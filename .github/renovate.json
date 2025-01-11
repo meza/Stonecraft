@@ -3,9 +3,10 @@
   "extends": [
     "github>stateshifters/renovate-common"
   ],
-  "prConcurrentLimit": 1,
-  "enabledManagers": [
-    "npm"
-  ],
-  "packageRules": []
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "semanticCommitType": "docs"
+    }
+  ]
 }
