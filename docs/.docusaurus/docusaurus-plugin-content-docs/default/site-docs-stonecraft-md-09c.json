@@ -1,0 +1,23 @@
+{
+  "id": "Stonecraft",
+  "title": "What is Stonecraft?",
+  "description": "Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a multi-loader, multi-version Minecraft modding workspace.",
+  "source": "@site/docs/Stonecraft.md",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "slug": "/",
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "Quickstart",
+    "permalink": "/Quickstart"
+  }
+}

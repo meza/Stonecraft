@@ -1,0 +1,17 @@
+{
+  "id": "intro",
+  "title": "intro",
+  "description": "welcome",
+  "source": "@site/docs/intro.md",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "slug": "/"
+  },
+  "sidebar": "tutorialSidebar"
+}

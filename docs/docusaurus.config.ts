@@ -10,6 +10,7 @@ const config: Config = {
     favicon: 'img/favicon.ico',
     url: 'https://stonecraft.meza.gg',
     baseUrl: '/',
+    trailingSlash: false,
 
     /* Your site config here */
 

@@ -6,6 +6,7 @@ build/
 out/
 classes/
 versions/**/src
+**/node_modules
 
 # eclipse
 

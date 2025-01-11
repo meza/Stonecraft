@@ -1,0 +1,19 @@
+{
+  "id": "test",
+  "title": "test",
+  "description": "",
+  "source": "@site/docs/test.md",
+  "sourceDirName": ".",
+  "slug": "/test",
+  "permalink": "/test",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "What is Stonecraft?",
+    "permalink": "/"
+  }
+}
