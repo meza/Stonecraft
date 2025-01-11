@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
+      -
 permissions:
-  issues: write
-  checks: write
-  contents: write
-  pull-requests: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
