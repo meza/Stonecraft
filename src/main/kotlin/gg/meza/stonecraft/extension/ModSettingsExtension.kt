@@ -50,8 +50,8 @@ abstract class ModSettingsExtension @Inject constructor(
     init {
         runDirectoryProp.convention(project.rootProject.layout.projectDirectory.dir("run"))
         generatedResourcesProp.convention(project.layout.projectDirectory.dir("src/main/generated"))
-        testClientRunDirectoryProp.convention(runDirectoryProp.dir("/testclient/$loader"))
-        testServerRunDirectoryProp.convention(runDirectoryProp.dir("/testserver/$loader"))
+        testClientRunDirectoryProp.convention(runDirectoryProp.dir("testclient/$loader"))
+        testServerRunDirectoryProp.convention(runDirectoryProp.dir("testserver/$loader"))
         fabricClientJunitReportLocationProp.convention(project.layout.buildDirectory.file("junit.xml"))
         fabricServerJunitReportLocationProp.convention(project.layout.buildDirectory.file("junit.xml"))
         variableReplacements.convention(mapOf())

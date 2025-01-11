@@ -30,7 +30,9 @@ jobs:
           cache-dependency-path: |
             *.properties
             *.gradle.kts
-          java-version: 21
+          java-version: |
+            17
+            21
           check-latest: true
           distribution: 'temurin'
       - name: Setup Gradle

@@ -35,10 +35,8 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuild, modSettings: 
         }
     }
     project.afterEvaluate {
-
         val runString = project.layout.projectDirectory.asFile.toPath()
             .relativize(modSettings.runDirectoryProp.get().asFile.toPath()).toString()
-
 
         loom.apply {
             runConfigs.all {
@@ -65,7 +63,7 @@ fun configureClientGameTests(
     val mod = project.mod
 
     val testClientDir =
-        project.projectDir.toPath().relativize(
+        project.layout.projectDirectory.asFile.toPath().relativize(
             modSettings.testClientRunDirectoryProp.get().asFile.toPath()
         ).toString()
 
@@ -97,7 +95,7 @@ fun configureServerGameTests(
     val mod = project.mod
 
     val testServerDir =
-        project.projectDir.toPath().relativize(
+        project.layout.projectDirectory.asFile.toPath().relativize(
             modSettings.testServerRunDirectoryProp.get().asFile.toPath()
         ).toString()
 

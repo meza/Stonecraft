@@ -51,6 +51,8 @@ class LoomBitsTest: IntegrationTest {
         gradleTest.setStonecutterVersion("1.21", "fabric", "forge", "neoforge")
         gradleTest.buildScript("""
             modSettings {
+                println("SUT")
+                println(rootProject.layout.projectDirectory.asFile.absolutePath)
                 runDirectory = rootProject.layout.projectDirectory.dir("run-test")
             }
         """.trimIndent())
@@ -60,6 +62,9 @@ class LoomBitsTest: IntegrationTest {
         val testServerDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test/testserver").asFile.toPath())
 
         val result = gradleTest.run("printLoomSettings")
+
+        println(testClientDir)
+        println("${testClientDir}${Path.DIRECTORY_SEPARATOR}fabric")
 
         assertTrue(result.output.contains("[1.21-fabric] client runDir=$runDir"))
         assertTrue(result.output.contains("[1.21-fabric] datagen runDir=build/datagen"))
