@@ -47,7 +47,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('src/test/resources/**/*.gradle*') }}
 
       - name: "🧪 Run tests"
-        run: ./gradlew build
+        run: ./gradlew build --stacktrace --debug
 
       - name: Semantic Release
         env:
