@@ -85,26 +85,3 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
-
-publishing {
-    repositories {
-        maven {
-            val releasesRepoUrl = uri("https://maven.meza.gg/releases")
-            val snapshotsRepoUrl = uri("https://maven.meza.gg/snapshots")
-            url = if (version.toString().contains("next")) snapshotsRepoUrl else releasesRepoUrl
-            credentials {
-                username = project.properties["gradle.publish.key"].toString()
-                password = project.properties["gradle.publish.secret"].toString()
-            }
-        }
-    }
-
-    publications {
-        register("mavenJava", MavenPublication::class) {
-            groupId = project.group.toString()
-            artifactId = "stonecraft"
-            version = project.version.toString()
-            from(components["java"])
-        }
-    }
-}

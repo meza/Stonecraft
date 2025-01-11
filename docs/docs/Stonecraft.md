@@ -1,5 +1,116 @@
 ---
 slug: /
+sidebar_position: 1
 ---
 
-welcome
+# What is Stonecraft?
+
+Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a **multi-loader, multi-version** Minecraft modding workspace.
+It uses [Stonecutter][stonecutter] and [Architectury][architectury] to provide the multi-loader, multi-version support.
+
+- **Multi-loader _(architectury)_**: supports Fabric, Forge and NeoForge, allowing you to develop mods for each loader in the same workspace
+- **Multi-version _(stonecutter)_**: supports multiple Minecraft versions, allowing you to develop mods for different versions in the same workspace
+- **Single codebase**:Stonecraft allows you to develop mods for different loaders and versions in the same 
+codebase without the need to maintain multiple branches or workspaces.
+- **Consistent release process**: easily release to Modrinth and Curseforge with proper versioning and metadata for all loaders and Minecraft versions.
+
+Stonecraft reduces about 500 lines of copy-paste build.gradle.kts to a single line with a tested and versioned plugin.
+
+:::info
+
+This project has been created to support [_my_ projects](https://modrinth.com/user/meza) and is HEAVILY a work in progress. <br/>
+That said, I would love to make it useful for others too so I am looking for feedback and contributions.
+
+This is my first stab at a Gradle plugin and Kotlin, so there are bound to be improvements that can be made.
+If you have any suggestions, feature requests, bug reports or improvements, please open an issue or PR on the [GitHub repository][github]
+
+::: 
+
+:::warning
+
+Stonecraft depends on your knowledge of [Stonecutter][stonecutter].<br/>Please familiarize yourself with Stonecutter before using Stonecraft.
+
+:::
+
+## What's included?
+
+### Stonecutter
+
+Stonecraft configures Stonecutter in a way that allows you to have your code change based on the
+active minecraft version and modloader. Instead of having to maintain separate git branches for each Minecraft version or modloader, 
+you can have a single codebase that adapts to the active environment.
+
+This is achieved by using special comments in your code that are replaced by Stonecutter at compile time.
+
+```java
+
+/*? if fabric {*/
+import net.fabricmc.api.ModInitializer;
+/*?}*/
+
+/*? if forge {*/
+/*import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+*/
+/*?}*/
+
+/*? if neoforge {*/
+/*import net.neoforged.fml.ModContainer;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+*/
+/*?}*/
+
+/*? if forgeLike {*/
+/*@Mod("examplemod")
+public class ExampleMod {*/
+/*?}*/
+
+/*? if fabric {*/
+public class ExampleMod implements ModInitializer {
+/*? }*/
+
+    /*? if forge {*/
+    /*public ExampleMod(final FMLJavaModLoadingContext context) {}*/
+    /*?}*/
+
+    /*? if neoforge {*/
+    /*public ExampleMod(IEventBus modEventBus, ModContainer modContainer) {}*/
+    /*?}*/
+
+    /*? if fabric {*/
+    @Override
+    public void onInitialize() {}
+    /*?}*/
+}
+
+```
+
+Please refer to the [Stonecutter documentation][stonecutter] for more information, you will need it!
+Alternatively you can check out the [Server Redstone Block mod](https://github.com/meza/ServerRedstoneBlock/tree/main)
+for inspiration.
+
+### Architectury
+
+Architectury is a fork of fabric-loom which coordinates the setup of a multi-loader project.
+Stonecraft configures Architectury to support Fabric, Forge and NeoForge with more loaders to come.
+
+### Yarn Mappings
+
+Stonecraft uses the Yarn mappings currently but Mojmap support is coming soon.
+
+### Mod-Publish-Plugin
+
+Stonecraft includes the [Mod-Publish-Plugin](https://modmuss50.github.io/mod-publish-plugin/) which allows you to easily 
+publish your mods to Modrinth and Curseforge.
+It's all configured in a way that you can publish your mod to all loaders and versions with a single command.
+
+### Test client configuration
+
+Stonecraft includes a way for you to set your minecraft client configuration for testing.
+You can now avoid having your eyes and ears blown out by the default Minecraft settings.
+
+
+[stonecutter]: https://stonecutter.kikugie.dev/
+[architectury]: https://docs.architectury.dev/
+[github]: https://github.com/meza/Stonecraft
