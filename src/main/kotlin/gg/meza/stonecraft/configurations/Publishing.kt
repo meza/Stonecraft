@@ -18,7 +18,7 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
     publishing.apply {
         val isBeta = "next" in project.version.toString()
         changelog.set(
-            project.layout.projectDirectory.file("CHANGELOG.md").asFile.takeIf { it.exists() }?.readText() ?: "No changelog provided."
+            project.rootProject.layout.projectDirectory.file("CHANGELOG.md").asFile.takeIf { it.exists() }?.readText() ?:"No changelog provided."
         )
 
         val remapJar = project.tasks.named<RemapJarTask>("remapJar")
