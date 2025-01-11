@@ -36,6 +36,8 @@ jobs:
           java-version: 21
           check-latest: true
           distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Cache Gradle Test dependencies
         id: cache-gradle-dependencies
