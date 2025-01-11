@@ -1,3 +1,4 @@
+import com.adarshr.gradle.testlogger.theme.ThemeType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinTargetHierarchy.SourceSetTree.Companion.test
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -7,6 +8,7 @@ plugins {
     `kotlin-dsl`
     kotlin("jvm") version "2.+"
     id("com.gradle.plugin-publish") version "1.+"
+    id("com.adarshr.test-logger") version "4.+"
 }
 
 group = "gg.meza.stonecuttermod"
@@ -47,6 +49,10 @@ tasks.withType<Test> {
     jvmArgs("--add-opens", "java.base/java.util=ALL-UNNAMED")
     jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
     jvmArgs("-Xmx4G")
+}
+
+testlogger {
+    theme = ThemeType.PLAIN
 }
 
 java {

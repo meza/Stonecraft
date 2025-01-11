@@ -23,9 +23,6 @@ jobs:
       - name: "⬇️ Checkout"
         uses: actions/checkout@v3
 
-      - name: "🛂 Validate Gradle Wrapper"
-        uses: gradle/wrapper-validation-action@v1
-
       - name: "☕ Setup Jdk 21"
         uses: actions/setup-java@v4
         with:
@@ -38,6 +35,8 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          validate-wrappers: true
 
       - name: Cache Gradle Test dependencies
         id: cache-gradle-dependencies
@@ -50,6 +49,17 @@ jobs:
 
       - name: "🧪 Run tests"
         run: ./gradlew build --stacktrace
+
+      - name: Upload build reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-reports
+          path: |
+            **/build/reports/
+            **/build/test-results/
+            **/build/e2e_tests/project/build/reports/
+            **/build/e2e_tests/project/build/test-results/
 
       - name: Semantic Release
         env:
