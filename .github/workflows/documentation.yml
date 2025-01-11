@@ -34,7 +34,6 @@ jobs:
           uses: actions/setup-node@v4.0.3
           with:
             node-version: ${{ inputs.node-version }}
-            cache: false
 
         - name: "📚 Build documentation"
           working-directory: ./docs
