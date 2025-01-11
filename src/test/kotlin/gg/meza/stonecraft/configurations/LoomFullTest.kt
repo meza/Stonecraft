@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
+import okio.Path
 
 /**
  * Big test file in order to save test execution time
@@ -42,44 +43,44 @@ class LoomFullTest: IntegrationTest {
 
     @Test
     fun `default rundir is set for all targets`() {
-        val runDir = "..\\..\\run"
-        val testClientDir = "..\\..\\run\\testclient"
-        val testServerDir = "..\\..\\run\\testserver"
+        val runDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run").asFile.toPath())
+        val testClientDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run/testclient").asFile.toPath())
+        val testServerDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run/testserver").asFile.toPath())
 
         assertTrue(result.output.contains("[1.21-fabric] client runDir=$runDir"))
         assertTrue(result.output.contains("[1.21-fabric] datagen runDir=build/datagen"))
-        assertTrue(result.output.contains("[1.21-fabric] gameTestClient runDir=$testClientDir\\fabric"))
-        assertTrue(result.output.contains("[1.21-fabric] gameTestServer runDir=$testServerDir\\fabric"))
+        assertTrue(result.output.contains("[1.21-fabric] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}fabric"))
+        assertTrue(result.output.contains("[1.21-fabric] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}fabric"))
         assertTrue(result.output.contains("[1.21-fabric] server runDir=$runDir"))
 
         assertTrue(result.output.contains("[1.21-forge] client runDir=$runDir"))
         assertTrue(result.output.contains("[1.21-forge] datagen runDir=$runDir"))
-        assertTrue(result.output.contains("[1.21-forge] gameTestClient runDir=$testClientDir\\forge"))
-        assertTrue(result.output.contains("[1.21-forge] gameTestServer runDir=$testServerDir\\forge"))
+        assertTrue(result.output.contains("[1.21-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
+        assertTrue(result.output.contains("[1.21-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
         assertTrue(result.output.contains("[1.21-forge] server runDir=$runDir"))
 
         assertTrue(result.output.contains("[1.21-neoforge] client runDir=$runDir"))
         assertFalse(result.output.contains("[1.21-neoforge] datagen runDir=$runDir"))
-        assertTrue(result.output.contains("[1.21-neoforge] gameTestClient runDir=$testClientDir\\neoforge"))
-        assertTrue(result.output.contains("[1.21-neoforge] gameTestServer runDir=$testServerDir\\neoforge"))
+        assertTrue(result.output.contains("[1.21-neoforge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
+        assertTrue(result.output.contains("[1.21-neoforge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21-neoforge] server runDir=$runDir"))
 
         assertTrue(result.output.contains("[1.21.4-fabric] client runDir=$runDir"))
         assertTrue(result.output.contains("[1.21.4-fabric] datagen runDir=build/datagen"))
-        assertTrue(result.output.contains("[1.21.4-fabric] gameTestClient runDir=$testClientDir\\fabric"))
-        assertTrue(result.output.contains("[1.21.4-fabric] gameTestServer runDir=$testServerDir\\fabric"))
+        assertTrue(result.output.contains("[1.21.4-fabric] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}fabric"))
+        assertTrue(result.output.contains("[1.21.4-fabric] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}fabric"))
         assertTrue(result.output.contains("[1.21.4-fabric] server runDir=$runDir"))
 
         assertTrue(result.output.contains("[1.21.4-forge] client runDir=$runDir"))
         assertTrue(result.output.contains("[1.21.4-forge] server runDir=$runDir"))
         assertFalse(result.output.contains("[1.21.4-forge] datagen runDir=$runDir"))
-        assertFalse(result.output.contains("[1.21.4-forge] gameTestClient runDir=$testClientDir\\forge"))
-        assertFalse(result.output.contains("[1.21.4-forge] gameTestServer runDir=$testServerDir\\forge"))
+        assertFalse(result.output.contains("[1.21.4-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
+        assertFalse(result.output.contains("[1.21.4-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
 
         assertTrue(result.output.contains("[1.21.4-neoforge] client runDir=$runDir"))
         assertFalse(result.output.contains("[1.21.4-neoforge] datagen runDir=$runDir"))
-        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestClient runDir=$testClientDir\\neoforge"))
-        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer runDir=$testServerDir\\neoforge"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21.4-neoforge] server runDir=$runDir"))
     }
 
