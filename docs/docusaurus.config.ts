@@ -6,8 +6,9 @@ const lightTheme = themes.oneLight;
 const darkTheme = themes.vsDark;
 
 const config: Config = {
-    title: 'My Site',
-    favicon: 'img/favicon.ico',
+    title: 'Stonecraft – Simplify Multi-Loader, Multi-Version Minecraft Mod Development',
+    titleDelimiter: '–',
+    favicon: 'img/stonecraft@0.25x.png',
     url: 'https://stonecraft.meza.gg',
     baseUrl: '/',
     trailingSlash: false,
@@ -34,8 +35,50 @@ const config: Config = {
             } satisfies Preset.Options,
         ],
     ],
-
+    headTags: [
+        {
+            tagName: 'link',
+            attributes: {
+                rel: 'canonical',
+                href: 'https://stonecraft.meza.gg',
+            }
+        },
+        {
+            tagName: 'script',
+            attributes: {
+                type: 'application/ld+json',
+            },
+            innerHTML: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "Stonecraft",
+                "description": "Stonecraft is a Gradle plugin that simplifies multi-loader, multi-version Minecraft mod development with Fabric, Forge, and NeoForge support.",
+                "applicationCategory": "DeveloperTool",
+                "operatingSystem": "Cross-platform",
+                "url": "https://stonecraft.meza.gg/",
+                "author": {
+                    "@type": "Person",
+                    "name": "Meza"
+                }
+            }),
+        }
+    ],
     themeConfig: {
+        metadata: [
+            {name: 'description', content: 'Stonecraft is a Gradle plugin that streamlines multi-loader, multi-version Minecraft mod development. Build Fabric, Forge, and NeoForge mods in a single codebase and simplify releases to Modrinth and CurseForge.'},
+            {name: 'keywords', content: 'Minecraft modding, Gradle plugin, Fabric mod, Forge mod, NeoForge, multi-loader modding, Stonecutter, Architectury, Modrinth, CurseForge'},
+            {name: 'og:title', content: 'Stonecraft – Simplify Multi-Loader, Multi-Version Minecraft Mod Development'},
+            {name: 'og:description', content: 'Stonecraft is a Gradle plugin that streamlines multi-loader, multi-version Minecraft mod development. Build Fabric, Forge, and NeoForge mods in a single codebase and simplify releases to Modrinth and CurseForge.'},
+            {name: 'og:type', content: 'website'},
+            {name: 'og:url', content: 'https://stonecraft.meza.gg'},
+            {name: 'og:image', content: 'https://stonecraft.meza.gg/img/stonecraft@0.5x.png'},
+            {name: 'twitter:card', content: 'summary_large_image'},
+            {name: 'twitter:site', content: '@houseofmeza'},
+            {name: 'twitter:creator', content: '@houseofmeza'},
+            {name: 'twitter:image', content: 'https://stonecraft.meza.gg/img/stonecraft@0.5x.png'},
+            {name: 'twitter:title', content: 'Stonecraft – Simplify Multi-Loader, Multi-Version Minecraft Mod Development'},
+            {name: 'twitter:description', content: 'Stonecraft is a Gradle plugin that streamlines multi-loader, multi-version Minecraft mod development. Build Fabric, Forge, and NeoForge mods in a single codebase and simplify releases to Modrinth and CurseForge.'}
+        ],
         announcementBar: {
             isCloseable: true,
             id: 'star',
