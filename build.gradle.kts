@@ -54,12 +54,14 @@ java {
 }
 
 gradlePlugin {
+    website = "https://github.com/meza/Stonecraft"
+    vcsUrl = "https://github.com/meza/Stonecraft.git"
     plugins {
         create("gg.meza.stonecraft") {
             id = "gg.meza.stonecraft"
             displayName = "Stonecraft"
             implementationClass = "gg.meza.stonecraft.ModPlugin"
-            version = "0.002"
+            tags = listOf("minecraft", "multi-loader", "configuration")
         }
     }
 }
@@ -86,29 +88,6 @@ publishing {
             credentials {
                 username = project.properties["gradle.publish.key"].toString()
                 password = project.properties["gradle.publish.secret"].toString()
-            }
-        }
-    }
-
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-
-            pom {
-                name = "Stonecraft"
-                description = "A Minecraft multi-loader, multi-version configuration plugin"
-                url = "https://github.com/meza/Stonecraft"
-                licenses {
-                    license {
-                        name = "GPL-3.0"
-                        url = "https://choosealicense.com/licenses/gpl-3.0/"
-                    }
-                }
-                scm {
-                    connection = "scm:git:git://github.com/meza/Stonecraft.git"
-                    developerConnection = "scm:git:ssh://github.com/meza/Stonecraft.git"
-                    url = "https://github.com/Stonecraft"
-                }
             }
         }
     }
