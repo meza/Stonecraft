@@ -68,6 +68,7 @@ gradlePlugin {
             displayName = "Stonecraft"
             implementationClass = "gg.meza.stonecraft.ModPlugin"
             tags = listOf("minecraft", "multi-loader", "configuration")
+            description = "Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a **multi-loader, multi-version** Minecraft modding workspace."
         }
     }
 }
