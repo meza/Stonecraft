@@ -1,7 +1,6 @@
 package gg.meza.stonecraft
 
 import org.gradle.api.Project
-import org.gradle.api.file.Directory
 import org.gradle.testfixtures.ProjectBuilder
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
@@ -17,9 +16,9 @@ interface IntegrationTest {
     companion object {
         @Language("gradle")
         val kotlinHeader = """
-                                    plugins {
-                id("gg.meza.stonecraft")
-            }
+plugins {
+    id("gg.meza.stonecraft")
+}
         """.trimIndent()
     }
 
