@@ -27,12 +27,6 @@
         "changelogFile": "CHANGELOG.md"
       }
     ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "./scripts/release.sh \"${nextRelease.version}\""
-      }
-    ],
     "gradle-semantic-release-plugin"
   ]
 }
