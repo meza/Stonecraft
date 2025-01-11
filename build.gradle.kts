@@ -98,4 +98,13 @@ publishing {
             }
         }
     }
+
+    publications {
+        register("mavenJava", MavenPublication::class) {
+            groupId = project.group.toString()
+            artifactId = "stonecraft"
+            version = project.version.toString()
+            from(components["java"])
+        }
+    }
 }
