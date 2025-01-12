@@ -31,7 +31,7 @@ jobs:
             run_install: false
 
         - name: Use Node.js ${{ inputs.node-version }}
-          uses: actions/setup-node@v4.0.3
+          uses: actions/setup-node@v4.1.0
           with:
             node-version: ${{ inputs.node-version }}
 
