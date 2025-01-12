@@ -8,6 +8,8 @@ classes/
 versions/**/src
 **/node_modules
 
+**/.docusaurus
+
 # eclipse
 
 *.launch
