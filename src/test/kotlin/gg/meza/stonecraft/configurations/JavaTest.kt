@@ -1,13 +1,14 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
 @DisplayName("Test java tooling setup")
-class JavaTest: IntegrationTest {
+class JavaTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
 
@@ -15,7 +16,8 @@ class JavaTest: IntegrationTest {
     fun setUp() {
         gradleTest = gradleTest()
 
-        gradleTest.buildScript("""
+        gradleTest.buildScript(
+            """
 tasks.register("checkJavaExtension") {
     doLast {
         println("sourceCompatibility=${'$'}{java.sourceCompatibility}")
@@ -32,8 +34,8 @@ tasks.register("checkSourceSets") {
         }
     }
 }
-
-""".trimIndent())
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -59,10 +61,12 @@ tasks.register("checkSourceSets") {
     @Test
     fun `check if the generated source is added for forge`() {
         gradleTest.setStonecutterVersion("1.21", "forge")
-        gradleTest.buildScript("""
+        gradleTest.buildScript(
+            """
 modSettings {
     generatedResources = layout.buildDirectory.dir("src/main/generatedForTests").get()
-}""")
+}"""
+        )
 
         val br = gradleTest.run("checkSourceSets")
         val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-forge/build/src/main/generatedForTests")
@@ -72,10 +76,12 @@ modSettings {
     @Test
     fun `check if the generated source is NOT added for fabric`() {
         gradleTest.setStonecutterVersion("1.21", "fabric")
-        gradleTest.buildScript("""
+        gradleTest.buildScript(
+            """
 modSettings {
     generatedResources = layout.buildDirectory.dir("src/main/generatedForTests").get()
-}""")
+}"""
+        )
 
         val br = gradleTest.run("checkSourceSets")
         val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-forge/build/src/main/generatedForTests")

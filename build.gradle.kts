@@ -1,6 +1,5 @@
 import com.adarshr.gradle.testlogger.theme.ThemeType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.KotlinTargetHierarchy.SourceSetTree.Companion.test
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -9,10 +8,12 @@ plugins {
     kotlin("jvm") version "2.1.0"
     id("com.gradle.plugin-publish") version "1.3.0"
     id("com.adarshr.test-logger") version "4.0.0"
+    id("com.diffplug.spotless") version "7.0.1"
 }
 
 group = "gg.meza"
-description = "Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a multi-loader, multi-version Minecraft modding workspace."
+description =
+    "Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a multi-loader, multi-version Minecraft modding workspace."
 
 repositories {
     mavenCentral()
@@ -26,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    fun plugin(id: String, version: String) = "${id}:${id}.gradle.plugin:${version}"
+    fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
     compileOnly(gradleApi())
 
     implementation(plugin("dev.kikugie.stonecutter", "0.5"))
@@ -43,7 +44,6 @@ dependencies {
     testImplementation(kotlin("test"))
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
 }
 
 tasks.withType<Test> {
@@ -72,7 +72,14 @@ gradlePlugin {
             id = "gg.meza.stonecraft"
             displayName = "Stonecraft"
             implementationClass = "gg.meza.stonecraft.ModPlugin"
-            tags = listOf("minecraft", "multi-loader", "configuration", "modding", "minecraft modding", "development environment configuration")
+            tags = listOf(
+                "minecraft",
+                "multi-loader",
+                "configuration",
+                "modding",
+                "minecraft modding",
+                "development environment configuration"
+            )
             description = project.description
         }
     }
@@ -89,6 +96,20 @@ compileKotlin.compilerOptions {
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
+}
+
+spotless {
+    kotlin {
+        ktlint()
+            .editorConfigOverride(
+                mapOf(
+                    "ktlint_code_style" to "intellij_idea",
+                    "ktlint_standard_no-line-break-before-assignment" to "disabled",
+                    "ktlint_standard_trailing-comma-on-call-site" to "disabled",
+                    "ktlint_standard_trailing-comma-on-declaration-site" to "disabled"
+                )
+            )
+    }
 }
 
 publishing {

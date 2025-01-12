@@ -27,7 +27,6 @@ stonecutter {
         }
 
         STONECUTTER_VERSIONS
-
     }
     create(rootProject)
 }

@@ -68,5 +68,4 @@ abstract class ConfigureMinecraftClient : DefaultTask() {
     private fun updateOption(optionsMap: MutableMap<String, String>, key: String, value: String) {
         optionsMap[key] = if (value.contains(" ")) "\"$value\"" else value
     }
-
 }

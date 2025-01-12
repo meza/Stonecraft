@@ -25,7 +25,7 @@ private fun removeUnnecessaryLWJGLDependencies(project: Project, stonecutter: St
             classpath = classpath.filter { !it.toString().contains("${Path.DIRECTORY_SEPARATOR}org.lwjgl${Path.DIRECTORY_SEPARATOR}") }
         }
 
-        if(canBeLaunchedByArchitectury(project.mod, stonecutter)) {
+        if (canBeLaunchedByArchitectury(project.mod, stonecutter)) {
             tasks.named<JavaExec>("runGameTestServer") {
                 classpath = classpath.filter { !it.toString().contains("${Path.DIRECTORY_SEPARATOR}org.lwjgl${Path.DIRECTORY_SEPARATOR}") }
             }

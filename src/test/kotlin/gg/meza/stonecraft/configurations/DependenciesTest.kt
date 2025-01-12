@@ -1,10 +1,12 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
 /**
  * Test that the dependencies are correctly resolved from the versions/dependencies/[minecraftVersion].properties files
  * and that the dependencies are correctly added to the project
@@ -16,7 +18,8 @@ class DependenciesTest : IntegrationTest {
 
     @BeforeEach
     fun setUp() {
-        gradleTest = gradleTest().buildScript("""
+        gradleTest = gradleTest().buildScript(
+            """
 tasks.register("printDeps") {
     doLast {
         configurations.forEach { config ->
@@ -26,7 +29,9 @@ tasks.register("printDeps") {
             }
         }
     }
-}""".trimIndent())
+}
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -114,5 +119,4 @@ tasks.register("printDeps") {
             )
         }
     }
-
 }

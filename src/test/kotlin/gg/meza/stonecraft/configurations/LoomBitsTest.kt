@@ -2,13 +2,15 @@ package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
 import okio.Path
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 
 @DisplayName("Test loom setup")
-class LoomBitsTest: IntegrationTest {
+class LoomBitsTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
 
@@ -25,7 +27,6 @@ class LoomBitsTest: IntegrationTest {
 
         assertFalse(br.output.contains("loom.accessWidenerPath"))
         assertFalse(br.output.contains("forge.convertAccessWideners"))
-
     }
 
     @Test
@@ -43,19 +44,20 @@ class LoomBitsTest: IntegrationTest {
         assertTrue(br.output.contains(forgeString))
         assertEquals(2, pathCount, "Expected 2 occurrences of $awString, found $pathCount")
         assertEquals(1, forgeCount, "Expected 1 occurrence of $forgeString, found $forgeCount")
-
     }
 
     @Test
     fun `test with a custom run directory`() {
         gradleTest.setStonecutterVersion("1.21", "fabric", "forge", "neoforge")
-        gradleTest.buildScript("""
+        gradleTest.buildScript(
+            """
             modSettings {
                 println("SUT")
                 println(rootProject.layout.projectDirectory.asFile.absolutePath)
                 runDirectory = rootProject.layout.projectDirectory.dir("run-test")
             }
-        """.trimIndent())
+            """.trimIndent()
+        )
 
         val runDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test").asFile.toPath())
         val testClientDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test/testclient").asFile.toPath())
@@ -88,13 +90,15 @@ class LoomBitsTest: IntegrationTest {
     @Test
     fun `test with a custom directories`() {
         gradleTest.setStonecutterVersion("1.20.2", "fabric", "forge")
-        gradleTest.buildScript("""
+        gradleTest.buildScript(
+            """
             modSettings {
                 runDirectory = rootProject.layout.projectDirectory.dir("run-test")
                 testClientRunDirectory = rootProject.layout.projectDirectory.dir("run-test-client")
                 testServerRunDirectory = rootProject.layout.projectDirectory.dir("run-test-server")    
             }
-        """.trimIndent())
+            """.trimIndent()
+        )
 
         val runDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test").asFile.toPath()).toString()
         val testClientDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test-client").asFile.toPath()).toString()
@@ -114,5 +118,4 @@ class LoomBitsTest: IntegrationTest {
         assertTrue(result.output.contains("[1.20.2-forge] gameTestServer runDir=$testServerDir"))
         assertTrue(result.output.contains("[1.20.2-forge] server runDir=$runDir"))
     }
-
 }

@@ -18,12 +18,12 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
     publishing.apply {
         val isBeta = "next" in project.version.toString()
         changelog.set(
-            project.rootProject.layout.projectDirectory.file("CHANGELOG.md").asFile.takeIf { it.exists() }?.readText() ?:"No changelog provided."
+            project.rootProject.layout.projectDirectory.file("CHANGELOG.md").asFile.takeIf { it.exists() }?.readText() ?: "No changelog provided."
         )
 
         val remapJar = project.tasks.named<RemapJarTask>("remapJar")
         file.set(remapJar.get().archiveFile)
-        version.set("${mod.version}+${mod.loader}-${minecraftVersion}")
+        version.set("${mod.version}+${mod.loader}-$minecraftVersion")
         type.set(if (isBeta) BETA else STABLE)
         modLoaders.add(mod.loader)
         displayName.set("${mod.version} for ${mod.loader.upperCaseFirst()} $minecraftVersion")
@@ -38,7 +38,7 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
                 accessToken.set(project.providers.environmentVariable("MODRINTH_TOKEN"))
                 projectId.set(project.providers.environmentVariable("MODRINTH_ID"))
                 minecraftVersions.add(minecraftVersion)
-                announcementTitle.set("Download ${mod.version}+${mod.loader}-${minecraftVersion} from Modrinth")
+                announcementTitle.set("Download ${mod.version}+${mod.loader}-$minecraftVersion from Modrinth")
             }
         } else {
             if (!dryRun.get()) {
@@ -53,7 +53,7 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
                 projectId.set(project.providers.environmentVariable("CURSEFORGE_ID"))
                 accessToken.set(project.providers.environmentVariable("CURSEFORGE_TOKEN").orElse(""))
                 minecraftVersions.add(minecraftVersion)
-                announcementTitle.set("Download ${mod.version}+${mod.loader}-${minecraftVersion} from CurseForge")
+                announcementTitle.set("Download ${mod.version}+${mod.loader}-$minecraftVersion from CurseForge")
             }
         } else {
             if (!dryRun.get()) {

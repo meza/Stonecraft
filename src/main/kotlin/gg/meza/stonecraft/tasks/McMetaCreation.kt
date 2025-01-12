@@ -3,7 +3,9 @@ package gg.meza.stonecraft.tasks
 import com.google.gson.GsonBuilder
 import gg.meza.stonecraft.mod
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.*
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.TaskAction
 import java.nio.file.Files
 
 data class PackMeta(
@@ -20,12 +22,12 @@ data class SupportedFormat(
     val min_inclusive: Int
 )
 
-abstract class McMetaCreation: DefaultTask() {
+abstract class McMetaCreation : DefaultTask() {
 
     companion object {
         private const val FILENAME = "pack.mcmeta"
-        private const val INPUT_PACK_FILE_PATH = "src/main/resources/${FILENAME}"
-        private const val OUTPUT_PACK_FILE_PATH = "resources/main/${FILENAME}"
+        private const val INPUT_PACK_FILE_PATH = "src/main/resources/$FILENAME"
+        private const val OUTPUT_PACK_FILE_PATH = "resources/main/$FILENAME"
     }
 
     private val inputPackFile = project.rootProject.file(INPUT_PACK_FILE_PATH)
@@ -67,7 +69,7 @@ abstract class McMetaCreation: DefaultTask() {
                 supported_formats = if (newFormat) SupportedFormat(version) else null
             )
         )
-        val gson = GsonBuilder().setPrettyPrinting().create();
+        val gson = GsonBuilder().setPrettyPrinting().create()
         val packFileData = gson.toJson(packMcMeta)
 
         if (!Files.exists(outputFilePath.toPath())) {
@@ -81,5 +83,4 @@ abstract class McMetaCreation: DefaultTask() {
             java.nio.file.StandardOpenOption.TRUNCATE_EXISTING
         )
     }
-
 }

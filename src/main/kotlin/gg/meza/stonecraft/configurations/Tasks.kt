@@ -1,7 +1,6 @@
 package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuild
-import gg.meza.stonecraft.canBeLaunchedByArchitectury
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
@@ -10,7 +9,6 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
-import kotlin.math.min
 
 fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings: ModSettingsExtension) {
     val currentModGroup = "mod"
@@ -23,7 +21,6 @@ fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings:
         into(project.rootProject.layout.buildDirectory.file("libs"))
         dependsOn("build")
     }
-
 
     if (stonecutter.current.isActive) {
         project.rootProject.tasks.register("buildActive") {
@@ -51,7 +48,6 @@ fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings:
     }
 
     project.tasks.register<ConfigureMinecraftClient>("configureMinecraftClient") {
-
         val runDirAsFile = modSettings.runDirectoryProp.get().asFile
         if (!runDirAsFile.exists()) {
             runDirAsFile.mkdirs()
@@ -67,5 +63,3 @@ fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings:
         dependsOn(project.tasks.named("configureMinecraftClient"))
     }
 }
-
-

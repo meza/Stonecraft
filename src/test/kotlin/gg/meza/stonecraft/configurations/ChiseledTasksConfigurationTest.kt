@@ -1,10 +1,10 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
 @DisplayName("Test stonecutter task setup")
 class ChiseledTasksConfigurationTest : IntegrationTest {
@@ -19,7 +19,6 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
 
     @Test
     fun `stonecutter tasks are configured`() {
-
         // Check that the chiseled tasks are listed in the tasks output
         val expectedTasks = listOf(
             "buildAndCollect",

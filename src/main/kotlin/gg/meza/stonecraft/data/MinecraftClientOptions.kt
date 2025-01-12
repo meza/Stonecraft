@@ -47,14 +47,11 @@ abstract class MinecraftClientOptions @Inject constructor(
         fovValue.convention(0.0)
     }
 
-
-    fun getOptions(): Map<String, String> {
-        return mapOf(
-            "guiScale" to guiScale.get().toString(),
-            "fov" to fovValue.get().toString(),
-            "narrator" to narratorValue,
-            "soundCategory_music" to musicVolume.get().toString(),
-            "darkMojangStudiosBackground" to darkBackground.get().toString()
-        ) + additionalLines.get()
-    }
+    fun getOptions(): Map<String, String> = mapOf(
+        "guiScale" to guiScale.get().toString(),
+        "fov" to fovValue.get().toString(),
+        "narrator" to narratorValue,
+        "soundCategory_music" to musicVolume.get().toString(),
+        "darkMojangStudiosBackground" to darkBackground.get().toString()
+    ) + additionalLines.get()
 }

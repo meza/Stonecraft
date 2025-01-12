@@ -1,10 +1,11 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 
 @DisplayName("Test the architectury quirks")
 class QuirksTest : IntegrationTest {
@@ -13,7 +14,8 @@ class QuirksTest : IntegrationTest {
 
     @BeforeEach
     fun setUp() {
-        gradleTest = gradleTest().buildScript("""
+        gradleTest = gradleTest().buildScript(
+            """
 tasks.register("printClasspathServer") {
     tasks.named<JavaExec>("runServer").get().classpath.forEach(${':'}${':'}println)
     tasks.named<JavaExec>("runGameTestServer").get().classpath.forEach(${':'}${':'}println)
@@ -27,7 +29,8 @@ tasks.register("getForcedModules") {
         println(it.resolutionStrategy.forcedModules)
     }
 }
-""".trimIndent())
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -54,5 +57,4 @@ tasks.register("getForcedModules") {
 
         assertTrue(br.output.contains("net.sf.jopt-simple:jopt-simple:5.+"), "Jopt was not set properly for forge")
     }
-
 }

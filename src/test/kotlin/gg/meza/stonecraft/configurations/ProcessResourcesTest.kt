@@ -4,9 +4,11 @@ import com.google.gson.GsonBuilder
 import gg.meza.stonecraft.IntegrationTest
 import org.gradle.api.file.FileSystemLocation
 import org.gradle.testkit.runner.BuildResult
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 
 @Suppress("DEPRECATION")
 class ProcessResourcesTest : IntegrationTest {
@@ -29,7 +31,7 @@ modSettings {
         "custom3" to "customValue3"
     )
 }            
-        """.trimIndent()
+            """.trimIndent()
         )
             .setStonecutterVersion("1.20.2", "fabric", "forge")
             .setStonecutterVersion("1.21", "fabric", "forge", "neoforge")
@@ -51,7 +53,9 @@ modSettings {
     @Test
     fun `all relevant files made it to their correct places`() {
         val fabric1202Paths = getPathsFor(
-            "1.20.2", "fabric", listOf(
+            "1.20.2",
+            "fabric",
+            listOf(
                 "fabric.mod.json",
                 "processResourcesTest/test.json",
                 "processResourcesTest/test.toml",
@@ -63,7 +67,9 @@ modSettings {
         )
 
         val fabric1202PathsDenied = getPathsFor(
-            "1.20.2", "fabric", listOf(
+            "1.20.2",
+            "fabric",
+            listOf(
                 "pack.mcmeta",
                 "META-INF/mods.toml",
                 "META-INF/neoforge.mods.toml",
@@ -71,7 +77,9 @@ modSettings {
         )
 
         val forge1202Paths = getPathsFor(
-            "1.20.2", "forge", listOf(
+            "1.20.2",
+            "forge",
+            listOf(
                 "pack.mcmeta",
                 "META-INF/mods.toml",
                 "processResourcesTest/test.json",
@@ -84,14 +92,18 @@ modSettings {
         )
 
         val forge1202PathsDenied = getPathsFor(
-            "1.20.2", "forge", listOf(
+            "1.20.2",
+            "forge",
+            listOf(
                 "fabric.mod.json",
                 "META-INF/neoforge.mods.toml",
             )
         )
 
         val fabric121Paths = getPathsFor(
-            "1.21", "fabric", listOf(
+            "1.21",
+            "fabric",
+            listOf(
                 "fabric.mod.json",
                 "processResourcesTest/test.json",
                 "processResourcesTest/test.toml",
@@ -103,7 +115,9 @@ modSettings {
         )
 
         val fabric121PathsDenied = getPathsFor(
-            "1.21", "fabric", listOf(
+            "1.21",
+            "fabric",
+            listOf(
                 "pack.mcmeta",
                 "META-INF/mods.toml",
                 "META-INF/neoforge.mods.toml",
@@ -111,7 +125,9 @@ modSettings {
         )
 
         val forge121Paths = getPathsFor(
-            "1.21", "forge", listOf(
+            "1.21",
+            "forge",
+            listOf(
                 "pack.mcmeta",
                 "META-INF/mods.toml",
                 "processResourcesTest/test.json",
@@ -124,14 +140,18 @@ modSettings {
         )
 
         val forge121PathsDenied = getPathsFor(
-            "1.21", "forge", listOf(
+            "1.21",
+            "forge",
+            listOf(
                 "fabric.mod.json",
                 "META-INF/neoforge.mods.toml",
             )
         )
 
         val neoforge121Paths = getPathsFor(
-            "1.21", "neoforge", listOf(
+            "1.21",
+            "neoforge",
+            listOf(
                 "META-INF/neoforge.mods.toml",
                 "processResourcesTest/test.json",
                 "processResourcesTest/test.toml",
@@ -143,7 +163,9 @@ modSettings {
         )
 
         val neoforge121PathsDenied = getPathsFor(
-            "1.21", "neoforge", listOf(
+            "1.21",
+            "neoforge",
+            listOf(
                 "pack.mcmeta",
                 "META-INF/mods.toml",
                 "fabric.mod.json",
@@ -177,34 +199,44 @@ modSettings {
     @Test
     fun `basic variable substitution works`() {
         val fabric1202Paths = getPathsFor(
-            "1.20.2", "fabric", listOf(
+            "1.20.2",
+            "fabric",
+            listOf(
                 "processResourcesTest/test.json",
                 "processResourcesTest/test.toml"
             )
         )
 
         val forge1202Paths = getPathsFor(
-            "1.20.2", "forge", listOf(
+            "1.20.2",
+            "forge",
+            listOf(
                 "processResourcesTest/test.json",
                 "processResourcesTest/test.toml"
             )
         )
 
         val fabric121Paths = getPathsFor(
-            "1.21", "fabric", listOf(
+            "1.21",
+            "fabric",
+            listOf(
                 "processResourcesTest/test.json",
                 "processResourcesTest/test.toml"
             )
         )
 
         val forge121Paths = getPathsFor(
-            "1.21", "forge", listOf(
+            "1.21",
+            "forge",
+            listOf(
                 "processResourcesTest/test.json",
                 "processResourcesTest/test.toml"
             )
         )
         val neoforge121Paths = getPathsFor(
-            "1.21", "neoforge", listOf(
+            "1.21",
+            "neoforge",
+            listOf(
                 "processResourcesTest/test.json",
                 "processResourcesTest/test.toml"
             )
@@ -314,8 +346,6 @@ modSettings {
         val neoToml = neoforge121Path.asFile.readText()
         assertTrue(neoToml.contains("fabricVersion=\"0.102.0+1.21\""))
         assertTrue(neoToml.contains("packVersion=\"34\""))
-
-
     }
 
     private fun getPathsFor(version: String, loader: String, files: List<String>): MutableList<FileSystemLocation> {
@@ -327,5 +357,4 @@ modSettings {
         }
         return paths
     }
-
 }

@@ -31,6 +31,7 @@ fun configureChiseledTasks(project: Project, stonecutterController: StonecutterC
                 group = allModsGroup
                 description = "Executes $ofTask for all versions and loaders"
                 ofTask(ofTask)
-            })
+            }
+        )
     }
 }

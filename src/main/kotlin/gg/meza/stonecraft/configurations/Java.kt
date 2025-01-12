@@ -10,10 +10,9 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 
 fun configureJava(project: Project, stonecutter: StonecutterBuild, modSettingsExtension: ModSettingsExtension) {
-
     val generatedResources = modSettingsExtension.generatedResourcesProp
 
-    //Configure the compile time
+    // Configure the compile time
     project.project.configure<JavaPluginExtension> {
         // Configure the Java plugin to use the correct Java version for the given Minecraft version
         val javaVersion = javaVersion(stonecutter)

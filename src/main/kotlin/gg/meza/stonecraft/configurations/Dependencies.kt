@@ -20,7 +20,6 @@ import java.util.*
  * @param minecraftVersion The version of Minecraft to configure the dependencies for
  */
 fun configureDependencies(project: Project, minecraftVersion: String) {
-
     // Set the basic repositories for a multiloader project
     project.repositories {
         mavenCentral()
@@ -68,7 +67,6 @@ fun configureDependencies(project: Project, minecraftVersion: String) {
     }
 }
 
-
 /**
  * Load version specific dependencies from a properties file
  * It will look for a file in the versions/dependencies directory with the name of the minecraft version
@@ -78,7 +76,7 @@ fun configureDependencies(project: Project, minecraftVersion: String) {
  *
  */
 private fun loadSpecificDependencyVersions(project: Project, minecraftVersion: String) {
-    val customPropsFile = project.rootProject.file("versions/dependencies/${minecraftVersion}.properties")
+    val customPropsFile = project.rootProject.file("versions/dependencies/$minecraftVersion.properties")
 
     if (customPropsFile.exists()) {
         val customProps = Properties().apply {

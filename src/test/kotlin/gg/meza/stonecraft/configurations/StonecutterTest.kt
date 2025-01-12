@@ -1,10 +1,11 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import java.io.File
 
 /**
@@ -15,7 +16,7 @@ import java.io.File
  * constants are correctly activated based on the active project.
  */
 @DisplayName("Test stonecutter constants")
-class StonecutterTest: IntegrationTest {
+class StonecutterTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
     private lateinit var markerFile: File
@@ -29,7 +30,7 @@ class StonecutterTest: IntegrationTest {
 
     @Test
     fun `when nothing has been actively selected`() {
-        val contents = markerFile.readText();
+        val contents = markerFile.readText()
 
         assertTrue(contents.contains("/*fabricline"), "Fabric line was activated incorrectly")
         assertTrue(contents.contains("/*fabriclikeline"), "Fabric like line was activated incorrectly")
@@ -41,8 +42,7 @@ class StonecutterTest: IntegrationTest {
     @Test
     fun `when fabric is selected`() {
         gradleTest.run("Set active project to 1.21.4-fabric")
-        val contents = markerFile.readText();
-
+        val contents = markerFile.readText()
 
         assertFalse(contents.contains("/*fabricline"), "Fabric line was not activated")
         assertFalse(contents.contains("/*fabriclikeline"), "Fabric like line was not activated")
@@ -58,7 +58,7 @@ class StonecutterTest: IntegrationTest {
     @Test
     fun `when forge is selected`() {
         gradleTest.run("Set active project to 1.21.4-forge")
-        val contents = markerFile.readText();
+        val contents = markerFile.readText()
 
         assertTrue(contents.contains("/*fabricline"), "Fabric line was activated incorrectly")
         assertTrue(contents.contains("/*fabriclikeline"), "Fabric like line was activated incorrectly")
@@ -75,7 +75,7 @@ class StonecutterTest: IntegrationTest {
     @Test
     fun `when neoforge is selected`() {
         gradleTest.run("Set active project to 1.21.4-neoforge")
-        val contents = markerFile.readText();
+        val contents = markerFile.readText()
 
         assertTrue(contents.contains("/*fabricline"), "Fabric line was activated incorrectly")
         assertTrue(contents.contains("/*fabriclikeline"), "Fabric like line was activated incorrectly")
@@ -87,5 +87,4 @@ class StonecutterTest: IntegrationTest {
         assertTrue(contents.contains("neoforgeline"), "Neoforge line was not activated")
         assertTrue(contents.contains("forgelikeline"), "Forge like line was not activated")
     }
-
 }

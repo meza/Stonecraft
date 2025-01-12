@@ -102,5 +102,4 @@ abstract class ModSettingsExtension @Inject constructor(
     fun clientOptions(configure: MinecraftClientOptions.() -> Unit) {
         clientOptions.configure()
     }
-
 }

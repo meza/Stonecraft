@@ -1,11 +1,10 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
-import org.gradle.internal.extensions.core.extra
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 
 @DisplayName("Test plugin setup")
 class PluginsTest : IntegrationTest {
@@ -23,18 +22,19 @@ tasks.register("printPlugins") {
         }
     }
 }
-""".trimIndent()
+            """.trimIndent()
         )
     }
 
     @Test
     fun `plugin throws an error if architectury exists`() {
-        gradleTest = gradleTest(false).buildScript("""
+        gradleTest = gradleTest(false).buildScript(
+            """
 plugins {
     id("dev.architectury.loom")
     id("gg.meza.stonecraft")
 }
-""".trimIndent()
+            """.trimIndent()
         )
         val br = gradleTest.run("printPlugins")
 
@@ -55,12 +55,15 @@ plugins {
 
     @Test
     fun `loom platform correctly gets applied`() {
-        gradleTest.buildScript("""
+        gradleTest.buildScript(
+            """
 tasks.register("printPlatform") {
     doLast {
         println("loom.platform is set to "+ext["loom.platform"])
     }
-}""".trimIndent())
+}
+            """.trimIndent()
+        )
 
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
 

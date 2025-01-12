@@ -1,20 +1,21 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import okio.Path
 import org.gradle.testkit.runner.BuildResult
 import org.intellij.lang.annotations.Language
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
-import okio.Path
 
 /**
  * Big test file in order to save test execution time
  * We run the loom print task once and run tests against the output
  */
 @DisplayName("Test loom configures everything")
-class LoomFullTest: IntegrationTest {
+class LoomFullTest : IntegrationTest {
     private lateinit var gradleTest: IntegrationTest.TestBuilder
     private lateinit var result: BuildResult
 
@@ -86,12 +87,8 @@ class LoomFullTest: IntegrationTest {
 
     @Test
     fun `datagen options are set for all targets`() {
-
-        fun generatedDir(version: String, loader: String): String {
-            return gradleTest.project().layout.projectDirectory.dir("versions/$version-$loader/src/main/generated").asFile.absolutePath
-        }
+        fun generatedDir(version: String, loader: String): String = gradleTest.project().layout.projectDirectory.dir("versions/$version-$loader/src/main/generated").asFile.absolutePath
         val existingDir = gradleTest.project().layout.projectDirectory.dir("src/main/resources").asFile.absolutePath
-
 
         assertTrue(result.output.contains("[1.21-fabric] datagen vmArgs=\"-Dfabric-api.datagen\""))
         assertTrue(result.output.contains("[1.21-fabric] datagen vmArgs=\"-Dfabric-api.datagen.output-dir=${generatedDir("1.21", "fabric")}\""))
@@ -122,7 +119,6 @@ class LoomFullTest: IntegrationTest {
         // This also needs to be true and like the above once arch-loom is fixed
         assertFalse(result.output.contains("[1.21-neoforge] datagen"), "Neoforge datagen settings exist even thought they shouldn't")
         assertFalse(result.output.contains("[1.21.4-neoforge] datagen"), "Neoforge datagen settings exist even thought they shouldn't")
-
     }
 
     @Test
@@ -218,6 +214,6 @@ class LoomFullTest: IntegrationTest {
             }
         }
     }     
-    """.trimIndent()
+        """.trimIndent()
     }
 }

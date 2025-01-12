@@ -1,8 +1,9 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
-import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
 @DisplayName("Test repository setup")
 class RepositoriesTest : IntegrationTest {
@@ -18,7 +19,7 @@ class RepositoriesTest : IntegrationTest {
             }
         }
     }
-""".trimIndent()
+            """.trimIndent()
         )
 
         gt.setStonecutterVersion("1.21.4", "fabric")

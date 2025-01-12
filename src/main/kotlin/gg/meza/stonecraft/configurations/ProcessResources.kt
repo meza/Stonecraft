@@ -36,11 +36,10 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
     project.afterEvaluate {
         // Deal with the general resources
         project.project.tasks.withType<ProcessResources> {
-
             duplicatesStrategy = DuplicatesStrategy.INCLUDE
             val currentResourceVersion = getResourceVersionFor(minecraftVersion)
 
-            //Version 43 changed how the resource directories are named
+            // Version 43 changed how the resource directories are named
             val needsOldResources = currentResourceVersion < 34
 
             doFirst {
@@ -120,8 +119,6 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
             }
         }
     }
-
-
 }
 
 private fun cleanUpEmptyResourceDirectories(project: Project) {

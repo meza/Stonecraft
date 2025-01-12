@@ -11,7 +11,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 
-
 interface IntegrationTest {
     companion object {
         @Language("gradle")
@@ -81,13 +80,14 @@ plugins {
                 buildScript.appendText(kotlinHeader)
             }
 
-
             runner.withProjectDir(projectDir)
             arguments.addAll(
                 listOf(
-                    "--gradle-user-home", gradleHome.absolutePath,
+                    "--gradle-user-home",
+                    gradleHome.absolutePath,
                     "--stacktrace",
-                    "--warning-mode", "all"
+                    "--warning-mode",
+                    "all"
                 )
             )
         }
@@ -111,14 +111,11 @@ plugins {
             return this
         }
 
-        fun project(): Project {
-            return ProjectBuilder.builder()
-                .withProjectDir(projectDir)
-                .build()
-        }
+        fun project(): Project = ProjectBuilder.builder()
+            .withProjectDir(projectDir)
+            .build()
 
         fun build(): BuildResult {
-
             if (supportedMinecraftVersions.isEmpty()) {
                 setStonecutterVersion("1.21.4", "fabric")
             }
@@ -128,10 +125,9 @@ plugins {
             val newSettings = settings.replace("STONECUTTER_VERSIONS", versions, true)
             settingsFile.writeText(newSettings)
 
-            val scGradle = stonecutterGradle.readText();
+            val scGradle = stonecutterGradle.readText()
             val newScGradle = scGradle.replace("ACTIVE_VERSION", getFirstVersion(), true)
             stonecutterGradle.writeText(newScGradle)
-
 
             runner.withArguments(arguments)
             return runner.run()
@@ -164,9 +160,7 @@ plugins {
         }
     }
 
-    fun gradleTest(addHeader: Boolean = true): TestBuilder {
-        return TestBuilder(addHeader)
-    }
+    fun gradleTest(addHeader: Boolean = true): TestBuilder = TestBuilder(addHeader)
 
     fun Project.setProperties(properties: Map<String, String>) {
         properties.forEach { (key, value) ->

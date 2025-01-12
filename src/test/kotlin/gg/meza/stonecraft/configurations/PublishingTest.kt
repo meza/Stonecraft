@@ -1,20 +1,23 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import org.junitpioneer.jupiter.SetEnvironmentVariable
 
 @DisplayName("Test publishing setup")
-class PublishingTest: IntegrationTest {
+class PublishingTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
 
     @BeforeEach
     fun setUp() {
-        gradleTest = gradleTest().buildScript("""
+        gradleTest = gradleTest().buildScript(
+            """
 import me.modmuss50.mpp.ModPublishExtension
 tasks.register("publishingSettings") {
     val pub = project.extensions.getByType(ModPublishExtension::class.java)
@@ -47,7 +50,9 @@ tasks.register("publishingSettings") {
 
     println("dryRun=" + pub.dryRun.get())
 
-}""".trimIndent())
+}
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -119,7 +124,6 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("displayName=5.6.7 for Fabric 1.21"), "Display name has not been set correctly for fabric 1.21")
         assertTrue(br.output.contains("displayName=5.6.7 for Forge 1.21"), "Display name has not been set correctly for forge 1.21")
         assertTrue(br.output.contains("displayName=5.6.7 for Neoforge 1.21"), "Display name has not been set correctly for neoforge 1.21")
-
     }
 
     @Test
@@ -132,7 +136,6 @@ tasks.register("publishingSettings") {
         assertFalse(br.output.contains("If you want to use Modrinth, please set the MODRINTH_TOKEN and MODRINTH_ID environment variables"))
         assertFalse(br.output.contains("Essential CurseForge variables not found, skipping CurseForge publishing"))
         assertFalse(br.output.contains("If you want to use CurseForge, please set the CURSEFORGE_SLUG, CURSEFORGE_ID, and CURSEFORGE_TOKEN environment variables"))
-
     }
 
     @SetEnvironmentVariable(key = "DO_PUBLISH", value = "anything-but-true")
@@ -146,11 +149,10 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("If you want to use Modrinth, please set the MODRINTH_TOKEN and MODRINTH_ID environment variables"))
         assertTrue(br.output.contains("Essential CurseForge variables not found, skipping CurseForge publishing"))
         assertTrue(br.output.contains("If you want to use CurseForge, please set the CURSEFORGE_SLUG, CURSEFORGE_ID, and CURSEFORGE_TOKEN environment variables"))
-
     }
 
-    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value="a-test-token-123")
-    @SetEnvironmentVariable(key = "MODRINTH_ID", value="an-even-better-test-id-456")
+    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value = "a-test-token-123")
+    @SetEnvironmentVariable(key = "MODRINTH_ID", value = "an-even-better-test-id-456")
     @Test
     fun `modrinth publishing can be configured for a single project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
@@ -164,8 +166,8 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("modrinth.announcementTitle=Download 0.1.2+fabric-1.21.4 from Modrinth"), "Modrinth announcement title has not been set correctly")
     }
 
-    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value="a-test-token-123.123")
-    @SetEnvironmentVariable(key = "MODRINTH_ID", value="an-even-better-test-id-456.456")
+    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value = "a-test-token-123.123")
+    @SetEnvironmentVariable(key = "MODRINTH_ID", value = "an-even-better-test-id-456.456")
     @Test
     fun `modrinth publishing can be configured for a multi-loader project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
@@ -189,9 +191,9 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("modrinth.announcementTitle=Download 3.4.5+neoforge-1.21 from Modrinth"), "Modrinth announcement title has not been set correctly for 1.21 Neoforge")
     }
 
-    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value="a-test-slug-123")
-    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value="an-even-better-test-id-456")
-    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value="a-test-token-123")
+    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value = "a-test-slug-123")
+    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value = "an-even-better-test-id-456")
+    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value = "a-test-token-123")
     @Test
     fun `curseforge publishing can be configured for a single project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
@@ -206,9 +208,9 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("curseforge.announcementTitle=Download 0.1.2+fabric-1.21.4 from CurseForge"), "CurseForge announcement title has not been set correctly")
     }
 
-    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value="a-test-slug-123.123")
-    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value="an-even-better-test-id-456.456")
-    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value="a-test-token-123.123")
+    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value = "a-test-slug-123.123")
+    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value = "an-even-better-test-id-456.456")
+    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value = "a-test-token-123.123")
     @Test
     fun `curseforge publishing can be configured for a multi-loader project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
@@ -232,11 +234,11 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("curseforge.announcementTitle=Download 3.4.5+neoforge-1.21 from CurseForge"), "CurseForge announcement title has not been set correctly for 1.21 Neoforge")
     }
 
-    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value="a-test-modrinth-token-123")
-    @SetEnvironmentVariable(key = "MODRINTH_ID", value="an-even-better-test-modrinth-id-456")
-    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value="a-test-curseforge-slug-123")
-    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value="an-even-better-test-curseforge-id-456")
-    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value="a-test-curseforge-token-123")
+    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value = "a-test-modrinth-token-123")
+    @SetEnvironmentVariable(key = "MODRINTH_ID", value = "an-even-better-test-modrinth-id-456")
+    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value = "a-test-curseforge-slug-123")
+    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value = "an-even-better-test-curseforge-id-456")
+    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value = "a-test-curseforge-token-123")
     @Test
     fun `both modrinth and curseforge publishing can be configured for a single project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
@@ -256,11 +258,11 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("curseforge.announcementTitle=Download 0.1.2+fabric-1.21.4 from CurseForge"), "CurseForge announcement title has not been set correctly")
     }
 
-    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value="a-test-modrinth-token-123.123")
-    @SetEnvironmentVariable(key = "MODRINTH_ID", value="an-even-better-test-modrinth-id-456.456")
-    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value="a-test-curseforge-slug-123.123")
-    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value="an-even-better-test-curseforge-id-456.456")
-    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value="a-test-curseforge-token-123.123")
+    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value = "a-test-modrinth-token-123.123")
+    @SetEnvironmentVariable(key = "MODRINTH_ID", value = "an-even-better-test-modrinth-id-456.456")
+    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value = "a-test-curseforge-slug-123.123")
+    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value = "an-even-better-test-curseforge-id-456.456")
+    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value = "a-test-curseforge-token-123.123")
     @Test
     fun `both modrinth and curseforge publishing can be configured for a multi-loader project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
@@ -319,7 +321,5 @@ tasks.register("publishingSettings") {
             br.output.contains("curseforge.announcementTitle=Download 3.4.5+neoforge-1.21 from CurseForge"),
             "CurseForge announcement title has not been set correctly for 1.21 Neoforge"
         )
-
     }
-
 }

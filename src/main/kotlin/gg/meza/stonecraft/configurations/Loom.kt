@@ -11,9 +11,7 @@ import net.fabricmc.loom.configuration.FabricApiExtension
 import net.fabricmc.loom.configuration.ide.RunConfigSettings
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.getByType
-import java.io.File
 
 fun configureLoom(project: Project, stonecutter: StonecutterBuild, modSettings: ModSettingsExtension) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
@@ -130,7 +128,6 @@ fun configureServerGameTests(
             logger.error("Read more: https://github.com/architectury/architectury-loom/issues/262")
         }
     }
-
 }
 
 /**
@@ -163,12 +160,12 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
  */
 private fun RunConfigSettings.forgeLikeConfig(side: Side, loader: String) {
     mapOf(
-        "${loader}.enabledGameTestNamespaces" to project.mod.id,
-        "${loader}.enableGameTest" to "true"
+        "$loader.enabledGameTestNamespaces" to project.mod.id,
+        "$loader.enableGameTest" to "true"
     ).forEach { (key, value) -> property(key, value) }
 
     if (side == Side.SERVER) {
-        property("${loader}.gameTestServer", "true")
+        property("$loader.gameTestServer", "true")
     }
 }
 
@@ -211,7 +208,6 @@ fun configureDatagen(
     }
 
     loom.runs {
-
         if (mod.isForge && stonecutter.eval(minecraftVersion, "<1.21.4")) {
             // Forge 1.21.4 is currently broken with Architectury Loom 1.9.424
             // Once that gets fixed, the version condition above should be removed
@@ -246,7 +242,6 @@ fun configureDatagen(
                 }
             }
         }
-
     }
 
     // NeoForge changed their datagen approach in 1.21.4
@@ -257,4 +252,3 @@ fun configureDatagen(
 //        }
     }
 }
-
