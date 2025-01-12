@@ -10,7 +10,7 @@ It uses [Stonecutter][stonecutter] and [Architectury][architectury] to provide t
 
 - **Multi-loader _(architectury)_**: supports Fabric, Forge and NeoForge, allowing you to develop mods for each loader in the same workspace
 - **Multi-version _(stonecutter)_**: supports multiple Minecraft versions, allowing you to develop mods for different versions in the same workspace
-- **Single codebase**:Stonecraft allows you to develop mods for different loaders and versions in the same 
+- **Single codebase**: Stonecraft allows you to develop mods for different loaders and versions in the same 
 codebase without the need to maintain multiple branches or workspaces.
 - **Consistent release process**: easily release to Modrinth and Curseforge with proper versioning and metadata for all loaders and Minecraft versions.
 

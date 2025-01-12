@@ -123,8 +123,15 @@ export default {
         "alt": "Stonecraft Logo",
         "src": "img/stonecraft@0.5x.png"
       },
-      "hideOnScroll": false,
-      "items": []
+      "items": [
+        {
+          "position": "right",
+          "className": "github-link",
+          "aria-label": "GitHub repository",
+          "href": "https://github.com/meza/Stonecraft"
+        }
+      ],
+      "hideOnScroll": false
     },
     "prism": {
       "theme": {

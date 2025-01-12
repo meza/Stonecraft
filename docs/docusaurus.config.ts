@@ -95,7 +95,15 @@ const config: Config = {
             logo: {
                 alt: "Stonecraft Logo",
                 src: "img/stonecraft@0.5x.png",
-            }
+            },
+            items:[
+                {
+                    position: 'right',
+                    className: 'github-link',
+                    'aria-label': 'GitHub repository',
+                    href: 'https://github.com/meza/Stonecraft'
+                }
+            ]
         },
         prism: {
             theme: lightTheme,
