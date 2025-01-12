@@ -1,9 +1,5 @@
-# minecraft-mod-gradle-plugin
+# Stonecraft
 
-// only yarn for now
+WIP
 
-modSettings {
-  variableReplacements = mapOf()
-  runDirectory = "run"
-  clientOptions {}
-}
+Please refer to https://stonecraft.meza.gg/ for more information.
