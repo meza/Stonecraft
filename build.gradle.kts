@@ -11,7 +11,7 @@ plugins {
     id("com.adarshr.test-logger") version "4.0.0"
 }
 
-group = "gg.meza.stonecuttermod"
+group = "gg.meza"
 
 repositories {
     mavenCentral()
@@ -64,7 +64,8 @@ gradlePlugin {
     vcsUrl = "https://github.com/meza/Stonecraft.git"
     plugins {
         create("gg.meza.stonecraft") {
-            id = "gg.meza.stonecraft"
+            group = "gg.meza"
+            id = "stonecraft"
             displayName = "Stonecraft"
             implementationClass = "gg.meza.stonecraft.ModPlugin"
             tags = listOf("minecraft", "multi-loader", "configuration")
