@@ -1,6 +1,12 @@
 
 ## Quickstart
 
+### Use the Stonecraft template
+
+The simplest way to get started with a brand new mod project is to use the Stonecraft template.
+
+Simply go to https://github.com/meza/Stonecraft-template and click the "Use this template" button.
+
 ### Add the plugin to build.gradle[.kts]
 
 If you already use Architectury, make sure to add Stonecraft BEFORE the Architectury plugin.
@@ -8,7 +14,7 @@ If you already use Architectury, make sure to add Stonecraft BEFORE the Architec
 ```kotlin
 // build.gradle.kts
 plugins {
-   id("gg.meza.stonecraft") version "1.0.0"   
+   id("gg.meza.stonecraft") 
 }
 ```
 
@@ -18,6 +24,8 @@ plugins {
 
 Create a `settings.gradle[.kts]` file in your project root with the following content:
 
+This is still boilerplate, and I'm working on making it more user-friendly.
+
 ```kotlin
 // settings.gradle.kts
 pluginManagement {
@@ -25,9 +33,14 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://maven.kikugie.dev/releases")
+        maven("https://maven.fabricmc.net/")
+        maven("https://maven.architectury.dev")
+        maven("https://maven.minecraftforge.net")
+        maven("https://maven.neoforged.net/releases/")
     }
 }
 plugins {
+    id("gg.meza.stonecraft") version "1.+"
     id("dev.kikugie.stonecutter") version "0.5"
 }
 

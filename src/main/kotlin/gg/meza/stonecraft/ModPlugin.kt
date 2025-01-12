@@ -28,11 +28,9 @@ class ModPlugin : Plugin<Any> {
             else -> throw IllegalStateException("Plugin must be applied to a build.gradle[.kts] or a stonecutter.gradle[.kts] file")
         }
     }
-
     private fun applyToSettings(settings: Settings) {
-        // will be used for multi-project builds
+        return
     }
-
     private fun applyToProject(project: Project) {
         if (project.extensions.findByType(StonecutterController::class.java) != null) {
             val stonecutterController = project.extensions.getByType<StonecutterController>()
