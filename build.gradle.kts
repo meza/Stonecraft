@@ -64,11 +64,10 @@ gradlePlugin {
     vcsUrl = "https://github.com/meza/Stonecraft.git"
     plugins {
         create("gg.meza.stonecraft") {
-            group = "gg.meza"
-            id = "stonecraft"
+            id = "gg.meza.stonecraft"
             displayName = "Stonecraft"
             implementationClass = "gg.meza.stonecraft.ModPlugin"
-            tags = listOf("minecraft", "multi-loader", "configuration")
+            tags = listOf("minecraft", "multi-loader", "configuration", "modding", "minecraft modding", "development environment configuration")
             description = "Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a **multi-loader, multi-version** Minecraft modding workspace."
         }
     }
