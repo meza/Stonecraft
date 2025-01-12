@@ -6,12 +6,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
-    kotlin("jvm") version "2.1.20-Beta1"
+    kotlin("jvm") version "2.1.0"
     id("com.gradle.plugin-publish") version "1.3.0"
     id("com.adarshr.test-logger") version "4.0.0"
 }
 
 group = "gg.meza"
+description = "Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a multi-loader, multi-version Minecraft modding workspace."
 
 repositories {
     mavenCentral()
@@ -25,8 +26,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly(gradleApi())
     fun plugin(id: String, version: String) = "${id}:${id}.gradle.plugin:${version}"
+    compileOnly(gradleApi())
+
     implementation(plugin("dev.kikugie.stonecutter", "0.5"))
     implementation("com.google.code.gson:gson:2.11.0")
     implementation(plugin("dev.architectury.loom", "1.9.+"))
@@ -38,8 +40,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
     testImplementation("org.junit-pioneer:junit-pioneer:2.3.0")
     testImplementation("net.bytebuddy:byte-buddy:LATEST")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation(kotlin("test"))
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 }
 
@@ -48,7 +51,6 @@ tasks.withType<Test> {
     jvmArgs("-XX:+EnableDynamicAgentLoading")
     jvmArgs("--add-opens", "java.base/java.util=ALL-UNNAMED")
     jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
-    jvmArgs("-Xmx4G")
 }
 
 testlogger {
@@ -62,13 +64,16 @@ java {
 gradlePlugin {
     website = "https://stonecraft.meza.gg"
     vcsUrl = "https://github.com/meza/Stonecraft.git"
+
+    testSourceSet(sourceSets["test"])
+
     plugins {
         create("gg.meza.stonecraft") {
             id = "gg.meza.stonecraft"
             displayName = "Stonecraft"
             implementationClass = "gg.meza.stonecraft.ModPlugin"
             tags = listOf("minecraft", "multi-loader", "configuration", "modding", "minecraft modding", "development environment configuration")
-            description = "Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a **multi-loader, multi-version** Minecraft modding workspace."
+            description = project.description
         }
     }
 }
@@ -76,7 +81,7 @@ gradlePlugin {
 val compileKotlin: KotlinCompile by tasks
 
 compileKotlin.compilerOptions {
-    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_1)
     jvmTarget.set(JvmTarget.JVM_21)
     freeCompilerArgs.addAll(listOf("-opt-in=kotlin.ExperimentalStdlibApi", "-opt-in=kotlin.RequiresOptIn"))
 }
@@ -84,4 +89,10 @@ compileKotlin.compilerOptions {
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
+}
+
+publishing {
+    repositories {
+        mavenLocal()
+    }
 }
