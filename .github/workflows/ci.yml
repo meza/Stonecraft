@@ -42,7 +42,7 @@ jobs:
 
       - name: Cache Gradle Test dependencies
         id: cache-gradle-dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             build/e2e_tests/home
