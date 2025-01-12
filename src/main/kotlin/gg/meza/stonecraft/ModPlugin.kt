@@ -15,17 +15,25 @@ import gg.meza.stonecraft.configurations.patchAroundArchitecturyQuirks
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.initialization.Settings
 import org.gradle.api.plugins.BasePluginExtension
-import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.getByType
 
-class ModPlugin : Plugin<ExtensionAware> {
+class ModPlugin : Plugin<Any> {
 
-    override fun apply(project: ExtensionAware) {
-        if (project !is Project) {
-            throw IllegalStateException("Plugin must be applied to a build.gradle[.kts] or a stonecutter.gradle[.kts] file")
+    override fun apply(target: Any) {
+        when (target) {
+            is Project -> applyToProject(target)
+            is Settings -> applyToSettings(target)
+            else -> throw IllegalStateException("Plugin must be applied to a build.gradle[.kts] or a stonecutter.gradle[.kts] file")
         }
+    }
 
+    private fun applyToSettings(settings: Settings) {
+        // will be used for multi-project builds
+    }
+
+    private fun applyToProject(project: Project) {
         if (project.extensions.findByType(StonecutterController::class.java) != null) {
             val stonecutterController = project.extensions.getByType<StonecutterController>()
             configureChiseledTasks(project, stonecutterController)
