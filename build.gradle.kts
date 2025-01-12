@@ -60,7 +60,7 @@ java {
 }
 
 gradlePlugin {
-    website = "https://github.com/meza/Stonecraft"
+    website = "https://stonecraft.meza.gg"
     vcsUrl = "https://github.com/meza/Stonecraft.git"
     plugins {
         create("gg.meza.stonecraft") {
