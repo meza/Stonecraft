@@ -85,3 +85,7 @@ plugins {
 
 stonecutter active "1.21.4-fabric" /* [SC] DO NOT EDIT */
 ```
+
+[stonecutter]: https://stonecutter.kikugie.dev/
+[architectury]: https://docs.architectury.dev/
+[github]: https://github.com/meza/Stonecraft
