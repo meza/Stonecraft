@@ -5,10 +5,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
-    kotlin("jvm") version "2.1.0"
-    id("com.gradle.plugin-publish") version "1.3.0"
-    id("com.adarshr.test-logger") version "4.0.0"
-    id("com.diffplug.spotless") version "7.0.1"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.plugin.publish)
+    alias(libs.plugins.test.logger)
+    alias(libs.plugins.spotless)
 }
 
 group = "gg.meza"
@@ -27,20 +27,19 @@ repositories {
 }
 
 dependencies {
-    fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
     compileOnly(gradleApi())
 
-    implementation(plugin("dev.kikugie.stonecutter", "0.5"))
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation(plugin("dev.architectury.loom", "1.9.+"))
-    implementation(plugin("me.modmuss50.mod-publish-plugin", "0.+"))
+    implementation(libs.stonecutter)
+    implementation(libs.gson)
+    implementation(libs.architectury.loom)
+    implementation(libs.mod.publish)
 
     testImplementation(gradleTestKit())
-    testImplementation("org.mockito:mockito-core:5.15.2")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
-    testImplementation("org.junit-pioneer:junit-pioneer:2.3.0")
-    testImplementation("net.bytebuddy:byte-buddy:LATEST")
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.pioneer)
+
     testImplementation(kotlin("test"))
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -88,7 +87,7 @@ gradlePlugin {
 val compileKotlin: KotlinCompile by tasks
 
 compileKotlin.compilerOptions {
-    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_1)
+    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0) // Changed from KOTLIN_2_1
     jvmTarget.set(JvmTarget.JVM_21)
     freeCompilerArgs.addAll(listOf("-opt-in=kotlin.ExperimentalStdlibApi", "-opt-in=kotlin.RequiresOptIn"))
 }
