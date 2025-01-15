@@ -1,0 +1,34 @@
+import dark from './assets/mojangDark.png';
+import light from './assets/mojangLight.png';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# darkBackground
+
+| Key              | Type      | Default Value |
+|------------------|-----------|---------------|
+| `darkBackground` | `Boolean` | `false`       |
+
+This controls whether to use Mojang's dark background or the original red one.
+
+This is using the accessibility setting in the options.txt file and it translates to the `darkMojangStudiosBackground` setting.
+
+```kotlin title='build.gradle.kts'
+modSettings {
+    clientOptions {
+        darkBackground = true
+    }
+}
+```
+
+<Tabs
+    groupId="clientOptions.darkBackground"
+    defaultValue="dark"
+    values={[
+        { label: 'darkBackground = true', value: 'dark', },
+        { label: 'darkBackground = false', value: 'light', },
+    ]
+    }>
+    <TabItem value="dark"><img src={dark} alt="Mojang Dark Background" /></TabItem>
+    <TabItem value="light"><img src={light} alt="Mojang Light Background" /></TabItem>
+</Tabs>

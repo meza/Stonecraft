@@ -2,8 +2,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import {themes} from "prism-react-renderer";
 
-const lightTheme = themes.oneLight;
-const darkTheme = themes.vsDark;
+const lightTheme = themes.oceanicNext;
+const darkTheme = themes.oceanicNext;
 
 const config: Config = {
     title: 'Stonecraft – Simplify Multi-Loader, Multi-Version Minecraft Mod Development',
@@ -108,7 +108,7 @@ const config: Config = {
         prism: {
             theme: lightTheme,
             darkTheme: darkTheme,
-            additionalLanguages: ["java", "gradle", "toml", "groovy", "kotlin", "javascript", "json", "json5"],
+            additionalLanguages: ["java", "gradle", "toml", "groovy", "kotlin", "json", "json5"],
         }
     } satisfies Preset.ThemeConfig
 };

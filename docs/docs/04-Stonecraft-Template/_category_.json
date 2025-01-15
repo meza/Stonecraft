@@ -1,0 +1,10 @@
+{
+  "label": "Stonecraft Template",
+  "collapsible": false,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Stonecraft Template overview"
+  }
+}

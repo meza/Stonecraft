@@ -1,0 +1,10 @@
+{
+  "label": "Configuration",
+  "collapsible": false,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "type": "doc",
+    "id": "index"
+  }
+}

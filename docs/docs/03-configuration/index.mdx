@@ -1,0 +1,70 @@
+# Stonecraft Configuration
+
+Stonecraft was created to have sensible defaults requiring little to no configuration.
+
+The function of the plugin is to make sure that the underlying systems are configured in a consistent manner.
+It takes care of the boilerplate and wires up the necessary directories across all the other plugins involved.
+
+For the sake of finding what you are looking for, all the settings are listed in the sidebar so you can jump to the one you need.
+
+## Main Configuration
+
+Stonecraft is configured via the [`modSettings`](01-modsettings.md) block. Before you click on it and start configuring,
+it is important to understand the distinction between the root project and the submodules.
+
+## Project vs. Root Project
+
+When using [Stonecutter](https://stonecutter.kikugie.dev/) especially with Stonecraft, there are a few terms that are used that might not be immediately clear.
+
+The way Stonecutter works is that it creates as many submodules for your project as many `minecraftVersion-loader` pairings you have.
+
+:::info
+For example if you have `1.17.1-fabric` and `1.17.1-forge` in your `versions` list, you will have two submodules in your project.
+If you have support for 4 different Minecraft versions and 3 different loaders, you will have 12 submodules.
+:::
+
+When dealing with your gradle configuration in such a project, you need to distinguish between the root project and the submodules.
+
+### Root Project
+
+In the gradle configuration, you refer to the root project as `rootProject`.
+This will always refer to the `build.gradle.kts` file in the root of your project.
+
+### Submodules
+
+When you are configuring settings for the version specific submodules that live in the `versions` folder, you refer to them as `project`.
+
+## Dealing with folders and files
+
+Stonecraft settings are all set up to work with `Directory` and `File` objects.
+These are usually always derived from the `project` or the `rootProject` objects.
+
+```kotlin title="build.gradle.kts"
+modSettings {
+    runDirectory = rootProject.layout.projectDirectory.dir("run")
+    fabricClientJunitReportLocation = project.layout.buildDirectory.file("fabric-client-junit-report.xml")
+}
+```
+
+In the example above, `runDirectory` is set to a directory in the root project, while `fabricClientJunitReportLocation`
+is set to a file in the submodule.
+
+This means that for every single `minecraftVersion-loader` pairing in the `versions` folder, you will have a
+`build/fabric-client-junit-report.xml` file separately for each.
+
+:::note
+It is always advisable to use the `layout` helper functions to create these objects as they provide the correct types
+and are more robust.
+:::
+
+## Outside the modSettings block
+
+the [`modSettings`](01-modsettings.md) block is Stonecraft's main configuration block.
+Stonecraft is made to use consistent file and directory providers and it translates them into the correct types for the plugins involved.
+
+When you are configuring loom, fabric-api, or any other plugin, you will have to refer to their documentation to figure out what
+types you need.
+
+Some expect relative paths, some expect strings, and some expect `File` or `Directory` objects.
+
+You're always better off deriving all of those from the `project` or `rootProject` objects for consistency's sake.
