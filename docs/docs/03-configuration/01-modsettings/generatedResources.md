@@ -16,3 +16,10 @@ modSettings {
     generatedResources = project.layout.projectDirectory.dir("src/main/generated")
 }
 ```
+
+## Overriding
+
+You can override this setting if you want to.
+
+```kotlin title="build.gradle.kts"
+```
