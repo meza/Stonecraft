@@ -7,6 +7,10 @@
     {
       "matchManagers": ["npm"],
       "semanticCommitType": "docs"
+    },
+    {
+      "matchManagers": ["gradle", "gradle-wrapper"],
+      "automerge": false
     }
   ]
 }
