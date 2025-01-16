@@ -45,10 +45,10 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2(webpack@5.97.1)
       react:
-        specifier: ^19.0.0
+        specifier: 19.0.0
         version: 19.0.0
       react-dom:
-        specifier: ^19.0.0
+        specifier: 19.0.0
         version: 19.0.0(react@19.0.0)
     devDependencies:
       '@docusaurus/module-type-aliases':
@@ -61,10 +61,10 @@ importers:
         specifier: 3.7.0
         version: 3.7.0(acorn@8.14.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@types/react':
-        specifier: ^19.0.7
+        specifier: 19.0.7
         version: 19.0.7
       '@types/react-dom':
-        specifier: ^19.0.3
+        specifier: 19.0.3
         version: 19.0.3(@types/react@19.0.7)
       pnpm:
         specifier: 9.15.4
