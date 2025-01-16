@@ -1,6 +1,7 @@
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["src/*.d.ts", "node"]
   }
 }

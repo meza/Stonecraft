@@ -19,7 +19,9 @@ const config: Config = {
         defaultLocale: "en",
         locales: ["en"],
     },
-
+    plugins: [
+        './plugins/custom-loaders'
+    ],
     presets: [
         [
             '@docusaurus/preset-classic',

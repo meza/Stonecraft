@@ -1,3 +1,5 @@
+import { versionInfo } from "../src/components/Version";
+import CodeBlock from '@theme/CodeBlock';
 
 ## Quickstart
 
@@ -14,7 +16,7 @@ If you already use Architectury, make sure to add Stonecraft BEFORE the Architec
 ```kotlin
 // build.gradle.kts
 plugins {
-   id("gg.meza.stonecraft") 
+   id("gg.meza.stonecraft")
 }
 ```
 
@@ -26,8 +28,7 @@ Create a `settings.gradle[.kts]` file in your project root with the following co
 
 This is still boilerplate, and I'm working on making it more user-friendly.
 
-```kotlin
-// settings.gradle.kts
+<CodeBlock language="kotlin" title="settings.gradle.kts">{`
 pluginManagement {
     repositories {
         mavenCentral()
@@ -40,7 +41,7 @@ pluginManagement {
     }
 }
 plugins {
-    id("gg.meza.stonecraft") version "1.+"
+    ${versionInfo}
     id("dev.kikugie.stonecutter") version "0.5"
 }
 
@@ -61,8 +62,8 @@ stonecutter {
 }
 
 rootProject.name = "YourModName"
-
-```
+`}
+</CodeBlock>
 
 #### Setting up the stonecutter
 

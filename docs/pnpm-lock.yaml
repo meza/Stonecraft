@@ -38,6 +38,12 @@ importers:
       prism-react-renderer:
         specifier: 2.4.1
         version: 2.4.1(react@19.0.0)
+      properties-file:
+        specifier: ^3.5.11
+        version: 3.5.11
+      raw-loader:
+        specifier: ^4.0.2
+        version: 4.0.2(webpack@5.97.1)
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -4081,6 +4087,9 @@ packages:
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
+  properties-file@3.5.11:
+    resolution: {integrity: sha512-mnv7qRXFMZAnp+9fj8vtkV+fCxOIpV8ggn4S2RPLP0C3MvQ2sOB6L9GOZ89gF1pOvF2qEwOkWWoIDNxTd9O4Cg==}
+
   property-information@6.5.0:
     resolution: {integrity: sha512-PgTgs/BlvHxOu8QuEN7wi5A0OmXaBcHpmCSTehcs6Uuu9IkDIEo13Hy7n898RHfrQ49vKCoGeWZSaAK01nwVig==}
 
@@ -4127,6 +4136,12 @@ packages:
   raw-body@2.5.2:
     resolution: {integrity: sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==}
     engines: {node: '>= 0.8'}
+
+  raw-loader@4.0.2:
+    resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
 
   rc@1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
@@ -10325,6 +10340,8 @@ snapshots:
       object-assign: 4.1.1
       react-is: 16.13.1
 
+  properties-file@3.5.11: {}
+
   property-information@6.5.0: {}
 
   proto-list@1.2.4: {}
@@ -10366,6 +10383,12 @@ snapshots:
       http-errors: 2.0.0
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+
+  raw-loader@4.0.2(webpack@5.97.1):
+    dependencies:
+      loader-utils: 2.0.4
+      schema-utils: 3.3.0
+      webpack: 5.97.1
 
   rc@1.2.8:
     dependencies:
