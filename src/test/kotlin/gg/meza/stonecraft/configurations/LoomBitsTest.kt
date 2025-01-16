@@ -118,4 +118,22 @@ class LoomBitsTest : IntegrationTest {
         assertTrue(result.output.contains("[1.20.2-forge] gameTestServer runDir=$testServerDir"))
         assertTrue(result.output.contains("[1.20.2-forge] server runDir=$runDir"))
     }
+
+    @Test
+    fun `test junit report paths`() {
+        gradleTest.setStonecutterVersion("1.20.2", "fabric", "forge")
+        gradleTest.buildScript(
+            """
+            modSettings {
+                fabricClientJunitReportLocation = project.layout.buildDirectory.file("fabric-client-junit-report.xml")
+                fabricServerJunitReportLocation = project.layout.buildDirectory.file("fabric-server-junit-report.xml")    
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run("printLoomSettings")
+
+        assertTrue(result.output.contains("vmArgs=\"-Dfabric-api.gametest.report-file=${gradleTest.project().layout.projectDirectory.file("versions/1.20.2-fabric/build/fabric-client-junit-report.xml").asFile.absolutePath}"))
+        assertTrue(result.output.contains("vmArgs=\"-Dfabric-api.gametest.report-file=${gradleTest.project().layout.projectDirectory.file("versions/1.20.2-fabric/build/fabric-server-junit-report.xml").asFile.absolutePath}"))
+    }
 }

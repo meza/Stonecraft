@@ -3,13 +3,14 @@ package gg.meza.stonecraft.extension
 import gg.meza.stonecraft.data.MinecraftClientOptions
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
+import org.gradle.api.file.RegularFile
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.Optional
-import java.io.File
 import javax.inject.Inject
 
 abstract class ModSettingsExtension @Inject constructor(
@@ -85,15 +86,15 @@ abstract class ModSettingsExtension @Inject constructor(
             generatedResourcesProp.disallowChanges()
         }
 
-    var fabricClientJunitReportLocation: File
-        get() = fabricClientJunitReportLocationProp.get().asFile
+    var fabricClientJunitReportLocation: Provider<RegularFile>
+        get() = fabricClientJunitReportLocationProp
         set(value) {
             fabricClientJunitReportLocationProp.set(value)
             fabricClientJunitReportLocationProp.disallowChanges()
         }
 
-    var fabricServerJunitReportLocation: File
-        get() = fabricServerJunitReportLocationProp.get().asFile
+    var fabricServerJunitReportLocation: Provider<RegularFile>
+        get() = fabricServerJunitReportLocationProp
         set(value) {
             fabricServerJunitReportLocationProp.set(value)
             fabricServerJunitReportLocationProp.disallowChanges()
