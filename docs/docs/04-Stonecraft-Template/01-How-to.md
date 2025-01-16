@@ -8,3 +8,5 @@ WIP Documentation
 - Datagen
 - CI/CD
 - Publishing
+
+Will continue updating this as I go along.

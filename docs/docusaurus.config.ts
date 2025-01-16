@@ -105,6 +105,46 @@ const config: Config = {
                 }
             ]
         },
+        footer: {
+            style: "dark",
+            logo: {
+                alt: "Stonecraft Logo",
+                src: "https://stonecraft.meza.gg/img/stonecraft@0.25x.png",
+            },
+            links: [
+                {
+                    title: "Docs",
+                    items: [
+                        {
+                            to: "/",
+                            label: "Documentation",
+                        },
+                        {
+                            to: "/contributing",
+                            label: "Contributing to the Documentation"
+                        }
+                    ],
+                },
+                {
+                    title: "Links",
+                    items: [
+                        {
+                            label: "Discord",
+                            href: "https://discord.gg/dvg3tcQCPW",
+                        },
+                        {
+                            label: "Main Website",
+                            href: "https://stonecraft.meza.gg/",
+                        },
+                        {
+                            label: "GitHub",
+                            href: "https://github.com/meza/Stonecraft",
+                        },
+                    ],
+                },
+            ],
+            copyright: `Copyright © 2025, under the GPL-3.0 license. Built with Docusaurus.`,
+        },
         prism: {
             theme: lightTheme,
             darkTheme: darkTheme,
