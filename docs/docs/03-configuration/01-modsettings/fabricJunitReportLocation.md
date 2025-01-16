@@ -2,7 +2,7 @@
 
 | Key                               | Type        | Default                                                |
 |-----------------------------------|-------------|--------------------------------------------------------|
-| `fabricClientJunitReportLocation` | RegularFile | project.layout.buildDirectory.file("juni-client.xml")  |
+| `fabricClientJunitReportLocation` | RegularFile | project.layout.buildDirectory.file("junit-client.xml") |
 | `fabricServerJunitReportLocation` | RegularFile | project.layout.buildDirectory.file("junit-server.xml") |
 
 These settings get configured for the **fabric** GameTest runners.
@@ -19,11 +19,11 @@ loom {
     runs {
         if (mod.isFabric) {
             getByName("gameTestServer") {
-                vmArg("-Dfabric-api.gametest.report-file=${rootProject.file("build/junit.xml")}");
+                vmArg("-Dfabric-api.gametest.report-file=${rootProject.file("build/junit.xml")}")
             }
 
             getByName("gameTestClient") {
-                vmArg("-Dfabric-api.gametest.report-file=${rootProject.file("build/junit.xml")}");
+                vmArg("-Dfabric-api.gametest.report-file=${rootProject.file("build/junit.xml")}")
             }
         }
     }

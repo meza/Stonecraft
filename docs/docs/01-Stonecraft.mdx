@@ -8,39 +8,38 @@ import TabItem from '@theme/TabItem';
 
 # What is Stonecraft?
 
-Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a **multi-loader, multi-version** Minecraft modding workspace.
-It uses [Stonecutter][stonecutter] and [Architectury][architectury] to provide the multi-loader, multi-version support.
+Stonecraft is a configuration Gradle plugin designed to eliminate the boilerplate involved in setting up a **multi-loader, multi-version** Minecraft modding workspace. It leverages [Stonecutter][stonecutter] and [Architectury][architectury] to provide comprehensive multi-loader and multi-version support.
 
-- **Multi-loader _(architectury)_**: supports Fabric, Forge and NeoForge, allowing you to develop mods for each loader in the same workspace
-- **Multi-version _(stonecutter)_**: supports multiple Minecraft versions, allowing you to develop mods for different versions in the same workspace
-- **Single codebase**: Stonecraft allows you to develop mods for different loaders and versions in the same
-codebase without the need to maintain multiple branches or workspaces.
-- **Consistent release process**: easily release to Modrinth and Curseforge with proper versioning and metadata for all loaders and Minecraft versions.
+- **Multi-loader _(Architectury)_**: Supports Fabric, Forge, and NeoForge, enabling mod development for each loader within the same workspace.
+- **Multi-version _(Stonecutter)_**: Supports multiple Minecraft versions, allowing mod development across different versions in a unified workspace.
+- **Single codebase**: Develop mods for various loaders and versions within a single codebase, eliminating the need to maintain multiple branches or separate workspaces.
+- **Consistent release process**: Seamlessly release mods to Modrinth and CurseForge with accurate versioning and metadata for all loaders and Minecraft versions.
 
-Stonecraft reduces about 500 lines of copy-paste build.gradle.kts to a single line with a tested and versioned plugin.
+Stonecraft reduces approximately 500 lines of repetitive `build.gradle.kts` code to a single line using a tested and versioned plugin.
 
 :::info
 
-This project has been created to support [_my_ projects](https://modrinth.com/user/meza) and is HEAVILY a work in progress. <br/>
-That said, I would love to make it useful for others too so I am looking for feedback and contributions.
+This project was initially created to support [my projects](https://modrinth.com/user/meza) and is currently a **work in progress**. <br/>
+However, I aim to make it valuable for others as well, so feedback and contributions are highly encouraged.
 
-This is my first stab at a Gradle plugin and Kotlin, so there are bound to be improvements that can be made.
-If you have any suggestions, feature requests, bug reports or improvements, please open an issue or PR on the [GitHub repository][github]
+As this is my first attempt at developing a Gradle plugin and working with Kotlin, there’s certainly room for improvement. If you have suggestions, feature requests, bug reports, or enhancements, please open an issue or a pull request on the [GitHub repository][github].
 
 :::
 
 :::warning
 
-Stonecraft depends on your knowledge of [Stonecutter][stonecutter].<br/>Please familiarize yourself with Stonecutter before using Stonecraft.
+Stonecraft relies on your understanding of [Stonecutter][stonecutter].<br/>Please familiarize yourself with Stonecutter before using Stonecraft.
 
 :::
 
-## What's included?
+## What's Included?
 
 ### Stonecutter
 
-Stonecraft configures Stonecutter in a way that allows you to have your code change based on the
-active minecraft version and modloader. Instead of having to maintain separate git branches for each Minecraft version or modloader,
+Stonecraft configures Stonecutter to adapt your code based on the active Minecraft version and modloader.
+This eliminates the need to manually manage separate configurations for each version and loader.
+
+Instead of having to maintain separate git branches for each Minecraft version or modloader,
 you can have a single codebase that adapts to the active environment.
 
 This is achieved by using special comments in your code that are replaced by Stonecutter at compile time.
