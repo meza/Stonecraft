@@ -1,4 +1,3 @@
-import { versionInfo } from "../src/components/Version";
 import CodeBlock from '@theme/CodeBlock';
 
 ## Quickstart
@@ -41,7 +40,7 @@ pluginManagement {
     }
 }
 plugins {
-    ${versionInfo}
+    id("gg.meza.stonecraft") version "1.+"
     id("dev.kikugie.stonecutter") version "0.5"
 }
 

@@ -135,8 +135,8 @@ class LoomFullTest : IntegrationTest {
             "-Dneoforge.enableGameTest=true"
         )
 
-        val fabric121 = gradleTest.project().layout.projectDirectory.file("versions/1.21-fabric/build/junit.xml").asFile.absolutePath
-        val fabric1214 = gradleTest.project().layout.projectDirectory.file("versions/1.21.4-fabric/build/junit.xml").asFile.absolutePath
+        val fabric121 = gradleTest.project().layout.projectDirectory.file("versions/1.21-fabric/build/junit-client.xml").asFile.absolutePath
+        val fabric1214 = gradleTest.project().layout.projectDirectory.file("versions/1.21.4-fabric/build/junit-client.xml").asFile.absolutePath
 
         assertTrue(result.output.contains("[1.21-fabric] gameTestClient vmArgs=\"${fabricClient[0]}\""))
         assertTrue(result.output.contains("[1.21-fabric] gameTestClient vmArgs=\"-Dfabric-api.gametest.report-file=${fabric121}\""))

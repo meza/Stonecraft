@@ -1,7 +1,8 @@
-import {properties as modData} from '../../../gradle.properties';
+import React, {forwardRef, useEffect} from "react";
+export const ref = React.createRef();
 const metadataUrl = 'https://plugins.gradle.org/m2/gg/meza/stonecraft/gg.meza.stonecraft.gradle.plugin/maven-metadata.xml';
 
-const version = async () => await fetchLatestPluginVersion(metadataUrl).then((version) => {
+const version = () => fetchLatestPluginVersion(metadataUrl).then((version) => {
     if (version) {
         return version;
     } else {
@@ -9,8 +10,16 @@ const version = async () => await fetchLatestPluginVersion(metadataUrl).then((ve
     }
 })
 
-export const versionInfo = `id("gg.meza.stonecraft") version "${await version()}"`
+export const VersionInfo = (props: {ref: React.Ref<HTMLElement>}) => {
+    useEffect(() => {
+        console.log(props.ref)
+        version().then((version) => {
+            if (props.ref) {
+                console.log(props.ref)
+        }});
 
+    }, [props.ref])
+}
 
 async function fetchLatestPluginVersion(url: string): Promise<string | null> {
     try {
