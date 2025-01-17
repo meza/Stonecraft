@@ -63,6 +63,13 @@ const config: Config = {
         }
     ],
     themeConfig: {
+        algolia: {
+            appId: '9CN68M6PTQ',
+            apiKey: 'c04256a693ddd8deb649fcc774ced671',
+            indexName: 'stonecraft-meza',
+            insights: true,
+            contextualSearch: true
+        },
         metadata: [
             {name: 'description', content: 'Stonecraft is a Gradle plugin that streamlines multi-loader, multi-version Minecraft mod development. Build Fabric, Forge, and NeoForge mods in a single codebase and simplify releases to Modrinth and CurseForge.'},
             {name: 'keywords', content: 'Minecraft modding, Gradle plugin, Fabric mod, Forge mod, NeoForge, multi-loader modding, Stonecutter, Architectury, Modrinth, CurseForge'},
