@@ -1,6 +1,6 @@
 # musicVolume
 
-| Name          | Type    | Default Value |
+| Key           | Type    | Default Value |
 |---------------|---------|---------------|
 | `musicVolume` | `Float` | `1.0`         |
 
