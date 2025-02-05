@@ -111,11 +111,13 @@ fun configureServerGameTests(
             }
         }
 
-        project.tasks.named("runGameTestServer") {
-            dependsOn("generatePackMCMetaJson")
-        }
-        project.tasks.named("runGameTestClient") {
-            dependsOn("generatePackMCMetaJson")
+        if (mod.isForge) {
+            project.tasks.named("runGameTestServer") {
+                dependsOn("generatePackMCMetaJson")
+            }
+            project.tasks.named("runGameTestClient") {
+                dependsOn("generatePackMCMetaJson")
+            }
         }
     } else {
         project.tasks.register("runGameTestServer") {
