@@ -2,7 +2,6 @@ package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuild
 import gg.meza.stonecraft.extension.ModSettingsExtension
-import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
 import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
@@ -12,7 +11,6 @@ import org.gradle.kotlin.dsl.register
 
 fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings: ModSettingsExtension) {
     val currentModGroup = "mod"
-    val minecraftVersion = stonecutter.current.version
 
     val buildAndCollect = project.tasks.register<Copy>("buildAndCollect") {
         val remapJar = project.tasks.named<RemapJarTask>("remapJar")
@@ -39,7 +37,7 @@ fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings:
 
         project.rootProject.tasks.register("testActiveClient") {
             group = currentModGroup
-            dependsOn(project.tasks.named("runGameTestClient"))
+            dependsOn(project.tasks.named("runGameTestClient"), project.tasks.named("configureMinecraftTestClient"))
         }
         project.rootProject.tasks.register("testActiveServer") {
             group = currentModGroup
@@ -49,12 +47,28 @@ fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings:
 
     project.tasks.register<ConfigureMinecraftClient>("configureMinecraftClient") {
         val runDirAsFile = modSettings.runDirectoryProp.get().asFile
+
         if (!runDirAsFile.exists()) {
             runDirAsFile.mkdirs()
         }
 
         clientOptions.set(modSettings.clientOptions.getOptions())
         runDirectory.set(modSettings.runDirectoryProp)
+
+        dependsOn(project.tasks.named("downloadAssets"))
+    }
+
+    project.tasks.register<ConfigureMinecraftClient>("configureMinecraftTestClient") {
+        val runDirAsFile = modSettings.testClientRunDirectoryProp.get().asFile
+
+        println("Run directory: ${runDirAsFile.absolutePath}")
+
+        if (!runDirAsFile.exists()) {
+            runDirAsFile.mkdirs()
+        }
+
+        clientOptions.set(modSettings.clientOptions.getOptions())
+        runDirectory.set(modSettings.testClientRunDirectoryProp)
 
         dependsOn(project.tasks.named("downloadAssets"))
     }
