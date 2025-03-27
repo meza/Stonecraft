@@ -48,7 +48,7 @@ plugins {
 
         assertTrue(br.output.contains("dev.kikugie.stonecutter.StonecutterPlugin"))
         assertTrue(br.output.contains("net.fabricmc.loom.LoomRepositoryPlugin"))
-        assertTrue(br.output.contains("net.fabricmc.loom.bootstrap.LoomGradlePluginBootstrap"))
+        assertTrue(br.output.contains("net.fabricmc.loom.LoomGradlePlugin"))
         assertTrue(br.output.contains("me.modmuss50.mpp.MppPlugin"))
         assertTrue(br.output.contains("Architectury Loom"))
     }

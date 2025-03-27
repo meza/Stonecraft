@@ -7,7 +7,7 @@ import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.getProgramArgs
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
-import net.fabricmc.loom.configuration.FabricApiExtension
+import net.fabricmc.loom.api.fabricapi.FabricApiExtension
 import net.fabricmc.loom.configuration.ide.RunConfigSettings
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty

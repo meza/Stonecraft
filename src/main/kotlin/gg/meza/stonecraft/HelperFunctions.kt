@@ -9,6 +9,7 @@ fun getResourceVersionFor(version: String): Int = when (version) {
     "1.20.2" -> 18
     "1.21" -> 34
     "1.21.4" -> 46
+    "1.21.5" -> 55
     else -> 18
 }
 

@@ -86,6 +86,15 @@ plugins {
 stonecutter active "1.21.4-fabric" /* [SC] DO NOT EDIT */
 ```
 
+## Development
+
+I will write this soon, but for now this is all we need:
+
+### Upgrading to new Minecraft versions
+
+In the `HelperFunctions.kt`, update the resource pack version otherwise bad things happen.
+
+
 [stonecutter]: https://stonecutter.kikugie.dev/
 [architectury]: https://docs.architectury.dev/
 [github]: https://github.com/meza/Stonecraft
