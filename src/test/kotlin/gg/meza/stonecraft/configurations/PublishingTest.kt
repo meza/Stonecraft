@@ -83,6 +83,43 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("dryRun=true"), "Dry run has been set incorrectly")
     }
 
+    @Test
+    fun `publish determines a beta version`() {
+        gradleTest.setModProperty("mod.version", "1.3.4-beta.2")
+
+        val br = gradleTest.run("publishingSettings")
+
+        assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
+    }
+
+    @Test
+    fun `publish determines a next version`() {
+        gradleTest.setModProperty("mod.version", "1.3.4-beta.3")
+
+        val br = gradleTest.run("publishingSettings")
+
+        assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
+    }
+
+    @Test
+    fun `publish determines an alpha version`() {
+        gradleTest.setModProperty("mod.version", "1.3.4-alpha.2")
+
+        val br = gradleTest.run("publishingSettings")
+
+        assertTrue(br.output.contains("type=ALPHA"), "Publishing type has not been set correctly")
+    }
+
+    @SetEnvironmentVariable(key = "RELEASE_TYPE", value = "beta")
+    @Test
+    fun `publish determines an overridden beta version`() {
+        gradleTest.setModProperty("mod.version", "1.3.4-alpha.2")
+
+        val br = gradleTest.run("publishingSettings")
+
+        assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
+    }
+
     @SetEnvironmentVariable(key = "DO_PUBLISH", value = "anything-but-true")
     @Test
     fun `dry run can be turned off with the correct setting`() {

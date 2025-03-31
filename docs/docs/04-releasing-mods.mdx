@@ -1,0 +1,134 @@
+# Releasing Mods
+
+The built in publisher is the [mod-publish-plugin][mod-publish-plugin].
+
+When you are using the built in `chiseledPublishMods` command, you only need to override the things that are unique
+to your mod.
+
+Here is an example of how to set up the `publishMods` block for a mod that is both Modrinth and Curseforge:
+
+```kotlin title="build.gradle.kts"
+publishMods {
+    modrinth {
+        if (mod.isFabric) {
+            requires("fabric-api")
+            optional("modmenu")
+        }
+        requires("cloth-config")
+    }
+
+    curseforge {
+        clientRequired = false
+        serverRequired = true
+        if (mod.isFabric) {
+            requires("fabric-api")
+            optional("modmenu")
+        }
+        requires("cloth-config")
+    }
+}
+```
+
+The name of the files, setting the version, the loader and other metadata is handled by Stonecraft.
+You can override the default values by setting them in the `publishMods` block as you would with the [mod-publish-plugin][mod-publish-plugin].
+
+## Environment Variables
+
+There are a few environment variables that you *must* set depending on your project.
+
+### Publishing on Modrinth
+
+| Environment Variable | Description                                   |
+|----------------------|-----------------------------------------------|
+| MODRINTH_TOKEN       | The token used to authenticate with Modrinth. |
+| MODRINTH_ID          | The ID of the project on Modrinth.            |
+
+### Publishing on Curseforge
+
+| Environment Variable | Description                                     |
+|----------------------|-------------------------------------------------|
+| CURSEFORGE_TOKEN     | The token used to authenticate with Curseforge. |
+| CURSEFORGE_ID        | The ID of the project on Curseforge.            |
+| CURSEFORGE_SLUG      | The project slug on Curseforge.                 |
+
+### Other Environment Variables
+
+| Environment Variable | Description                                                                                                                            |
+|----------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| DO_PUBLISH           | Set to `true` to publish the mod. <br/>This translates to the mod-publish-plugin's dryRun setting's opposite                           |
+| RELEASE_TYPE         | The type of release. <br/>This can be one of `alpha`, `beta` or `stable`<br/>If a value is not recognized, it will default to `stable` |
+
+## Release Types
+
+Release types are used to determine the type of release you are making. In terms of Minecraft mods, it's usually
+used to determine if the mod is alpha, beta or stable release.
+
+The simplest way to set this up is to use the `RELEASE_TYPE` environment variable in your CI/CD pipeline.
+
+### GitHub Actions
+
+In GitHub Actions, you can set the `RELEASE_TYPE` environment variable in your workflow file.
+This looks at the branch name and sets the release type accordingly.
+the `main` branch is set to `release`, the `beta` branch is set to `beta`, the `alpha` branch is set to `alpha` and everything else is set to `snapshot`.
+
+Ideally you wouldn't call publish on anything but the main, alpha and beta branches.
+
+```yaml
+env:
+  RELEASE_TYPE: ${{ endsWith(github.ref_name, 'main') && 'release' || (endsWith(github.ref_name, 'beta') && 'beta' || (endsWith(github.ref_name, 'alpha') && 'alpha') || 'snapshot') }}
+```
+
+### Setting it manually
+
+You can of course set the release type in your build file manually.
+
+```kotlin title="build.gradle.kts"
+publishMods {
+    // highlight-next-line
+    type=ReleaseType.BETA
+    modrinth {
+        if (mod.isFabric) {
+            requires("fabric-api")
+            optional("modmenu")
+        }
+        requires("cloth-config")
+    }
+
+    curseforge {
+        clientRequired = false
+        serverRequired = true
+        if (mod.isFabric) {
+            requires("fabric-api")
+            optional("modmenu")
+        }
+        requires("cloth-config")
+    }
+}
+```
+
+### Semantic Release - version string parser
+
+Me (Meza), I'm a big fan of [semantic release](https://semantic-release.gitbook.io/semantic-release/) and I think it should be the default way to release software.
+It's not only a great way to automate the release process, but it also helps you keep track of the changes in your project and deal with versioning.
+
+It does require a bit of setup, and to get used to the [conventional commit messages](https://www.conventionalcommits.org/en/v1.0.0/), but it's worth it in the end.
+
+:::info
+**To support this flow, Stonecraft automatically attempts to determine the release type based on the version string of the project.**
+:::
+
+- If a version contains the word "alpha", it will be treated as an alpha release.
+- If a version contains the word "beta", it will be treated as a beta release.
+- If a version contains the word "next", it will be treated as a beta release. (This is useful when you use the @next terminology from the npm ecosystem)
+
+:::tip
+If you don't want this behavior, you can set the `RELEASE_TYPE` environment variable and that will override the version string parser.
+:::
+
+If you are curious about how this works, checkout the [SoundsBeGone mod](https://github.com/meza/SoundsBeGone) or the
+[Inventory Sorter mod](https://github.com/kyrptonaught/Inventory-Sorter) where I use this technique to release the mod.
+
+If you're still curious, join discord and ask me about it. I love talking about this stuff. (link in the footer)
+
+
+[mod-publish-plugin]: https://modmuss50.github.io/mod-publish-plugin/

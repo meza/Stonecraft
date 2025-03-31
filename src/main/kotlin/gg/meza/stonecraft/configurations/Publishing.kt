@@ -3,6 +3,7 @@ package gg.meza.stonecraft.configurations
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.upperCaseFirst
 import me.modmuss50.mpp.ModPublishExtension
+import me.modmuss50.mpp.ReleaseType
 import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
@@ -16,15 +17,27 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
     val mod = project.mod
 
     publishing.apply {
-        val isBeta = "next" in project.version.toString()
+        val isBeta = listOf("next", "beta").any { it in project.version.toString().lowercase() }
+        val isAlpha = listOf("alpha").any { it in project.version.toString().lowercase() }
         changelog.set(
             project.rootProject.layout.projectDirectory.file("CHANGELOG.md").asFile.takeIf { it.exists() }?.readText() ?: "No changelog provided."
         )
 
+        if (project.providers.environmentVariable("RELEASE_TYPE").isPresent) {
+            type.set(ReleaseType.of(project.providers.environmentVariable("RELEASE_TYPE").get()))
+        } else {
+            type.set(
+                when {
+                    isBeta -> BETA
+                    isAlpha -> ALPHA
+                    else -> STABLE
+                }
+            )
+        }
+
         val remapJar = project.tasks.named<RemapJarTask>("remapJar")
         file.set(remapJar.get().archiveFile)
         version.set("${mod.version}+${mod.loader}-$minecraftVersion")
-        type.set(if (isBeta) BETA else STABLE)
         modLoaders.add(mod.loader)
         displayName.set("${mod.version} for ${mod.loader.upperCaseFirst()} $minecraftVersion")
         dryRun.set(project.providers.environmentVariable("DO_PUBLISH").getOrElse("true").toBoolean())
