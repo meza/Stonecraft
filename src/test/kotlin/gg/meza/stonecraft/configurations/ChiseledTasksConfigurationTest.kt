@@ -36,6 +36,7 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
             "runDatagen",
             "buildActive",
             "runActive",
+            "runActiveServer",
             "dataGenActive",
             "testActiveClient",
             "testActiveServer",

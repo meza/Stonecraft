@@ -30,6 +30,11 @@ fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings:
             dependsOn(project.tasks.named("runClient"))
         }
 
+        project.rootProject.tasks.register("runActiveServer") {
+            group = currentModGroup
+            dependsOn(project.tasks.named("runServer"))
+        }
+
         project.rootProject.tasks.register("dataGenActive") {
             group = currentModGroup
             dependsOn(project.tasks.named("runDatagen"))
