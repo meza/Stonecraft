@@ -348,6 +348,27 @@ modSettings {
         assertTrue(neoToml.contains("packVersion=\"34\""))
     }
 
+    @Test
+    fun `language files are excluded from the variable replacement`() {
+        val fabric1202Path = getPathsFor("1.20.2", "fabric", listOf("assets/examplemod/lang/en_us.json")).first()
+        val forge1202Path = getPathsFor("1.20.2", "forge", listOf("assets/examplemod/lang/en_us.json")).first()
+        val fabric121Path = getPathsFor("1.21", "fabric", listOf("assets/examplemod/lang/en_us.json")).first()
+        val forge121Path = getPathsFor("1.21", "forge", listOf("assets/examplemod/lang/en_us.json")).first()
+        val neoforge121Path = getPathsFor("1.21", "neoforge", listOf("assets/examplemod/lang/en_us.json")).first()
+
+        val files = listOf(
+            fabric1202Path,
+            forge1202Path,
+            fabric121Path,
+            forge121Path,
+            neoforge121Path
+        )
+
+        files.forEach { path ->
+            assertTrue(path.asFile.readText().contains("This is a line with a variable: %1\$s"))
+        }
+    }
+
     private fun getPathsFor(version: String, loader: String, files: List<String>): MutableList<FileSystemLocation> {
         var project = gradleTest.project()
         val basePath = project.layout.projectDirectory.dir("versions/$version-$loader/build/resources/main")

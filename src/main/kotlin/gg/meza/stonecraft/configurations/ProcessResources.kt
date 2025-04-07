@@ -59,7 +59,23 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
                 "neoforgeVersion" to project.mod.prop("neoforge_version", "not set"),
             ) + modSettings.variableReplacements.get()
 
-            filesMatching(listOf("**/*.json", "**/*.toml", "**/*.mcmeta")) { expand(basicModDetails) }
+            val filesToNotExpandIn = listOf("assets/**/lang/*.json")
+
+            filesMatching(listOf("**/*.json", "**/*.toml", "**/*.mcmeta")) {
+                val shouldSkip = filesToNotExpandIn.any { skipPattern ->
+                    // If anyone has a better way to do this, please submit a PR
+                    // Convert Ant-style pattern to regex pattern for matching
+                    val regexPattern = skipPattern
+                        .replace(".", "\\.")
+                        .replace("**", ".*")
+                        .replace("*", "[^/]*")
+                    path.matches(Regex(regexPattern))
+                }
+
+                if (!shouldSkip) {
+                    expand(basicModDetails)
+                }
+            }
 
             // Exclude the correct mod metadata file based on the loader
             when {
