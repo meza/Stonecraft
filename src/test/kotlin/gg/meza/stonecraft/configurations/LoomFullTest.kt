@@ -75,8 +75,8 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21.4-forge] client runDir=$runDir"))
         assertTrue(result.output.contains("[1.21.4-forge] server runDir=$runDir"))
         assertFalse(result.output.contains("[1.21.4-forge] datagen runDir=$runDir"))
-        assertFalse(result.output.contains("[1.21.4-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
-        assertFalse(result.output.contains("[1.21.4-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
+        assertTrue(result.output.contains("[1.21.4-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
+        assertTrue(result.output.contains("[1.21.4-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
 
         assertTrue(result.output.contains("[1.21.4-neoforge] client runDir=$runDir"))
         assertFalse(result.output.contains("[1.21.4-neoforge] datagen runDir=$runDir"))
@@ -143,7 +143,7 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21.4-fabric] gameTestClient vmArgs=\"${fabricClient[0]}\""))
         assertTrue(result.output.contains("[1.21.4-fabric] gameTestClient vmArgs=\"-Dfabric-api.gametest.report-file=${fabric1214}\""))
 
-        assertFalse(result.output.contains("[1.21.4-forge] gameTestClient"))
+        assertTrue(result.output.contains("[1.21.4-forge] gameTestClient"))
         assertTrue(result.output.contains("[1.21-forge] gameTestClient vmArgs=\"${forgeClient[0]}\""))
         assertTrue(result.output.contains("[1.21-forge] gameTestClient vmArgs=\"${forgeClient[1]}\""))
 
@@ -169,7 +169,7 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21-fabric] gameTestServer vmArgs=\"-Dfabric-api.gametest\""))
         assertTrue(result.output.contains("[1.21.4-fabric] gameTestServer vmArgs=\"-Dfabric-api.gametest\""))
 
-        assertFalse(result.output.contains("[1.21.4-forge] gameTestServer"))
+        assertTrue(result.output.contains("[1.21.4-forge] gameTestServer"))
         assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[0]}\""))
         assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[1]}\""))
         assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[2]}\""))

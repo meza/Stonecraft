@@ -47,7 +47,6 @@ tasks.register("getForcedModules") {
         val br = gradleTest.run("printClasspathServer1214Forge")
 
         assertFalse(br.output.contains("org.lwjgl"), "LWJGL was not removed from the server classpath")
-        assertTrue(br.output.contains("Game test server task is disabled for 1.21.4 Forge Architectury"))
     }
 
     @Test
