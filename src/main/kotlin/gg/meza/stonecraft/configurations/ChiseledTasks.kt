@@ -11,7 +11,6 @@ import org.gradle.api.Project
 fun configureChiseledTasks(project: Project, stonecutterController: StonecutterController) {
     // @TODO: Extract this setting to an extension that works on the stonecutter controller file
     val allModsGroup = "modsAll"
-    stonecutterController.automaticPlatformConstants = true
 
     // List of task names and their corresponding `ofTask` values
     val tasks = listOf(
