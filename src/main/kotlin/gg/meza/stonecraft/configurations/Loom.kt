@@ -2,7 +2,6 @@ package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuild
 import gg.meza.stonecraft.Side
-import gg.meza.stonecraft.canBeLaunchedByArchitectury
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.getProgramArgs
 import gg.meza.stonecraft.mod
@@ -65,20 +64,25 @@ fun configureClientGameTests(
             modSettings.testClientRunDirectoryProp.get().asFile.toPath()
         ).toString()
 
-    if (canBeLaunchedByArchitectury(project.mod, stonecutter)) {
-        loom.runs {
-            create("gameTestClient") {
-                client()
-                runDir = testClientDir
-                if (mod.isFabric) {
-                    fabricGameTestConfig(Side.CLIENT, modSettings.fabricClientJunitReportLocationProp)
-                }
-                if (mod.isForgeLike) {
-                    forgeLikeConfig(Side.CLIENT, mod.loader)
-                }
+    loom.runs {
+        create("gameTestClient") {
+            client()
+            runDir = testClientDir
+            if (mod.isFabric) {
+                fabricGameTestConfig(Side.CLIENT, modSettings.fabricClientJunitReportLocationProp)
+            }
+            if (mod.isForgeLike) {
+                forgeLikeConfig(Side.CLIENT, mod.loader, stonecutter)
+            }
+        }
+
+        if (mod.isForge) {
+            project.tasks.named("runGameTestClient") {
+                dependsOn("generatePackMCMetaJson")
             }
         }
     }
+//
 }
 
 /**
@@ -97,37 +101,22 @@ fun configureServerGameTests(
             modSettings.testServerRunDirectoryProp.get().asFile.toPath()
         ).toString()
 
-    if (canBeLaunchedByArchitectury(project.mod, stonecutter)) {
-        loom.runs {
-            create("gameTestServer") {
-                server()
-                runDir = testServerDir
-                if (mod.isFabric) {
-                    fabricGameTestConfig(Side.SERVER, modSettings.fabricServerJunitReportLocationProp)
-                }
-                if (mod.isForgeLike) {
-                    forgeLikeConfig(Side.SERVER, mod.loader)
-                }
+    loom.runs {
+        create("gameTestServer") {
+            server()
+            runDir = testServerDir
+            if (mod.isFabric) {
+                fabricGameTestConfig(Side.SERVER, modSettings.fabricServerJunitReportLocationProp)
+            }
+            if (mod.isForgeLike) {
+                forgeLikeConfig(Side.SERVER, mod.loader, stonecutter)
             }
         }
+    }
 
-        if (mod.isForge) {
-            project.tasks.named("runGameTestServer") {
-                dependsOn("generatePackMCMetaJson")
-            }
-            project.tasks.named("runGameTestClient") {
-                dependsOn("generatePackMCMetaJson")
-            }
-        }
-    } else {
-        project.tasks.register("runGameTestServer") {
-            logger.error("Game test server task is disabled for 1.21.4 Forge Architectury")
-            logger.error("Read more: https://github.com/architectury/architectury-loom/issues/262")
-        }
-
-        project.tasks.register("runGameTestClient") {
-            logger.error("Game test client task is disabled for 1.21.4 Forge Architectury")
-            logger.error("Read more: https://github.com/architectury/architectury-loom/issues/262")
+    if (mod.isForge) {
+        project.tasks.named("runGameTestServer") {
+            dependsOn("generatePackMCMetaJson")
         }
     }
 }
@@ -160,15 +149,23 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
  *
  * @param side The side of the game test
  */
-private fun RunConfigSettings.forgeLikeConfig(side: Side, loader: String) {
+private fun RunConfigSettings.forgeLikeConfig(side: Side, loader: String, stonecutter: StonecutterBuild) {
+    if (side == Side.SERVER) {
+        environment("gametestserver")
+
+        if (
+            !(project.mod.isNeoforge && stonecutter.eval(stonecutter.current.version, "=1.21")) &&
+            !(project.mod.isForge && stonecutter.eval(stonecutter.current.version, "=1.21.4"))
+        ) {
+            forgeTemplate("gametestserver")
+        }
+        property("$loader.gameTestServer", "true")
+    }
+
     mapOf(
         "$loader.enabledGameTestNamespaces" to project.mod.id,
         "$loader.enableGameTest" to "true"
     ).forEach { (key, value) -> property(key, value) }
-
-    if (side == Side.SERVER) {
-        property("$loader.gameTestServer", "true")
-    }
 }
 
 /**
@@ -223,34 +220,52 @@ fun configureDatagen(
 
         // Neoforge datagen is simply broken in architectury loom
         // @see https://github.com/architectury/architectury-loom/pull/258
-        if (mod.isNeoforge && false) {
+        if (mod.isNeoforge) {
             if (stonecutter.eval(minecraftVersion, ">=1.21.4")) {
                 // @see https://neoforged.net/news/21.4release/#data-generation-splitting
                 create("ServerDatagen") {
                     serverData()
                     programArgs(getProgramArgs(modDefinition, outputFolder))
                     forgeLikeLogging()
+                    environment("dataserver")
+                    forgeTemplate("dataserver")
                 }
-                create("CliteDatagen") {
+                create("ClientDatagen") {
                     clientData()
                     programArgs(getProgramArgs(modDefinition, outputFolder))
                     forgeLikeLogging()
+                    environment("dataclient")
+                    forgeTemplate("dataclient")
                 }
             } else {
-                create("Datagen") {
-                    data()
-                    programArgs(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
-                    forgeLikeLogging()
+                if (stonecutter.eval(minecraftVersion, ">1.21")) {
+                    create("Datagen") {
+                        data()
+                        programArgs(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
+                        forgeLikeLogging()
+                    }
                 }
             }
+        }
+    }
+
+    if (mod.isForge && stonecutter.eval(minecraftVersion, "<1.21.4")) {
+        project.tasks.named("runDatagen") {
+            dependsOn("generatePackMCMetaJson")
+        }
+    }
+
+    if (mod.isNeoforge && stonecutter.eval(stonecutter.current.version, "<=1.21")) {
+        project.tasks.register("runDatagen") {
+            logger.error("Datagen is disabled for Neoforge 1.21.4 and below due to existing issues")
         }
     }
 
     // NeoForge changed their datagen approach in 1.21.4
     // This is disabled for now because Architectury Loom does not support it yet
     if (mod.isNeoforge && stonecutter.eval(stonecutter.current.version, ">=1.21.4")) {
-//        project.tasks.register("runDatagen") {
-//            dependsOn(project.tasks.named("runServerDatagen"), project.tasks.named("runClientDatagen"))
-//        }
+        project.tasks.register("runDatagen") {
+            dependsOn(project.tasks.named("runServerDatagen"), project.tasks.named("runClientDatagen"))
+        }
     }
 }

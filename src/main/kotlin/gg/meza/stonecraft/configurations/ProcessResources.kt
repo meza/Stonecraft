@@ -25,6 +25,10 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
         project.tasks.named("runClient") {
             dependsOn(project.tasks.named("generatePackMCMetaJson"))
         }
+
+        project.tasks.named("runServer") {
+            dependsOn(project.tasks.named("generatePackMCMetaJson"))
+        }
     }
 
     if (project.mod.isForge) {
