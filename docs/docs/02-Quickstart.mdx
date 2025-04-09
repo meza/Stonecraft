@@ -65,6 +65,21 @@ rootProject.name = "YourModName"
 `}
 </CodeBlock>
 
+#### Creating your dependency files
+
+In order to manage different dependencies for different versions of Minecraft, you need to create a separate file for each version.
+
+These need to be placed in the `versions/dependencies` directory.
+
+- `versions/dependencies/1.21.3.properties`
+- `versions/dependencies/1.21.4.properties`
+
+These would be the equivalent of the more traditional `gradle.properties` file for each version.
+
+:::warning
+The name of the files is important. These needs to be the same as the versions you specified in the `settings.gradle.kts` file.
+:::
+
 #### Setting up the stonecutter
 
 Create a `stonecutter.gradle[.kts]` file in your project root with the following content:
