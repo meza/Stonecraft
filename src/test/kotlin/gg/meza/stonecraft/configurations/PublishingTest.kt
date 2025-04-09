@@ -93,6 +93,16 @@ tasks.register("publishingSettings") {
     }
 
     @Test
+    fun `publish determines a beta version for snapshots`() {
+        gradleTest.setModProperty("mod.version", "1.3.4")
+        gradleTest.setModProperty("is_snapshot", "true")
+
+        val br = gradleTest.run("publishingSettings")
+
+        assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
+    }
+
+    @Test
     fun `publish determines a next version`() {
         gradleTest.setModProperty("mod.version", "1.3.4-beta.3")
 

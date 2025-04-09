@@ -25,6 +25,8 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
 
         if (project.providers.environmentVariable("RELEASE_TYPE").isPresent) {
             type.set(ReleaseType.of(project.providers.environmentVariable("RELEASE_TYPE").get()))
+        } else if (mod.isSnapshot()) {
+            type.set(BETA)
         } else {
             type.set(
                 when {

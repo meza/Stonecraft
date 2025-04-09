@@ -125,6 +125,17 @@ It does require a bit of setup, and to get used to the [conventional commit mess
 If you don't want this behavior, you can set the `RELEASE_TYPE` environment variable and that will override the version string parser.
 :::
 
+The above however sets the release type for the entire project.
+
+### Setting the release type for a specific mod
+
+You can set the release type for a specific mod by using the `is_snapshot` property in the `versions/dependencies/[miencraft_version].properties` file.
+Setting this to `true` will set the release type to `beta` and setting it to `false` will make Stonecraft behave normally.
+
+```properties title="versions/dependencies/1.21.4.properties"
+is_snapshot=true
+```
+
 If you are curious about how this works, checkout the [SoundsBeGone mod](https://github.com/meza/SoundsBeGone) or the
 [Inventory Sorter mod](https://github.com/kyrptonaught/Inventory-Sorter) where I use this technique to release the mod.
 
