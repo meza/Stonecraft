@@ -9,7 +9,7 @@ architectury-loom = "1.10.430"
 mod-publish = "0.8.4"
 junit = "5.12.1"
 junit-pioneer = "2.3.0"
-mockito = "5.16.1"
+mockito = "5.17.0"
 mockito-kotlin = "5.4.0"
 
 [libraries]
