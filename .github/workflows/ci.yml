@@ -4,7 +4,9 @@
 # against bad commits.
 
 name: build
-on: push
+on:
+  - push
+  - pull_request
 
 permissions:
   issues: write
