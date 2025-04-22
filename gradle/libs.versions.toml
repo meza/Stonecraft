@@ -7,17 +7,12 @@ gson = "2.12.1"
 stonecutter = "0.6-beta.2"
 architectury-loom = "1.10.430"
 mod-publish = "0.8.4"
-junit = "5.12.1"
+junit = "5.12.2"
 junit-pioneer = "2.3.0"
-mockito = "5.16.1"
+mockito = "5.17.0"
 mockito-kotlin = "5.4.0"
 
 [libraries]
-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-plugin-publish = { module = "com.gradle.plugin-publish:com.gradle.plugin-publish.gradle.plugin", version.ref = "plugin-publish" }
-test-logger = { module = "com.adarshr.test-logger:com.adarshr.test-logger.gradle.plugin", version.ref = "test-logger" }
-spotless = { module = "com.diffplug.spotless:com.diffplug.spotless.gradle.plugin", version.ref = "spotless" }
-
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 stonecutter = { module = "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin", version.ref = "stonecutter" }
 architectury-loom = { module = "dev.architectury.loom:dev.architectury.loom.gradle.plugin", version.ref = "architectury-loom" }
