@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.plugin.publish)
     alias(libs.plugins.test.logger)
-    alias(libs.plugins.spotless)
+//    alias(libs.plugins.spotless)
 }
 
 group = "gg.meza"
@@ -98,19 +98,19 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-spotless {
-    kotlin {
-        ktlint()
-            .editorConfigOverride(
-                mapOf(
-                    "ktlint_code_style" to "intellij_idea",
-                    "ktlint_standard_no-line-break-before-assignment" to "disabled",
-                    "ktlint_standard_trailing-comma-on-call-site" to "disabled",
-                    "ktlint_standard_trailing-comma-on-declaration-site" to "disabled"
-                )
-            )
-    }
-}
+//spotless {
+//    kotlin {
+//        ktlint()
+//            .editorConfigOverride(
+//                mapOf(
+//                    "ktlint_code_style" to "intellij_idea",
+//                    "ktlint_standard_no-line-break-before-assignment" to "disabled",
+//                    "ktlint_standard_trailing-comma-on-call-site" to "disabled",
+//                    "ktlint_standard_trailing-comma-on-declaration-site" to "disabled"
+//                )
+//            )
+//    }
+//}
 
 publishing {
     repositories {
