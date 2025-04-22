@@ -2,10 +2,9 @@ package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
 import okio.Path
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -29,11 +28,13 @@ class LoomBitsTest : IntegrationTest {
         assertFalse(br.output.contains("forge.convertAccessWideners"))
     }
 
+    @Disabled("architectury-loom issue #274")
     @Test
     fun `test access wideners when there is an access widener in the project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
         val br = gradleTest.run("printLoomSettings")
-        val awPath = gradleTest.project().layout.projectDirectory.file("src/main/resources/examplemod.accesswidener").asFile.absolutePath
+        val awPath =
+            gradleTest.project().layout.projectDirectory.file("src/main/resources/examplemod.accesswidener").asFile.absolutePath
 
         val awString = "loom.accessWidenerPath=\"$awPath\""
         val pathCount = Regex(Regex.escape(awString)).findAll(br.output).count()
@@ -47,6 +48,21 @@ class LoomBitsTest : IntegrationTest {
     }
 
     @Test
+    fun `TMP-arch test access wideners when there is an access widener in the project`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        val br = gradleTest.run("printLoomSettings")
+        val awPath =
+            gradleTest.project().layout.projectDirectory.file("src/main/resources/examplemod.accesswidener").asFile.absolutePath
+
+        val awString = "loom.accessWidenerPath=\"$awPath\""
+        val pathCount = Regex(Regex.escape(awString)).findAll(br.output).count()
+
+        assertTrue(br.output.contains(awString))
+        assertEquals(1, pathCount, "Expected 1 occurrence of $awString, found $pathCount")
+    }
+
+    @Disabled("architectury-loom issue #274")
+    @Test
     fun `test with a custom run directory`() {
         gradleTest.setStonecutterVersion("1.21", "fabric", "forge", "neoforge")
         gradleTest.buildScript(
@@ -59,9 +75,12 @@ class LoomBitsTest : IntegrationTest {
             """.trimIndent()
         )
 
-        val runDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test").asFile.toPath())
-        val testClientDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test/testclient").asFile.toPath())
-        val testServerDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test/testserver").asFile.toPath())
+        val runDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test").asFile.toPath())
+        val testClientDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test/testclient").asFile.toPath())
+        val testServerDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test/testserver").asFile.toPath())
 
         val result = gradleTest.run("printLoomSettings")
 
@@ -88,8 +107,47 @@ class LoomBitsTest : IntegrationTest {
     }
 
     @Test
+    fun `TMP-arch test with a custom run directory`() {
+        gradleTest.setStonecutterVersion("1.21", "fabric", "neoforge")
+        gradleTest.buildScript(
+            """
+            modSettings {
+                println("SUT")
+                println(rootProject.layout.projectDirectory.asFile.absolutePath)
+                runDirectory = rootProject.layout.projectDirectory.dir("run-test")
+            }
+            """.trimIndent()
+        )
+
+        val runDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test").asFile.toPath())
+        val testClientDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test/testclient").asFile.toPath())
+        val testServerDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test/testserver").asFile.toPath())
+
+        val result = gradleTest.run("printLoomSettings")
+
+        println(testClientDir)
+        println("${testClientDir}${Path.DIRECTORY_SEPARATOR}fabric")
+
+        assertTrue(result.output.contains("[1.21-fabric] client runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21-fabric] datagen runDir=build/datagen"))
+        assertTrue(result.output.contains("[1.21-fabric] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}fabric"))
+        assertTrue(result.output.contains("[1.21-fabric] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}fabric"))
+        assertTrue(result.output.contains("[1.21-fabric] server runDir=$runDir"))
+
+        assertTrue(result.output.contains("[1.21-neoforge] client runDir=$runDir"))
+        assertFalse(result.output.contains("[1.21-neoforge] datagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21-neoforge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
+        assertTrue(result.output.contains("[1.21-neoforge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
+        assertTrue(result.output.contains("[1.21-neoforge] server runDir=$runDir"))
+    }
+
+
+    @Test
     fun `test with a custom directories`() {
-        gradleTest.setStonecutterVersion("1.20.2", "fabric", "forge")
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
         gradleTest.buildScript(
             """
             modSettings {
@@ -100,28 +158,32 @@ class LoomBitsTest : IntegrationTest {
             """.trimIndent()
         )
 
-        val runDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test").asFile.toPath()).toString()
-        val testClientDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test-client").asFile.toPath()).toString()
-        val testServerDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric").asFile.toPath().relativize(gradleTest.project().layout.projectDirectory.dir("run-test-server").asFile.toPath()).toString()
+        val runDir = gradleTest.project().layout.projectDirectory.dir("versions/1.21.4-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test").asFile.toPath()).toString()
+        val testClientDir = gradleTest.project().layout.projectDirectory.dir("versions/1.21.4-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test-client").asFile.toPath()).toString()
+        val testServerDir = gradleTest.project().layout.projectDirectory.dir("versions/1.21.4-fabric").asFile.toPath()
+            .relativize(gradleTest.project().layout.projectDirectory.dir("run-test-server").asFile.toPath()).toString()
 
         val result = gradleTest.run("printLoomSettings")
 
-        assertTrue(result.output.contains("[1.20.2-fabric] client runDir=$runDir"))
-        assertTrue(result.output.contains("[1.20.2-fabric] datagen runDir=build/datagen"))
-        assertTrue(result.output.contains("[1.20.2-fabric] gameTestClient runDir=$testClientDir"))
-        assertTrue(result.output.contains("[1.20.2-fabric] gameTestServer runDir=$testServerDir"))
-        assertTrue(result.output.contains("[1.20.2-fabric] server runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-fabric] client runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-fabric] datagen runDir=build/datagen"))
+        assertTrue(result.output.contains("[1.21.4-fabric] gameTestClient runDir=$testClientDir"))
+        assertTrue(result.output.contains("[1.21.4-fabric] gameTestServer runDir=$testServerDir"))
+        assertTrue(result.output.contains("[1.21.4-fabric] server runDir=$runDir"))
 
-        assertTrue(result.output.contains("[1.20.2-forge] client runDir=$runDir"))
-        assertTrue(result.output.contains("[1.20.2-forge] datagen runDir=$runDir"))
-        assertTrue(result.output.contains("[1.20.2-forge] gameTestClient runDir=$testClientDir"))
-        assertTrue(result.output.contains("[1.20.2-forge] gameTestServer runDir=$testServerDir"))
-        assertTrue(result.output.contains("[1.20.2-forge] server runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] client runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] ClientDatagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] ServerDatagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestClient runDir=$testClientDir"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer runDir=$testServerDir"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] server runDir=$runDir"))
     }
 
     @Test
     fun `test junit report paths`() {
-        gradleTest.setStonecutterVersion("1.20.2", "fabric", "forge")
+        gradleTest.setStonecutterVersion("1.20.2", "fabric")
         gradleTest.buildScript(
             """
             modSettings {
@@ -133,7 +195,23 @@ class LoomBitsTest : IntegrationTest {
 
         val result = gradleTest.run("printLoomSettings")
 
-        assertTrue(result.output.contains("vmArgs=\"-Dfabric-api.gametest.report-file=${gradleTest.project().layout.projectDirectory.file("versions/1.20.2-fabric/build/fabric-client-junit-report.xml").asFile.absolutePath}"))
-        assertTrue(result.output.contains("vmArgs=\"-Dfabric-api.gametest.report-file=${gradleTest.project().layout.projectDirectory.file("versions/1.20.2-fabric/build/fabric-server-junit-report.xml").asFile.absolutePath}"))
+        assertTrue(
+            result.output.contains(
+                "vmArgs=\"-Dfabric-api.gametest.report-file=${
+                    gradleTest.project().layout.projectDirectory.file(
+                        "versions/1.20.2-fabric/build/fabric-client-junit-report.xml"
+                    ).asFile.absolutePath
+                }"
+            )
+        )
+        assertTrue(
+            result.output.contains(
+                "vmArgs=\"-Dfabric-api.gametest.report-file=${
+                    gradleTest.project().layout.projectDirectory.file(
+                        "versions/1.20.2-fabric/build/fabric-server-junit-report.xml"
+                    ).asFile.absolutePath
+                }"
+            )
+        )
     }
 }

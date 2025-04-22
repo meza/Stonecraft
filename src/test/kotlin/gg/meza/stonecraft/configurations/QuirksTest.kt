@@ -4,6 +4,7 @@ import gg.meza.stonecraft.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -49,6 +50,7 @@ tasks.register("getForcedModules") {
         assertFalse(br.output.contains("org.lwjgl"), "LWJGL was not removed from the server classpath")
     }
 
+    @Disabled("architectury-loom issue #274")
     @Test
     fun `forge jopt is set properly`() {
         gradleTest.setStonecutterVersion("1.21.4", "forge")

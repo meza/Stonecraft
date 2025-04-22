@@ -3,6 +3,7 @@ package gg.meza.stonecraft.configurations
 import gg.meza.stonecraft.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -53,6 +54,7 @@ plugins {
         assertTrue(br.output.contains("Architectury Loom"))
     }
 
+    @Disabled("architectury-loom issue #274")
     @Test
     fun `loom platform correctly gets applied`() {
         gradleTest.buildScript(
@@ -71,6 +73,26 @@ tasks.register("printPlatform") {
 
         assertTrue(br.output.contains("loom.platform is set to fabric"))
         assertTrue(br.output.contains("loom.platform is set to forge"))
+        assertTrue(br.output.contains("loom.platform is set to neoforge"))
+    }
+
+    @Test
+    fun `TMP-arch loom platform correctly gets applied`() {
+        gradleTest.buildScript(
+            """
+tasks.register("printPlatform") {
+    doLast {
+        println("loom.platform is set to "+ext["loom.platform"])
+    }
+}
+            """.trimIndent()
+        )
+
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+
+        val br = gradleTest.run("printPlatform")
+
+        assertTrue(br.output.contains("loom.platform is set to fabric"))
         assertTrue(br.output.contains("loom.platform is set to neoforge"))
     }
 }

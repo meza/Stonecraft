@@ -4,6 +4,7 @@ import gg.meza.stonecraft.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -24,7 +25,9 @@ class StonecutterTest : IntegrationTest {
     @BeforeEach
     fun setUp() {
         gradleTest = gradleTest()
-        gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
+        gradleTest.setStonecutterVersion("1.21.4", "fabric",
+//            "forge",
+            "neoforge")
         markerFile = gradleTest.project().layout.projectDirectory.file("src/main/resources/const.test.txt").asFile
     }
 
@@ -55,6 +58,7 @@ class StonecutterTest : IntegrationTest {
         assertTrue(contents.contains("/*neoforgeline"), "Neoforge line was activated incorrectly")
     }
 
+    @Disabled("architectury-loom issue #274")
     @Test
     fun `when forge is selected`() {
         gradleTest.run("Set active project to 1.21.4-forge")
