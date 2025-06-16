@@ -10,7 +10,7 @@
     },
     {
       "matchManagers": ["gradle", "gradle-wrapper"],
-      "automerge": false
+      "automerge": true
     }
   ]
 }
