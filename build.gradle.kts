@@ -51,6 +51,7 @@ tasks.withType<Test> {
     jvmArgs("-XX:+EnableDynamicAgentLoading")
     jvmArgs("--add-opens", "java.base/java.util=ALL-UNNAMED")
     jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
+    maxHeapSize = "4G"
 }
 
 testlogger {
@@ -98,7 +99,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-//spotless {
+// spotless {
 //    kotlin {
 //        ktlint()
 //            .editorConfigOverride(
@@ -110,7 +111,7 @@ java {
 //                )
 //            )
 //    }
-//}
+// }
 
 publishing {
     repositories {
