@@ -48,7 +48,7 @@ Create a file named `1.21.6.properties` in the `versions/dependencies` folder wi
 
 ```properties
 // highlight-next-line
-minecraft_version=1.21.6-rc1  // <- This is the real snapshot version that the build will use
+minecraft_version=1.21.6-rc1  # <- This is the real snapshot version that the build will use
 yarn_mappings=1.21.6-rc1+build.1
 loader_version=0.16.14
 

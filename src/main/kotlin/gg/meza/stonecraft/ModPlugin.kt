@@ -52,7 +52,7 @@ class ModPlugin : Plugin<Any> {
         // Load version specific dependencies from versions/dependencies/[minecraftVersion].properties
         loadSpecificDependencyVersions(project, canonicalMinecraftVersion)
 
-        val realMinecraftVersion = project.mod.prop("minecraft_version")
+        val realMinecraftVersion = project.mod.prop("minecraft_version", canonicalMinecraftVersion)
 
         base.archivesName.set("${project.mod.id}-${project.mod.loader}")
         project.version = "${project.mod.version}+mc$realMinecraftVersion"
