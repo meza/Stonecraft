@@ -2,16 +2,7 @@ package gg.meza.stonecraft
 
 import dev.kikugie.stonecutter.build.StonecutterBuild
 import dev.kikugie.stonecutter.controller.StonecutterController
-import gg.meza.stonecraft.configurations.configureChiseledTasks
-import gg.meza.stonecraft.configurations.configureDependencies
-import gg.meza.stonecraft.configurations.configureJava
-import gg.meza.stonecraft.configurations.configureLoom
-import gg.meza.stonecraft.configurations.configurePlugins
-import gg.meza.stonecraft.configurations.configureProcessResources
-import gg.meza.stonecraft.configurations.configurePublishing
-import gg.meza.stonecraft.configurations.configureStonecutterConstants
-import gg.meza.stonecraft.configurations.configureTasks
-import gg.meza.stonecraft.configurations.patchAroundArchitecturyQuirks
+import gg.meza.stonecraft.configurations.*
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -56,17 +47,22 @@ class ModPlugin : Plugin<Any> {
         val base = project.extensions.getByType(BasePluginExtension::class)
         val modSettings = project.extensions.create("modSettings", ModSettingsExtension::class.java, project, project.mod.loader)
 
-        val minecraftVersion = stonecutter.current.version
+        val canonicalMinecraftVersion = stonecutter.current.version
+
+        // Load version specific dependencies from versions/dependencies/[minecraftVersion].properties
+        loadSpecificDependencyVersions(project, canonicalMinecraftVersion)
+
+        val realMinecraftVersion = project.mod.prop("minecraft_version")
 
         base.archivesName.set("${project.mod.id}-${project.mod.loader}")
-        project.version = "${project.mod.version}+mc$minecraftVersion"
+        project.version = "${project.mod.version}+mc$realMinecraftVersion"
 
-        configureDependencies(project, minecraftVersion)
+        configureDependencies(project, canonicalMinecraftVersion, realMinecraftVersion)
         configureStonecutterConstants(project, stonecutter)
-        configureProcessResources(project, minecraftVersion, modSettings)
+        configureProcessResources(project, canonicalMinecraftVersion, modSettings)
         configureLoom(project, stonecutter, modSettings)
         patchAroundArchitecturyQuirks(project, stonecutter)
-        configurePublishing(project, minecraftVersion)
+        configurePublishing(project, realMinecraftVersion)
         configureTasks(project, stonecutter, modSettings)
         configureJava(project, stonecutter, modSettings)
 

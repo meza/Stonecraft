@@ -35,3 +35,35 @@ tasks.processResources {}
 publishMods {}
 
 ```
+
+## Overriding Minecraft Version for snapshot builds
+
+When you are building for a snapshot version of Minecraft, you can prepare your mod for the eventual release. 
+It's simpler to explain this with an example.
+
+Let's say currently Minecraft `1.21.5` is out and you're preparing your mod for `1.21.6` and the current snapshot is `1.21.6-rc1`.
+
+### 1. Create the `1.21.6.properties` file
+Create a file named `1.21.6.properties` in the `versions/dependencies` folder with the following content:
+
+```properties
+// highlight-next-line
+minecraft_version=1.21.6-rc1  // <- This is the real snapshot version that the build will use
+yarn_mappings=1.21.6-rc1+build.1
+loader_version=0.16.14
+
+# Fabric API
+fabric_version=0.127.0+1.21.6
+```
+
+This is what you would copy from Fabric's website for the snapshot version.
+
+### 2. Set your stonecutter version
+
+```kotlin title="settings.gradle.kts"
+  ...
+  mc("1.21.6", "fabric")  // 1.21.6 doesn't technically exist yet, but you can prepare for it
+  ...
+```
+
+And that's it! Stonecraft will automatically use the `1.21.6.properties` file for the snapshot build.

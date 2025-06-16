@@ -119,4 +119,15 @@ tasks.register("printDeps") {
             )
         }
     }
+
+    @Test
+    fun `the minecraft version can be overridden`() {
+        gradleTest.setStonecutterVersion("1.21.6", "fabric")
+        val buildResult = gradleTest.run("printDeps")
+
+        assertTrue(
+            buildResult.output.contains("com.mojang:minecraft:1.21.6-rc1"),
+            "Dependency \"com.mojang:minecraft:1.21.6-rc1\" was not resolved from the versions deps"
+        )
+    }
 }
