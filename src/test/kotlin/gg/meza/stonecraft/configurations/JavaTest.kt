@@ -4,7 +4,6 @@ import gg.meza.stonecraft.IntegrationTest
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -59,7 +58,6 @@ tasks.register("checkSourceSets") {
         assertTrue(br.output.contains("toolchainVersion=17"))
     }
 
-    @Disabled("architectury-loom issue #274")
     @Test
     fun `check if the generated source is added for forge`() {
         gradleTest.setStonecutterVersion("1.21", "forge")

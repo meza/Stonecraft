@@ -14,7 +14,7 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
     @BeforeEach
     fun setUp() {
         gradleTest = gradleTest()
-        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
     }
 
     @Test
@@ -42,7 +42,7 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
             "testActiveServer",
             "chiseledPublishMods",
             "Set active project to 1.21.4-fabric",
-            "Set active project to 1.21.4-neoforge"
+            "Set active project to 1.21.4-forge"
         )
 
         val br = gradleTest.run("tasks")

@@ -26,12 +26,8 @@ class LoomFullTest : IntegrationTest {
         }
         gradleTest = gradleTest()
             .buildScript(loomTask)
-            .setStonecutterVersion("1.21", "fabric",
-//                "forge",
-                "neoforge")
-            .setStonecutterVersion("1.21.4", "fabric",
-//                "forge",
-                "neoforge")
+            .setStonecutterVersion("1.21", "fabric", "forge", "neoforge")
+            .setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
 
         result = gradleTest.run("printLoomSettings")
     }
@@ -39,10 +35,10 @@ class LoomFullTest : IntegrationTest {
     @Test
     fun `all versions and loaders are represented`() {
         assertTrue(result.output.contains("1.21-fabric"))
-//        assertTrue(result.output.contains("1.21-forge"))
+        assertTrue(result.output.contains("1.21-forge"))
         assertTrue(result.output.contains("1.21-neoforge"))
         assertTrue(result.output.contains("1.21.4-fabric"))
-//        assertTrue(result.output.contains("1.21.4-forge"))
+        assertTrue(result.output.contains("1.21.4-forge"))
         assertTrue(result.output.contains("1.21.4-neoforge"))
     }
 
@@ -58,11 +54,11 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21-fabric] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}fabric"))
         assertTrue(result.output.contains("[1.21-fabric] server runDir=$runDir"))
 
-//        assertTrue(result.output.contains("[1.21-forge] client runDir=$runDir"))
-//        assertTrue(result.output.contains("[1.21-forge] datagen runDir=$runDir"))
-//        assertTrue(result.output.contains("[1.21-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
-//        assertTrue(result.output.contains("[1.21-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
-//        assertTrue(result.output.contains("[1.21-forge] server runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21-forge] client runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21-forge] datagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
+        assertTrue(result.output.contains("[1.21-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
+        assertTrue(result.output.contains("[1.21-forge] server runDir=$runDir"))
 
         assertTrue(result.output.contains("[1.21-neoforge] client runDir=$runDir"))
         assertFalse(result.output.contains("[1.21-neoforge] datagen runDir=$runDir"))
@@ -76,11 +72,11 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21.4-fabric] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}fabric"))
         assertTrue(result.output.contains("[1.21.4-fabric] server runDir=$runDir"))
 
-//        assertTrue(result.output.contains("[1.21.4-forge] client runDir=$runDir"))
-//        assertTrue(result.output.contains("[1.21.4-forge] server runDir=$runDir"))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen runDir=$runDir"))
-//        assertTrue(result.output.contains("[1.21.4-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
-//        assertTrue(result.output.contains("[1.21.4-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
+        assertTrue(result.output.contains("[1.21.4-forge] client runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-forge] server runDir=$runDir"))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
+        assertTrue(result.output.contains("[1.21.4-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
 
         assertTrue(result.output.contains("[1.21.4-neoforge] client runDir=$runDir"))
         assertFalse(result.output.contains("[1.21.4-neoforge] datagen runDir=$runDir"))
@@ -99,26 +95,26 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21.4-fabric] datagen vmArgs=\"-Dfabric-api.datagen\""))
         assertTrue(result.output.contains("[1.21.4-fabric] datagen vmArgs=\"-Dfabric-api.datagen.output-dir=${generatedDir("1.21.4", "fabric")}\""))
 
-//        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"--all\""))
-//        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"--mod\""))
-//        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"examplemod\""))
-//        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"--output\""))
-//        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"${generatedDir("1.21", "forge")}\""))
-//        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"--existing\""))
-//        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"${existingDir}\""))
-//        assertTrue(result.output.contains("[1.21-forge] datagen vmArgs=\"-Dforge.logging.console.level=debug\""))
-//        assertTrue(result.output.contains("[1.21-forge] datagen vmArgs=\"-Dforge.logging.markers=REGISTRIES\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"--all\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"--mod\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"examplemod\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"--output\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"${generatedDir("1.21", "forge")}\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"--existing\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen programArgs=\"${existingDir}\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen vmArgs=\"-Dforge.logging.console.level=debug\""))
+        assertTrue(result.output.contains("[1.21-forge] datagen vmArgs=\"-Dforge.logging.markers=REGISTRIES\""))
 
         // This needs to be assertTrue once arch-loom fixes itself for modern forge
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--all\""))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--mod\""))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"examplemod\""))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--output\""))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"${generatedDir("1.21.4", "forge")}\""))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--existing\""))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"${existingDir}\""))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.console.level=debug\""))
-//        assertFalse(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.markers=REGISTRIES\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--all\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--mod\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"examplemod\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--output\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"${generatedDir("1.21.4", "forge")}\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--existing\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"${existingDir}\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.console.level=debug\""))
+        assertFalse(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.markers=REGISTRIES\""))
 
         // This also needs to be true and like the above once arch-loom is fixed
         assertFalse(result.output.contains("[1.21-neoforge] datagen"), "Neoforge datagen settings exist even thought they shouldn't")
@@ -147,9 +143,9 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21.4-fabric] gameTestClient vmArgs=\"${fabricClient[0]}\""))
         assertTrue(result.output.contains("[1.21.4-fabric] gameTestClient vmArgs=\"-Dfabric-api.gametest.report-file=${fabric1214}\""))
 
-//        assertTrue(result.output.contains("[1.21.4-forge] gameTestClient"))
-//        assertTrue(result.output.contains("[1.21-forge] gameTestClient vmArgs=\"${forgeClient[0]}\""))
-//        assertTrue(result.output.contains("[1.21-forge] gameTestClient vmArgs=\"${forgeClient[1]}\""))
+        assertTrue(result.output.contains("[1.21.4-forge] gameTestClient"))
+        assertTrue(result.output.contains("[1.21-forge] gameTestClient vmArgs=\"${forgeClient[0]}\""))
+        assertTrue(result.output.contains("[1.21-forge] gameTestClient vmArgs=\"${forgeClient[1]}\""))
 
         assertTrue(result.output.contains("[1.21-neoforge] gameTestClient vmArgs=\"${neoforgeClient[0]}\""))
         assertTrue(result.output.contains("[1.21-neoforge] gameTestClient vmArgs=\"${neoforgeClient[1]}\""))
@@ -173,10 +169,10 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21-fabric] gameTestServer vmArgs=\"-Dfabric-api.gametest\""))
         assertTrue(result.output.contains("[1.21.4-fabric] gameTestServer vmArgs=\"-Dfabric-api.gametest\""))
 
-//        assertTrue(result.output.contains("[1.21.4-forge] gameTestServer"))
-//        assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[0]}\""))
-//        assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[1]}\""))
-//        assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[2]}\""))
+        assertTrue(result.output.contains("[1.21.4-forge] gameTestServer"))
+        assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[0]}\""))
+        assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[1]}\""))
+        assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"${forgeServer[2]}\""))
 
         assertTrue(result.output.contains("[1.21-neoforge] gameTestServer vmArgs=\"${neoforgeServer[0]}\""))
         assertTrue(result.output.contains("[1.21-neoforge] gameTestServer vmArgs=\"${neoforgeServer[1]}\""))

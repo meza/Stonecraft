@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-// TMP-arch the entire file is forge-deprived
 @Suppress("DEPRECATION")
 class ProcessResourcesTest : IntegrationTest {
 
@@ -34,12 +33,8 @@ modSettings {
 }            
             """.trimIndent()
         )
-            .setStonecutterVersion("1.20.2",
-//                "forge",
-                "fabric")
-            .setStonecutterVersion("1.21", "fabric",
-//                "forge",
-                "neoforge")
+            .setStonecutterVersion("1.20.2", "fabric", "forge")
+            .setStonecutterVersion("1.21", "fabric", "forge", "neoforge")
             .withProperties(
                 mapOf(
                     "mod.id" to "examplemod",
@@ -177,16 +172,12 @@ modSettings {
             )
         )
 
-        val pathsToTest = listOf(
-            fabric1202Paths,
-//            forge1202Paths, fabric121Paths, forge121Paths,
-            neoforge121Paths
-        )
+        val pathsToTest = listOf(fabric1202Paths, forge1202Paths, fabric121Paths, forge121Paths, neoforge121Paths)
         val pathsDenied = listOf(
             fabric1202PathsDenied,
-//            forge1202PathsDenied,
+            forge1202PathsDenied,
             fabric121PathsDenied,
-//            forge121PathsDenied,
+            forge121PathsDenied,
             neoforge121PathsDenied
         )
 
@@ -251,11 +242,7 @@ modSettings {
             )
         )
 
-        listOf(fabric1202Paths,
-//            forge1202Paths,
-            fabric121Paths,
-//            forge121Paths,
-            neoforge121Paths).forEach { paths ->
+        listOf(fabric1202Paths, forge1202Paths, fabric121Paths, forge121Paths, neoforge121Paths).forEach { paths ->
             paths.forEach { path ->
                 val file = path.asFile
                 val content = file.readText()
@@ -344,18 +331,18 @@ modSettings {
     @Test
     fun `versioned replacements work as expected`() {
         val fabric1202Path = getPathsFor("1.20.2", "fabric", listOf("processResourcesTest/test.toml")).first()
-//        val forge1202Path = getPathsFor("1.20.2", "forge", listOf("processResourcesTest/test.toml")).first()
+        val forge1202Path = getPathsFor("1.20.2", "forge", listOf("processResourcesTest/test.toml")).first()
         val fabric121Path = getPathsFor("1.21", "fabric", listOf("processResourcesTest/test.toml")).first()
-//        val forge121Path = getPathsFor("1.21", "forge", listOf("processResourcesTest/test.toml")).first()
+        val forge121Path = getPathsFor("1.21", "forge", listOf("processResourcesTest/test.toml")).first()
         val neoforge121Path = getPathsFor("1.21", "neoforge", listOf("processResourcesTest/test.toml")).first()
 
         assertTrue(fabric1202Path.asFile.readText().contains("fabricVersion=\"0.89.3+1.20.2\""))
-//        val forgeToml = forge1202Path.asFile.readText()
-//        assertTrue(forgeToml.contains("fabricVersion=\"0.89.3+1.20.2\""))
-//        assertTrue(forgeToml.contains("packVersion=\"18\""))
+        val forgeToml = forge1202Path.asFile.readText()
+        assertTrue(forgeToml.contains("fabricVersion=\"0.89.3+1.20.2\""))
+        assertTrue(forgeToml.contains("packVersion=\"18\""))
 
         assertTrue(fabric121Path.asFile.readText().contains("fabricVersion=\"0.102.0+1.21\""))
-//        assertTrue(forge121Path.asFile.readText().contains("fabricVersion=\"0.102.0+1.21\""))
+        assertTrue(forge121Path.asFile.readText().contains("fabricVersion=\"0.102.0+1.21\""))
         val neoToml = neoforge121Path.asFile.readText()
         assertTrue(neoToml.contains("fabricVersion=\"0.102.0+1.21\""))
         assertTrue(neoToml.contains("packVersion=\"34\""))
@@ -371,9 +358,9 @@ modSettings {
 
         val files = listOf(
             fabric1202Path,
-//            forge1202Path,
+            forge1202Path,
             fabric121Path,
-//            forge121Path,
+            forge121Path,
             neoforge121Path
         )
 

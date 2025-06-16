@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junitpioneer.jupiter.SetEnvironmentVariable
@@ -58,7 +57,7 @@ tasks.register("publishingSettings") {
 
     @Test
     fun `publishing tasks are configured`() {
-        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
 
         val br = gradleTest.run("tasks")
 
@@ -138,7 +137,6 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("dryRun=false"), "Dry run has been set incorrectly")
     }
 
-    @Disabled("architectury-loom issue #274")
     @Test
     fun `publish values are correctly set for a multi-loader and multi-version project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
@@ -172,36 +170,6 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("displayName=5.6.7 for Neoforge 1.21.4"), "Display name has not been set correctly for neoforge 1.21.4")
         assertTrue(br.output.contains("displayName=5.6.7 for Fabric 1.21"), "Display name has not been set correctly for fabric 1.21")
         assertTrue(br.output.contains("displayName=5.6.7 for Forge 1.21"), "Display name has not been set correctly for forge 1.21")
-        assertTrue(br.output.contains("displayName=5.6.7 for Neoforge 1.21"), "Display name has not been set correctly for neoforge 1.21")
-    }
-
-    @Test
-    fun `TMP-arch publish values are correctly set for a multi-loader and multi-version project`() {
-        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
-        gradleTest.setStonecutterVersion("1.21", "fabric", "neoforge")
-        gradleTest.setModProperty("mod.version", "5.6.7")
-
-        val br = gradleTest.run("publishingSettings")
-        val expectedFiles = listOf(
-            gradleTest.project().layout.projectDirectory.file("versions/1.21.4-fabric/build/libs/examplemod-fabric-5.6.7+mc1.21.4.jar").asFile.absolutePath,
-            gradleTest.project().layout.projectDirectory.file("versions/1.21.4-neoforge/build/libs/examplemod-neoforge-5.6.7+mc1.21.4.jar").asFile.absolutePath,
-            gradleTest.project().layout.projectDirectory.file("versions/1.21-fabric/build/libs/examplemod-fabric-5.6.7+mc1.21.jar").asFile.absolutePath,
-            gradleTest.project().layout.projectDirectory.file("versions/1.21-neoforge/build/libs/examplemod-neoforge-5.6.7+mc1.21.jar").asFile.absolutePath
-        )
-
-        expectedFiles.forEach { expectedFile ->
-            assertTrue(br.output.contains(expectedFile), "File path has not been set correctly. Expected: $expectedFile")
-        }
-
-        assertTrue(br.output.contains("displayName=5.6.7 for Fabric 1.21.4"), "Display name has not been set correctly for fabric 1.21.4")
-        assertTrue(br.output.contains("displayName=5.6.7 for Neoforge 1.21.4"), "Display name has not been set correctly for neoforge 1.21.4")
-
-        assertTrue(br.output.contains("displayName=5.6.7 for Fabric 1.21"), "Display name has not been set correctly for fabric 1.21")
-        assertTrue(br.output.contains("displayName=5.6.7 for Neoforge 1.21"), "Display name has not been set correctly for neoforge 1.21")
-
-        assertTrue(br.output.contains("displayName=5.6.7 for Fabric 1.21.4"), "Display name has not been set correctly for fabric 1.21.4")
-        assertTrue(br.output.contains("displayName=5.6.7 for Neoforge 1.21.4"), "Display name has not been set correctly for neoforge 1.21.4")
-        assertTrue(br.output.contains("displayName=5.6.7 for Fabric 1.21"), "Display name has not been set correctly for fabric 1.21")
         assertTrue(br.output.contains("displayName=5.6.7 for Neoforge 1.21"), "Display name has not been set correctly for neoforge 1.21")
     }
 
@@ -249,7 +217,7 @@ tasks.register("publishingSettings") {
     @SetEnvironmentVariable(key = "MODRINTH_ID", value = "an-even-better-test-id-456.456")
     @Test
     fun `modrinth publishing can be configured for a multi-loader project`() {
-        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
         gradleTest.setStonecutterVersion("1.21", "neoforge")
         gradleTest.setModProperty("mod.version", "3.4.5")
 
@@ -266,7 +234,7 @@ tasks.register("publishingSettings") {
         assertEquals(3, versionCount4, "Modrinth project ID has not been set correctly for all versions")
 
         assertTrue(br.output.contains("modrinth.announcementTitle=Download 3.4.5+fabric-1.21.4 from Modrinth"), "Modrinth announcement title has not been set correctly for 1.21.4 Fabric")
-        assertTrue(br.output.contains("modrinth.announcementTitle=Download 3.4.5+neoforge-1.21.4 from Modrinth"), "Modrinth announcement title has not been set correctly for 1.21.4 Neoforge")
+        assertTrue(br.output.contains("modrinth.announcementTitle=Download 3.4.5+forge-1.21.4 from Modrinth"), "Modrinth announcement title has not been set correctly for 1.21.4 Forge")
         assertTrue(br.output.contains("modrinth.announcementTitle=Download 3.4.5+neoforge-1.21 from Modrinth"), "Modrinth announcement title has not been set correctly for 1.21 Neoforge")
     }
 
@@ -287,7 +255,6 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("curseforge.announcementTitle=Download 0.1.2+fabric-1.21.4 from CurseForge"), "CurseForge announcement title has not been set correctly")
     }
 
-    @Disabled("architectury-loom issue #274")
     @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value = "a-test-slug-123.123")
     @SetEnvironmentVariable(key = "CURSEFORGE_ID", value = "an-even-better-test-id-456.456")
     @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value = "a-test-token-123.123")
@@ -338,7 +305,6 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("curseforge.announcementTitle=Download 0.1.2+fabric-1.21.4 from CurseForge"), "CurseForge announcement title has not been set correctly")
     }
 
-    @Disabled("architectury-loom issue #274")
     @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value = "a-test-modrinth-token-123.123")
     @SetEnvironmentVariable(key = "MODRINTH_ID", value = "an-even-better-test-modrinth-id-456.456")
     @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value = "a-test-curseforge-slug-123.123")
