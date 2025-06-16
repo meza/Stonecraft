@@ -17,9 +17,9 @@ import java.util.*
  * @TODO: Add support for Mojang mappings
  *
  * @param project The project to configure the dependencies for
- * @param minecraftVersion The version of Minecraft to configure the dependencies for
+ * @param canonicalMinecraftVersion The version of Minecraft to configure the dependencies for
  */
-fun configureDependencies(project: Project, minecraftVersion: String) {
+fun configureDependencies(project: Project, canonicalMinecraftVersion: String, realMinecraftVersion: String) {
     // Set the basic repositories for a multiloader project
     project.repositories {
         mavenCentral()
@@ -29,10 +29,7 @@ fun configureDependencies(project: Project, minecraftVersion: String) {
         maven("https://maven.neoforged.net/releases/")
     }
 
-    // Load version specific dependencies from versions/dependencies/[minecraftVersion].properties
-    loadSpecificDependencyVersions(project, minecraftVersion)
-
-    project.dependencies.add("minecraft", "com.mojang:minecraft:$minecraftVersion")
+    project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
 
     if (!project.mod.isNeoforge) {
         // normal projects
@@ -75,7 +72,7 @@ fun configureDependencies(project: Project, minecraftVersion: String) {
  * @param minecraftVersion The version of Minecraft to load the dependencies for
  *
  */
-private fun loadSpecificDependencyVersions(project: Project, minecraftVersion: String) {
+public fun loadSpecificDependencyVersions(project: Project, minecraftVersion: String) {
     val customPropsFile = project.rootProject.file("versions/dependencies/$minecraftVersion.properties")
 
     if (customPropsFile.exists()) {
