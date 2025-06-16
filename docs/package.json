@@ -13,8 +13,8 @@
     "dev": "docusaurus start"
   },
   "dependencies": {
-    "@docusaurus/core": "3.7.0",
-    "@docusaurus/preset-classic": "3.7.0",
+    "@docusaurus/core": "3.8.1",
+    "@docusaurus/preset-classic": "3.8.1",
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-brands-svg-icons": "6.7.2",
     "@fortawesome/free-regular-svg-icons": "6.7.2",
@@ -27,13 +27,13 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.7.0",
-    "@docusaurus/preset-classic": "3.7.0",
-    "@docusaurus/tsconfig": "3.7.0",
-    "@docusaurus/types": "3.7.0",
-    "@types/react": "19.1.2",
-    "@types/react-dom": "19.1.2",
-    "pnpm": "10.8.1",
+    "@docusaurus/module-type-aliases": "3.8.1",
+    "@docusaurus/preset-classic": "3.8.1",
+    "@docusaurus/tsconfig": "3.8.1",
+    "@docusaurus/types": "3.8.1",
+    "@types/react": "19.1.6",
+    "@types/react-dom": "19.1.6",
+    "pnpm": "10.12.1",
     "typescript": "5.8.3"
   }
 }
