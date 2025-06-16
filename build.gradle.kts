@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.architectury.loom)
     implementation(libs.mod.publish)
+    implementation(libs.okio)
 
     testImplementation(gradleTestKit())
     testImplementation(libs.mockito.core)

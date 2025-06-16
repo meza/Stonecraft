@@ -4,13 +4,14 @@ plugin-publish = "1.3.1"
 test-logger = "4.0.0"
 spotless = "7.0.2"
 gson = "2.13.1"
-stonecutter = "0.6-beta.2"
+stonecutter = "0.6.1"
 architectury-loom = "1.10.431"
 mod-publish = "0.8.4"
 junit = "5.13.1"
 junit-pioneer = "2.3.0"
 mockito = "5.18.0"
 mockito-kotlin = "5.4.0"
+okio= "3.13.0"
 
 [libraries]
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -22,6 +23,7 @@ junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 junit-pioneer = { module = "org.junit-pioneer:junit-pioneer", version.ref = "junit-pioneer" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
