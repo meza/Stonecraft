@@ -194,4 +194,58 @@ tasks.register("testConditionalDeps") {
         assertTrue(buildResult.output.contains("forge_version exists: true"), "hasProp should return true for forge_version property from 1.21.4.properties")
         assertTrue(buildResult.output.contains("forge_version value: 1.21.4-54.0.16"), "Should load forge_version from 1.21.4.properties")
     }
+
+    @Test
+    fun `debug properties loading`() {
+        val testBuilder = gradleTest().buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("debugProperties") {
+    doLast {
+        println("=== PROJECT INFO ===")
+        println("Project name: " + project.name)
+        println("Project path: " + project.path)
+        println("Root project: " + project.rootProject.name)
+        
+        println("=== ALL EXTRA PROPERTIES ===")
+        project.extra.properties.forEach { (key, value) ->
+            println("EXTRA[${'$'}key] = '${'$'}value' (type: ${'$'}{value?.javaClass?.simpleName})")
+        }
+        
+        println("=== ROOT PROJECT EXTRA PROPERTIES ===")
+        project.rootProject.extra.properties.forEach { (key, value) ->
+            println("ROOT_EXTRA[${'$'}key] = '${'$'}value' (type: ${'$'}{value?.javaClass?.simpleName})")
+        }
+        
+        println("=== TESTING SPECIFIC KEYS ===")
+        val testKeys = listOf("fabric_version", "yarn_mappings", "loader_version", "forge_version")
+        testKeys.forEach { key ->
+            println("Key '${'$'}key':")
+            println("  project.extra.has('${'$'}key'): " + project.extra.has(key))
+            println("  project.extra['${'$'}key']: " + project.extra.properties[key])
+            println("  project.rootProject.extra.has('${'$'}key'): " + project.rootProject.extra.has(key))
+            println("  project.rootProject.extra['${'$'}key']: " + project.rootProject.extra.properties[key])
+            try {
+                println("  mod.prop('${'$'}key'): " + mod.prop(key))
+            } catch (e: Exception) {
+                println("  mod.prop('${'$'}key') ERROR: " + e.message)
+            }
+            println("  mod.hasProp('${'$'}key'): " + mod.hasProp(key))
+        }
+    }
+}
+            """.trimIndent()
+        )
+        
+        testBuilder.setStonecutterVersion("1.21.4", "fabric")
+        
+        val buildResult = testBuilder.run("debugProperties")
+        
+        println("=== BUILD OUTPUT ===")
+        println(buildResult.output)
+        
+        // This test is just for debugging, so we don't assert anything
+        assertTrue(true, "Debug test completed")
+    }
 }
