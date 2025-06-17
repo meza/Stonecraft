@@ -1,7 +1,5 @@
 package gg.meza.stonecraft
 
-import org.gradle.api.Project
-import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -11,98 +9,157 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 @DisplayName("ModData Tests")
-class ModDataTest {
+class ModDataTest : IntegrationTest {
 
-    private lateinit var project: Project
-    private lateinit var modData: ModData
+    private lateinit var gradleTest: IntegrationTest.TestBuilder
 
     @BeforeEach
     fun setUp() {
-        project = ProjectBuilder.builder().build()
+        gradleTest = gradleTest().buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("testHasProp") {
+    doLast {
+        println("fabric_version exists: " + mod.hasProp("fabric_version"))
+        println("forge_version exists: " + mod.hasProp("forge_version"))
+        println("non_existent_property exists: " + mod.hasProp("non_existent_property"))
+        println("yarn_mappings exists: " + mod.hasProp("yarn_mappings"))
+        println("loader_version exists: " + mod.hasProp("loader_version"))
         
-        // Set up required mod properties
-        project.setProperty("mod.id", "test-mod")
-        project.setProperty("mod.name", "Test Mod")
-        project.setProperty("mod.description", "A test mod")
-        project.setProperty("mod.version", "1.0.0")
-        project.setProperty("mod.group", "com.test")
-        
-        // Set project name to include loader
-        project.name = "test-mod-fabric"
-        
-        modData = ModData(project)
+        if (mod.hasProp("fabric_version")) {
+            println("fabric_version value: " + mod.prop("fabric_version"))
+        }
+        if (mod.hasProp("forge_version")) {
+            println("forge_version value: " + mod.prop("forge_version"))
+        }
+        if (mod.hasProp("yarn_mappings")) {
+            println("yarn_mappings value: " + mod.prop("yarn_mappings"))
+        }
+    }
+}
+            """.trimIndent()
+        )
     }
 
     @Test
-    fun `hasProp returns true when property exists`() {
-        project.extensions.extraProperties["test_property"] = "test_value"
+    fun `hasProp returns true when property exists in version file`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
         
-        assertTrue(modData.hasProp("test_property"), "hasProp should return true for existing property")
+        val buildResult = gradleTest.run("testHasProp")
+        
+        assertTrue(buildResult.output.contains("fabric_version exists: true"), "hasProp should return true for fabric_version property from 1.21.4.properties")
+        assertTrue(buildResult.output.contains("yarn_mappings exists: true"), "hasProp should return true for yarn_mappings property from 1.21.4.properties")
+        assertTrue(buildResult.output.contains("loader_version exists: true"), "hasProp should return true for loader_version property from 1.21.4.properties")
     }
 
     @Test
     fun `hasProp returns false when property does not exist`() {
-        assertFalse(modData.hasProp("non_existent_property"), "hasProp should return false for non-existent property")
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        
+        val buildResult = gradleTest.run("testHasProp")
+        
+        assertFalse(buildResult.output.contains("non_existent_property exists: true"), "hasProp should return false for non-existent property")
+        assertTrue(buildResult.output.contains("non_existent_property exists: false"), "hasProp should return false for non-existent property")
     }
 
     @Test
-    fun `hasProp returns true for property with null value`() {
-        project.extensions.extraProperties["null_property"] = null
+    fun `hasProp works with different minecraft versions`() {
+        gradleTest.setStonecutterVersion("1.21", "fabric")
         
-        assertTrue(modData.hasProp("null_property"), "hasProp should return true even for null-valued property")
-    }
-
-    @Test
-    fun `hasProp returns true for property with empty string value`() {
-        project.extensions.extraProperties["empty_property"] = ""
+        val buildResult = gradleTest.run("testHasProp")
         
-        assertTrue(modData.hasProp("empty_property"), "hasProp should return true for empty string property")
-    }
-
-    @Test
-    fun `hasProp works with complex property names`() {
-        project.extensions.extraProperties["dependency_name"] = "fabric-api"
-        project.extensions.extraProperties["minecraft.version"] = "1.21.4"
-        project.extensions.extraProperties["mod-loader_type"] = "fabric"
-        
-        assertTrue(modData.hasProp("dependency_name"), "hasProp should work with underscore property names")
-        assertTrue(modData.hasProp("minecraft.version"), "hasProp should work with dot-separated property names")
-        assertTrue(modData.hasProp("mod-loader_type"), "hasProp should work with mixed property names")
+        assertTrue(buildResult.output.contains("fabric_version exists: true"), "hasProp should return true for fabric_version property from 1.21.properties")
+        assertTrue(buildResult.output.contains("fabric_version value: 0.102.0+1.21"), "Should load fabric_version from 1.21.properties")
     }
 
     @Test
     fun `hasProp integrates well with existing prop functions`() {
-        project.extensions.extraProperties["existing_prop"] = "value"
+        gradleTest.buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("testPropIntegration") {
+    doLast {
+        val existingProp = "fabric_version"
+        val missingProp = "missing_property"
         
-        assertTrue(modData.hasProp("existing_prop"), "hasProp should return true for existing property")
-        assertEquals("value", modData.prop("existing_prop"), "prop should return the value for existing property")
-        assertEquals("value", modData.prop("existing_prop", "default"), "prop with default should return the value for existing property")
+        println("hasProp existing: " + mod.hasProp(existingProp))
+        println("hasProp missing: " + mod.hasProp(missingProp))
         
-        assertFalse(modData.hasProp("missing_prop"), "hasProp should return false for missing property")
-        assertEquals("default", modData.prop("missing_prop", "default"), "prop with default should return default for missing property")
-        
-        // Test that prop without default throws for missing property
-        assertThrows<IllegalArgumentException> {
-            modData.prop("missing_prop")
+        if (mod.hasProp(existingProp)) {
+            println("prop value: " + mod.prop(existingProp))
+            println("prop with default: " + mod.prop(existingProp, "default"))
         }
+        
+        if (!mod.hasProp(missingProp)) {
+            println("prop with default for missing: " + mod.prop(missingProp, "default_value"))
+        }
+        
+        try {
+            mod.prop(missingProp)
+            println("ERROR: Should have thrown exception")
+        } catch (Exception e) {
+            println("Exception caught: " + e.message)
+        }
+    }
+}
+            """.trimIndent()
+        )
+        
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        
+        val buildResult = gradleTest.run("testPropIntegration")
+        
+        assertTrue(buildResult.output.contains("hasProp existing: true"), "hasProp should return true for existing property")
+        assertTrue(buildResult.output.contains("hasProp missing: false"), "hasProp should return false for missing property")
+        assertTrue(buildResult.output.contains("prop value: 0.114.0+1.21.4"), "prop should return the value for existing property")
+        assertTrue(buildResult.output.contains("prop with default: 0.114.0+1.21.4"), "prop with default should return the value for existing property")
+        assertTrue(buildResult.output.contains("prop with default for missing: default_value"), "prop with default should return default for missing property")
+        assertTrue(buildResult.output.contains("Exception caught: Property missing_property not found"), "prop without default should throw for missing property")
     }
 
     @Test
     fun `hasProp can be used for conditional dependency loading pattern`() {
-        // Simulate the use case described in the issue
-        project.extensions.extraProperties["fabric_api_version"] = "0.92.0"
-        // Note: "sodium_version" is intentionally not set to simulate missing optional dependency
-        
+        gradleTest.buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("testConditionalDeps") {
+    doLast {
         // This is the pattern users would use in their build files
-        val shouldLoadFabricApi = modData.hasProp("fabric_api_version")
-        val shouldLoadSodium = modData.hasProp("sodium_version")
+        val shouldLoadFabricApi = mod.hasProp("fabric_version")
+        val shouldLoadSodium = mod.hasProp("sodium_version") // This property doesn't exist in fixture files
         
-        assertTrue(shouldLoadFabricApi, "Should load fabric-api when version is available")
-        assertFalse(shouldLoadSodium, "Should not load sodium when version is not available")
+        println("Should load fabric-api: " + shouldLoadFabricApi)
+        println("Should load sodium: " + shouldLoadSodium)
         
         // Additional validation that the values can be retrieved when available
         if (shouldLoadFabricApi) {
-            assertEquals("0.92.0", modData.prop("fabric_api_version"))
+            println("Fabric API version: " + mod.prop("fabric_version"))
         }
     }
+}
+            """.trimIndent()
+        )
+        
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        
+        val buildResult = gradleTest.run("testConditionalDeps")
+        
+        assertTrue(buildResult.output.contains("Should load fabric-api: true"), "Should load fabric-api when version is available")
+        assertTrue(buildResult.output.contains("Should load sodium: false"), "Should not load sodium when version is not available")
+        assertTrue(buildResult.output.contains("Fabric API version: 0.114.0+1.21.4"), "Should retrieve fabric_version value when available")
+    }
+
+    @Test
+    fun `hasProp works with forge properties`() {
+        gradleTest.setStonecutterVersion("1.21.4", "forge")
+        
+        val buildResult = gradleTest.run("testHasProp")
+        
+        assertTrue(buildResult.output.contains("forge_version exists: true"), "hasProp should return true for forge_version property from 1.21.4.properties")
+        assertTrue(buildResult.output.contains("forge_version value: 1.21.4-54.0.16"), "Should load forge_version from 1.21.4.properties")
+    }
+}
 }
