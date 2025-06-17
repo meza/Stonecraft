@@ -9,40 +9,9 @@ import org.junit.jupiter.api.Test
 @DisplayName("ModData Tests")
 class ModDataTest : IntegrationTest {
 
-    private lateinit var gradleTest: IntegrationTest.TestBuilder
-
-    @BeforeEach
-    fun setUp() {
-        gradleTest = gradleTest().buildScript(
-            """
-import gg.meza.stonecraft.mod
-
-tasks.register("testHasProp") {
-    doLast {
-        println("fabric_version exists: " + mod.hasProp("fabric_version"))
-        println("forge_version exists: " + mod.hasProp("forge_version"))
-        println("non_existent_property exists: " + mod.hasProp("non_existent_property"))
-        println("yarn_mappings exists: " + mod.hasProp("yarn_mappings"))
-        println("loader_version exists: " + mod.hasProp("loader_version"))
-        
-        if (mod.hasProp("fabric_version")) {
-            println("fabric_version value: " + mod.prop("fabric_version"))
-        }
-        if (mod.hasProp("forge_version")) {
-            println("forge_version value: " + mod.prop("forge_version"))
-        }
-        if (mod.hasProp("yarn_mappings")) {
-            println("yarn_mappings value: " + mod.prop("yarn_mappings"))
-        }
-    }
-}
-            """.trimIndent()
-        )
-    }
-
     @Test
     fun `hasProp returns true when property exists in version file`() {
-        gradleTest.buildScript(
+        val testBuilder = gradleTest().buildScript(
             """
 import gg.meza.stonecraft.mod
 
@@ -74,9 +43,9 @@ tasks.register("debugProps") {
             """.trimIndent()
         )
         
-        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        testBuilder.setStonecutterVersion("1.21.4", "fabric")
         
-        val buildResult = gradleTest.run("debugProps")
+        val buildResult = testBuilder.run("debugProps")
         
         println("=== BUILD OUTPUT ===")
         println(buildResult.output)
@@ -88,9 +57,35 @@ tasks.register("debugProps") {
 
     @Test
     fun `hasProp returns false when property does not exist`() {
-        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        val testBuilder = gradleTest().buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("testHasProp") {
+    doLast {
+        println("fabric_version exists: " + mod.hasProp("fabric_version"))
+        println("forge_version exists: " + mod.hasProp("forge_version"))
+        println("non_existent_property exists: " + mod.hasProp("non_existent_property"))
+        println("yarn_mappings exists: " + mod.hasProp("yarn_mappings"))
+        println("loader_version exists: " + mod.hasProp("loader_version"))
         
-        val buildResult = gradleTest.run("testHasProp")
+        if (mod.hasProp("fabric_version")) {
+            println("fabric_version value: " + mod.prop("fabric_version"))
+        }
+        if (mod.hasProp("forge_version")) {
+            println("forge_version value: " + mod.prop("forge_version"))
+        }
+        if (mod.hasProp("yarn_mappings")) {
+            println("yarn_mappings value: " + mod.prop("yarn_mappings"))
+        }
+    }
+}
+            """.trimIndent()
+        )
+        
+        testBuilder.setStonecutterVersion("1.21.4", "fabric")
+        
+        val buildResult = testBuilder.run("testHasProp")
         
         assertFalse(buildResult.output.contains("non_existent_property exists: true"), "hasProp should return false for non-existent property")
         assertTrue(buildResult.output.contains("non_existent_property exists: false"), "hasProp should return false for non-existent property")
@@ -98,9 +93,35 @@ tasks.register("debugProps") {
 
     @Test
     fun `hasProp works with different minecraft versions`() {
-        gradleTest.setStonecutterVersion("1.21", "fabric")
+        val testBuilder = gradleTest().buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("testHasProp") {
+    doLast {
+        println("fabric_version exists: " + mod.hasProp("fabric_version"))
+        println("forge_version exists: " + mod.hasProp("forge_version"))
+        println("non_existent_property exists: " + mod.hasProp("non_existent_property"))
+        println("yarn_mappings exists: " + mod.hasProp("yarn_mappings"))
+        println("loader_version exists: " + mod.hasProp("loader_version"))
         
-        val buildResult = gradleTest.run("testHasProp")
+        if (mod.hasProp("fabric_version")) {
+            println("fabric_version value: " + mod.prop("fabric_version"))
+        }
+        if (mod.hasProp("forge_version")) {
+            println("forge_version value: " + mod.prop("forge_version"))
+        }
+        if (mod.hasProp("yarn_mappings")) {
+            println("yarn_mappings value: " + mod.prop("yarn_mappings"))
+        }
+    }
+}
+            """.trimIndent()
+        )
+        
+        testBuilder.setStonecutterVersion("1.21", "fabric")
+        
+        val buildResult = testBuilder.run("testHasProp")
         
         assertTrue(buildResult.output.contains("fabric_version exists: true"), "hasProp should return true for fabric_version property from 1.21.properties")
         assertTrue(buildResult.output.contains("fabric_version value: 0.102.0+1.21"), "Should load fabric_version from 1.21.properties")
@@ -187,9 +208,35 @@ tasks.register("testConditionalDeps") {
 
     @Test
     fun `hasProp works with forge properties`() {
-        gradleTest.setStonecutterVersion("1.21.4", "forge")
+        val testBuilder = gradleTest().buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("testHasProp") {
+    doLast {
+        println("fabric_version exists: " + mod.hasProp("fabric_version"))
+        println("forge_version exists: " + mod.hasProp("forge_version"))
+        println("non_existent_property exists: " + mod.hasProp("non_existent_property"))
+        println("yarn_mappings exists: " + mod.hasProp("yarn_mappings"))
+        println("loader_version exists: " + mod.hasProp("loader_version"))
         
-        val buildResult = gradleTest.run("testHasProp")
+        if (mod.hasProp("fabric_version")) {
+            println("fabric_version value: " + mod.prop("fabric_version"))
+        }
+        if (mod.hasProp("forge_version")) {
+            println("forge_version value: " + mod.prop("forge_version"))
+        }
+        if (mod.hasProp("yarn_mappings")) {
+            println("yarn_mappings value: " + mod.prop("yarn_mappings"))
+        }
+    }
+}
+            """.trimIndent()
+        )
+        
+        testBuilder.setStonecutterVersion("1.21.4", "forge")
+        
+        val buildResult = testBuilder.run("testHasProp")
         
         assertTrue(buildResult.output.contains("forge_version exists: true"), "hasProp should return true for forge_version property from 1.21.4.properties")
         assertTrue(buildResult.output.contains("forge_version value: 1.21.4-54.0.16"), "Should load forge_version from 1.21.4.properties")

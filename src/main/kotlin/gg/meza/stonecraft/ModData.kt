@@ -60,7 +60,7 @@ class ModData(private val project: Project) {
     }
 
     fun hasProp(key: String): Boolean {
-        return project.extra.has(key)
+        return project.extra[key] != null
     }
 
     fun isSnapshot(): Boolean = prop("is_snapshot", "false") == "true"
