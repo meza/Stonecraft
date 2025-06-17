@@ -1,12 +1,10 @@
 package gg.meza.stonecraft
 
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 @DisplayName("ModData Tests")
 class ModDataTest : IntegrationTest {
@@ -161,5 +159,4 @@ tasks.register("testConditionalDeps") {
         assertTrue(buildResult.output.contains("forge_version exists: true"), "hasProp should return true for forge_version property from 1.21.4.properties")
         assertTrue(buildResult.output.contains("forge_version value: 1.21.4-54.0.16"), "Should load forge_version from 1.21.4.properties")
     }
-}
 }
