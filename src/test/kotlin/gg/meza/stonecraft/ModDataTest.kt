@@ -42,9 +42,44 @@ tasks.register("testHasProp") {
 
     @Test
     fun `hasProp returns true when property exists in version file`() {
+        gradleTest.buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("debugProps") {
+    doLast {
+        println("=== DEBUG: All extra properties ===")
+        project.extra.properties.forEach { (key, value) ->
+            println("EXTRA PROP: ${'$'}key = ${'$'}value")
+        }
+        println("=== DEBUG: Testing specific properties ===")
+        println("fabric_version exists: " + mod.hasProp("fabric_version"))
+        println("yarn_mappings exists: " + mod.hasProp("yarn_mappings"))
+        println("loader_version exists: " + mod.hasProp("loader_version"))
+        println("non_existent_property exists: " + mod.hasProp("non_existent_property"))
+        
+        println("=== DEBUG: Checking project.extra.has directly ===")
+        println("project.extra.has(fabric_version): " + project.extra.has("fabric_version"))
+        println("project.extra.has(yarn_mappings): " + project.extra.has("yarn_mappings"))
+        println("project.extra.has(loader_version): " + project.extra.has("loader_version"))
+        
+        if (project.extra.has("fabric_version")) {
+            println("fabric_version value: " + project.extra["fabric_version"])
+        }
+        if (project.extra.has("yarn_mappings")) {
+            println("yarn_mappings value: " + project.extra["yarn_mappings"])
+        }
+    }
+}
+            """.trimIndent()
+        )
+        
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
         
-        val buildResult = gradleTest.run("testHasProp")
+        val buildResult = gradleTest.run("debugProps")
+        
+        println("=== BUILD OUTPUT ===")
+        println(buildResult.output)
         
         assertTrue(buildResult.output.contains("fabric_version exists: true"), "hasProp should return true for fabric_version property from 1.21.4.properties")
         assertTrue(buildResult.output.contains("yarn_mappings exists: true"), "hasProp should return true for yarn_mappings property from 1.21.4.properties")
@@ -73,7 +108,7 @@ tasks.register("testHasProp") {
 
     @Test
     fun `hasProp integrates well with existing prop functions`() {
-        gradleTest.buildScript(
+        val testBuilder = gradleTest().buildScript(
             """
 import gg.meza.stonecraft.mod
 
@@ -105,9 +140,9 @@ tasks.register("testPropIntegration") {
             """.trimIndent()
         )
         
-        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        testBuilder.setStonecutterVersion("1.21.4", "fabric")
         
-        val buildResult = gradleTest.run("testPropIntegration")
+        val buildResult = testBuilder.run("testPropIntegration")
         
         assertTrue(buildResult.output.contains("hasProp existing: true"), "hasProp should return true for existing property")
         assertTrue(buildResult.output.contains("hasProp missing: false"), "hasProp should return false for missing property")
@@ -119,7 +154,7 @@ tasks.register("testPropIntegration") {
 
     @Test
     fun `hasProp can be used for conditional dependency loading pattern`() {
-        gradleTest.buildScript(
+        val testBuilder = gradleTest().buildScript(
             """
 import gg.meza.stonecraft.mod
 
@@ -141,9 +176,9 @@ tasks.register("testConditionalDeps") {
             """.trimIndent()
         )
         
-        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        testBuilder.setStonecutterVersion("1.21.4", "fabric")
         
-        val buildResult = gradleTest.run("testConditionalDeps")
+        val buildResult = testBuilder.run("testConditionalDeps")
         
         assertTrue(buildResult.output.contains("Should load fabric-api: true"), "Should load fabric-api when version is available")
         assertTrue(buildResult.output.contains("Should load sodium: false"), "Should not load sodium when version is not available")
