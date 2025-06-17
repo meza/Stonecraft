@@ -24,6 +24,12 @@ Ensure that commit types are chosen carefully, as they directly impact the softw
 version; only use `fix` or `feat` for changes that affect user-facing behavior, 
 and all commits must strictly follow the conventional commit format.
 
+**Review-feedback fixes**
+
+When a change only corrects mistakes introduced by the **same logical unit of work**, **amend** the original commit and **force-push** instead of adding a new commit.  
+If rewriting history is impossible, and you must create a follow-up commit, use **`chore`** or **`refactor`**.  
+Never use **`feat`** or **`fix`** for these clean-up commits as they are user-facing and appear in the changelog.
+
 ### Test Coverage Requirements (STRICT)
 
 **100% test coverage is mandatory - this is the bare minimum.**
