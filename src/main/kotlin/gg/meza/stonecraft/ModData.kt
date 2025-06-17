@@ -31,6 +31,7 @@ val Project.mod: ModData get() = ModData(this)
  * @property isForgeLike Whether the mod is a forge or neoforge mod
  * @property isFabricLike Whether the mod is a fabric or quilt mod
  * @property prop A helper function to get a property from the project that is not in the mod data
+ * @property hasProp A helper function to check if a property exists in the project
  */
 class ModData(private val project: Project) {
     val id: String get() = project.property("mod.id").toString()
@@ -57,6 +58,8 @@ class ModData(private val project: Project) {
 
         return default
     }
+
+    fun hasProp(key: String): Boolean = project.extra.has(key)
 
     fun isSnapshot(): Boolean = prop("is_snapshot", "false") == "true"
 }
