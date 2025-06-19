@@ -15,6 +15,6 @@ class HelperFunctionsTest {
 
     @Test
     fun `throws for unknown versions`() {
-        assertThrows(IllegalArgumentException::class.java) { getResourceVersionFor("1.20.1") }
+        assertThrows(IllegalArgumentException::class.java) { getResourceVersionFor("0.20.1") }
     }
 }
