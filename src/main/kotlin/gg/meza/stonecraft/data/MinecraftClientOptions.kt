@@ -17,7 +17,7 @@ abstract class MinecraftClientOptions @Inject constructor(
     internal val fovValue = objects.property(Double::class.java)
 
     var fov: Int
-        get() = (fovValue.get() * 80 + 30).toInt()
+        get() = ((fovValue.get() + 1) * 40 + 30).toInt()
         set(value) {
             fovValue.set(-1.0 + (value - 30) * (2.0 / 80.0))
         }
