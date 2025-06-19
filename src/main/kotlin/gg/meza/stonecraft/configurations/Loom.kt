@@ -15,9 +15,9 @@ import org.gradle.kotlin.dsl.getByType
 fun configureLoom(project: Project, stonecutter: StonecutterBuild, modSettings: ModSettingsExtension) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
 
-    if (project.mod.isForge && stonecutter.eval(stonecutter.current.version, ">1.21")) {
+    if (project.mod.isForge && stonecutter.eval(stonecutter.current.version, ">=1.21")) {
         project.logger.warn(
-            "Forge 1.21+ is not really supported by Architectury anymore and " +
+            "Forge 1.21 and above is not really supported by Architectury anymore and " +
                 "issues may arise when using it with Architectury Loom.\n" +
                 "Please consider using NeoForge instead if you can."
         )
