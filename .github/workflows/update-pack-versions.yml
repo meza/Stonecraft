@@ -1,0 +1,21 @@
+name: Update pack versions
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update pack formats
+        uses: meza/action-minecraft-pack-versions@v1
+        with:
+          output_path: src/main/resources/pack_versions.json
+          commit_enabled: true
+          commit_type: fix
+          commit_scope: pack-format
