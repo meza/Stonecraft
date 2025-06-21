@@ -11,7 +11,13 @@ format. There's a bit of transformation that needs to happen to get the value in
 
 :::note
 It might not be completely accurate so if you have a better way, please submit a PR.
-The current calculation can be found in the [MinecraftClientOptions.kt](https://github.com/meza/Stonecraft/blob/main/src/main/kotlin/gg/meza/stonecraft/data/MinecraftClientOptions.kt#L22) file
+The current calculation can be found in the [MinecraftClientOptions.kt](https://github.com/meza/Stonecraft/blob/main/src/main/kotlin/gg/meza/stonecraft/data/MinecraftClientOptions.kt) file.
+The value stored in `options.txt` ranges from `-1` to `1`. The getter now
+converts this value back to degrees using:
+
+```kotlin
+fov = ((storedValue + 1) * 40 + 30).toInt()
+```
 :::
 
 ```kotlin title='build.gradle.kts'

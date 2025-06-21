@@ -15,6 +15,14 @@ import org.gradle.kotlin.dsl.getByType
 fun configureLoom(project: Project, stonecutter: StonecutterBuild, modSettings: ModSettingsExtension) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
 
+    if (project.mod.isForge && stonecutter.eval(stonecutter.current.version, ">=1.21")) {
+        project.logger.warn(
+            "Forge 1.21 and above is not really supported by Architectury anymore and " +
+                "issues may arise when using it with Architectury Loom.\n" +
+                "Please consider using NeoForge instead if you can."
+        )
+    }
+
     loom.apply {
         val awFile =
             project.rootProject.layout.projectDirectory.file("src/main/resources/${project.mod.id}.accesswidener")
@@ -152,13 +160,7 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
 private fun RunConfigSettings.forgeLikeConfig(side: Side, loader: String, stonecutter: StonecutterBuild) {
     if (side == Side.SERVER) {
         environment("gametestserver")
-
-        if (
-            !(project.mod.isNeoforge && stonecutter.eval(stonecutter.current.version, "=1.21")) &&
-            !(project.mod.isForge && stonecutter.eval(stonecutter.current.version, "=1.21.4"))
-        ) {
-            forgeTemplate("gametestserver")
-        }
+        forgeTemplate("gametestserver")
         property("$loader.gameTestServer", "true")
     }
 
@@ -207,10 +209,7 @@ fun configureDatagen(
     }
 
     loom.runs {
-        if (mod.isForge && stonecutter.eval(minecraftVersion, "<1.21.4")) {
-            // Forge 1.21.4 is currently broken with Architectury Loom 1.9.424
-            // Once that gets fixed, the version condition above should be removed
-            // @see https://github.com/architectury/architectury-loom/issues/262
+        if (mod.isForge) {
             create("datagen") {
                 data()
                 programArgs(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
@@ -249,7 +248,7 @@ fun configureDatagen(
         }
     }
 
-    if (mod.isForge && stonecutter.eval(minecraftVersion, "<1.21.4")) {
+    if (mod.isForge) {
         project.tasks.named("runDatagen") {
             dependsOn("generatePackMCMetaJson")
         }

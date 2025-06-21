@@ -74,12 +74,13 @@ class LoomFullTest : IntegrationTest {
 
         assertTrue(result.output.contains("[1.21.4-forge] client runDir=$runDir"))
         assertTrue(result.output.contains("[1.21.4-forge] server runDir=$runDir"))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen runDir=$runDir"))
         assertTrue(result.output.contains("[1.21.4-forge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}forge"))
         assertTrue(result.output.contains("[1.21.4-forge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}forge"))
 
         assertTrue(result.output.contains("[1.21.4-neoforge] client runDir=$runDir"))
-        assertFalse(result.output.contains("[1.21.4-neoforge] datagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] ClientDatagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] ServerDatagen runDir=$runDir"))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21.4-neoforge] server runDir=$runDir"))
@@ -89,7 +90,6 @@ class LoomFullTest : IntegrationTest {
     fun `datagen options are set for all targets`() {
         fun generatedDir(version: String, loader: String): String = gradleTest.project().layout.projectDirectory.dir("versions/$version-$loader/src/main/generated").asFile.absolutePath
         val existingDir = gradleTest.project().layout.projectDirectory.dir("src/main/resources").asFile.absolutePath
-
         assertTrue(result.output.contains("[1.21-fabric] datagen vmArgs=\"-Dfabric-api.datagen\""))
         assertTrue(result.output.contains("[1.21-fabric] datagen vmArgs=\"-Dfabric-api.datagen.output-dir=${generatedDir("1.21", "fabric")}\""))
         assertTrue(result.output.contains("[1.21.4-fabric] datagen vmArgs=\"-Dfabric-api.datagen\""))
@@ -106,19 +106,19 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21-forge] datagen vmArgs=\"-Dforge.logging.markers=REGISTRIES\""))
 
         // This needs to be assertTrue once arch-loom fixes itself for modern forge
-        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--all\""))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--mod\""))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"examplemod\""))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--output\""))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"${generatedDir("1.21.4", "forge")}\""))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"--existing\""))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen programArgs=\"${existingDir}\""))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.console.level=debug\""))
-        assertFalse(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.markers=REGISTRIES\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen programArgs=\"--all\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen programArgs=\"--mod\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen programArgs=\"examplemod\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen programArgs=\"--output\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen programArgs=\"${generatedDir("1.21.4", "forge")}\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen programArgs=\"--existing\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen programArgs=\"${existingDir}\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.console.level=debug\""))
+        assertTrue(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.markers=REGISTRIES\""))
 
         // This also needs to be true and like the above once arch-loom is fixed
         assertFalse(result.output.contains("[1.21-neoforge] datagen"), "Neoforge datagen settings exist even thought they shouldn't")
-        assertFalse(result.output.contains("[1.21.4-neoforge] datagen"), "Neoforge datagen settings exist even thought they shouldn't")
+        assertTrue(result.output.contains("[1.21.4-neoforge] ClientDatagen"), "Neoforge datagen settings exist even thought they shouldn't")
     }
 
     @Test
