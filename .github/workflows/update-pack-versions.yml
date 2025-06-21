@@ -25,4 +25,3 @@ jobs:
           commit_type: fix
           commit_scope: pack-format
           auto_merge: true
-          pr_base: dev
