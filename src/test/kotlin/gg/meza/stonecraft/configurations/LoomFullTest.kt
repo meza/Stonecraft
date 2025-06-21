@@ -90,7 +90,6 @@ class LoomFullTest : IntegrationTest {
     fun `datagen options are set for all targets`() {
         fun generatedDir(version: String, loader: String): String = gradleTest.project().layout.projectDirectory.dir("versions/$version-$loader/src/main/generated").asFile.absolutePath
         val existingDir = gradleTest.project().layout.projectDirectory.dir("src/main/resources").asFile.absolutePath
-        println(result.output)
         assertTrue(result.output.contains("[1.21-fabric] datagen vmArgs=\"-Dfabric-api.datagen\""))
         assertTrue(result.output.contains("[1.21-fabric] datagen vmArgs=\"-Dfabric-api.datagen.output-dir=${generatedDir("1.21", "fabric")}\""))
         assertTrue(result.output.contains("[1.21.4-fabric] datagen vmArgs=\"-Dfabric-api.datagen\""))
