@@ -20,7 +20,7 @@ jobs:
           ref: dev
 
       - name: Update pack formats
-        uses: meza/action-minecraft-pack-versions@v1.0.1
+        uses: meza/action-minecraft-pack-versions@v1.0.2
         with:
           github_token: '${{ secrets.GH_TOKEN }}'
           output_path: src/main/resources/pack_versions.json
