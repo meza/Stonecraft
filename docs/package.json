@@ -33,7 +33,7 @@
     "@docusaurus/types": "3.8.1",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
-    "pnpm": "10.12.1",
+    "pnpm": "10.12.2",
     "typescript": "5.8.3"
   }
 }
