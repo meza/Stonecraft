@@ -2,7 +2,7 @@
 kotlin = "2.2.0"
 plugin-publish = "2.0.0"
 test-logger = "4.0.0"
-spotless = "7.1.0"
+spotless = "8.0.0"
 gson = "2.13.1"
 stonecutter = "0.6.2"
 architectury-loom = "1.10.433"
