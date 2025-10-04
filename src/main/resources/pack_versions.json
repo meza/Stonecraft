@@ -1602,5 +1602,89 @@
   "18w48a": {
     "datapack": 4,
     "resourcepack": 4
+  },
+  "1.21.9-pre4": {
+    "datapack": 88,
+    "resourcepack": 69
+  },
+  "1.21.9-rc1": {
+    "datapack": 88,
+    "resourcepack": 69
+  },
+  "1.21.10-rc1": {
+    "datapack": 88,
+    "resourcepack": 69
+  },
+  "1.21.9": {
+    "datapack": 88,
+    "resourcepack": 69
+  },
+  "1.21.9-pre3": {
+    "datapack": 88,
+    "resourcepack": 69
+  },
+  "1.21.9-pre1": {
+    "datapack": 87.1,
+    "resourcepack": 69
+  },
+  "1.21.9-pre2": {
+    "datapack": 88,
+    "resourcepack": 69
+  },
+  "25w37a": {
+    "datapack": 87,
+    "resourcepack": 69
+  },
+  "25w36b": {
+    "datapack": 86,
+    "resourcepack": 68
+  },
+  "25w36a": {
+    "datapack": 86,
+    "resourcepack": 68
+  },
+  "25w35a": {
+    "datapack": 85,
+    "resourcepack": 67
+  },
+  "25w34b": {
+    "datapack": 84,
+    "resourcepack": 66
+  },
+  "25w34a": {
+    "datapack": 84,
+    "resourcepack": 66
+  },
+  "25w33a": {
+    "datapack": 83.1,
+    "resourcepack": 65.2
+  },
+  "25w32a": {
+    "datapack": 83,
+    "resourcepack": 65.1
+  },
+  "1.21.8": {
+    "datapack": 81,
+    "resourcepack": 64
+  },
+  "1.21.8-rc1": {
+    "datapack": 81,
+    "resourcepack": 64
+  },
+  "25w31a": {
+    "datapack": 82,
+    "resourcepack": 65
+  },
+  "1.21.7": {
+    "datapack": 81,
+    "resourcepack": 64
+  },
+  "1.21.7-rc2": {
+    "datapack": 81,
+    "resourcepack": 64
+  },
+  "1.21.7-rc1": {
+    "datapack": 80,
+    "resourcepack": 63
   }
 }
