@@ -44,7 +44,7 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
             val currentResourceVersion = getResourcePackFormat(minecraftVersion)
 
             // Version 43 changed how the resource directories are named
-            val needsOldResources = currentResourceVersion < 34
+            val needsOldResources = currentResourceVersion.compareTo(34) < 0
 
             doFirst {
                 logger.debug(String.format("Current resource version is %s", currentResourceVersion.toString()))
