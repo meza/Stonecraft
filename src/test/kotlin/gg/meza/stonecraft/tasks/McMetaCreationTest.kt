@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.io.File
+import java.math.BigDecimal
 import java.util.UUID
 
 @DisplayName("Test pack mcmeta generation for forge")
@@ -43,7 +44,7 @@ class McMetaCreationTest : IntegrationTest {
     @Test
     fun `packfile can be generated for old versions`() {
         val mcMetaCreation = project.tasks.register<McMetaCreation>("mcMetaCreation") {
-            resourcePackVersion.set(6)
+            resourcePackVersion.set(BigDecimal.valueOf(6L))
         }.get()
 
         mcMetaCreation.generateMcMeta()
@@ -55,7 +56,7 @@ class McMetaCreationTest : IntegrationTest {
          */
         val expectedContent = PackMeta(
             Pack(
-                pack_format = 6,
+                pack_format = BigDecimal.valueOf(6L),
                 description = description
             )
         )
@@ -69,7 +70,7 @@ class McMetaCreationTest : IntegrationTest {
     @Test
     fun `packfile correctly generates for the first version supporting the new format`() {
         val mcMetaCreation = project.tasks.register<McMetaCreation>("mcMetaCreation") {
-            resourcePackVersion.set(18)
+            resourcePackVersion.set(BigDecimal.valueOf(18L))
         }.get()
 
         mcMetaCreation.generateMcMeta()
@@ -81,9 +82,9 @@ class McMetaCreationTest : IntegrationTest {
          */
         val expectedContent = PackMeta(
             Pack(
-                pack_format = 18,
+                pack_format = BigDecimal.valueOf(18L),
                 description = description,
-                supported_formats = SupportedFormat(18)
+                supported_formats = SupportedFormat(BigDecimal.valueOf(18L))
             )
         )
 
@@ -96,7 +97,7 @@ class McMetaCreationTest : IntegrationTest {
     @Test
     fun `packfile correctly generates for the new versions`() {
         val mcMetaCreation = project.tasks.register<McMetaCreation>("mcMetaCreation") {
-            resourcePackVersion.set(21)
+            resourcePackVersion.set(BigDecimal.valueOf(21L))
         }.get()
 
         mcMetaCreation.generateMcMeta()
@@ -108,9 +109,9 @@ class McMetaCreationTest : IntegrationTest {
          */
         val expectedContent = PackMeta(
             Pack(
-                pack_format = 21,
+                pack_format = BigDecimal.valueOf(21L),
                 description = description,
-                supported_formats = SupportedFormat(21)
+                supported_formats = SupportedFormat(BigDecimal.valueOf(21L))
             )
         )
 
@@ -127,7 +128,7 @@ class McMetaCreationTest : IntegrationTest {
         inputFile.writeText(packFileContents)
 
         val mcMetaCreation = project.tasks.register<McMetaCreation>("mcMetaCreation") {
-            resourcePackVersion.set(21)
+            resourcePackVersion.set(BigDecimal.valueOf(21L))
         }.get()
 
         mcMetaCreation.generateMcMeta()

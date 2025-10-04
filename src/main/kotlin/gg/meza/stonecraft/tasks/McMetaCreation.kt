@@ -6,6 +6,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
+import java.math.BigDecimal
 import java.nio.file.Files
 
 data class PackMeta(
@@ -13,13 +14,13 @@ data class PackMeta(
 )
 
 data class Pack(
-    val pack_format: Int,
+    val pack_format: BigDecimal,
     val description: String,
     val supported_formats: SupportedFormat? = null
 )
 
 data class SupportedFormat(
-    val min_inclusive: Int
+    val min_inclusive: BigDecimal
 )
 
 abstract class McMetaCreation : DefaultTask() {
@@ -43,7 +44,7 @@ abstract class McMetaCreation : DefaultTask() {
      * The resource pack version to use in the pack.mcmeta file
      */
     @Input
-    val resourcePackVersion = project.objects.property(Int::class.java)
+    val resourcePackVersion = project.objects.property(BigDecimal::class.java)
 
     init {
         group = "mod"
@@ -52,8 +53,8 @@ abstract class McMetaCreation : DefaultTask() {
 
     @TaskAction
     fun generateMcMeta() {
-        val version = requireNotNull(resourcePackVersion.get()) { "Resource pack version must be set with `resourcePackVersion`" }
-        val newFormat = version >= 18
+        val version = requireNotNull(resourcePackVersion.orNull) { "Resource pack version must be set with `resourcePackVersion`" }
+        val newFormat = version >= BigDecimal.valueOf(18L)
 
         if (inputPackFile.exists()) {
             logger.lifecycle("Pack file exists, there's no need to generate one.")

@@ -1,7 +1,7 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.extension.ModSettingsExtension
-import gg.meza.stonecraft.getResourceVersionFor
+import gg.meza.stonecraft.getResourcePackFormat
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.tasks.McMetaCreation
 import org.gradle.api.Project
@@ -17,7 +17,7 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
      */
     if (project.mod.isForge) {
         project.tasks.register<McMetaCreation>("generatePackMCMetaJson") {
-            resourcePackVersion.set(getResourceVersionFor(minecraftVersion))
+            resourcePackVersion.set(getResourcePackFormat(minecraftVersion).toBigDecimal())
         }
     }
 
@@ -41,13 +41,13 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
         // Deal with the general resources
         project.project.tasks.withType<ProcessResources> {
             duplicatesStrategy = DuplicatesStrategy.INCLUDE
-            val currentResourceVersion = getResourceVersionFor(minecraftVersion)
+            val currentResourceVersion = getResourcePackFormat(minecraftVersion)
 
             // Version 43 changed how the resource directories are named
             val needsOldResources = currentResourceVersion < 34
 
             doFirst {
-                logger.debug(String.format("Current resource version is %d", currentResourceVersion))
+                logger.debug(String.format("Current resource version is %s", currentResourceVersion.toString()))
             }
 
             val basicModDetails = mapOf(
@@ -57,7 +57,7 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
                 "description" to project.mod.description,
                 "version" to project.mod.version,
                 "minecraftVersion" to minecraftVersion,
-                "packVersion" to getResourceVersionFor(minecraftVersion),
+                "packVersion" to currentResourceVersion.toBigDecimal(),
                 "fabricVersion" to project.mod.prop("fabric_version", "not set"),
                 "forgeVersion" to project.mod.prop("forge_version", "not set"),
                 "neoforgeVersion" to project.mod.prop("neoforge_version", "not set"),
