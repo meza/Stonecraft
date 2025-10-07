@@ -1686,5 +1686,9 @@
   "1.21.7-rc1": {
     "datapack": 80,
     "resourcepack": 63
+  },
+  "1.21.10": {
+    "datapack": 88,
+    "resourcepack": 69
   }
 }
