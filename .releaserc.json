@@ -64,7 +64,7 @@
                 "type": 2,
                 "style": 5,
                 "label": "Download from GitHub",
-                "url": "https://github.com/meza/Stonecraft/releases/tag/${nextRelease.version}"
+                "url": "https://github.com/meza/Stonecraft/releases/tag/v${nextRelease.version}"
               }
             ]
           }
