@@ -61,8 +61,8 @@ importers:
         specifier: 19.2.1
         version: 19.2.1(@types/react@19.2.2)
       pnpm:
-        specifier: 10.18.1
-        version: 10.18.1
+        specifier: 10.18.2
+        version: 10.18.2
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -3639,8 +3639,8 @@ packages:
     resolution: {integrity: sha512-Ie9z/WINcxxLp27BKOCHGde4ITq9UklYKDzVo1nhk5sqGEXU3FpkwP5GM2voTGJkGd9B3Otl+Q4uwSOeSUtOBA==}
     engines: {node: '>=14.16'}
 
-  pnpm@10.18.1:
-    resolution: {integrity: sha512-d6iEoWXLui2NHBnjtIgO7m0vyr0Nh5Eh4oIZa4AEI1HV6zygk1+lmdodxRJlzGiBatK93Sot5eqf35KtvsfNNA==}
+  pnpm@10.18.2:
+    resolution: {integrity: sha512-n7lp+nSbOt5gNeDxCfC4pgtdCKGof99y4zfakNzJMzbiKAyk5E8jWKZJuDwXlZ6Zk+d3wggIefOAHm8NmZrT3Q==}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -9772,7 +9772,7 @@ snapshots:
     dependencies:
       find-up: 6.3.0
 
-  pnpm@10.18.1: {}
+  pnpm@10.18.2: {}
 
   postcss-attribute-case-insensitive@7.0.1(postcss@8.5.5):
     dependencies:
