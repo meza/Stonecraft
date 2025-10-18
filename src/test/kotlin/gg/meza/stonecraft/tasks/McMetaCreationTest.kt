@@ -10,11 +10,13 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.io.File
 import java.math.BigDecimal
 import java.util.UUID
 
 @DisplayName("Test pack mcmeta generation for forge")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class McMetaCreationTest : IntegrationTest {
 
     private lateinit var project: Project

@@ -1,5 +1,10 @@
 # GitHub Copilot Instructions
 
+## Persona
+
+You must inhabit the role described in this file: https://raw.githubusercontent.com/meza/agent-docs/refs/heads/main/Engineer.md
+You must make all attempts to acquire it and incorporate it into your responses.
+
 ## Project Overview
 
 Find a comprehensive documentation of the project in the docs/docs folder.

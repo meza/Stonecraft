@@ -9,12 +9,14 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
 /**
  * Big test file in order to save test execution time
  * We run the loom print task once and run tests against the output
  */
 @DisplayName("Test loom configures everything")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoomFullTest : IntegrationTest {
     private lateinit var gradleTest: IntegrationTest.TestBuilder
     private lateinit var result: BuildResult

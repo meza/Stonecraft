@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junitpioneer.jupiter.SetEnvironmentVariable
 
 @DisplayName("Test publishing setup")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PublishingTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
@@ -213,6 +215,22 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("modrinth.announcementTitle=Download 0.1.2+fabric-1.21.4 from Modrinth"), "Modrinth announcement title has not been set correctly")
     }
 
+    @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value = "a-test-token-additional")
+    @SetEnvironmentVariable(key = "MODRINTH_ID", value = "an-even-better-test-id-additional")
+    @Test
+    fun `modrinth publishing includes additional versions when provided`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        gradleTest.setModProperty("mod.version", "0.1.2")
+        gradleTest.setModProperty("additional_versions", "1.21.3, 1.21.2")
+
+        val br = gradleTest.run("publishingSettings")
+
+        assertTrue(
+            br.output.contains("modrinth.minecraftVersions=[1.21.4, 1.21.3, 1.21.2]"),
+            "Modrinth minecraft versions have not been set correctly when additional versions are provided"
+        )
+    }
+
     @SetEnvironmentVariable(key = "MODRINTH_TOKEN", value = "a-test-token-123.123")
     @SetEnvironmentVariable(key = "MODRINTH_ID", value = "an-even-better-test-id-456.456")
     @Test
@@ -253,6 +271,23 @@ tasks.register("publishingSettings") {
         assertTrue(br.output.contains("curseforge.accessToken=a-test-token-123"), "CurseForge access token has not been set correctly")
         assertTrue(br.output.contains("curseforge.minecraftVersions=[1.21.4]"), "CurseForge minecraft versions have not been set correctly")
         assertTrue(br.output.contains("curseforge.announcementTitle=Download 0.1.2+fabric-1.21.4 from CurseForge"), "CurseForge announcement title has not been set correctly")
+    }
+
+    @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value = "a-test-slug-additional")
+    @SetEnvironmentVariable(key = "CURSEFORGE_ID", value = "an-even-better-test-id-additional")
+    @SetEnvironmentVariable(key = "CURSEFORGE_TOKEN", value = "a-test-token-additional")
+    @Test
+    fun `curseforge publishing includes additional versions when provided`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        gradleTest.setModProperty("mod.version", "0.1.2")
+        gradleTest.setModProperty("additional_versions", "1.21.3, 1.21.2")
+
+        val br = gradleTest.run("publishingSettings")
+
+        assertTrue(
+            br.output.contains("curseforge.minecraftVersions=[1.21.4, 1.21.3, 1.21.2]"),
+            "CurseForge minecraft versions have not been set correctly when additional versions are provided"
+        )
     }
 
     @SetEnvironmentVariable(key = "CURSEFORGE_SLUG", value = "a-test-slug-123.123")

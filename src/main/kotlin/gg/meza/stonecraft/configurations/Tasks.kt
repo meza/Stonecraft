@@ -66,7 +66,7 @@ fun configureTasks(project: Project, stonecutter: StonecutterBuild, modSettings:
     project.tasks.register<ConfigureMinecraftClient>("configureMinecraftTestClient") {
         val runDirAsFile = modSettings.testClientRunDirectoryProp.get().asFile
 
-        println("Run directory: ${runDirAsFile.absolutePath}")
+        logger.debug("Run directory: ${runDirAsFile.absolutePath}")
 
         if (!runDirAsFile.exists()) {
             runDirAsFile.mkdirs()

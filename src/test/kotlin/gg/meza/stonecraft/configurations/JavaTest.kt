@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test java tooling setup")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JavaTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
