@@ -8,9 +8,11 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.Test
 
 @Suppress("DEPRECATION")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProcessResourcesTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder

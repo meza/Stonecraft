@@ -26,7 +26,6 @@ plugins {
             .withPluginClasspath()
             .withArguments("-Dorg.gradle.jvmargs=-Xmx4G")
             .forwardOutput()
-            .withDebug(true)
 
         private val gradleHome: File
         private val projectDir: File
@@ -34,7 +33,8 @@ plugins {
         private val gradleProperties: File
         private val settingsFile: File
         private val stonecutterGradle: File
-        private var arguments = ArrayList<String>()
+        private val baseArguments = mutableListOf<String>()
+        private val cachedTasks = LinkedHashSet<String>()
         private var supportedMinecraftVersions = mutableMapOf<String, List<String>>()
 
         init {
@@ -81,13 +81,14 @@ plugins {
             }
 
             runner.withProjectDir(projectDir)
-            arguments.addAll(
+            baseArguments.addAll(
                 listOf(
                     "--gradle-user-home",
                     gradleHome.absolutePath,
                     "--stacktrace",
                     "--warning-mode",
-                    "all"
+                    "all",
+                    "--parallel"
                 )
             )
         }
@@ -115,7 +116,7 @@ plugins {
             .withProjectDir(projectDir)
             .build()
 
-        fun build(): BuildResult {
+        private fun execute(tasks: List<String>): BuildResult {
             if (supportedMinecraftVersions.isEmpty()) {
                 setStonecutterVersion("1.21.4", "fabric")
             }
@@ -129,13 +130,21 @@ plugins {
             val newScGradle = scGradle.replace("ACTIVE_VERSION", getFirstVersion(), true)
             stonecutterGradle.writeText(newScGradle)
 
-            runner.withArguments(arguments)
+            runner.withArguments(baseArguments + tasks)
             return runner.run()
         }
 
-        fun run(task: String): BuildResult {
-            arguments.add(task)
-            return this.build()
+        fun build(): BuildResult {
+            return execute(cachedTasks.toList())
+        }
+
+        fun run(task: String, cacheTask: Boolean = true): BuildResult {
+            return if (cacheTask) {
+                cachedTasks.add(task)
+                build()
+            } else {
+                execute(listOf(task))
+            }
         }
 
         fun setModProperty(key: String, value: String): TestBuilder {

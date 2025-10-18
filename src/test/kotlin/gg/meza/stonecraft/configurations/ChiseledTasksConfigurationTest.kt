@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test stonecutter task setup")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ChiseledTasksConfigurationTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder

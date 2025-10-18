@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.io.File
 
 /**
@@ -16,6 +17,7 @@ import java.io.File
  * constants are correctly activated based on the active project.
  */
 @DisplayName("Test stonecutter constants")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StonecutterTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder

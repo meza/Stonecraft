@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
 /**
  * Test that the dependencies are correctly resolved from the versions/dependencies/[minecraftVersion].properties files
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test
  *
  */
 @DisplayName("Test dependency setup")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DependenciesTest : IntegrationTest {
     private lateinit var gradleTest: IntegrationTest.TestBuilder
 
