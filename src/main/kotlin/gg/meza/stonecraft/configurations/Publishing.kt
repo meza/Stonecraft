@@ -52,10 +52,6 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
         displayName.set("${mod.version} for ${mod.loader.upperCaseFirst()} $minecraftVersion")
         dryRun.set(project.providers.environmentVariable("DO_PUBLISH").getOrElse("true").toBoolean())
 
-        publishing.platforms.forEach { platform ->
-            println("LOOKIE HERE  -> Platform: $platform")
-        }
-
         if (modrinthVariables.all { project.providers.environmentVariable(it).isPresent }) {
             modrinth {
                 accessToken.set(project.providers.environmentVariable("MODRINTH_TOKEN"))
