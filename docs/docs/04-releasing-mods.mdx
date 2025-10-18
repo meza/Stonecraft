@@ -32,6 +32,20 @@ publishMods {
 The name of the files, setting the version, the loader and other metadata is handled by Stonecraft.
 You can override the default values by setting them in the `publishMods` block as you would with the [mod-publish-plugin][mod-publish-plugin].
 
+## Declaring Additional Compatible Versions
+
+If a single build of your mod should appear as compatible with multiple Minecraft releases, add the extra versions to your
+`gradle.properties` (or any file that ends up in the project's extra properties) using the `additional_versions` key.
+Stonecraft will automatically merge these values with the active Stonecutter version when configuring every publishing
+target.
+
+```properties title="gradle.properties"
+additional_versions=1.21.3, 1.21.2
+```
+
+This only affects the compatibility list shown on Modrinth and Curseforge; the file name and displayed version still
+use the active Stonecutter version so consumers know which build they downloaded.
+
 ## Environment Variables
 
 There are a few environment variables that you *must* set depending on your project.

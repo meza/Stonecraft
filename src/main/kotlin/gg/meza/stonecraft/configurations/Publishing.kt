@@ -15,6 +15,14 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
     val curseforgeVariables = listOf("CURSEFORGE_SLUG", "CURSEFORGE_ID", "CURSEFORGE_TOKEN")
 
     val mod = project.mod
+    val additionalMinecraftVersions = project.findProperty("additional_versions")
+        ?.toString()
+        ?.split(',')
+        ?.map { it.trim() }
+        ?.filter { it.isNotEmpty() }
+        ?.distinct()
+        ?: emptyList()
+    val publishingMinecraftVersions = (listOf(minecraftVersion) + additionalMinecraftVersions).distinct()
 
     publishing.apply {
         val isBeta = listOf("next", "beta").any { it in project.version.toString().lowercase() }
@@ -52,7 +60,7 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
             modrinth {
                 accessToken.set(project.providers.environmentVariable("MODRINTH_TOKEN"))
                 projectId.set(project.providers.environmentVariable("MODRINTH_ID"))
-                minecraftVersions.add(minecraftVersion)
+                minecraftVersions.addAll(publishingMinecraftVersions)
                 announcementTitle.set("Download ${mod.version}+${mod.loader}-$minecraftVersion from Modrinth")
             }
         } else {
@@ -67,7 +75,7 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
                 projectSlug.set(project.providers.environmentVariable("CURSEFORGE_SLUG"))
                 projectId.set(project.providers.environmentVariable("CURSEFORGE_ID"))
                 accessToken.set(project.providers.environmentVariable("CURSEFORGE_TOKEN").orElse(""))
-                minecraftVersions.add(minecraftVersion)
+                minecraftVersions.addAll(publishingMinecraftVersions)
                 announcementTitle.set("Download ${mod.version}+${mod.loader}-$minecraftVersion from CurseForge")
             }
         } else {
