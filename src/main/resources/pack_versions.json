@@ -1710,5 +1710,9 @@
   "25w45a": {
     "datapack": 93,
     "resourcepack": 73
+  },
+  "25w46a": {
+    "datapack": 93.1,
+    "resourcepack": 74
   }
 }
