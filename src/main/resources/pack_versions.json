@@ -1714,5 +1714,9 @@
   "25w46a": {
     "datapack": 93.1,
     "resourcepack": 74
+  },
+  "1.21.11-pre1": {
+    "datapack": 94,
+    "resourcepack": 75
   }
 }
