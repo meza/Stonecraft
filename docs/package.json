@@ -31,7 +31,7 @@
     "@docusaurus/preset-classic": "3.9.2",
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
-    "@types/react": "19.2.2",
+    "@types/react": "19.2.3",
     "@types/react-dom": "19.2.2",
     "pnpm": "10.21.0",
     "typescript": "5.9.3"
