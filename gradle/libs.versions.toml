@@ -1,17 +1,17 @@
 [versions]
-kotlin = "2.2.0"
+kotlin = "2.2.21"
 plugin-publish = "2.0.0"
 test-logger = "4.0.0"
 spotless = "8.0.0"
-gson = "2.13.1"
-stonecutter = "0.6.2"
-architectury-loom = "1.11-SNAPSHOT"
-mod-publish = "1.0.0"
-junit = "6.0.0"
+gson = "2.13.2"
+stonecutter = "0.7.10"
+architectury-loom = "1.13.457"
+mod-publish = "1.1.0"
+junit = "6.0.1"
 junit-pioneer = "2.3.0"
-mockito = "5.18.0"
-mockito-kotlin = "6.0.0"
-okio= "3.15.0"
+mockito = "5.20.0"
+mockito-kotlin = "6.1.0"
+okio= "3.16.3"
 
 [libraries]
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
