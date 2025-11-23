@@ -30,7 +30,11 @@ const config: Config = {
                     sidebarPath: './sidebars.ts',
                     routeBasePath: '/'
                 },
-                blog: false,
+                blog: {
+                    path: 'blog',
+                    routeBasePath: 'blog',
+                    showReadingTime: true,
+                },
             } satisfies Preset.Options,
         ],
     ],
@@ -103,6 +107,11 @@ const config: Config = {
                 src: "img/stonecraft@0.5x.png",
             },
             items:[
+                {
+                    to: '/blog',
+                    label: 'Blog',
+                    position: 'right',
+                },
                 {
                     position: 'right',
                     className: 'github-link',
