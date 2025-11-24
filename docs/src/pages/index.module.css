@@ -1,0 +1,86 @@
+.heroBanner {
+  padding: 6rem 0;
+  text-align: left;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+.tagline {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+}
+
+.heroButtons > *:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.features {
+  padding: 4rem 0;
+}
+
+.featureCard {
+  margin-bottom: 1.5rem;
+}
+
+.ctaSection {
+  padding: 4rem 0;
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.postsSection {
+  padding: 4rem 0;
+}
+
+.postsHeaderAction {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.postTitle {
+  margin-bottom: 0.5rem;
+}
+
+.postMeta {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.postMetaItem {
+  display: inline-flex;
+  align-items: center;
+}
+
+.postMetaItem:not(:first-child)::before {
+  content: '•';
+  margin: 0 0.5rem;
+  color: var(--ifm-color-emphasis-500);
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    text-align: center;
+  }
+
+  .heroButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .heroButtons > * {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .postsHeaderAction {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    justify-content: flex-start;
+  }
+}

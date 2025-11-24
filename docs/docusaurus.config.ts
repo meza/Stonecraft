@@ -28,12 +28,13 @@ const config: Config = {
                 },
                 docs: {
                     sidebarPath: './sidebars.ts',
-                    routeBasePath: '/'
+                    routeBasePath: '/docs'
                 },
                 blog: {
                     path: 'blog',
                     routeBasePath: 'blog',
                     showReadingTime: true,
+                    showLastUpdateAuthor: true
                 },
             } satisfies Preset.Options,
         ],
@@ -107,6 +108,11 @@ const config: Config = {
                 src: "img/stonecraft@0.5x.png",
             },
             items:[
+                {
+                    to: '/docs',
+                    label: 'Docs',
+                    position: 'right',
+                },
                 {
                     to: '/blog',
                     label: 'Blog',

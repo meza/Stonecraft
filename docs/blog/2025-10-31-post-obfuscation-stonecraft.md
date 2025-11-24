@@ -7,6 +7,8 @@ authors: meza
 
 Mojang’s recent post about [removing obfuscation in Java Edition](https://www.minecraft.net/en-us/article/removing-obfuscation-in-java-edition) lands at the same time as Fabric’s companion update on [removing obfuscation from Fabric](https://fabricmc.net/2025/10/31/obfuscation.html). Both teams want modders to spend less time deciphering symbol soup and more time building. Stonecraft exists to make multi-loader, multi-version projects routine, so a structural change to how Minecraft ships its code is a story we care about deeply.
 
+<!-- truncate -->
+
 ## What Mojang’s Deobfuscation Means
 
 Starting with the first snapshot that follows the Mounts of Mayhem launch, new builds of Minecraft: Java Edition will include Mojang’s original class, field, method, parameter and local names directly inside the jars. In the meantime Mojang is publishing “experimental release” builds so toolchains can prepare. There will no longer be obfuscation map entries in version JSONs and Fabric Loader will not need to run remapping steps for those versions. Nothing about the EULA or usage guidelines changes, but logs, stack traces and debugging sessions become dramatically easier to read because the names you see in your IDE now match the names inside the production jars.
