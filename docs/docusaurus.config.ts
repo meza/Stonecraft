@@ -141,7 +141,7 @@ const config: Config = {
                             label: "Documentation",
                         },
                         {
-                            to: "/contributing",
+                            to: "/docs/contributing",
                             label: "Contributing to the Documentation"
                         }
                     ],
