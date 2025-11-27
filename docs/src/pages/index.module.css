@@ -24,6 +24,23 @@
   margin-bottom: 1.5rem;
 }
 
+.homeCard {
+  background: linear-gradient(135deg, var(--stonecraft-card-base), var(--stonecraft-card-highlight));
+  border: 1px solid var(--stonecraft-card-border);
+  box-shadow: 0 18px 35px var(--stonecraft-card-shadow);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.homeCard:hover,
+.homeCard:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 40px var(--stonecraft-card-shadow-strong);
+}
+
+.homeCard :global(.card__footer) {
+  border-top: 1px solid var(--stonecraft-card-border);
+}
+
 .ctaSection {
   padding: 4rem 0;
   background-color: var(--ifm-color-emphasis-100);

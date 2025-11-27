@@ -40,7 +40,7 @@ const features: Feature[] = [
 function FeatureCard({title, description, link, linkLabel}: Feature) {
   return (
     <div className={clsx('col col--4', styles.featureCard)}>
-      <div className="card">
+      <div className={clsx('card', styles.homeCard)}>
         <div className="card__body">
           <h3>{title}</h3>
           <p>{description}</p>
@@ -131,7 +131,7 @@ function RecentPosts() {
 
             return (
               <div key={permalink} className="col col--4">
-                <div className="card">
+                <div className={clsx('card', styles.homeCard)}>
                   <div className="card__body">
                     <h3 className={styles.postTitle}>
                       <Link to={permalink}>{title}</Link>

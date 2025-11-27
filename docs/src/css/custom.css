@@ -24,6 +24,11 @@
     --ifm-link-color: var(--ifm-color-primary);
     --ifm-color-emphasis-100: #f3e2d6;
     --ifm-color-emphasis-200: #e7d3c3;
+    --stonecraft-card-base: #fff5ed;
+    --stonecraft-card-highlight: #ffe4d3;
+    --stonecraft-card-border: #f1d1be;
+    --stonecraft-card-shadow: rgba(58, 31, 15, 0.08);
+    --stonecraft-card-shadow-strong: rgba(58, 31, 15, 0.15);
 }
 
 
@@ -58,6 +63,11 @@
     --ifm-color-emphasis-200: #26272e;
     --ifm-color-emphasis-300: #30323b;
     --ifm-code-background: #1a1b21;
+    --stonecraft-card-base: #0f1825;
+    --stonecraft-card-highlight: #1b2a3e;
+    --stonecraft-card-border: #25354a;
+    --stonecraft-card-shadow: rgba(4, 12, 28, 0.5);
+    --stonecraft-card-shadow-strong: rgba(2, 8, 20, 0.65);
 }
 
 html[data-theme='dark'] .github-link {
