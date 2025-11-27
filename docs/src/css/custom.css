@@ -1,30 +1,73 @@
 :root {
-    --ifm-color-primary: #ff7b00;
-    --ifm-color-primary-dark: #e66f00;
-    --ifm-color-primary-darker: #d96900;
-    --ifm-color-primary-darkest: #b35600;
-    --ifm-color-primary-light: #ff881a;
-    --ifm-color-primary-lighter: #ff8f26;
-    --ifm-color-primary-lightest: #ffa34d;
+    --ifm-color-primary: #f06b2b;
+    --ifm-color-primary-dark: #d65d23;
+    --ifm-color-primary-darker: #ba4f1d;
+    --ifm-color-primary-darkest: #7f3613;
+    --ifm-color-primary-light: #f48844;
+    --ifm-color-primary-lighter: #f79f60;
+    --ifm-color-primary-lightest: #fbc69a;
+    --ifm-color-secondary: #f2c14e;
+    --ifm-color-secondary-dark: #d3a53d;
+    --ifm-color-secondary-darker: #b68b33;
+    --ifm-color-secondary-darkest: #7f6122;
+    --ifm-color-secondary-light: #f5cd6e;
+    --ifm-color-secondary-lighter: #f8d88e;
+    --ifm-color-secondary-lightest: #fbe6b4;
+    --ifm-background-color: #fdf7f1;
+    --ifm-background-surface-color: #f8efe6;
+    --ifm-navbar-background-color: var(--ifm-background-color);
+    --ifm-navbar-link-color: #3c2a23;
+    --ifm-footer-background-color: #f6ebdd;
+    --ifm-card-background-color: #ffffff;
+    --ifm-font-color-base: #2a1a16;
+    --ifm-heading-color: #1c110e;
+    --ifm-link-color: var(--ifm-color-primary);
+    --ifm-color-emphasis-100: #f3e2d6;
+    --ifm-color-emphasis-200: #e7d3c3;
+    --stonecraft-card-base: #fff5ed;
+    --stonecraft-card-highlight: #ffe4d3;
+    --stonecraft-card-border: #f1d1be;
+    --stonecraft-card-shadow: rgba(58, 31, 15, 0.08);
+    --stonecraft-card-shadow-strong: rgba(58, 31, 15, 0.15);
 }
 
 
 [data-theme='dark'] {
-    --ifm-color-primary: #ff7b00;
-    --ifm-color-primary-dark: #e66f00;
-    --ifm-color-primary-darker: #d96900;
-    --ifm-color-primary-darkest: #b35600;
-    --ifm-color-primary-light: #ff881a;
-    --ifm-color-primary-lighter: #ff8f26;
-    --ifm-color-primary-lightest: #ffa34d;
-    --ifm-color-secondary: #3CAAB9;
-    --ifm-color-secondary-light: #56BBC8;
-    --ifm-color-secondary-lighter: #74C7D2;
-    --ifm-color-secondary-lightest: #93D4DC;
-    --ifm-color-secondary-dark: #379CA9;
-    --ifm-color-secondary-darker: #2D808B;
-    --ifm-color-secondary-darkest: #1E555C;
-    --ifm-background-color: #121212;
+    --ifm-color-primary: #f06b2b;
+    --ifm-color-primary-dark: #d65d23;
+    --ifm-color-primary-darker: #ba4f1d;
+    --ifm-color-primary-darkest: #7f3613;
+    --ifm-color-primary-light: #f48844;
+    --ifm-color-primary-lighter: #f79f60;
+    --ifm-color-primary-lightest: #fbc69a;
+    --ifm-color-secondary: #f2c14e;
+    --ifm-color-secondary-light: #f5cd6e;
+    --ifm-color-secondary-lighter: #f8d88e;
+    --ifm-color-secondary-lightest: #fbe6b4;
+    --ifm-color-secondary-dark: #d3a53d;
+    --ifm-color-secondary-darker: #b68b33;
+    --ifm-color-secondary-darkest: #7f6122;
+    --ifm-background-color: #0d0d10;
+    --ifm-background-surface-color: #16171c;
+    --ifm-navbar-background-color: #0d0d10;
+    --ifm-card-background-color: #191a1f;
+    --ifm-footer-background-color: #101014;
+    --ifm-font-color-base: #f0e9e1;
+    --ifm-heading-color: #fff6ed;
+    --ifm-link-color: var(--ifm-color-primary);
+    --ifm-navbar-link-color: #f0e9e1;
+    --ifm-menu-color: #e4dbd0;
+    --ifm-menu-color-active: var(--ifm-color-primary);
+    --ifm-toc-link-color: #dcd2c3;
+    --ifm-color-emphasis-100: #1e1f24;
+    --ifm-color-emphasis-200: #26272e;
+    --ifm-color-emphasis-300: #30323b;
+    --ifm-code-background: #1a1b21;
+    --stonecraft-card-base: #0f1825;
+    --stonecraft-card-highlight: #1b2a3e;
+    --stonecraft-card-border: #25354a;
+    --stonecraft-card-shadow: rgba(4, 12, 28, 0.5);
+    --stonecraft-card-shadow-strong: rgba(2, 8, 20, 0.65);
 }
 
 html[data-theme='dark'] .github-link {
@@ -72,32 +115,38 @@ html[data-theme='light'] .github-link {
 }
 
 [data-theme='light'] .DocSearch {
-    /* --docsearch-primary-color: var(--ifm-color-primary); */
-    /* --docsearch-text-color: var(--ifm-font-color-base); */
+    --docsearch-primary-color: var(--ifm-color-primary);
+    --docsearch-text-color: var(--ifm-font-color-base);
     --docsearch-muted-color: var(--ifm-color-secondary-darkest);
-    --docsearch-container-background: rgba(94, 100, 112, 0.7);
+    --docsearch-container-background: rgba(122, 96, 70, 0.55);
     /* Modal */
-    --docsearch-modal-background: var(--ifm-color-secondary-lighter);
+    --docsearch-modal-background: var(--ifm-background-surface-color);
     /* Search box */
-    --docsearch-searchbox-background: var(--ifm-color-secondary);
+    --docsearch-searchbox-background: var(--ifm-color-secondary-lightest);
     --docsearch-searchbox-focus-background: var(--ifm-color-white);
     /* Hit */
     --docsearch-hit-color: var(--ifm-font-color-base);
     --docsearch-hit-active-color: var(--ifm-color-white);
     --docsearch-hit-background: var(--ifm-color-white);
     /* Footer */
-    --docsearch-footer-background: var(--ifm-color-white);
+    --docsearch-footer-background: var(--ifm-background-color);
+    --docsearch-key-gradient: linear-gradient(
+            120deg,
+            var(--ifm-color-secondary-dark) 0%,
+            var(--ifm-color-secondary) 100%
+    );
 }
 
 [data-theme='dark'] .DocSearch {
+    --docsearch-primary-color: var(--ifm-color-primary);
     --docsearch-text-color: var(--ifm-font-color-base);
-    --docsearch-muted-color: var(--ifm-color-secondary-dark);
-    --docsearch-container-background: rgba(47, 55, 69, 0.7);
+    --docsearch-muted-color: var(--ifm-color-secondary-light);
+    --docsearch-container-background: rgba(6, 6, 8, 0.8);
     /* Modal */
     --docsearch-modal-background: var(--ifm-background-color);
     /* Search box */
-    --docsearch-searchbox-background: var(--ifm-background-color);
-    --docsearch-searchbox-focus-background: var(--ifm-color-black);
+    --docsearch-searchbox-background: var(--ifm-background-surface-color);
+    --docsearch-searchbox-focus-background: #23242a;
     /* Hit */
     --docsearch-hit-color: var(--ifm-font-color-base);
     --docsearch-hit-active-color: var(--ifm-color-white);
@@ -105,8 +154,8 @@ html[data-theme='light'] .github-link {
     /* Footer */
     --docsearch-footer-background: var(--ifm-background-surface-color);
     --docsearch-key-gradient: linear-gradient(
-            -26.5deg,
-            var(--ifm-color-emphasis-200) 0%,
-            var(--ifm-color-emphasis-100) 100%
+            120deg,
+            var(--ifm-color-secondary-dark) 0%,
+            var(--ifm-color-secondary) 100%
     );
 }

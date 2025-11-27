@@ -1,0 +1,5 @@
+.summary {
+  font-size: 1rem;
+  margin: 0 0 var(--ifm-spacing-vertical);
+  color: var(--ifm-font-color-base);
+}
