@@ -28,3 +28,7 @@ We are adding Mojmap support so that new versions can benefit from the official 
 ## Looking Ahead
 
 The payoff is a simpler mapping story for everyone using Stonecraft: faster setup on new snapshots, fewer moving parts in Gradle builds and clearer crash reports when players send logs back. We will continue tracking the experimental drops from Mojang and Fabric, update Stonecraft as necessary and document every change on this site. If you spot a scenario we should cover, open an issue so we can keep the transition just as smooth as the old workflow.
+
+:::tip Update (2025-11-27)
+Mojmap support is now live. Read the follow-up post [“Mojmap Arrives in Stonecraft”](/blog/mojmap-arrives) for the details on how to adopt it and what changes for Yarn-based projects.
+:::

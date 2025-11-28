@@ -5,7 +5,7 @@ slug: mojmap-arrives
 authors: meza
 ---
 
-When Mojang announced that Java Edition would ship unobfuscated jars, we promised Stonecraft builds would get simpler, not harder. Today’s 1.7.0 release delivers on that: Mojang’s official Mojmap names are now supported and become the default namespace for new Stonecraft versions, while Yarn remains available for older branches that still rely on it.
+When Mojang announced that Java Edition would ship unobfuscated jars, [we promised](/blog/post-obfuscation-stonecraft) Stonecraft’s interface would stay stable while adding Mojmap support. Today’s 1.7.0 release delivers exactly that: Mojang’s official mappings become the default namespace for new Stonecraft versions, while Yarn remains available for older branches that still rely on it.
 
 <!-- truncate -->
 
