@@ -36,6 +36,11 @@ dependencies {
     implementation(libs.mod.publish)
     implementation(libs.okio)
 
+    constraints {
+        implementation(libs.kotlinx.serialization.core)
+        implementation(libs.kotlinx.serialization.json)
+    }
+
     testImplementation(gradleTestKit())
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)

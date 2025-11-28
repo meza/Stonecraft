@@ -4,7 +4,7 @@ plugin-publish = "2.0.0"
 test-logger = "4.0.0"
 spotless = "8.1.0"
 gson = "2.13.2"
-stonecutter = "0.6.2"
+stonecutter = "0.7.11"
 architectury-loom = "1.13.457"
 mod-publish = "1.1.0"
 junit = "6.0.1"
@@ -12,6 +12,7 @@ junit-pioneer = "2.3.0"
 mockito = "5.20.0"
 mockito-kotlin = "6.1.0"
 okio= "3.16.4"
+kotlinx-serialization = "1.9.0"
 
 [libraries]
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -24,6 +25,8 @@ junit-pioneer = { module = "org.junit-pioneer:junit-pioneer", version.ref = "jun
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

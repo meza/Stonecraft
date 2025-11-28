@@ -14,7 +14,7 @@ pluginManagement {
     }
 }
 plugins {
-    id("dev.kikugie.stonecutter") version "0.5"
+    id("dev.kikugie.stonecutter") version "0.7.11"
 }
 
 stonecutter {
@@ -23,7 +23,7 @@ stonecutter {
     shared {
         fun mc(version: String, vararg loaders: String) {
             // Make the relevant version directories named "1.20.2-fabric", "1.20.2-forge", etc.
-            for (it in loaders) vers("$version-$it", version)
+            for (it in loaders) version("$version-$it", version)
         }
 
         STONECUTTER_VERSIONS

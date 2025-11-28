@@ -7,7 +7,7 @@ out/
 classes/
 versions/**/src
 **/node_modules
-
+tmp*
 **/.docusaurus
 
 # eclipse
