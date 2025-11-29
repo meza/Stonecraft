@@ -26,3 +26,7 @@ We are taking this one iteration at a time. The work is tracked in our [Stonecut
 We can’t promise a timeline; the scope touches every part of the plugin and we’d rather be right than fast. What we *can* promise is clear SemVer. If we do need to expose a breaking change, it will come with a major version bump and explicit release notes. Minor and patch releases will continue to behave the way they do today, just with better Stonecutter support under the hood.
 
 Stay tuned to the blog and the migration plan for progress updates, and thanks for trusting Stonecraft with your multi-loader builds.
+
+## Edits (2025-11-29)
+
+Phase 1 of the migration checklist wrapped up on November 29, 2025. Stonecraft 1.8.x now ships Stonecutter 0.7.11, wires the `stonecutter.tasks` container so the familiar `chiseled*` wrappers keep working, migrates to the 0.7 constants/filters DSL, and guards places where `stonecutter.current` may be unset. If you are wondering what this means for your CI entry points, read the follow-up post [Stonecutter 0.7 and the Future of chiseled* Tasks](/blog/native-tasks-deprecation) for the rationale.
