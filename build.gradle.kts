@@ -1,11 +1,9 @@
 import com.adarshr.gradle.testlogger.theme.ThemeType
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
-    alias(libs.plugins.kotlin)
     alias(libs.plugins.plugin.publish)
     alias(libs.plugins.test.logger)
 //    alias(libs.plugins.spotless)
@@ -65,6 +63,7 @@ testlogger {
 }
 
 java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     withSourcesJar()
 }
 
@@ -92,18 +91,20 @@ gradlePlugin {
     }
 }
 
-val compileKotlin: KotlinCompile by tasks
-
-compileKotlin.compilerOptions {
-    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0) // Changed from KOTLIN_2_1
-    jvmTarget.set(JvmTarget.JVM_21)
-    freeCompilerArgs.addAll(listOf("-opt-in=kotlin.ExperimentalStdlibApi", "-opt-in=kotlin.RequiresOptIn"))
+kotlin {
+    jvmToolchain(21)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
+// compileKotlin.compilerOptions {
+//    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0) // Changed from KOTLIN_2_1
+//    jvmTarget.set(JvmTarget.JVM_21)
+//    freeCompilerArgs.addAll(listOf("-opt-in=kotlin.ExperimentalStdlibApi", "-opt-in=kotlin.RequiresOptIn"))
+// }
+//
+// java {
+//    sourceCompatibility = JavaVersion.VERSION_21
+//    targetCompatibility = JavaVersion.VERSION_21
+// }
 
 // spotless {
 //    kotlin {

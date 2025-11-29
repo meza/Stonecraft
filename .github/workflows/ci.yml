@@ -33,7 +33,6 @@ jobs:
             *.properties
             *.gradle.kts
           java-version: |
-            17
             21
           check-latest: true
           distribution: 'temurin'
@@ -52,7 +51,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('src/test/resources/**/*.gradle*') }}
 
       - name: "🧪 Run tests"
-        run: ./gradlew build --stacktrace
+        run: ./gradlew build --stacktrace --no-configuration-cache
 
       - name: Upload build reports
         uses: actions/upload-artifact@v5
