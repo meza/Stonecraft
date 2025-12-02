@@ -35,11 +35,11 @@ Add the string template to `fabric.mod.json`, which will be dynamically replaced
 
 #### Replacing template on build/run
 
-If you used Stonecutter before, this is where lies the main difference.
+If you used Stonecutter before, this is where the main difference lies.
 
 Stonecraft already defines variable replacements in the `processResources` task, so modifying the replaced templates in this task will override all the other variables defined and used by Stonecraft.
 
-Instead, we will use the convenient `variableReplacements` properties in `modSettings` to add a new variable replacement. You can read about [variableReplacements](configuration/modsettings/variableReplacements) in Stonecraft.
+Instead, we will use the convenient `variableReplacements` properties in `modSettings` to add a new variable replacement. You can read about [variableReplacements](/docs/configuration/modsettings/variableReplacements) in Stonecraft.
 
 In your `build.gradle(.kts)` file, you can add the following and edit it as needed for your use case:
 
@@ -58,7 +58,7 @@ loom {
 
 Here is what is happening:
 
-- `stonecutter.eval(minecraft, ">=1.21.10") -> "1.21.10.accesswidener"` defines a condition. In this case, if `stonecutter.minecraft` is equal or above `1.21.10`, the file `1.21.10.accesswidener` will be loaded.
+- `stonecutter.eval(minecraft, ">=1.21.10") -> "1.21.10.accesswidener"` defines a condition. In this case, if `minecraft` is equal or above `1.21.10`, the file `1.21.10.accesswidener` will be loaded.
 - In the `loom` section, we define the variable `accessWidenerPath` to the according file using the previously defined `$accesswidener` variable.
 
 :::tip
@@ -74,7 +74,8 @@ modSettings {
         ...
     }
 
-    variableReplacements.put("aw_file", accesswidener);
+    variableReplacements.set(mapOf("at_file", accesstransformer));
+
 }
 ```
 
@@ -106,11 +107,11 @@ file="accesstransformers/${at_file}"
 
 #### Replacing template on build/run
 
-If you used Stonecutter before, this is where lies the main difference.
+If you used Stonecutter before, this is where the main difference lies.
 
 Stonecraft already defines variable replacements in the `processResources` task, so modifying the replaced templates in this task will override all the other variables defined and used by Stonecraft.
 
-Instead, we will use the convenient `variableReplacements` properties in `modSettings` to add a new variable replacement. You can read about [variableReplacements](configuration/modsettings/variableReplacements) in Stonecraft.
+Instead, we will use the convenient `variableReplacements` properties in `modSettings` to add a new variable replacement. You can read about [variableReplacements](/docs/configuration/modsettings/variableReplacements) in Stonecraft.
 
 In your `build.gradle(.kts)` file, you can add the following and edit it as needed for your use case:
 
@@ -131,7 +132,7 @@ minecraft {
 
 Here is what is happening:
 
-- `stonecutter.eval(minecraft, ">=1.21") -> "1.21.cfg"` defines a condition. In this case, if `stonecutter.minecraft` is equal or above `1.21`, the file `1.21.cfg` will be loaded.
+- `stonecutter.eval(minecraft, ">=1.21") -> "1.21.cfg"` defines a condition. In this case, if `minecraft` is equal or above `1.21`, the file `1.21.cfg` will be loaded.
 - In the `minecraft` section, we define the configuration variable `accessTransformers` to the according file using the previously defined `$accesstransformer` variable.
 
 :::tip
@@ -147,7 +148,7 @@ modSettings {
         ...
     }
 
-    variableReplacements.put("at_file", accesstransformer);
+    variableReplacements.set(mapOf("at_file", accesstransformer));
 }
 ```
 
