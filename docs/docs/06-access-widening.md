@@ -4,7 +4,7 @@ Access widening provides a way to loosen the access limits of classes, methods o
 
 In Fabric, this would typically be done with **Access wideners**, while NeoForge uses **Access Transformers**. Please refer to their respective docs in order to understand the differences.
 
-Stonecraft leverages Stonecutter, which allows you to define a different access widening file for each version supported by your mod by using variables substitution.
+Stonecraft leverages Stonecutter, which allows you to define a different access widening file for each version supported by your mod by using variable substitution.
 
 ## Setting up
 
@@ -17,9 +17,9 @@ In your Fabric mod project, create the needed files in a common folder inside `r
 ```
 src.main.resources
 └── accesswideners/
-    └── 1.19.accesswideners
-    └── 1.20.accesswideners
-    └── 1.21.accesswideners
+    └── 1.19.accesswidener
+    └── 1.20.accesswidener
+    └── 1.21.accesswidener
 ```
 
 #### Using string template
@@ -46,9 +46,9 @@ In your `build.gradle(.kts)` file, you can add the following and edit it as need
 ```kotlin title="build.gradle.kts"
 val minecraft = stonecutter.current.version
 val accesswidener = when {
-    stonecutter.eval(minecraft, ">=1.21.10") -> "1.21.10.accesswidener"
-    stonecutter.eval(minecraft, ">=1.20") -> "1.20.1.accesswidener"
-    else -> "1.20.1.accesswidener"
+    stonecutter.eval(minecraft, ">=1.21") -> "1.21.accesswidener"
+    stonecutter.eval(minecraft, ">=1.20") -> "1.20.accesswidener"
+    else -> "1.19.accesswidener"
 }
 
 loom {
@@ -62,7 +62,7 @@ Here is what is happening:
 - In the `loom` section, we define the variable `accessWidenerPath` to the according file using the previously defined `$accesswidener` variable.
 
 :::tip
-Please note, in the `when` loop, the versions are sorted in descending order, as we use the condition `>=`.
+Please note, in the `when` expression, the versions are sorted in descending order, as we use the condition `>=`.
 Make sure to modify the versions accordingly when necessary.
 :::
 
@@ -79,11 +79,11 @@ modSettings {
 }
 ```
 
-This will use the previously assigned value of `accesswidener` as the `aw_file` variable. We have previously set it up in our `fabric.mod.json` above ([Using String Templates](#using-string-template)).
+This will use the previously assigned value of `accesswidener` as the `aw_file` variable. We have previously set it up in our `fabric.mod.json` above ([Using string templates](#using-string-template)).
 
 Building the project should run the necessary tasks in order to apply your access widening.
 
-### Forge NeoForge - Access Transformers
+### NeoForge - Access Transformers
 
 #### Creating the files
 
@@ -136,7 +136,7 @@ Here is what is happening:
 - In the `minecraft` section, we define the configuration variable `accessTransformers` to the according file using the previously defined `$accesstransformer` variable.
 
 :::tip
-Please note, in the `when` loop, the versions are sorted in descending order, as we use the condition `>=`.
+Please note, in the `when` expression, the versions are sorted in descending order, as we use the condition `>=`.
 Make sure to modify the versions accordingly when necessary.
 :::
 
@@ -152,6 +152,6 @@ modSettings {
 }
 ```
 
-This will use the previously assigned value of `accesstransformer` as the `at_file` variable. We have previously set it up in our `neoforge.mods.toml` above ([Using String Templates](#using-string-template)).
+This will use the previously assigned value of `accesstransformer` as the `at_file` variable. We have previously set it up in our `neoforge.mods.toml` above ([Using string templates](#using-string-template)).
 
 Building the project should run the necessary tasks in order to apply your access widening.
