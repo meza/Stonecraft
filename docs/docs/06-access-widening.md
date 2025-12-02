@@ -74,7 +74,7 @@ modSettings {
         ...
     }
 
-    variableReplacements.set(mapOf("at_file", accesstransformer));
+    variableReplacements.set(mapOf("aw_file", accesswidener));
 
 }
 ```
