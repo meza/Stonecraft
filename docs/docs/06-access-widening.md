@@ -74,12 +74,12 @@ modSettings {
         ...
     }
 
-    variableReplacements.set(mapOf("aw_file", accesswidener));
+    variableReplacements.set(mapOf("aw_file", accesswidener))
 
 }
 ```
 
-This will use the previously assigned value of `accesswidener` as the `aw_file` variable. We have previously set it up in our `fabric.mod.json` above ([Using string templates](#using-string-template)).
+This will use the previously assigned value of `accesswidener` as the `aw_file` variable. We have previously set it up in our `fabric.mod.json` above ([Using string template](#using-string-template)).
 
 Building the project should run the necessary tasks in order to apply your access widening.
 
@@ -125,7 +125,7 @@ val accesstransformer = when {
 
 minecraft {
     accessTransformers {
-        file("../../src/main/resources/accesstransformers/$accesstransformer")
+        file(rootProject.file("src/main/resources/accesstransformers/$accesstransformer")
     }
 }
 ```
@@ -148,10 +148,10 @@ modSettings {
         ...
     }
 
-    variableReplacements.set(mapOf("at_file", accesstransformer));
+    variableReplacements.set(mapOf("at_file", accesstransformer))
 }
 ```
 
-This will use the previously assigned value of `accesstransformer` as the `at_file` variable. We have previously set it up in our `neoforge.mods.toml` above ([Using string templates](#using-string-template)).
+This will use the previously assigned value of `accesstransformer` as the `at_file` variable. We have previously set it up in our `neoforge.mods.toml` above ([Using string template](#using-string-template)).
 
 Building the project should run the necessary tasks in order to apply your access widening.
