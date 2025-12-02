@@ -1726,5 +1726,9 @@
   "1.21.11-pre3": {
     "datapack": 94,
     "resourcepack": 75
+  },
+  "1.21.11-pre4": {
+    "datapack": 94.1,
+    "resourcepack": 75
   }
 }
