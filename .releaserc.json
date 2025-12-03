@@ -44,6 +44,7 @@
     ],
     "gradle-semantic-release-plugin",
     ["semantic-release-discord-notifier", {
+      "branches": ["main"],
       "embedJson": {
         "username": "Stonecraft",
         "avatar_url": "https://stonecraft.meza.gg/img/stonecraft@0.25x.png",
