@@ -10,11 +10,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  update:
+  determine-branches:
     runs-on: ubuntu-latest
+    outputs:
+      branches: ${{ steps.set-matrix.outputs.branches }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Build branch matrix
+        id: set-matrix
+        run: |
+          maintenance_branches=$(git ls-remote --heads origin 'v*.x' | awk '{print $2}' | sed 's#refs/heads/##' || true)
+          matrix=$(printf '%s\n' main $maintenance_branches | jq -Rsc '[split("\n")[] | select(length>0)]')
+          echo "branches=$matrix" >> "$GITHUB_OUTPUT"
+
+  update:
+    needs: determine-branches
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        branch: ${{ fromJson(needs.determine-branches.outputs.branches) }}
+    name: Update pack versions (${{ matrix.branch }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ matrix.branch }}
+          fetch-depth: 0
 
       - name: Update pack formats
         uses: meza/action-minecraft-pack-versions@v1.0.22
