@@ -1,7 +1,7 @@
 package gg.meza.stonecraft
 
-import dev.kikugie.stonecutter.build.StonecutterBuild
-import dev.kikugie.stonecutter.controller.StonecutterController
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
+import dev.kikugie.stonecutter.controller.StonecutterControllerExtension
 import gg.meza.stonecraft.configurations.*
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import org.gradle.api.Plugin
@@ -23,8 +23,8 @@ class ModPlugin : Plugin<Any> {
         return
     }
     private fun applyToProject(project: Project) {
-        if (project.extensions.findByType(StonecutterController::class.java) != null) {
-            val stonecutterController = project.extensions.getByType<StonecutterController>()
+        if (project.extensions.findByType(StonecutterControllerExtension::class.java) != null) {
+            val stonecutterController = project.extensions.getByType<StonecutterControllerExtension>()
             configureChiseledTasks(project, stonecutterController)
             return
         }
@@ -43,7 +43,7 @@ class ModPlugin : Plugin<Any> {
         project.group = project.mod.group
         configurePlugins(project)
 
-        val stonecutter = project.extensions.getByType<StonecutterBuild>()
+        val stonecutter = project.extensions.getByType<StonecutterBuildExtension>()
         val base = project.extensions.getByType(BasePluginExtension::class)
         val modSettings = project.extensions.create("modSettings", ModSettingsExtension::class.java, project, project.mod.loader)
 

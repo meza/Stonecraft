@@ -7,9 +7,9 @@ out/
 classes/
 versions/**/src
 **/node_modules
-
+tmp*
 **/.docusaurus
-
+bob-memory.md
 # eclipse
 
 *.launch

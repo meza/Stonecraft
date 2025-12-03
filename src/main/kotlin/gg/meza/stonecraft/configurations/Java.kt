@@ -1,6 +1,6 @@
 package gg.meza.stonecraft.configurations
 
-import dev.kikugie.stonecutter.build.StonecutterBuild
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.mod
 import org.gradle.api.JavaVersion
@@ -9,7 +9,7 @@ import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 
-fun configureJava(project: Project, stonecutter: StonecutterBuild, modSettingsExtension: ModSettingsExtension) {
+fun configureJava(project: Project, stonecutter: StonecutterBuildExtension, modSettingsExtension: ModSettingsExtension) {
     val generatedResources = modSettingsExtension.generatedResourcesProp
 
     // Configure the compile time
@@ -32,7 +32,7 @@ fun configureJava(project: Project, stonecutter: StonecutterBuild, modSettingsEx
     }
 }
 
-private fun javaVersion(stonecutter: StonecutterBuild): JavaVersion {
+private fun javaVersion(stonecutter: StonecutterBuildExtension): JavaVersion {
     val j21 = stonecutter.eval(stonecutter.current.version, ">=1.20.6")
     return if (j21) JavaVersion.VERSION_21 else JavaVersion.VERSION_17
 }
