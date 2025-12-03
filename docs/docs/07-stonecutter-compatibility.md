@@ -23,7 +23,8 @@ If you override Stonecutter manually you can break task wiring, DSL keywords, or
 
 
 :::warning Older Stonecraft lines are frozen
-Legacy releases (`< 1.8.0` today) only receive critical security fixes. New Stonecutter functionality is added exclusively to newer Stonecraft branches, so upgrade when you want modern tasks and DSL helpers.
+Legacy releases only receive critical security fixes. 
+New Stonecutter functionality is added exclusively to newer Stonecraft branches, so upgrade when you want modern tasks and DSL helpers.
 :::
 
 We actively track Stonecutter development so Stonecraft users can adopt the latest tooling with minimal effort. When Stonecutter moves forward, expect a corresponding Stonecraft release to keep this compatibility matrix authoritative.
