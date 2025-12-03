@@ -43,6 +43,7 @@ jobs:
             gradle-semantic-release-plugin
 
       - name: Update gradle.properties version
+        if: steps.version.outputs.new_release_published == 'true'
         run: |
           VERSION="${{ steps.version.outputs.new_release_version }}"
           if [ -z "$VERSION" ]; then
