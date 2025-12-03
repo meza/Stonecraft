@@ -10,10 +10,16 @@
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "semanticCommitType": "docs"
+      "semanticCommitType": "docs",
+      "automerge": true
     },
     {
       "matchManagers": ["gradle", "gradle-wrapper"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "semanticCommitType": "ci",
       "automerge": true
     },
     {
