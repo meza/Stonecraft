@@ -48,6 +48,7 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           output_path: src/main/resources/pack_versions.json
           pr_branch: 'bot/pack-format/${{ matrix.branch }}'
+          pr_base: ${{ matrix.branch }}
           commit_enabled: true
           commit_type: fix
           commit_scope: pack-format
