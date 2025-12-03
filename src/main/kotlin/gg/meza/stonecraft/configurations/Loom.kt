@@ -1,6 +1,6 @@
 package gg.meza.stonecraft.configurations
 
-import dev.kikugie.stonecutter.build.StonecutterBuild
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.Side
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.getProgramArgs
@@ -12,7 +12,7 @@ import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.kotlin.dsl.getByType
 
-fun configureLoom(project: Project, stonecutter: StonecutterBuild, modSettings: ModSettingsExtension) {
+fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
 
     if (project.mod.isForge && stonecutter.eval(stonecutter.current.version, ">=1.21")) {
@@ -62,7 +62,7 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuild, modSettings: 
 fun configureClientGameTests(
     project: Project,
     loom: LoomGradleExtensionAPI,
-    stonecutter: StonecutterBuild,
+    stonecutter: StonecutterBuildExtension,
     modSettings: ModSettingsExtension
 ) {
     val mod = project.mod
@@ -99,7 +99,7 @@ fun configureClientGameTests(
 fun configureServerGameTests(
     project: Project,
     loom: LoomGradleExtensionAPI,
-    stonecutter: StonecutterBuild,
+    stonecutter: StonecutterBuildExtension,
     modSettings: ModSettingsExtension
 ) {
     val mod = project.mod
@@ -157,7 +157,7 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
  *
  * @param side The side of the game test
  */
-private fun RunConfigSettings.forgeLikeConfig(side: Side, loader: String, stonecutter: StonecutterBuild) {
+private fun RunConfigSettings.forgeLikeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
     if (side == Side.SERVER) {
         environment("gametestserver")
         forgeTemplate("gametestserver")
@@ -176,7 +176,7 @@ private fun RunConfigSettings.forgeLikeConfig(side: Side, loader: String, stonec
 fun configureDatagen(
     project: Project,
     loom: LoomGradleExtensionAPI,
-    stonecutter: StonecutterBuild,
+    stonecutter: StonecutterBuildExtension,
     modSettings: ModSettingsExtension
 ) {
     val minecraftVersion = stonecutter.current.version

@@ -2,7 +2,7 @@
 
 Stonecraft helps with variable substitution in your resources.
 It hooks into the ProcessResources task and replaces the variables in your resources with the values you set in your `build.gradle[.kts] file`.
-Check the [configuration](/configuration/modsettings/variableReplacements) for more information on how to set this up.
+Check the [configuration](/docs/configuration/modsettings/variableReplacements) for more information on how to set this up.
 
 ## Example 
 

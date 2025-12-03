@@ -7,6 +7,7 @@ const darkTheme = themes.oceanicNext;
 
 const config: Config = {
     title: 'Stonecraft – Simplify Multi-Loader, Multi-Version Minecraft Mod Development',
+    tagline: 'Stonecraft is a Gradle plugin that streamlines multi-loader, multi-version Minecraft mod development. Build Fabric, Forge, and NeoForge mods in a single codebase and simplify releases to Modrinth and CurseForge.',
     titleDelimiter: '–',
     favicon: 'img/stonecraft@0.25x.png',
     url: 'https://stonecraft.meza.gg',
@@ -137,11 +138,11 @@ const config: Config = {
                     title: "Docs",
                     items: [
                         {
-                            to: "/",
+                            to: "/docs/",
                             label: "Documentation",
                         },
                         {
-                            to: "/contributing",
+                            to: "/docs/contributing",
                             label: "Contributing to the Documentation"
                         }
                     ],

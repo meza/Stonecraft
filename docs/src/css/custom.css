@@ -159,3 +159,20 @@ html[data-theme='light'] .github-link {
             var(--ifm-color-secondary) 100%
     );
 }
+
+/* Ensure the DocSearch trigger stays legible in the dark navbar */
+[data-theme='dark'] .DocSearch-Button {
+    color: var(--ifm-font-color-base);
+}
+
+[data-theme='dark'] .DocSearch-Button:focus,
+[data-theme='dark'] .DocSearch-Button:hover,
+[data-theme='dark'] .DocSearch-Button:active {
+    color: var(--ifm-font-color-base);
+}
+
+/* Keyboard shortcut badges need dark text to contrast the amber brand fill */
+[data-theme='dark'] .DocSearch-Button-Key,
+[data-theme='dark'] .DocSearch-Commands-Key {
+    color: var(--ifm-navbar-background-color);
+}

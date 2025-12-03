@@ -37,6 +37,10 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
         }
     }
 
+    project.tasks.named("processResources") {
+        dependsOn(project.tasks.named("stonecutterGenerate"))
+    }
+
     project.afterEvaluate {
         // Deal with the general resources
         project.project.tasks.withType<ProcessResources> {

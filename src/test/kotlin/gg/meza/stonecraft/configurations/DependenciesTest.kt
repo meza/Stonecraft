@@ -132,4 +132,32 @@ tasks.register("printDeps") {
             "Dependency \"com.mojang:minecraft:1.21.6-rc1\" was not resolved from the versions deps"
         )
     }
+
+    @Test
+    fun `legacy yarn mappings are used when configured`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+
+        val buildResult = gradleTest.run("printDeps")
+
+        assertTrue(
+            buildResult.output.contains("net.fabricmc:yarn"),
+            "Yarn mappings should be used when the legacy property is present."
+        )
+        assertFalse(
+            buildResult.output.contains("net.minecraft:mappings"),
+            "Mojmap should not replace Yarn when the legacy property is present."
+        )
+    }
+
+    @Test
+    fun `mojmap is the default when yarn mappings are missing`() {
+        gradleTest.setStonecutterVersion("1.21.6", "fabric")
+
+        val buildResult = gradleTest.run("printDeps")
+
+        assertTrue(
+            buildResult.output.contains("loom.mappings.1_21_6"),
+            "Official Mojmap mappings should be used when no Yarn mappings are configured."
+        )
+    }
 }

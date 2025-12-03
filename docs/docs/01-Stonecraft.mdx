@@ -204,9 +204,23 @@ for inspiration.
 Architectury is a fork of fabric-loom which coordinates the setup of a multi-loader project.
 Stonecraft configures Architectury to support Fabric, Forge and NeoForge with more loaders to come.
 
-### Yarn Mappings
+### Mappings
 
-Stonecraft uses the Yarn mappings currently but Mojmap support is coming soon.
+As of version 1.7.0, Stonecraft defaults to using Mojang's official Mojmap mappings for all supported Minecraft versions.
+The main reasons behind this change are described in my [blog post about the post-obfuscation world](/blog/post-obfuscation-stonecraft).
+
+#### Mojmap
+
+This is the default. We use `loom.officialMojangMappings()` to enable Mojmap support in Loom.
+
+#### Yarn Mappings
+
+Using Yarn mappings is also possible and the 1.7.0 changes made sure that existing projects using Yarn are not affected.
+To use Yarn mappings, simply add the usual `yarn_mappings` property in your [dependency files](/docs/Quickstart#creating-your-dependency-files)
+
+When the `yarn_mappings` property is present, Stonecraft will automatically configure Loom to use Yarn mappings instead of Mojmap.
+
+This includes setting up the necessary yarn patch for Neoforge.
 
 ### Mod-Publish-Plugin
 

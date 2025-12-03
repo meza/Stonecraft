@@ -10,11 +10,12 @@ import org.gradle.kotlin.dsl.repositories
 import java.util.*
 
 /**
- * Configure the dependencies for a project depending on the mod type and Minecraft version
- * This is all based on yarn mappings for now
+ * Configures dependencies for each loader/version pair.
+ *
+ * Mojmap is the default namespace. Older branches can stay on Yarn by providing the legacy
+ * `yarn_mappings` (and optional patch properties).
  *
  * @TODO: Add support for Quilt
- * @TODO: Add support for Mojang mappings
  *
  * @param project The project to configure the dependencies for
  * @param canonicalMinecraftVersion The version of Minecraft to configure the dependencies for
@@ -29,21 +30,27 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
         maven("https://maven.neoforged.net/releases/")
     }
 
+    val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
+    val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
+
     project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
 
-    if (!project.mod.isNeoforge) {
-        // normal projects
-        project.dependencies.add("mappings", "net.fabricmc:yarn:${project.mod.prop("yarn_mappings")}:v2")
+    if (useLegacyYarnMappings) {
+        if (project.mod.isNeoforge) {
+            // Legacy Yarn requires the Architectury patch to stay compatible with NeoForge’s Mojmap-first toolchain.
+            val neoforgeMappings = loom.layered {
+                mappings("net.fabricmc:yarn:${project.mod.prop("yarn_mappings")}:v2")
+                mappings("dev.architectury:yarn-mappings-patch-neoforge:${project.mod.prop("yarn_mappings_neoforge_patch")}")
+            }
+            project.dependencies.add("mappings", neoforgeMappings)
+        } else {
+            project.dependencies.add("mappings", "net.fabricmc:yarn:${project.mod.prop("yarn_mappings")}:v2")
+        }
+    } else {
+        project.dependencies.add("mappings", loom.officialMojangMappings())
     }
 
     if (project.mod.isNeoforge) {
-        // Neoforge is designed with mojmap in mind. When yarn is used, it needs to be patched.
-        val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
-        val neoforgeMappings = loom.layered {
-            mappings("net.fabricmc:yarn:${project.mod.prop("yarn_mappings")}:v2")
-            mappings("dev.architectury:yarn-mappings-patch-neoforge:${project.mod.prop("yarn_mappings_neoforge_patch")}")
-        }
-        project.dependencies.add("mappings", neoforgeMappings)
         project.dependencies.add("neoForge", "net.neoforged:neoforge:${project.mod.prop("neoforge_version")}")
     }
 
