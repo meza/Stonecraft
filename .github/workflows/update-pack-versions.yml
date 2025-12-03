@@ -43,7 +43,7 @@ jobs:
           fetch-depth: 0
 
       - name: Update pack formats
-        uses: meza/action-minecraft-pack-versions@v1.0.22
+        uses: meza/action-minecraft-pack-versions@v1.0.23
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           output_path: src/main/resources/pack_versions.json
