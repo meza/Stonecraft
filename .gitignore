@@ -9,7 +9,7 @@ versions/**/src
 **/node_modules
 tmp*
 **/.docusaurus
-bob-memory.md
+./bob-memory.md
 # eclipse
 
 *.launch
