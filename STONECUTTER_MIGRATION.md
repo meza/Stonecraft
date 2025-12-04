@@ -7,7 +7,7 @@ Stonecutter 0.7 and 0.8 introduce sweeping changes that Stonecraft needs to acco
 - **Version semantics updates (0.7)**: Version parsing/evaluation is unified, `stonecutter.current` can be null, and a new semver engine adds operators like `!=`.
 - **File processing groundwork (0.7)**: Pattern-based file filtering replaces `allowExtensions`/`excludeFiles`, simplifying multi-branch setups and improving config-cache behavior.
 - **Parser & file handler rewrite (0.8)**: ANTLR powers the new parser with richer diagnostics; Stonecutter supports custom file handlers, line/word scope improvements, parametrized swaps, inline comment notes, and better replacement performance/error handling.
-- **Developer ergonomics (0.8)**: `sc` shorthand, `current.parsed` comparisons, comment-splitting scopes, stricter identifier grammar, and optional comment suppression highlight the alpha features.
+- **Developer ergonomics (0.8)**: `stonecutter.current.parsed` comparisons, comment-splitting scopes, stricter identifier grammar, and optional comment suppression highlight the alpha features.
 
 The following steps outline how Stonecraft should adopt these releases without breaking its interface.
 
@@ -50,26 +50,41 @@ The following steps outline how Stonecraft should adopt these releases without b
 2. Update documentation/CHANGELOG summarizing the 0.7 integration (removal of chiseled tasks, new DSL, nullable active versions).
 3. Publish a Stonecraft release targeting Stonecutter 0.7.x.
 
-## Phase 2 – Prepare for Stonecutter 0.8 (currently alpha)
+## Phase 2 – Adopt Stonecutter 0.8-alpha.14
 
-### Iteration 6 – Ready the codebase
-1. Ensure Phase 1 steps are complete (0.7 DSL everywhere) and abstract version comparisons through helper functions so switching to `current.parsed` is trivial.
-2. Decide which experimental flags/features (comment splitting, handler API) Stonecraft wants to surface; expose toggles if needed.
+Stonecutter 0.8 makes two concrete changes that matter to Stonecraft:
+1. `StonecutterControllerExtension.tasks` now exposes typed accessors (see the [0.8 changelog, alpha.14](https://stonecutter.kikugie.dev/blog/changes/0.8#08-alpha14)), so we can no longer pass raw strings when wiring `chiseled*` wrappers.
+2. File processing is limited to extensions with registered handlers (see [0.8 changelog, alpha.3](https://stonecutter.kikugie.dev/blog/changes/0.8#08-alpha3) and the [handler wiki](https://stonecutter.kikugie.dev/wiki/config/handlers)), so our existing `stonecutter.filters.include("**/*.md", "**/*.txt")` call only works if we register matching handlers.
 
-### Iteration 7 – Integrate 0.8 APIs
-1. Bump the dependency to the selected `0.8-alpha.x` when ready.
-2. Register file handlers (per `/blog/changes/0.8-alpha.3`) if Stonecraft still wants to process `.txt`/`.md`; otherwise remove the extension overrides.
-3. Adopt `stonecutter.current.parsed` (`>=`, `matches`, `eq`) in place of raw `eval` where possible to align with the new API surface.
-4. If Stonecraft exposes replacements/swaps, migrate them to the updated DSL (`stonecutter.replacements { string { ... } }`) for compatibility with the new parser.
-5. Expand fixtures/tests to include files with nested comments, YAML/access wideners, etc., validating the ANTLR parser/handlers.
+### Iteration 6 – Update `chiseled*` wrappers for typed task access
+1. `src/main/kotlin/gg/meza/stonecraft/configurations/ChiseledTasks.kt:10-36`  
+   - Replace the `Wrapper(name, target)` helper with the typed API exposed by `StonecutterControllerExtension.tasks`.  
+   - For each wrapper (`chiseledBuild`, `chiseledClean`, …) depend on the typed property instead of calling `controller.tasks.named(targetTask)` with a `String`.  
+   - Likewise, switch the `controller.tasks { order("buildAndCollect") }` calls to the typed constants.  
+   - Source: [0.8 changelog, alpha.14](https://stonecutter.kikugie.dev/blog/changes/0.8#08-alpha14).
+2. `src/test/kotlin/gg/meza/stonecraft/configurations/ChiseledTasksConfigurationTest.kt`  
+   - Adjust expectations if the task names exposed by the typed API changed.  
+   - Keep asserting that every legacy `chiseled*` wrapper shows up in `./gradlew tasks` so future upstream changes don’t silently break us.
 
-### Iteration 8 – Docs/testing/release
-1. Refresh README/docs to state compatibility with Stonecutter 0.8 and call out any new configuration knobs.
-2. Document migration notes (e.g., handler registration, new version comparison helpers).
-3. Add TestKit coverage for formats touched by file handlers.
-4. Release once satisfied with alpha stability (or wait for 0.8 stable); flag the dependency’s prerelease status in release notes if applicable.
+### Iteration 7 – Decide how `.md` / `.txt` files should be handled
+1. `src/main/kotlin/gg/meza/stonecraft/configurations/Stonecutter.kt:9-15`  
+   - Decide whether Stonecraft should continue preprocessing Markdown/text files.  
+   - If yes, register handlers using the DSL in the [handler wiki](https://stonecutter.kikugie.dev/wiki/config/handlers) (e.g., reuse the hash-style preset) and keep the filter entry.  
+   - If no, remove `stonecutter.filters.include("**/*.md", "**/*.txt")` so we align with the default handler list (`java`, `kt`, `kts`, `yaml`, `aw`, etc.) called out in the changelog and wiki.  
+   - Source references: [0.8 changelog, alpha.3](https://stonecutter.kikugie.dev/blog/changes/0.8#08-alpha3) and [handler wiki](https://stonecutter.kikugie.dev/wiki/config/handlers).
+2. Tests/docs to update after the decision:  
+   - Add or adjust a fixture (e.g., in `StonecutterTest` or a new TestKit case) to prove the intended behavior for `.md`/`.txt`.  
+   - Update `README.md`, `docs/docs/02-Quickstart.mdx`, and any tutorials that mention `.md`/`.txt` preprocessing so users know which extensions are supported and how to add more via handlers.
+3. Re-run the integration project (`src/test/resources/fixtures`) to ensure `stonecutterGenerate` → `processResources` wiring still behaves (no skipped resources, no cache regressions).
+
+### Iteration 8 – Documentation and release packaging
+1. Update every public reference to the Stonecutter version (`README.md`, `docs/docs/02-Quickstart.mdx`, blog posts) so they state “0.8-alpha.14” and summarize the two functional changes above. Cite the relevant upstream docs where useful.
+2. Extend CI/TestKit coverage to fail fast if either breaking change regresses:
+   - Keep `ChiseledTasksConfigurationTest` asserting the wrapper tasks.  
+   - Add/extend a fixture that covers the chosen `.md`/`.txt` policy (processed vs. ignored).
+3. Prepare release notes describing the dependency bump, the handler decision, and how to roll back to 0.7.x if the alpha build causes issues.
 
 ## Next Steps
-1. Execute Phase 1 Iteration 1 (dependency/doc updates) on a feature branch.
-2. Prototype the `stonecutter.tasks`-based wrappers locally to confirm parity with the old chiseled tasks before merging.
-3. After shipping the 0.7-compatible Stonecraft version, use a long-lived branch for the 0.8 experiments to isolate alpha risk.
+1. Update `ChiseledTasks.kt` and its tests to use the typed `controller.tasks` API from [0.8-alpha.14](https://stonecutter.kikugie.dev/blog/changes/0.8#08-alpha14); run `./gradlew test` afterward.
+2. Decide on the `.md`/`.txt` policy, implement it in `Stonecutter.kt`, and add the corresponding fixture assertions; sources: [handler wiki](https://stonecutter.kikugie.dev/wiki/config/handlers) and [0.8-alpha.3 changelog](https://stonecutter.kikugie.dev/blog/changes/0.8#08-alpha3).
+3. Refresh the README/docs to reference Stonecutter 0.8-alpha.14, document the handler policy with links to the upstream docs, and draft release notes for downstream users.
