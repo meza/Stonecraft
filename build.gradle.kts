@@ -4,9 +4,9 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
-    alias(libs.plugins.plugin.publish)
+    `maven-publish`
+    alias(libs.plugins.plugin.publish) apply false
     alias(libs.plugins.test.logger)
-//    alias(libs.plugins.spotless)
 }
 
 group = "gg.meza"
@@ -95,33 +95,35 @@ kotlin {
     jvmToolchain(21)
 }
 
-// compileKotlin.compilerOptions {
-//    languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0) // Changed from KOTLIN_2_1
-//    jvmTarget.set(JvmTarget.JVM_21)
-//    freeCompilerArgs.addAll(listOf("-opt-in=kotlin.ExperimentalStdlibApi", "-opt-in=kotlin.RequiresOptIn"))
-// }
-//
-// java {
-//    sourceCompatibility = JavaVersion.VERSION_21
-//    targetCompatibility = JavaVersion.VERSION_21
-// }
+val isPrereleaseChannel = providers.environmentVariable("STONECRAFT_PRERELEASE")
+    .map { it.equals("true", ignoreCase = true) }
+    .orElse(false)
 
-// spotless {
-//    kotlin {
-//        ktlint()
-//            .editorConfigOverride(
-//                mapOf(
-//                    "ktlint_code_style" to "intellij_idea",
-//                    "ktlint_standard_no-line-break-before-assignment" to "disabled",
-//                    "ktlint_standard_trailing-comma-on-call-site" to "disabled",
-//                    "ktlint_standard_trailing-comma-on-declaration-site" to "disabled"
-//                )
-//            )
-//    }
-// }
+if (!isPrereleaseChannel.get()) {
+    apply(plugin = "com.gradle.plugin-publish")
+}
 
 publishing {
     repositories {
         mavenLocal()
+        if (isPrereleaseChannel.get()) {
+            maven {
+                name = "reposilite"
+
+                val versionTag = project.version.toString().lowercase()
+                val target = if (listOf("alpha", "beta", "rc", "snapshot", "dev", "next").any { it in versionTag }) {
+                    "snapshots"
+                } else {
+                    "releases"
+                }
+
+                url = uri("https://maven.meza.gg/$target")
+
+                credentials {
+                    username = providers.environmentVariable("MEZA_MAVEN_USER").orElse("").get()
+                    password = providers.environmentVariable("MEZA_MAVEN_PASSWORD").orElse("").get()
+                }
+            }
+        }
     }
 }

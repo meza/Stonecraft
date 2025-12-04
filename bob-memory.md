@@ -2,6 +2,7 @@
 - Confirmed requirement to support concurrent maintenance branches (e.g., `1.7.x`, `1.8.x`) with semantic-release so Renovate + update-pack-versions workflows can publish security patches per branch.
 - Need to document process for configuring semantic-release multi-branch strategy, ensuring branch-specific release rules and workflow triggers remain isolated from `main`.
 - Follow up: design/update release config + docs so that each maintenance branch gets proper release channel without manual intervention.
+- Today's sync focuses on release/versioning UX for downstream mods: when only a new MC version is added via Stonecutter, semantic-release still pushes `feat`/`fix` bumps for all `<mc-version>-<loader>` artifacts; need brainstorming on whether this is desired and possible mitigations (scoped releases, partial publishing, docs guidance).
 
 # 2025-02-14
 - Reviewed docs/blog/2025-11-25-post-obfuscation-stonecraft.md to understand promised Mojmap support toggle between Yarn and Mojang mappings while keeping legacy behavior unchanged.

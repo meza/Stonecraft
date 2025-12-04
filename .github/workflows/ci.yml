@@ -31,6 +31,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GRADLE_PUBLISH_KEY: ${{ vars.GRADLE_PUBLISH_KEY }}
           GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
+          MEZA_MAVEN_USER: ${{ secrets.MEZA_MAVEN_USER }}
+          MEZA_MAVEN_PASSWORD: ${{ secrets.MEZA_MAVEN_PASSWORD }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: cycjimmy/semantic-release-action@v4
         with:
@@ -94,12 +96,15 @@ jobs:
             **/build/e2e_tests/project/build/reports/
             **/build/e2e_tests/project/build/test-results/
 
-      - name: Semantic Release
+      - name: Semantic Release to channel ${{ steps.version.outputs.new_release_channel }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GRADLE_PUBLISH_KEY: ${{ vars.GRADLE_PUBLISH_KEY }}
           GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
+          MEZA_MAVEN_USER: ${{ secrets.MEZA_MAVEN_USER }}
+          MEZA_MAVEN_PASSWORD: ${{ secrets.MEZA_MAVEN_PASSWORD }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          STONECRAFT_PRERELEASE: ${{ steps.version.outputs.new_release_channel == 'SNAPSHOT' }}
         uses: cycjimmy/semantic-release-action@v4
         with:
           extra_plugins: |
