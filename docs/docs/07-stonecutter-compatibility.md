@@ -19,7 +19,7 @@ If you override Stonecutter manually you can break task wiring, DSL keywords, or
 | `<1.3.3`                | `0.5.x`                       | Legacy line, no new features                                                          |
 | `1.3.3 - 1.7.x`         | `0.6.2`                       | Trusted and true. If you don't like change, stay here.                                |
 | `1.8.x`                 | `0.7.11`                      | Embracing Stonecutter 0.7 stable features. Allows you to abandon the chiseled* tasks. See [our native tasks write-up](/blog/native-tasks-deprecation) for context. |
-| `1.9.x`                 | `0.8+ (alpha)`                | Cutting-edge Stonecutter 0.8 features, expect breaking changes as upstream stabilizes |
+| `1.9.x`                 | `0.8.14-alpha`                | Cutting-edge Stonecutter 0.8 parser/handler stack plus typed task accessors; expect churn until upstream ships stable. |
 
 
 :::warning Older Stonecraft lines are frozen

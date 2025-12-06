@@ -19,7 +19,7 @@ Stonecutter 0.7 removes chiseled tasks, replaces the constants/filters API, and 
 
 ## Our Plan
 
-We are taking this one iteration at a time. The work is tracked in our [Stonecutter Migration Plan](https://github.com/meza/Stonecraft/blob/main/STONECUTTER_MIGRATION.md), which breaks the effort down into small, reviewable steps. We’ll move through that checklist in order. First landing 0.7 compatibility, then experimenting with the 0.8 alpha stream once the foundation is stable.
+We are taking this one iteration at a time. The work is tracked in our [Stonecutter Migration Plan](https://github.com/meza/Stonecraft/blob/main/docs/reference/stonecutter-migration-plan.md), which breaks the effort down into small, reviewable steps. We’ll move through that checklist in order. First landing 0.7 compatibility, then experimenting with the 0.8 alpha stream once the foundation is stable.
 
 ## Release Guarantees
 
