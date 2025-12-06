@@ -5,6 +5,7 @@
   ],
   "baseBranchPatterns": [
     "main",
+    "next",
     "/^v\\d+\\.\\d+\\.x$/"
   ],
   "packageRules": [
