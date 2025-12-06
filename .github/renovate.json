@@ -3,43 +3,65 @@
   "extends": [
     "github>stateshifters/renovate-common"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "main",
     "/^v\\d+\\.\\d+\\.x$/"
   ],
   "packageRules": [
     {
-      "matchManagers": ["npm"],
+      "matchManagers": [
+        "npm"
+      ],
       "semanticCommitType": "docs",
       "automerge": true
     },
     {
-      "matchManagers": ["gradle", "gradle-wrapper"],
+      "matchManagers": [
+        "gradle",
+        "gradle-wrapper"
+      ],
       "automerge": true
     },
     {
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "semanticCommitType": "ci",
       "automerge": true
     },
     {
-      "matchBaseBranches": ["/^v\\d+\\.\\d+\\.x$/"],
+      "matchBaseBranches": [
+        "/^v\\d+\\.\\d+\\.x$/"
+      ],
       "schedule": [
         "before 5am on monday"
       ],
       "groupName": "maintenance dependency rollup",
       "groupSlug": "maintenance-deps",
-      "matchManagers": ["gradle", "gradle-wrapper", "npm", "github-actions"],
+      "matchManagers": [
+        "gradle",
+        "gradle-wrapper",
+        "npm",
+        "github-actions"
+      ],
       "separateMinorPatch": false
     },
     {
-      "matchBaseBranches": ["v1.7.x"],
-      "matchPackageNames": ["dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin"],
+      "matchBaseBranches": [
+        "v1.7.x"
+      ],
+      "matchPackageNames": [
+        "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin"
+      ],
       "allowedVersions": "0.6.2"
     },
     {
-      "matchBaseBranches": ["v1.7.x"],
-      "matchManagers": ["gradle-wrapper"],
+      "matchBaseBranches": [
+        "v1.7.x"
+      ],
+      "matchManagers": [
+        "gradle-wrapper"
+      ],
       "allowedVersions": "8.14"
     }
   ]
