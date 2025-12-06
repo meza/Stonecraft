@@ -119,9 +119,12 @@ publishing {
 
                 url = uri("https://maven.meza.gg/$target")
 
-                credentials {
-                    username = providers.environmentVariable("MEZA_MAVEN_USER").orElse("").get()
-                    password = providers.environmentVariable("MEZA_MAVEN_PASSWORD").orElse("").get()
+                credentials(PasswordCredentials::class) {
+                    username = providers.environmentVariable("MEZA_MAVEN_USER").get()
+                    password = providers.environmentVariable("MEZA_MAVEN_PASSWORD").get()
+                }
+                authentication {
+                    create<BasicAuthentication>("basic")
                 }
             }
         }
