@@ -27,4 +27,30 @@ Legacy releases only receive critical security fixes.
 New Stonecutter functionality is added exclusively to newer Stonecraft branches, so upgrade when you want modern tasks and DSL helpers.
 :::
 
+## Experimental Snapshot Channel
+
+Stonecraft publishes the 1.9 snapshot line to keep pace with the alpha-grade Stonecutter 0.8 APIs. Because this track evolves quickly, you must opt-in explicitly by pointing Gradle at the snapshots repository and declaring the matching plugin versions.
+
+1. Add the snapshots repository anywhere you resolve Gradle plugins:
+
+```kotlin
+pluginManagement {
+    repositories {
+        maven("https://maven.meza.gg/snapshots")
+        // keep your existing repos here
+    }
+}
+```
+
+2. Depend on the compatible plugin versions:
+
+```kotlin
+plugins {
+    id("gg.meza.stonecraft") version "1.9.+"
+    id("dev.kikugie.stonecutter") version "0.8.+"
+}
+```
+
+Stonecutter 0.8 is still stabilizing, so expect breaking changes between snapshot bumps. Track this page for updates before promoting a build to production or pinning the line in CI.
+
 We actively track Stonecutter development so Stonecraft users can adopt the latest tooling with minimal effort. When Stonecutter moves forward, expect a corresponding Stonecraft release to keep this compatibility matrix authoritative.

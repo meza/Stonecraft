@@ -26,6 +26,8 @@ plugins {
 }
 ```
 
+Need to experiment with the Stonecraft 1.9 snapshot that bundles Stonecutter 0.8 alpha? Follow the [experimental snapshot channel guide](https://stonecutter.meza.gg/docs/stonecraft-and-stonecutter-compatibility#experimental-snapshot-channel) on the documentation site.
+
 ### Set up Stonecutter
 
 #### Setting up supported version
