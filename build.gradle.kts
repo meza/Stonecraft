@@ -104,6 +104,16 @@ if (!isPrereleaseChannel.get()) {
 }
 
 publishing {
+
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "gg.meza"
+            artifactId = "stonecraft"
+            version = project.version.toString()
+            from(components["java"])
+        }
+    }
+
     repositories {
         mavenLocal()
         if (isPrereleaseChannel.get()) {
