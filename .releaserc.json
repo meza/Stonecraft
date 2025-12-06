@@ -3,7 +3,7 @@
     "main",
     {
       "name": "next",
-      "prerelease": true,
+      "prerelease": "SNAPSHOT",
       "channel": "SNAPSHOT"
     },
     {
