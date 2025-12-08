@@ -59,7 +59,7 @@ class ModPlugin : Plugin<Any> {
 
         configureDependencies(project, canonicalMinecraftVersion, realMinecraftVersion)
         configureStonecutterConstants(project, stonecutter)
-        configureProcessResources(project, canonicalMinecraftVersion, modSettings)
+        configureProcessResources(project, realMinecraftVersion, modSettings)
         configureLoom(project, stonecutter, modSettings)
         patchAroundArchitecturyQuirks(project, stonecutter)
         configurePublishing(project, realMinecraftVersion)
