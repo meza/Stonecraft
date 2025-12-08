@@ -134,6 +134,18 @@ tasks.register("printDeps") {
     }
 
     @Test
+    fun `new rc minecraft versions are picked up from version properties`() {
+        gradleTest.setStonecutterVersion("600.21.11", "fabric")
+
+        val buildResult = gradleTest.run("printDeps")
+
+        assertTrue(
+            buildResult.output.contains("com.mojang:minecraft:1.21.11-rc2"),
+            "Dependency \"com.mojang:minecraft:1.21.11-rc2\" was not resolved from the versions deps"
+        )
+    }
+
+    @Test
     fun `legacy yarn mappings are used when configured`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
 

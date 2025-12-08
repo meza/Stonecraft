@@ -5,6 +5,7 @@
   ],
   "baseBranchPatterns": [
     "main",
+    "next",
     "/^v\\d+\\.\\d+\\.x$/"
   ],
   "packageRules": [
@@ -72,6 +73,12 @@
         "gradle-wrapper"
       ],
       "allowedVersions": "8.14"
+    },
+    {
+      "matchPackageNames": [
+        "dev.architectury.loom:dev.architectury.loom.gradle.plugin"
+      ],
+      "stabilityDays": 0
     }
   ],
   "customManagers": [
