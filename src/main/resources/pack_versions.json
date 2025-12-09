@@ -1730,5 +1730,21 @@
   "1.21.11-pre4": {
     "datapack": 94.1,
     "resourcepack": 75
+  },
+  "1.21.11-pre5": {
+    "datapack": 94.1,
+    "resourcepack": 75
+  },
+  "1.21.11-rc1": {
+    "datapack": 94.1,
+    "resourcepack": 75
+  },
+  "1.21.11-rc2": {
+    "datapack": 94.1,
+    "resourcepack": 75
+  },
+  "1.21.11-rc3": {
+    "datapack": 94.1,
+    "resourcepack": 75
   }
 }
