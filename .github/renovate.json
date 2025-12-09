@@ -24,13 +24,6 @@
       "automerge": true
     },
     {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "semanticCommitType": "ci",
-      "automerge": true
-    },
-    {
       "matchBaseBranches": [
         "/^v\\d+\\.\\d+\\.x$/"
       ],
@@ -46,6 +39,13 @@
         "github-actions"
       ],
       "separateMinorPatch": false
+    },
+    {
+      "matchPackageNames": [
+        "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin",
+        "dev.architectury.loom:dev.architectury.loom.gradle.plugin"
+      ],
+      "semanticCommitType": "deps"
     },
     {
       "matchBaseBranches": [
