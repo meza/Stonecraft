@@ -3,13 +3,6 @@
   "extends": [
     "github>stateshifters/renovate-common:deps"
   ],
-  "enabledManagers": [
-    "github-actions",
-    "gradle",
-    "gradle-wrapper",
-    "npm",
-    "regex"
-  ],
   "baseBranchPatterns": [
     "main",
     "next",
@@ -56,15 +49,6 @@
     },
     {
       "matchBaseBranches": [
-        "main"
-      ],
-      "matchPackageNames": [
-        "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin"
-      ],
-      "allowedVersions": "^0.7.0 <0.8.0"
-    },
-    {
-      "matchBaseBranches": [
         "v1.7.x"
       ],
       "matchPackageNames": [
@@ -107,11 +91,12 @@
         "/^src\\/test\\/resources\\/fixtures\\/settings\\.gradle\\.kts$/"
       ],
       "matchStrings": [
-        "id\\(\"dev\\.kikugie\\.stonecutter\"\\) version \"(?<currentValue>[^\"]+)\""
+        "(?<prefix>id\\(\"dev\\.kikugie\\.stonecutter\"\\) version \")(?<currentValue>\\d+(?:[.-][0-9A-Za-z]+)*)(?<rangeSuffix>\\.\\+|\\+)?(?<suffix>\")"
       ],
       "depNameTemplate": "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin",
       "packageNameTemplate": "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin",
-      "datasourceTemplate": "gradle-version"
+      "datasourceTemplate": "gradle-version",
+      "replaceStringTemplate": "{{prefix}}{{{newValue}}}{{#if rangeSuffix}}{{rangeSuffix}}{{/if}}{{suffix}}"
     }
   ]
 }
