@@ -153,6 +153,54 @@ tasks.register("testConditionalDeps") {
     }
 
     @Test
+    fun `minecraftVersion returns overridden snapshot version`() {
+        gradleTest = gradleTest().buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("printMinecraftVersion") {
+    doLast {
+        println("Resolved Minecraft Version: " + mod.minecraftVersion)
+    }
+}
+            """.trimIndent()
+        )
+
+        gradleTest.setStonecutterVersion("1.21.6", "fabric")
+
+        val buildResult = gradleTest.run("printMinecraftVersion")
+
+        assertTrue(
+            buildResult.output.contains("Resolved Minecraft Version: 1.21.6-rc1"),
+            "minecraftVersion should return overridden snapshot value"
+        )
+    }
+
+    @Test
+    fun `minecraftVersion falls back to stonecutter version when override missing`() {
+        gradleTest = gradleTest().buildScript(
+            """
+import gg.meza.stonecraft.mod
+
+tasks.register("printMinecraftVersion") {
+    doLast {
+        println("Resolved Minecraft Version: " + mod.minecraftVersion)
+    }
+}
+            """.trimIndent()
+        )
+
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+
+        val buildResult = gradleTest.run("printMinecraftVersion")
+
+        assertTrue(
+            buildResult.output.contains("Resolved Minecraft Version: 1.21.4"),
+            "minecraftVersion should use the canonical Stonecutter version when no override exists"
+        )
+    }
+
+    @Test
     fun `hasProp works with forge properties`() {
         gradleTest.setStonecutterVersion("1.21.4", "forge")
 
