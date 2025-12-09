@@ -1,5 +1,6 @@
 package gg.meza.stonecraft
 
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
 
@@ -39,6 +40,19 @@ class ModData(private val project: Project) {
     val version: String get() = project.property("mod.version").toString()
     val group: String get() = project.property("mod.group").toString()
     val loader: String get() = project.name.substringAfterLast("-").lowercase()
+    val minecraftVersion: String
+        get() {
+            if (project.extra.has("minecraft_version")) {
+                return project.extra["minecraft_version"].toString()
+            }
+
+            val stonecutter = project.extensions.findByType(StonecutterBuildExtension::class.java)
+            requireNotNull(stonecutter) {
+                "Cannot determine Minecraft version; Stonecutter extension is missing"
+            }
+
+            return stonecutter.current.version
+        }
 
     val isFabric: Boolean get() = loader == "fabric"
     val isQuilt: Boolean get() = loader == "quilt"
