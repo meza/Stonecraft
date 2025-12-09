@@ -3,6 +3,13 @@
   "extends": [
     "github>stateshifters/renovate-common:deps"
   ],
+  "enabledManagers": [
+    "github-actions",
+    "gradle",
+    "gradle-wrapper",
+    "npm",
+    "regex"
+  ],
   "baseBranchPatterns": [
     "main",
     "next",
