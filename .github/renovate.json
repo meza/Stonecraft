@@ -78,7 +78,7 @@
       "matchPackageNames": [
         "dev.architectury.loom:dev.architectury.loom.gradle.plugin"
       ],
-      "stabilityDays": 0
+      "minimumReleaseAge": null
     }
   ],
   "customManagers": [
