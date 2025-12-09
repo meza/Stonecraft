@@ -40,6 +40,7 @@ jobs:
           extra_plugins: |
             @semantic-release/changelog@6.0.0
             semantic-release-discord-notifier 
+            @meza/mezas-conventional-changelog
             conventional-changelog-conventionalcommits 
             @semantic-release/changelog 
             gradle-semantic-release-plugin
@@ -110,6 +111,7 @@ jobs:
           extra_plugins: |
             @semantic-release/changelog@6.0.0
             semantic-release-discord-notifier 
-            conventional-changelog-conventionalcommits 
+            conventional-changelog-conventionalcommits
+            @meza/mezas-conventional-changelog
             @semantic-release/changelog 
             gradle-semantic-release-plugin
