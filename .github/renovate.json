@@ -56,6 +56,15 @@
     },
     {
       "matchBaseBranches": [
+        "main"
+      ],
+      "matchPackageNames": [
+        "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin"
+      ],
+      "allowedVersions": "^0.7.0 <0.8.0"
+    },
+    {
+      "matchBaseBranches": [
         "v1.7.x"
       ],
       "matchPackageNames": [
