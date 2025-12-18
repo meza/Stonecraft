@@ -3,10 +3,10 @@
   "extends": [
     "github>stateshifters/renovate-common:deps"
   ],
-  "baseBranchPatterns": [
+  "baseBranches": [
     "main",
     "next",
-    "/^v\\d+\\.\\d+\\.x$/"
+    "v1.7.x"
   ],
   "packageRules": [
     {
@@ -85,17 +85,18 @@
     {
       "customType": "regex",
       "description": "Keep quickstart docs and test fixture Stonecutter plugin versions aligned",
-      "managerFilePatterns": [
-        "/^README\\.md$/",
-        "/^docs\\/docs\\/02-Quickstart\\.mdx$/",
-        "/^src\\/test\\/resources\\/fixtures\\/settings\\.gradle\\.kts$/"
+      "fileMatch": [
+        "(^|/)README\\.md$",
+        "^docs\\/docs\\/02-Quickstart\\.mdx$",
+        "^src\\/test\\/resources\\/fixtures\\/settings\\.gradle\\.kts$"
       ],
       "matchStrings": [
-        "id\\(\"dev\\.kikugie\\.stonecutter\"\\) version \"(?<currentValue>[^\"]+)\""
+        "(?<prefix>id\\(\"dev\\.kikugie\\.stonecutter\"\\) version \")(?<currentValue>\\d+(?:[.-][0-9A-Za-z]+)*)(?<rangeSuffix>\\.\\+|\\+)?(?<suffix>\")"
       ],
       "depNameTemplate": "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin",
       "packageNameTemplate": "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin",
-      "datasourceTemplate": "gradle-version"
+      "datasourceTemplate": "gradle-version",
+      "autoReplaceStringTemplate": "{{prefix}}{{{newValue}}}{{#if rangeSuffix}}{{rangeSuffix}}{{/if}}{{suffix}}"
     }
   ]
 }
