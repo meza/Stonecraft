@@ -1,5 +1,6 @@
 package gg.meza.stonecraft
 
+import dev.kikugie.stonecutter.build.StonecutterBuild
 import dev.kikugie.stonecutter.controller.StonecutterController
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
@@ -46,12 +47,17 @@ class ModData(private val project: Project) {
                 return project.extra["minecraft_version"].toString()
             }
 
-            val stonecutter = project.extensions.findByType(StonecutterController::class.java)
-            requireNotNull(stonecutter) {
+            val stonecutterBuild = project.extensions.findByType(StonecutterBuild::class.java)
+            if (stonecutterBuild != null) {
+                return stonecutterBuild.current.version
+            }
+
+            val stonecutterController = project.extensions.findByType(StonecutterController::class.java)
+            requireNotNull(stonecutterController) {
                 "Cannot determine Minecraft version; Stonecutter extension is missing"
             }
 
-            return stonecutter.current.version
+            return stonecutterController.current.version
         }
 
     val isFabric: Boolean get() = loader == "fabric"
