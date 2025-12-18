@@ -9,6 +9,7 @@ versions/**/src
 **/node_modules
 
 **/.docusaurus
+bob-memory.md
 
 # eclipse
 
