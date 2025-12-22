@@ -6,9 +6,10 @@ When you are using the built in `chiseledPublishMods` command, you only need to 
 to your mod.
 
 :::info
-Stonecutter 0.7 (Stonecraft 1.8+) fans out the native Gradle tasks to every node, so most pipelines can invoke the root
-`publishMods` task directly and skip the wrapper. We still register the `chiseledPublishMods` alias for older scripts,
-and you can read why the native tasks are preferred in [Stonecutter 0.7 and the Future of chiseled* Tasks](/blog/native-tasks-deprecation).
+Stonecutter 0.8 (Stonecraft 1.9+) fans out the native Gradle tasks to every node, so most pipelines can invoke
+the root `publishMods` task directly and skip the wrapper. We still register the `chiseledPublishMods` alias for older
+scripts, and you can read why the native tasks are preferred in
+[Stonecutter 0.7 and the Future of chiseled* Tasks](/blog/native-tasks-deprecation).
 :::
 
 Here is an example of how to set up the `publishMods` block for a mod that is both Modrinth and Curseforge:

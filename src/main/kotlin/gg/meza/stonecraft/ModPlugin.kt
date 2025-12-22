@@ -25,6 +25,7 @@ class ModPlugin : Plugin<Any> {
     private fun applyToProject(project: Project) {
         if (project.extensions.findByType(StonecutterControllerExtension::class.java) != null) {
             val stonecutterController = project.extensions.getByType<StonecutterControllerExtension>()
+            configureStonecutterHandlers(stonecutterController)
             configureChiseledTasks(project, stonecutterController)
             return
         }
