@@ -24,7 +24,7 @@ jobs:
         id: set-matrix
         run: |
           maintenance_branches=$(git ls-remote --heads origin 'v*.x' | awk '{print $2}' | sed 's#refs/heads/##' || true)
-          matrix=$(printf '%s\n' main next $maintenance_branches | jq -Rsc '[split("\n")[] | select(length>0)]')
+          matrix=$(printf '%s\n' main $maintenance_branches | jq -Rsc '[split("\n")[] | select(length>0)]')
           echo "branches=$matrix" >> "$GITHUB_OUTPUT"
 
   update:
