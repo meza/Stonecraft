@@ -48,8 +48,8 @@ modSettings {
                 )
             )
 
-        gradleTest.run("clean")
-        result = gradleTest.run("chiseledBuildAndCollect")
+        gradleTest.run("clean", cacheTask = false)
+        result = gradleTest.run("buildAndCollect")
     }
 
     @Test

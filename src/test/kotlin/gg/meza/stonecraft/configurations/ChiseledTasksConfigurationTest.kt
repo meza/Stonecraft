@@ -19,6 +19,28 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
     }
 
     @Test
+    fun `chiseled build and collect delegates to build and collect`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        gradleTest.buildScript(
+            """
+            tasks.register("printChiseledBuildAndCollectDeps") {
+                doLast {
+                    val chiseled = rootProject.tasks.named("chiseledBuildAndCollect").get()
+                    val deps = chiseled.taskDependencies.getDependencies(chiseled).map { it.path }.sorted()
+                    deps.forEach { println("chiseled.dep=" + it) }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run("printChiseledBuildAndCollectDeps")
+        assertTrue(
+            Regex("chiseled\\.dep=.*:buildAndCollect").containsMatchIn(br.output),
+            "Expected chiseledBuildAndCollect to depend on buildAndCollect. Output was:\n${br.output}"
+        )
+    }
+
+    @Test
     fun `stonecutter tasks are configured for 1-21-4`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
         // Check that the chiseled tasks are listed in the tasks output
