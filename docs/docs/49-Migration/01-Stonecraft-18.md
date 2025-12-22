@@ -6,6 +6,10 @@ description: Steps to upgrade Stonecraft from 1.7.x to 1.8.x, including Stonecut
 
 # Stonecraft 1.7.x to 1.8.x Migration Guide
 
+:::warning
+Stonecraft `1.7.x` is end-of-life and receives no further updates.
+:::
+
 ## Dependencies
 
 Make sure your `settings.gradle[.kts]` uses the correct Stonecraft and Stonecutter versions:

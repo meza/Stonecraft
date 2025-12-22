@@ -5,6 +5,10 @@ slug: mojmap-arrives
 authors: meza
 ---
 
+:::note
+Stonecraft `1.7.x` is now end-of-life. This post covers the original 1.7.0 Mojmap change; please upgrade to a newer Stonecraft line for ongoing updates.
+:::
+
 When Mojang announced that Java Edition would ship unobfuscated jars, [we promised](/blog/post-obfuscation-stonecraft) Stonecraft’s interface would stay stable while adding Mojmap support. Today’s 1.7.0 release delivers exactly that: Mojang’s official mappings become the default namespace for new Stonecraft versions, while Yarn remains available for older branches that still rely on it.
 
 <!-- truncate -->

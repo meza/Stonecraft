@@ -19,7 +19,7 @@ Stonecutter 0.7 removes chiseled tasks, replaces the constants/filters API, and 
 
 ## Our Plan
 
-We are taking this one iteration at a time. The work is tracked in our [Stonecutter Migration Plan](https://github.com/meza/Stonecraft/blob/main/docs/reference/stonecutter-migration-plan.md), which breaks the effort down into small, reviewable steps. We’ll move through that checklist in order. First landing 0.7 compatibility, then experimenting with the 0.8 alpha stream once the foundation is stable.
+We are taking this one iteration at a time. The work is tracked in our [Stonecutter Migration Plan](https://github.com/meza/Stonecraft/blob/main/docs/reference/stonecutter-migration-plan.md), which breaks the effort down into small, reviewable steps. We’ll move through that checklist in order: land 0.7 compatibility, then ship the Stonecutter 0.8 upgrade as the new stable line.
 
 ## Release Guarantees
 
@@ -30,3 +30,7 @@ Stay tuned to the blog and the migration plan for progress updates, and thanks f
 ## Edits (2025-11-29)
 
 Phase 1 of the migration checklist wrapped up on November 29, 2025. Stonecraft 1.8.x now ships Stonecutter 0.7.11, wires the `stonecutter.tasks` container so the familiar `chiseled*` wrappers keep working, migrates to the 0.7 constants/filters DSL, and guards places where `stonecutter.current` may be unset. If you are wondering what this means for your CI entry points, read the follow-up post [Stonecutter 0.7 and the Future of chiseled* Tasks](/blog/native-tasks-deprecation) for the rationale.
+
+## Edits (2025-12-22)
+
+Stonecutter 0.8 is now stable, and Stonecraft `1.9.x` is the actively maintained release line that ships it. Stonecraft `1.8.x` is in maintenance mode (critical fixes only).
