@@ -44,7 +44,7 @@ jobs:
 
       - name: Cache Gradle Test dependencies
         id: cache-gradle-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             build/e2e_tests/home
@@ -55,7 +55,7 @@ jobs:
         run: ./gradlew build --stacktrace
 
       - name: Upload build reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: build-reports
