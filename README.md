@@ -3,6 +3,10 @@
 Stonecraft is a configuration Gradle plugin that removes the boilerplate of setting up a **multi-loader, multi-version** Minecraft modding workspace.
 It uses [Stonecutter][stonecutter] and [Architectury][architectury] to provide the multi-loader, multi-version support.
 
+> [!WARNING]
+> Stonecraft `1.7.x` is end-of-life. Please upgrade to the latest Stonecraft release: https://github.com/meza/Stonecraft
+> (To silence the build-time notice while migrating, set `-Pstonecraft.eolWarning=false`.)
+
 Stonecraft reduces about 500 lines of copy-paste build.gradle.kts to a single line with a tested and versioned plugin.
 
 For the full documentation, please visit [Stonecraft](https://stonecraft.meza.gg)

@@ -7,10 +7,15 @@ import gg.meza.stonecraft.extension.ModSettingsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
+import org.gradle.api.logging.Logging
 import org.gradle.api.plugins.BasePluginExtension
 import org.gradle.kotlin.dsl.getByType
 
 class ModPlugin : Plugin<Any> {
+    companion object {
+        private const val eolWarningFlag = "gg.meza.stonecraft.eolWarned"
+        private const val eolWarningProperty = "stonecraft.eolWarning"
+    }
 
     override fun apply(target: Any) {
         when (target) {
@@ -20,9 +25,17 @@ class ModPlugin : Plugin<Any> {
         }
     }
     private fun applyToSettings(settings: Settings) {
-        return
+        // Intentionally no-op today, but keep EOL notification visible for settings-only users.
+        warnEolOnce(
+            gradle = settings.gradle,
+            isEnabled = isEolWarningEnabled(settings.gradle.startParameter.projectProperties[eolWarningProperty])
+        ) { Logging.getLogger(ModPlugin::class.java).warn(it) }
     }
     private fun applyToProject(project: Project) {
+        warnEolOnce(
+            gradle = project.gradle,
+            isEnabled = isEolWarningEnabled(project.findProperty(eolWarningProperty)?.toString())
+        ) { project.logger.warn(it) }
         if (project.extensions.findByType(StonecutterController::class.java) != null) {
             val stonecutterController = project.extensions.getByType<StonecutterController>()
             configureChiseledTasks(project, stonecutterController)
@@ -67,6 +80,27 @@ class ModPlugin : Plugin<Any> {
         configureJava(project, stonecutter, modSettings)
 
         project.afterEvaluate {
+        }
+    }
+
+    private fun warnEolOnce(gradle: org.gradle.api.invocation.Gradle, isEnabled: Boolean, warn: (String) -> Unit) {
+        if (!isEnabled) return
+        val extras = gradle.extensions.extraProperties
+        if (extras.has(eolWarningFlag)) return
+        extras.set(eolWarningFlag, true)
+
+        warn(
+            "Stonecraft 1.7.x is end-of-life and will not receive further updates.\n" +
+                "Please upgrade to the latest Stonecraft release: https://github.com/meza/Stonecraft\n" +
+                "To silence this message, set -P$eolWarningProperty=false."
+        )
+    }
+
+    private fun isEolWarningEnabled(raw: String?): Boolean {
+        val normalized = raw?.trim()?.lowercase() ?: return true
+        return when (normalized) {
+            "false", "0", "no", "off" -> false
+            else -> true
         }
     }
 }

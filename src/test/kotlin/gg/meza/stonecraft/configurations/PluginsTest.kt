@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -53,6 +54,33 @@ plugins {
         assertTrue(br.output.contains("net.fabricmc.loom.LoomGradlePlugin"))
         assertTrue(br.output.contains("me.modmuss50.mpp.MppPlugin"))
         assertTrue(br.output.contains("Architectury Loom"))
+    }
+
+    @Test
+    fun `eol warning is printed by default`() {
+        val br = gradleTest.run("printPlugins")
+        assertTrue(br.output.contains("Stonecraft 1.7.x is end-of-life"))
+        assertTrue(br.output.contains("-Pstonecraft.eolWarning=false"))
+    }
+
+    @Test
+    fun `eol warning can be disabled`() {
+        val br = gradleTest()
+            .withProperties(mapOf("stonecraft.eolWarning" to "false"))
+            .buildScript(
+                """
+tasks.register("printPlugins") {
+    doLast {
+        plugins.forEach { plugin ->
+            println(plugin.javaClass)
+        }
+    }
+}
+                """.trimIndent()
+            )
+            .run("printPlugins")
+
+        assertFalse(br.output.contains("Stonecraft 1.7.x is end-of-life"))
     }
 
     @Test
