@@ -3,7 +3,7 @@
   "extends": [
     "github>stateshifters/renovate-common:deps"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "main"
   ],
   "packageRules": [
@@ -83,10 +83,10 @@
     {
       "customType": "regex",
       "description": "Keep quickstart docs and test fixture Stonecutter plugin versions aligned",
-      "fileMatch": [
-        "(^|/)README\\.md$",
-        "^docs\\/docs\\/02-Quickstart\\.mdx$",
-        "^src\\/test\\/resources\\/fixtures\\/settings\\.gradle\\.kts$"
+      "managerFilePatterns": [
+        "/(^|/)README\\.md$/",
+        "/^docs\\/docs\\/02-Quickstart\\.mdx$/",
+        "/^src\\/test\\/resources\\/fixtures\\/settings\\.gradle\\.kts$/"
       ],
       "matchStrings": [
         "(?<prefix>id\\(\"dev\\.kikugie\\.stonecutter\"\\) version \")(?<currentValue>\\d+(?:[.-][0-9A-Za-z]+)*)(?<rangeSuffix>\\.\\+|\\+)?(?<suffix>\")"
