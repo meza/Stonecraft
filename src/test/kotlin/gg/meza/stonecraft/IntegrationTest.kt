@@ -10,6 +10,7 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
+import java.util.UUID
 
 interface IntegrationTest {
     companion object {
@@ -41,7 +42,7 @@ plugins {
             val testDir = File("build/e2e_tests")
             val ext = ".kts"
             gradleHome = File(testDir, "home")
-            projectDir = File(testDir, "project")
+            projectDir = File(testDir, "project-" + UUID.randomUUID().toString().replace("-", ""))
             buildScript = File(projectDir, "build.gradle$ext")
             gradleProperties = File(projectDir, "gradle.properties")
             settingsFile = File(projectDir, "settings.gradle$ext")
@@ -87,8 +88,7 @@ plugins {
                     gradleHome.absolutePath,
                     "--stacktrace",
                     "--warning-mode",
-                    "all",
-                    "--parallel"
+                    "all"
                 )
             )
         }
