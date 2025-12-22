@@ -6,7 +6,7 @@
   "baseBranches": [
     "main",
     "next",
-    "v1.7.x"
+    "v1.8.x"
   ],
   "packageRules": [
     {
@@ -49,12 +49,12 @@
     },
     {
       "matchBaseBranches": [
-        "v1.7.x"
+        "v1.8.x"
       ],
       "matchPackageNames": [
         "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin"
       ],
-      "allowedVersions": "0.6.2"
+      "allowedVersions": "0.7.11"
     },
     {
       "matchBaseBranches": [
@@ -67,12 +67,12 @@
     },
     {
       "matchBaseBranches": [
-        "v1.7.x"
+        "v1.8.x"
       ],
       "matchManagers": [
         "gradle-wrapper"
       ],
-      "allowedVersions": "8.14"
+      "allowedVersions": "9.2"
     },
     {
       "matchPackageNames": [
