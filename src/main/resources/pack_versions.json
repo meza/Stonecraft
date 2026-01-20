@@ -1762,5 +1762,9 @@
   "26.1-snapshot-3": {
     "datapack": 97,
     "resourcepack": 78
+  },
+  "26.1-snapshot-4": {
+    "datapack": 97.1,
+    "resourcepack": 78.1
   }
 }
