@@ -1,7 +1,7 @@
 [versions]
 plugin-publish = "2.0.0"
 test-logger = "4.0.0"
-spotless = "8.1.0"
+spotless = "8.2.0"
 gson = "2.13.2"
 stonecutter = "0.8+"
 architectury-loom = "1.13.467"
