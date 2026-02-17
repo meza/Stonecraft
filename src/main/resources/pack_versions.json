@@ -1778,5 +1778,9 @@
   "26.1-snapshot-7": {
     "datapack": 99.1,
     "resourcepack": 81
+  },
+  "26.1-snapshot-8": {
+    "datapack": 99.2,
+    "resourcepack": 81.1
   }
 }
