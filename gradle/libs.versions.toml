@@ -10,7 +10,7 @@ junit = "6.0.3"
 junit-pioneer = "2.3.0"
 mockito = "5.23.0"
 mockito-kotlin = "6.2.3"
-okio= "3.16.4"
+okio= "3.17.0"
 kotlinx-serialization = "1.10.0"
 
 [libraries]
