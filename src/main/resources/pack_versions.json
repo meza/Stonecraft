@@ -1822,5 +1822,9 @@
   "26.1-pre-3": {
     "datapack": 101.1,
     "resourcepack": 84
+  },
+  "26.1.1-rc-1": {
+    "datapack": 101.1,
+    "resourcepack": 84
   }
 }
