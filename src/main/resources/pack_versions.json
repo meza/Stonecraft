@@ -1834,5 +1834,9 @@
   "26w14a": {
     "datapack": 101.1,
     "resourcepack": 84
+  },
+  "26.2-snapshot-1": {
+    "datapack": 101.2,
+    "resourcepack": 85
   }
 }
