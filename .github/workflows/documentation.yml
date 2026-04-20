@@ -22,7 +22,7 @@ jobs:
         - name: "⬇️ Checkout"
           uses: actions/checkout@v6
 
-        - uses: pnpm/action-setup@v5.0.0
+        - uses: pnpm/action-setup@v6.0.0
           name: Install pnpm
           id: pnpm-install
           with:
@@ -41,7 +41,7 @@ jobs:
             pnpm run build
 
         - name: "🚀 Upload documentation"
-          uses: actions/upload-pages-artifact@v4
+          uses: actions/upload-pages-artifact@v5
           with:
             path: ./docs/build
 
