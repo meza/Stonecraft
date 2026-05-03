@@ -34,5 +34,12 @@ fun configureJava(project: Project, stonecutter: StonecutterBuildExtension, modS
 
 private fun javaVersion(stonecutter: StonecutterBuildExtension): JavaVersion {
     val j21 = stonecutter.eval(stonecutter.current.version, ">=1.20.6")
-    return if (j21) JavaVersion.VERSION_21 else JavaVersion.VERSION_17
+    val j25 = stonecutter.eval(stonecutter.current.version, ">=21.6")
+    return if (j25) {
+        JavaVersion.VERSION_25
+    } else if (j21) {
+        JavaVersion.VERSION_21
+    } else {
+        JavaVersion.VERSION_17
+    }
 }

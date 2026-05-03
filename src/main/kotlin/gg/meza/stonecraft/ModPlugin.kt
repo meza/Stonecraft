@@ -29,8 +29,12 @@ class ModPlugin : Plugin<Any> {
             configureChiseledTasks(project, stonecutterController)
             return
         }
+        val stonecutter = project.extensions.getByType<StonecutterBuildExtension>()
+        val canonicalMinecraftVersion = stonecutter.current.version
+        val deobfuscatedMinecraft = stonecutter.current.parsed >= "21.6"
 
-        if (project.pluginManager.hasPlugin("dev.architectury.loom")) {
+        val archyName = if (deobfuscatedMinecraft) "dev.architectury.loom-no-remap" else "dev.architectury.loom"
+        if (project.pluginManager.hasPlugin(archyName)) {
             project.logger.error(
                 "This plugin needs to be applied before the Architectury Loom plugin.\n" +
                     "Please move gg.meza.stonecraft plugin to the top of your build.gradle.kts file"
@@ -44,27 +48,23 @@ class ModPlugin : Plugin<Any> {
         project.group = project.mod.group
         configurePlugins(project)
 
-        val stonecutter = project.extensions.getByType<StonecutterBuildExtension>()
         val base = project.extensions.getByType(BasePluginExtension::class)
         val modSettings = project.extensions.create("modSettings", ModSettingsExtension::class.java, project, project.mod.loader)
 
-        val canonicalMinecraftVersion = stonecutter.current.version
-
         // Load version specific dependencies from versions/dependencies/[minecraftVersion].properties
         loadSpecificDependencyVersions(project, canonicalMinecraftVersion)
-
         val realMinecraftVersion = project.mod.prop("minecraft_version", canonicalMinecraftVersion)
 
         base.archivesName.set("${project.mod.id}-${project.mod.loader}")
         project.version = "${project.mod.version}+mc$realMinecraftVersion"
 
-        configureDependencies(project, canonicalMinecraftVersion, realMinecraftVersion)
+        configureDependencies(project, canonicalMinecraftVersion, realMinecraftVersion, stonecutter)
         configureStonecutterConstants(project, stonecutter)
         configureProcessResources(project, realMinecraftVersion, modSettings)
         configureLoom(project, stonecutter, modSettings)
         patchAroundArchitecturyQuirks(project, stonecutter)
-        configurePublishing(project, realMinecraftVersion)
-        configureTasks(project, stonecutter, modSettings)
+        configurePublishing(project, realMinecraftVersion, stonecutter)
+        configureTasks(project, realMinecraftVersion, stonecutter, modSettings)
         configureJava(project, stonecutter, modSettings)
 
         project.afterEvaluate {

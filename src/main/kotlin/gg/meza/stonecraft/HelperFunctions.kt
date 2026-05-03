@@ -58,17 +58,13 @@ private val packFormatMap: Map<String, PackFormats> by lazy {
     }
 }
 
-private fun JsonObject.toPackFormats(): PackFormats {
-    return PackFormats(
-        PackFormatVersion.of(get("datapack").asBigDecimal),
-        PackFormatVersion.of(get("resourcepack").asBigDecimal)
-    )
-}
+private fun JsonObject.toPackFormats(): PackFormats = PackFormats(
+    PackFormatVersion.of(get("datapack").asBigDecimal),
+    PackFormatVersion.of(get("resourcepack").asBigDecimal)
+)
 
-private fun getPackFormats(version: String): PackFormats {
-    return packFormatMap[version]
-        ?: throw IllegalArgumentException("Unknown Minecraft version: $version")
-}
+private fun getPackFormats(version: String): PackFormats = packFormatMap[version]
+    ?: throw IllegalArgumentException("Unknown Minecraft version: $version")
 
 fun getResourcePackFormat(version: String): PackFormatVersion = getPackFormats(version).resourcepack
 

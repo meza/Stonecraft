@@ -3,21 +3,19 @@ package gg.meza.stonecraft.configurations
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
-import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
 
-fun configureTasks(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
+fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
     val currentModGroup = "mod"
-
     val buildAndCollect = project.tasks.register<Copy>("buildAndCollect") {
-        val remapJar = project.tasks.named<RemapJarTask>("remapJar")
+        val jarTask = resolveJarTask(project, stonecutter, realMinecraftVersion)
         group = "build"
-        from(remapJar.get().archiveFile)
+        from(jarTask.flatMap { it.archiveFile })
         into(project.rootProject.layout.buildDirectory.file("libs"))
-        dependsOn("build")
+        dependsOn("build", jarTask)
     }
 
     if (stonecutter.current.isActive) {

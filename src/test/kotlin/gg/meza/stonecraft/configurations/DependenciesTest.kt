@@ -172,4 +172,67 @@ tasks.register("printDeps") {
             "Official Mojmap mappings should be used when no Yarn mappings are configured."
         )
     }
+
+    @Test
+    fun `deobfuscated versions skip mappings and use implementation for fabric loader`() {
+        gradleTest.setStonecutterVersion("26.1", "fabric")
+        gradleTest.buildScript(
+            """
+tasks.register("printConfigDeps") {
+    doLast {
+        listOf("implementation", "modImplementation", "mappings").forEach { name ->
+            val config = configurations.findByName(name)
+            if (config != null) {
+                config.allDependencies.forEach { dep ->
+                    println("dep." + name + "=" + dep)
+                }
+            }
+        }
+    }
+}
+            """.trimIndent()
+        )
+
+        val buildResult = gradleTest.run("printConfigDeps")
+
+        assertTrue(
+            buildResult.output.contains("dep.implementation=net.fabricmc:fabric-loader:0.18.4"),
+            "Fabric loader should be added to implementation for deobfuscated versions."
+        )
+        assertFalse(
+            buildResult.output.contains("dep.modImplementation=net.fabricmc:fabric-loader:0.18.4"),
+            "Fabric loader should not be added to modImplementation for deobfuscated versions."
+        )
+        assertFalse(
+            buildResult.output.contains("dep.mappings="),
+            "No mappings should be added for deobfuscated versions."
+        )
+        assertFalse(
+            buildResult.output.contains("net.fabricmc:yarn"),
+            "Yarn mappings should be ignored for deobfuscated versions."
+        )
+        assertFalse(
+            buildResult.output.contains("loom.mappings"),
+            "Mojmap mappings should be skipped for deobfuscated versions."
+        )
+    }
+
+    @Test
+    fun `yarn mappings are ignored for deobfuscated versions with a warning`() {
+        gradleTest.setStonecutterVersion("26.1", "fabric")
+        gradleTest.setModProperty("yarn_mappings", "1.21.4+build.4")
+
+        val buildResult = gradleTest.run("printDeps")
+
+        assertTrue(
+            buildResult.output.contains(
+                "Ignoring yarn_mappings for Minecraft 26.1-snapshot-1; mappings are not supported past 1.21.11."
+            ),
+            "A warning should be logged when yarn_mappings is set for deobfuscated versions."
+        )
+        assertFalse(
+            buildResult.output.contains("net.fabricmc:yarn"),
+            "Yarn mappings should be ignored for deobfuscated versions."
+        )
+    }
 }

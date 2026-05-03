@@ -3,8 +3,9 @@ plugin-publish = "2.1.1"
 test-logger = "4.0.0"
 spotless = "8.4.0"
 gson = "2.13.2"
-stonecutter = "0.8+"
+stonecutter = "0.9+"
 architectury-loom = "1.13.467"
+architectury-loomnoremap = "1.14.473"
 mod-publish = "1.1.0"
 junit = "6.0.3"
 junit-pioneer = "2.3.0"
@@ -17,6 +18,7 @@ kotlinx-serialization = "1.11.0"
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 stonecutter = { module = "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin", version.ref = "stonecutter" }
 architectury-loom = { module = "dev.architectury.loom:dev.architectury.loom.gradle.plugin", version.ref = "architectury-loom" }
+architectury-loomnoremap = { module = "dev.architectury.loom-no-remap:dev.architectury.loom-no-remap.gradle.plugin", version.ref = "architectury-loomnoremap" }
 mod-publish = { module = "me.modmuss50.mod-publish-plugin:me.modmuss50.mod-publish-plugin.gradle.plugin", version.ref = "mod-publish" }
 
 junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }

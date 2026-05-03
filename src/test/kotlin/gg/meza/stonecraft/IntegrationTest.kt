@@ -91,6 +91,10 @@ plugins {
                     "all"
                 )
             )
+            val javaHome = System.getenv("JAVA_HOME")?.takeIf { it.isNotBlank() }
+            if (javaHome != null) {
+                baseArguments.add("-Dorg.gradle.java.home=$javaHome")
+            }
         }
 
         fun setStonecutterVersion(version: String, vararg loaders: String): TestBuilder {

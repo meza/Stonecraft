@@ -30,7 +30,7 @@ dependencies {
 
     implementation(libs.stonecutter)
     implementation(libs.gson)
-    implementation(libs.architectury.loom)
+    implementation(libs.architectury.loomnoremap)
     implementation(libs.mod.publish)
     implementation(libs.okio)
 

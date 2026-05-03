@@ -19,7 +19,11 @@ private fun loadBasics(project: Project) {
 private fun loadArchitectury(project: Project) {
     // The loom platform needs to be set before architectury is loaded
     project.extra["loom.platform"] = project.mod.loader
-    applyIfAbsent("dev.architectury.loom", project)
+    if (project.mod.minecraftVersion.startsWith("2")) {
+        applyIfAbsent("dev.architectury.loom-no-remap", project)
+    } else {
+        applyIfAbsent("dev.architectury.loom", project)
+    }
 }
 
 private fun loadPublishing(project: Project) {

@@ -1,5 +1,6 @@
 package gg.meza.stonecraft.configurations
 
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import org.gradle.api.Project
@@ -20,7 +21,7 @@ import java.util.*
  * @param project The project to configure the dependencies for
  * @param canonicalMinecraftVersion The version of Minecraft to configure the dependencies for
  */
-fun configureDependencies(project: Project, canonicalMinecraftVersion: String, realMinecraftVersion: String) {
+fun configureDependencies(project: Project, canonicalMinecraftVersion: String, realMinecraftVersion: String, stonecutter: StonecutterBuildExtension) {
     // Set the basic repositories for a multiloader project
     project.repositories {
         mavenCentral()
@@ -32,22 +33,32 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
 
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
     val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
-
+    val deobfuscatedMinecraft = stonecutter.current.parsed >= "21.6"
     project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
+    System.out.println("Deobfuscated? $deobfuscatedMinecraft")
 
-    if (useLegacyYarnMappings) {
-        if (project.mod.isNeoforge) {
-            // Legacy Yarn requires the Architectury patch to stay compatible with NeoForge’s Mojmap-first toolchain.
-            val neoforgeMappings = loom.layered {
-                mappings("net.fabricmc:yarn:${project.mod.prop("yarn_mappings")}:v2")
-                mappings("dev.architectury:yarn-mappings-patch-neoforge:${project.mod.prop("yarn_mappings_neoforge_patch")}")
-            }
-            project.dependencies.add("mappings", neoforgeMappings)
-        } else {
-            project.dependencies.add("mappings", "net.fabricmc:yarn:${project.mod.prop("yarn_mappings")}:v2")
+    if (deobfuscatedMinecraft) {
+        project.logger.info("Using deobfuscated Minecraft for version $realMinecraftVersion; no mappings will be applied.")
+        if (useLegacyYarnMappings) {
+            project.logger.warn(
+                "Ignoring yarn_mappings for Minecraft $realMinecraftVersion; mappings are not supported past 1.21.11."
+            )
         }
     } else {
-        project.dependencies.add("mappings", loom.officialMojangMappings())
+        if (useLegacyYarnMappings) {
+            if (project.mod.isNeoforge) {
+                // Legacy Yarn requires the Architectury patch to stay compatible with NeoForge's Mojmap-first toolchain.
+                val neoforgeMappings = loom.layered {
+                    mappings("net.fabricmc:yarn:${project.mod.prop("yarn_mappings")}:v2")
+                    mappings("dev.architectury:yarn-mappings-patch-neoforge:${project.mod.prop("yarn_mappings_neoforge_patch")}")
+                }
+                project.dependencies.add("mappings", neoforgeMappings)
+            } else {
+                project.dependencies.add("mappings", "net.fabricmc:yarn:${project.mod.prop("yarn_mappings")}:v2")
+            }
+        } else {
+            project.dependencies.add("mappings", loom.officialMojangMappings())
+        }
     }
 
     if (project.mod.isNeoforge) {
@@ -59,15 +70,30 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
     }
 
     if (project.mod.isFabric) {
-        project.dependencies.add(
-            "modImplementation",
-            "net.fabricmc:fabric-loader:${project.mod.prop("loader_version")}"
-        )
-        project.dependencies.add("modApi", "net.fabricmc.fabric-api:fabric-api:${project.mod.prop("fabric_version")}")
-        project.dependencies.add(
-            "modApi",
-            "net.fabricmc.fabric-api:fabric-gametest-api-v1:${project.mod.prop("fabric_version")}"
-        )
+        if (deobfuscatedMinecraft) {
+            project.dependencies.add(
+                "implementation",
+                "net.fabricmc:fabric-loader:${project.mod.prop("loader_version")}"
+            )
+            project.dependencies.add(
+                "api",
+                "net.fabricmc.fabric-api:fabric-api:${project.mod.prop("fabric_version")}"
+            )
+            project.dependencies.add(
+                "api",
+                "net.fabricmc.fabric-api:fabric-gametest-api-v1:${project.mod.prop("fabric_version")}"
+            )
+        } else {
+            project.dependencies.add(
+                "modImplementation",
+                "net.fabricmc:fabric-loader:${project.mod.prop("loader_version")}"
+            )
+            project.dependencies.add("modApi", "net.fabricmc.fabric-api:fabric-api:${project.mod.prop("fabric_version")}")
+            project.dependencies.add(
+                "modApi",
+                "net.fabricmc.fabric-api:fabric-gametest-api-v1:${project.mod.prop("fabric_version")}"
+            )
+        }
     }
 }
 

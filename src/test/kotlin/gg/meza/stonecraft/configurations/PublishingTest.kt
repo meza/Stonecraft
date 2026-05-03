@@ -86,6 +86,18 @@ tasks.register("publishingSettings") {
     }
 
     @Test
+    fun `publish uses jar output for deobfuscated versions`() {
+        gradleTest.setStonecutterVersion("26.1", "fabric")
+        gradleTest.setModProperty("mod.version", "1.3.4")
+
+        val br = gradleTest.run("publishingSettings")
+        val expectedFile = gradleTest.project().layout.projectDirectory.file("versions/26.1-fabric/build/libs/examplemod-fabric-1.3.4+mc26.1.jar").asFile.absolutePath
+
+        assertTrue(br.output.contains(expectedFile), "File path has not been set correctly. Expected: $expectedFile")
+        assertTrue(br.output.contains("1.3.4+fabric-26.1"), "Publishing version has not been set correctly")
+    }
+
+    @Test
     fun `publish determines a beta version`() {
         gradleTest.setModProperty("mod.version", "1.3.4-beta.2")
 

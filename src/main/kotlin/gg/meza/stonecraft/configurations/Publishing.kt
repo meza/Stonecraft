@@ -1,19 +1,17 @@
 package gg.meza.stonecraft.configurations
 
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.upperCaseFirst
 import me.modmuss50.mpp.ModPublishExtension
 import me.modmuss50.mpp.ReleaseType
-import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.named
 
-fun configurePublishing(project: Project, minecraftVersion: String) {
+fun configurePublishing(project: Project, minecraftVersion: String, stonecutter: StonecutterBuildExtension) {
     val publishing = project.extensions.getByType(ModPublishExtension::class)
     val modrinthVariables = listOf("MODRINTH_TOKEN", "MODRINTH_ID")
     val curseforgeVariables = listOf("CURSEFORGE_SLUG", "CURSEFORGE_ID", "CURSEFORGE_TOKEN")
-
     val mod = project.mod
     val additionalMinecraftVersions = project.findProperty("additional_versions")
         ?.toString()
@@ -45,8 +43,8 @@ fun configurePublishing(project: Project, minecraftVersion: String) {
             )
         }
 
-        val remapJar = project.tasks.named<RemapJarTask>("remapJar")
-        file.set(remapJar.get().archiveFile)
+        val jarTask = resolveJarTask(project, stonecutter, minecraftVersion)
+        file.set(jarTask.flatMap { it.archiveFile })
         version.set("${mod.version}+${mod.loader}-$minecraftVersion")
         modLoaders.add(mod.loader)
         displayName.set("${mod.version} for ${mod.loader.upperCaseFirst()} $minecraftVersion")

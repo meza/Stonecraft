@@ -104,4 +104,48 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
             }
         }
     }
+
+    @Test
+    fun `build and collect depends on remapJar for mapped versions`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        gradleTest.buildScript(
+            """
+            tasks.register("printBuildAndCollectDeps") {
+                doLast {
+                    val task = tasks.named("buildAndCollect").get()
+                    val deps = task.taskDependencies.getDependencies(task).map { it.name }.sorted()
+                    deps.forEach { println("buildAndCollect.dep=" + it) }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run("printBuildAndCollectDeps")
+        assertTrue(
+            br.output.contains("buildAndCollect.dep=remapJar"),
+            "Expected buildAndCollect to depend on remapJar for mapped versions."
+        )
+    }
+
+    @Test
+    fun `build and collect depends on jar for deobfuscated versions`() {
+        gradleTest.setStonecutterVersion("26.1", "fabric")
+        gradleTest.buildScript(
+            """
+            tasks.register("printBuildAndCollectDeps") {
+                doLast {
+                    val task = tasks.named("buildAndCollect").get()
+                    val deps = task.taskDependencies.getDependencies(task).map { it.name }.sorted()
+                    deps.forEach { println("buildAndCollect.dep=" + it) }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run("printBuildAndCollectDeps")
+        assertTrue(
+            br.output.contains("buildAndCollect.dep=jar"),
+            "Expected buildAndCollect to depend on jar for deobfuscated versions."
+        )
+    }
 }
