@@ -32,7 +32,7 @@ jobs:
       - name: Prune deleted remote branches
         run: git fetch --prune --prune-tags
       - name: Use Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v6.4.0
         with:
           node-version: 25
       - name: "☕ Setup Jdk 25"
