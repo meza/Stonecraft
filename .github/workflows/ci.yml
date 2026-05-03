@@ -31,6 +31,21 @@ jobs:
         uses: actions/setup-node@v6.3.0
         with:
           node-version: 25
+      - name: "☕ Setup Jdk 25"
+        uses: actions/setup-java@v5
+        with:
+          cache: 'gradle'
+          cache-dependency-path: |
+            *.properties
+            *.gradle.kts
+          java-version: |
+            25
+          check-latest: true
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          validate-wrappers: true
       - name: Determine Version
         id: version
         env:
@@ -49,7 +64,7 @@ jobs:
             @meza/mezas-conventional-changelog
             conventional-changelog-conventionalcommits 
             @semantic-release/changelog 
-            gradle-semantic-release-plugin@1.10.3
+            gradle-semantic-release-plugin
 
       - name: Update gradle.properties version
         if: steps.version.outputs.new_release_published == 'true'
@@ -63,22 +78,6 @@ jobs:
         shell: bash
         working-directory: ${{ github.workspace }}
         # This step updates the version in gradle.properties using the semantic-release output
-
-      - name: "☕ Setup Jdk 25"
-        uses: actions/setup-java@v5
-        with:
-          cache: 'gradle'
-          cache-dependency-path: |
-            *.properties
-            *.gradle.kts
-          java-version: |
-            25
-          check-latest: true
-          distribution: 'temurin'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
-        with:
-          validate-wrappers: true
 
       - name: Cache Gradle Test dependencies
         id: cache-gradle-dependencies
@@ -120,4 +119,4 @@ jobs:
             conventional-changelog-conventionalcommits
             @meza/mezas-conventional-changelog
             @semantic-release/changelog 
-            gradle-semantic-release-plugin@1.10.3
+            gradle-semantic-release-plugin
