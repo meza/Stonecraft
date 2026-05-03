@@ -49,7 +49,7 @@ jobs:
             @meza/mezas-conventional-changelog
             conventional-changelog-conventionalcommits 
             @semantic-release/changelog 
-            gradle-semantic-release-plugin
+            gradle-semantic-release-plugin@1.10.3
 
       - name: Update gradle.properties version
         if: steps.version.outputs.new_release_published == 'true'
@@ -120,4 +120,4 @@ jobs:
             conventional-changelog-conventionalcommits
             @meza/mezas-conventional-changelog
             @semantic-release/changelog 
-            gradle-semantic-release-plugin
+            gradle-semantic-release-plugin@1.10.3
