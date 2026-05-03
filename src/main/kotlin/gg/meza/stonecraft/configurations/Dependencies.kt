@@ -34,7 +34,6 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
     val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
     val deobfuscatedMinecraft = realMinecraftVersion.startsWith("2")
     project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
-    System.out.println("Deobfuscated? $deobfuscatedMinecraft")
 
     if (deobfuscatedMinecraft) {
         project.logger.info("Using deobfuscated Minecraft for version $realMinecraftVersion; no mappings will be applied.")

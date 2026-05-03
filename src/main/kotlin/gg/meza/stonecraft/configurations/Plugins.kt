@@ -19,8 +19,10 @@ private fun loadBasics(project: Project) {
 private fun loadArchitectury(project: Project) {
     // The loom platform needs to be set before architectury is loaded
     project.extra["loom.platform"] = project.mod.loader
-    project.extra["fabric.loom.disableObfuscation"] = project.mod.minecraftVersion.startsWith("2").toString()
-    applyIfAbsent("dev.architectury.loom-no-remap", project)
+    if (project.mod.minecraftVersion.startsWith("2")) {
+        project.extra["fabric.loom.disableObfuscation"] = "true"
+    }
+    applyIfAbsent("dev.architectury.loom", project)
 }
 
 private fun loadPublishing(project: Project) {

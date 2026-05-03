@@ -67,6 +67,11 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
                 "neoforgeVersion" to project.mod.prop("neoforge_version", "not set"),
             ) + modSettings.variableReplacements.get()
 
+            inputs.property(
+                "stonecraftResourceReplacements",
+                basicModDetails.mapValues { (_, value) -> value.toString() }
+            )
+
             val filesToNotExpandIn = listOf("assets/**/lang/*.json")
 
             filesMatching(listOf("**/*.json", "**/*.toml", "**/*.mcmeta")) {

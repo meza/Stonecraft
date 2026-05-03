@@ -33,7 +33,10 @@ class ModPlugin : Plugin<Any> {
         val canonicalMinecraftVersion = stonecutter.current.version
         val realMinecraftVersion = loadSpecificMinecraftVersion(project, canonicalMinecraftVersion)
 
-        if (project.pluginManager.hasPlugin("dev.architectury.loom-no-remap")) {
+        if (
+            project.pluginManager.hasPlugin("dev.architectury.loom") ||
+            project.pluginManager.hasPlugin("dev.architectury.loom-no-remap")
+        ) {
             project.logger.error(
                 "This plugin needs to be applied before the Architectury Loom plugin.\n" +
                     "Please move gg.meza.stonecraft plugin to the top of your build.gradle.kts file"

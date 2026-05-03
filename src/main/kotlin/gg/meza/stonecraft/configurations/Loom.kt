@@ -8,9 +8,11 @@ import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.api.fabricapi.FabricApiExtension
 import net.fabricmc.loom.configuration.ide.RunConfigSettings
+import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.withType
 
 fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
@@ -21,6 +23,10 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modS
                 "issues may arise when using it with Architectury Loom.\n" +
                 "Please consider using NeoForge instead if you can."
         )
+
+        project.tasks.withType<RemapJarTask>().configureEach {
+            targetNamespace.set(loom.runtimeIntermediaryNamespace)
+        }
     }
 
     loom.apply {
