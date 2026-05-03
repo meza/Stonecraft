@@ -27,7 +27,8 @@ jobs:
     steps:
       - name: "⬇️ Checkout"
         uses: actions/checkout@v6
-
+      - name: Setup Node and NPM
+        uses: meza/action-setup-node-npm@v1.0.3
       - name: Determine Version
         id: version
         env:
@@ -61,7 +62,7 @@ jobs:
         working-directory: ${{ github.workspace }}
         # This step updates the version in gradle.properties using the semantic-release output
 
-      - name: "☕ Setup Jdk 17 and 21"
+      - name: "☕ Setup Jdk 25"
         uses: actions/setup-java@v5
         with:
           cache: 'gradle'
