@@ -14,16 +14,18 @@ If you override Stonecutter manually you can break task wiring, DSL keywords, or
 
 ## Current Mapping
 
-| Stonecraft version line | Supported Stonecutter version | Notes                                                               |
-|-------------------------|-------------------------------|---------------------------------------------------------------------|
-| `<1.3.3`                | `0.5.x`                       | Legacy line, no new features                                        |
-| `1.3.3 - 1.7.x`         | `0.6.2`                       | End-of-life (frozen). Upgrade when possible.                        |
-| `1.8.x`                 | `0.7.11`                      | Maintenance mode. Receives critical fixes only.                     |
-| `1.9.x`                 | `0.8.x`                       | Current stable line. Stonecutter 0.8 stable + typed task accessors. |
+| Stonecraft version line | Supported Stonecutter version | Notes                                        |
+|-------------------------|-------------------------------|----------------------------------------------|
+| `<1.3.3`                | `0.5.x`                       | Legacy line, no new features                 |
+| `1.3.3 - 1.7.x`         | `0.6.2`                       | End-of-life (frozen). Upgrade when possible. |
+| `1.8.x`                 | `0.7.11`                      | End-of-life (frozen). Upgrade when possible. |
+| `1.9.x`                 | `0.8.x`                       | End-of-life (frozen). Upgrade when possible. |
+| `1.10.x`                | `0.9.x`                       | Stable line. Stonecutter 0.9 stable          |
 
 
 :::warning Support policy
-- `1.9.x` is the actively maintained release line.
+- `1.10.x` is in active development.
+- `1.9.x` is in maintenance mode (critical fixes only).
 - `1.8.x` is in maintenance mode (critical fixes only).
 - `1.7.x` is end-of-life and receives no further updates.
 :::
