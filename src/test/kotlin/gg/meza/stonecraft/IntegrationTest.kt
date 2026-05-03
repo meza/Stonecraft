@@ -34,6 +34,7 @@ plugins {
         private val gradleProperties: File
         private val settingsFile: File
         private val stonecutterGradle: File
+        private val fixturesDir: File
         private val baseArguments = mutableListOf<String>()
         private val cachedTasks = LinkedHashSet<String>()
         private var supportedMinecraftVersions = mutableMapOf<String, List<String>>()
@@ -47,7 +48,7 @@ plugins {
             gradleProperties = File(projectDir, "gradle.properties")
             settingsFile = File(projectDir, "settings.gradle$ext")
             stonecutterGradle = File(projectDir, "stonecutter.gradle$ext")
-            val fixturesDir = File("src/test/resources/fixtures")
+            fixturesDir = File("src/test/resources/fixtures")
 
             projectDir.mkdirs()
 
@@ -66,10 +67,15 @@ plugins {
                     .sorted(Comparator.reverseOrder())
                     .forEach { source: Path ->
                         try {
+                            if (source.fileName.toString() == "examplemod.deobfuscated.accesswidener") {
+                                return@forEach
+                            }
                             val destination = projectDir.toPath().resolve(fixturesDir.toPath().relativize(source))
-                            destination.toFile().mkdirs()
                             if (!Files.isDirectory(source)) {
+                                destination.parent.toFile().mkdirs()
                                 Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING)
+                            } else {
+                                destination.toFile().mkdirs()
                             }
                         } catch (e: IOException) {
                             throw RuntimeException(e)
@@ -133,6 +139,7 @@ plugins {
             val scGradle = stonecutterGradle.readText()
             val newScGradle = scGradle.replace("ACTIVE_VERSION", getFirstVersion(), true)
             stonecutterGradle.writeText(newScGradle)
+            configureAccessWidenerFixture()
 
             runner.withArguments(baseArguments + tasks)
             return runner.run()
@@ -170,6 +177,19 @@ plugins {
             val key = supportedMinecraftVersions.keys.first()
             val loader = supportedMinecraftVersions[key]?.first()
             return "$key-$loader"
+        }
+
+        private fun configureAccessWidenerFixture() {
+            val accessWidener = File(projectDir, "src/main/resources/examplemod.accesswidener")
+            val source = File(fixturesDir, "src/main/resources/examplemod.deobfuscated.accesswidener")
+
+            if (getFirstMinecraftVersion().startsWith("2") && accessWidener.exists() && source.exists()) {
+                Files.copy(source.toPath(), accessWidener.toPath(), StandardCopyOption.REPLACE_EXISTING)
+            }
+        }
+
+        private fun getFirstMinecraftVersion(): String {
+            return supportedMinecraftVersions.keys.first()
         }
     }
 

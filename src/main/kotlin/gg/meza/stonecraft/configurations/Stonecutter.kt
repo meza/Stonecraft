@@ -16,7 +16,7 @@ fun configureStonecutterConstants(project: Project, stonecutter: StonecutterBuil
 
 fun configureStonecutterHandlers(controller: StonecutterControllerExtension) {
     controller.handlers {
-        inherit("json5", "json", "mcmeta", "md", "txt")
+        inherit("json5", "json", "mcmeta", "md", "txt", "accesswidener")
         inherit("cfg", "properties")
     }
 }

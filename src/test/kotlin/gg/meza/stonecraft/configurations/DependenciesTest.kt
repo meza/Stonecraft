@@ -196,11 +196,11 @@ tasks.register("printConfigDeps") {
         val buildResult = gradleTest.run("printConfigDeps")
 
         assertTrue(
-            buildResult.output.contains("dep.implementation=net.fabricmc:fabric-loader:0.18.4"),
+            buildResult.output.contains("dep.implementation=net.fabricmc:fabric-loader:0.19.2"),
             "Fabric loader should be added to implementation for deobfuscated versions."
         )
         assertFalse(
-            buildResult.output.contains("dep.modImplementation=net.fabricmc:fabric-loader:0.18.4"),
+            buildResult.output.contains("dep.modImplementation=net.fabricmc:fabric-loader:0.19.2"),
             "Fabric loader should not be added to modImplementation for deobfuscated versions."
         )
         assertFalse(
@@ -226,7 +226,7 @@ tasks.register("printConfigDeps") {
 
         assertTrue(
             buildResult.output.contains(
-                "Ignoring yarn_mappings for Minecraft 26.1-snapshot-1; mappings are not supported past 1.21.11."
+                "Ignoring yarn_mappings for Minecraft 26.1; mappings are not supported past 1.21.11."
             ),
             "A warning should be logged when yarn_mappings is set for deobfuscated versions."
         )

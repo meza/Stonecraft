@@ -1,6 +1,5 @@
 package gg.meza.stonecraft.configurations
 
-import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import org.gradle.api.Project
@@ -21,7 +20,7 @@ import java.util.*
  * @param project The project to configure the dependencies for
  * @param canonicalMinecraftVersion The version of Minecraft to configure the dependencies for
  */
-fun configureDependencies(project: Project, canonicalMinecraftVersion: String, realMinecraftVersion: String, stonecutter: StonecutterBuildExtension) {
+fun configureDependencies(project: Project, canonicalMinecraftVersion: String, realMinecraftVersion: String) {
     // Set the basic repositories for a multiloader project
     project.repositories {
         mavenCentral()
@@ -33,7 +32,7 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
 
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
     val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
-    val deobfuscatedMinecraft = stonecutter.current.parsed >= "21.6"
+    val deobfuscatedMinecraft = realMinecraftVersion.startsWith("2")
     project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
     System.out.println("Deobfuscated? $deobfuscatedMinecraft")
 
@@ -116,4 +115,20 @@ public fun loadSpecificDependencyVersions(project: Project, minecraftVersion: St
             project.extra[key.toString()] = value
         }
     }
+}
+
+internal fun loadSpecificMinecraftVersion(project: Project, minecraftVersion: String): String {
+    val customPropsFile = project.rootProject.file("versions/dependencies/$minecraftVersion.properties")
+
+    if (!customPropsFile.exists()) {
+        return minecraftVersion
+    }
+
+    val customProps = Properties().apply {
+        customPropsFile.inputStream().use { load(it) }
+    }
+
+    val realMinecraftVersion = customProps.getProperty("minecraft_version") ?: return minecraftVersion
+    project.extra["minecraft_version"] = realMinecraftVersion
+    return realMinecraftVersion
 }

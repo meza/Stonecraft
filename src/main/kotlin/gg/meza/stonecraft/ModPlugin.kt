@@ -31,10 +31,9 @@ class ModPlugin : Plugin<Any> {
         }
         val stonecutter = project.extensions.getByType<StonecutterBuildExtension>()
         val canonicalMinecraftVersion = stonecutter.current.version
-        val deobfuscatedMinecraft = stonecutter.current.parsed >= "21.6"
+        val realMinecraftVersion = loadSpecificMinecraftVersion(project, canonicalMinecraftVersion)
 
-        val archyName = if (deobfuscatedMinecraft) "dev.architectury.loom-no-remap" else "dev.architectury.loom"
-        if (project.pluginManager.hasPlugin(archyName)) {
+        if (project.pluginManager.hasPlugin("dev.architectury.loom-no-remap")) {
             project.logger.error(
                 "This plugin needs to be applied before the Architectury Loom plugin.\n" +
                     "Please move gg.meza.stonecraft plugin to the top of your build.gradle.kts file"
@@ -53,12 +52,11 @@ class ModPlugin : Plugin<Any> {
 
         // Load version specific dependencies from versions/dependencies/[minecraftVersion].properties
         loadSpecificDependencyVersions(project, canonicalMinecraftVersion)
-        val realMinecraftVersion = project.mod.prop("minecraft_version", canonicalMinecraftVersion)
 
         base.archivesName.set("${project.mod.id}-${project.mod.loader}")
         project.version = "${project.mod.version}+mc$realMinecraftVersion"
 
-        configureDependencies(project, canonicalMinecraftVersion, realMinecraftVersion, stonecutter)
+        configureDependencies(project, canonicalMinecraftVersion, realMinecraftVersion)
         configureStonecutterConstants(project, stonecutter)
         configureProcessResources(project, realMinecraftVersion, modSettings)
         configureLoom(project, stonecutter, modSettings)
