@@ -27,10 +27,8 @@ jobs:
     steps:
       - name: "⬇️ Checkout"
         uses: actions/checkout@v6
-      - name: Setup Node and NPM
-        uses: meza/action-setup-node-npm@v1.0.3
-        with:
-          command: exit 0
+      - name: Use Node.js
+        uses: actions/setup-node@v6.3.0
       - name: Determine Version
         id: version
         env:
