@@ -11,6 +11,14 @@ import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.language.jvm.tasks.ProcessResources
+import org.gradle.api.tasks.bundling.AbstractArchiveTask
+import java.io.File
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 
 fun configureProcessResources(project: Project, minecraftVersion: String, modSettings: ModSettingsExtension) {
     /**
@@ -42,6 +50,8 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
     project.tasks.named("processResources") {
         dependsOn(project.tasks.named("stonecutterGenerate"))
     }
+
+    configureFabricGametestEntrypointArchiveCleanup(project, modSettings)
 
     project.afterEvaluate {
         // Deal with the general resources
@@ -160,6 +170,27 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
     }
 }
 
+private fun configureFabricGametestEntrypointArchiveCleanup(project: Project, modSettings: ModSettingsExtension) {
+    if (!project.mod.isFabric) {
+        return
+    }
+
+    project.tasks.withType<AbstractArchiveTask>().configureEach {
+        if (name !in listOf("jar", "remapJar")) {
+            return@configureEach
+        }
+
+        val gametestEntrypointCleanup = modSettings.gametestEntrypointCleanupProp
+        inputs.property("stonecraftGametestEntrypointCleanup", gametestEntrypointCleanup)
+
+        doLast {
+            if (gametestEntrypointCleanup.get()) {
+                removeFabricGametestEntrypointFromArchive(archiveFile.get().asFile)
+            }
+        }
+    }
+}
+
 private fun isGametestTargetRequested(project: Project): Boolean {
     return project.gradle.startParameter.taskNames.any { taskName ->
         taskName.contains("gametest", ignoreCase = true) ||
@@ -179,6 +210,65 @@ private fun removeFabricGametestEntrypoint(project: Project) {
     val entrypoints = json.getAsJsonObject("entrypoints") ?: return
     entrypoints.remove("fabric-gametest")
     fabricModJson.writeText(GsonBuilder().setPrettyPrinting().create().toJson(json))
+}
+
+private fun removeFabricGametestEntrypointFromArchive(archive: File) {
+    if (!archive.exists()) {
+        return
+    }
+
+    val tempArchive = Files.createTempFile(archive.parentFile.toPath(), archive.name, ".tmp").toFile()
+    var changed = false
+
+    ZipInputStream(archive.inputStream().buffered()).use { input ->
+        ZipOutputStream(tempArchive.outputStream().buffered()).use { output ->
+            generateSequence { input.nextEntry }.forEach { entry ->
+                val replacementContent = if (entry.name == "fabric.mod.json") {
+                    removeFabricGametestEntrypointFromJson(input.readBytes().toString(StandardCharsets.UTF_8))
+                } else {
+                    null
+                }
+
+                val outputEntry = ZipEntry(entry.name)
+                outputEntry.time = entry.time
+                output.putNextEntry(outputEntry)
+
+                if (entry.isDirectory) {
+                    output.closeEntry()
+                    input.closeEntry()
+                    return@forEach
+                }
+
+                if (replacementContent != null) {
+                    changed = true
+                    output.write(replacementContent.toByteArray(StandardCharsets.UTF_8))
+                } else {
+                    input.copyTo(output)
+                }
+
+                output.closeEntry()
+                input.closeEntry()
+            }
+        }
+    }
+
+    if (changed) {
+        Files.move(tempArchive.toPath(), archive.toPath(), StandardCopyOption.REPLACE_EXISTING)
+    } else {
+        tempArchive.delete()
+    }
+}
+
+private fun removeFabricGametestEntrypointFromJson(content: String): String? {
+    val json = JsonParser.parseString(content).asJsonObject
+    val entrypoints = json.getAsJsonObject("entrypoints") ?: return null
+
+    if (!entrypoints.has("fabric-gametest")) {
+        return null
+    }
+
+    entrypoints.remove("fabric-gametest")
+    return GsonBuilder().setPrettyPrinting().create().toJson(json)
 }
 
 private fun cleanUpEmptyResourceDirectories(project: Project) {

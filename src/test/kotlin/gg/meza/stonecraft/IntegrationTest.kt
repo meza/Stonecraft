@@ -158,6 +158,15 @@ plugins {
             }
         }
 
+        fun run(tasks: List<String>, cacheTask: Boolean = true): BuildResult {
+            return if (cacheTask) {
+                cachedTasks.addAll(tasks)
+                build()
+            } else {
+                execute(tasks)
+            }
+        }
+
         fun setModProperty(key: String, value: String): TestBuilder {
             val properties = gradleProperties.readText().lines().filterNot { it.startsWith(key) }
             gradleProperties.writeText(properties.joinToString("\n") + "\n$key=$value\n")

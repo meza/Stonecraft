@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.Test
+import java.util.zip.ZipFile
 
 @Suppress("DEPRECATION")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -390,6 +391,46 @@ modSettings {
             entrypoints.containsKey("fabric-gametest"),
             "fabric-gametest entrypoint should remain in ${fabricModJson.absolutePath} when gametestEntrypointCleanup is false"
         )
+
+        val jar = gametest.project().layout.projectDirectory
+            .file("versions/1.21.4-fabric/build/libs/examplemod-fabric-1.0+mc1.21.4.jar")
+            .asFile
+        val artifactEntrypoints = readFabricEntrypointsFromJar(jar)
+
+        assertTrue(
+            artifactEntrypoints.containsKey("fabric-gametest"),
+            "fabric-gametest entrypoint should remain in ${jar.absolutePath} when gametestEntrypointCleanup is false"
+        )
+    }
+
+    @Test
+    fun `mixed gametest build and publish invocation strips fabric gametest entrypoint from artifact`() {
+        val gametest = gametestResourceProject()
+
+        gametest.run("clean", cacheTask = false)
+        gametest.run(
+            listOf("chiseledTest", "chiseledGameTest", "buildAndCollect", "chiseledPublishMods"),
+            cacheTask = false
+        )
+
+        val fabricModJson = gametest.project().layout.projectDirectory
+            .file("versions/1.21.4-fabric/build/resources/main/fabric.mod.json")
+            .asFile
+        val resourceEntrypoints = readFabricEntrypoints(fabricModJson.readText())
+        assertTrue(
+            resourceEntrypoints.containsKey("fabric-gametest"),
+            "fabric-gametest entrypoint should remain in ${fabricModJson.absolutePath} for the gametest task in a mixed invocation"
+        )
+
+        val jar = gametest.project().layout.projectDirectory
+            .file("versions/1.21.4-fabric/build/libs/examplemod-fabric-1.0+mc1.21.4.jar")
+            .asFile
+        val artifactEntrypoints = readFabricEntrypointsFromJar(jar)
+
+        assertFalse(
+            artifactEntrypoints.containsKey("fabric-gametest"),
+            "fabric-gametest entrypoint should be removed from ${jar.absolutePath} for build and publish artifacts"
+        )
     }
 
     private fun assertGametestTargetKeepsFabricGametestEntrypoint(taskName: String) {
@@ -485,6 +526,14 @@ tasks.withType<org.gradle.api.tasks.JavaExec>().configureEach {
         val gson = GsonBuilder().create()
         val json = gson.fromJson(content, Map::class.java)
         return json["entrypoints"] as Map<String, Any>
+    }
+
+    private fun readFabricEntrypointsFromJar(jar: java.io.File): Map<String, Any> {
+        ZipFile(jar).use { zip ->
+            val entry = zip.getEntry("fabric.mod.json")
+            val content = zip.getInputStream(entry).bufferedReader().use { it.readText() }
+            return readFabricEntrypoints(content)
+        }
     }
 
     private fun getPathsFor(version: String, loader: String, files: List<String>): MutableList<FileSystemLocation> {
