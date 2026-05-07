@@ -12,6 +12,9 @@
   "entrypoints": {
     "main": [
       "${group}.${id}.ExampleMod"
+    ],
+    "fabric-gametest": [
+      "${group}.${id}.ExampleModTests"
     ]
   },
   "depends": {

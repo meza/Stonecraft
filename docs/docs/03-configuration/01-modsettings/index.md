@@ -42,5 +42,7 @@ modSettings {
     testServerRunDirectory = rootProject.layout.projectDirectory.dir("run")
 
     variableReplacements = mapOf<String, Any>()
+
+    gametestEntrypointCleanup = true
 }
 ```

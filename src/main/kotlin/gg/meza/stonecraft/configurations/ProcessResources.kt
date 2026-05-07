@@ -1,5 +1,7 @@
 package gg.meza.stonecraft.configurations
 
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.getResourcePackFormat
 import gg.meza.stonecraft.mod
@@ -71,6 +73,10 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
                 "stonecraftResourceReplacements",
                 basicModDetails.mapValues { (_, value) -> value.toString() }
             )
+            val keepFabricGametestEntrypoint = isGametestTargetRequested(project)
+            inputs.property("stonecraftKeepFabricGametestEntrypoint", keepFabricGametestEntrypoint)
+            val gametestEntrypointCleanup = modSettings.gametestEntrypointCleanupProp.get()
+            inputs.property("stonecraftGametestEntrypointCleanup", gametestEntrypointCleanup)
 
             val filesToNotExpandIn = listOf("assets/**/lang/*.json")
 
@@ -143,11 +149,36 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
             }
 
             doLast {
+                if (project.mod.isFabric && gametestEntrypointCleanup && !keepFabricGametestEntrypoint) {
+                    removeFabricGametestEntrypoint(project)
+                }
+
                 // Process the pack.mcmeta file for Forge
                 cleanUpEmptyResourceDirectories(project)
             }
         }
     }
+}
+
+private fun isGametestTargetRequested(project: Project): Boolean {
+    return project.gradle.startParameter.taskNames.any { taskName ->
+        taskName.contains("gametest", ignoreCase = true) ||
+            taskName.contains("testActiveClient", ignoreCase = true) ||
+            taskName.contains("testActiveServer", ignoreCase = true)
+    }
+}
+
+private fun removeFabricGametestEntrypoint(project: Project) {
+    val fabricModJson = project.layout.buildDirectory.file("resources/main/fabric.mod.json").get().asFile
+
+    if (!fabricModJson.exists()) {
+        return
+    }
+
+    val json = JsonParser.parseString(fabricModJson.readText()).asJsonObject
+    val entrypoints = json.getAsJsonObject("entrypoints") ?: return
+    entrypoints.remove("fabric-gametest")
+    fabricModJson.writeText(GsonBuilder().setPrettyPrinting().create().toJson(json))
 }
 
 private fun cleanUpEmptyResourceDirectories(project: Project) {

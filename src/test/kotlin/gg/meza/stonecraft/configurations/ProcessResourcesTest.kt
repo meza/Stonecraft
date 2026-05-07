@@ -331,6 +331,115 @@ modSettings {
     }
 
     @Test
+    fun `build and collect removes fabric gametest entrypoint from fabric mod json`() {
+        val fabricModJson = getPathsFor("1.21", "fabric", listOf("fabric.mod.json")).first().asFile
+        val entrypoints = readFabricEntrypoints(fabricModJson.readText())
+
+        assertFalse(
+            entrypoints.containsKey("fabric-gametest"),
+            "fabric-gametest entrypoint should be removed from ${fabricModJson.absolutePath} for build targets"
+        )
+    }
+
+    @Test
+    fun `gametest target keeps fabric gametest entrypoint in fabric mod json`() {
+        assertGametestTargetKeepsFabricGametestEntrypoint("runGameTestServer")
+    }
+
+    @Test
+    fun `gametest client target keeps fabric gametest entrypoint in fabric mod json`() {
+        assertGametestTargetKeepsFabricGametestEntrypoint("runGameTestClient")
+    }
+
+    @Test
+    fun `gametest target restores fabric gametest entrypoint after build target stripped it`() {
+        val gametest = gametestResourceProject()
+
+        gametest.run("clean", cacheTask = false)
+        gametest.run("buildAndCollect", cacheTask = false)
+        gametest.run("runGameTestServer", cacheTask = false)
+
+        val fabricModJson = gametest.project().layout.projectDirectory
+            .file("versions/1.21.4-fabric/build/resources/main/fabric.mod.json")
+            .asFile
+        val entrypoints = readFabricEntrypoints(fabricModJson.readText())
+
+        assertTrue(
+            entrypoints.containsKey("fabric-gametest"),
+            "fabric-gametest entrypoint should be restored in ${fabricModJson.absolutePath} when a gametest target runs after a build target"
+        )
+    }
+
+    @Test
+    fun `build target keeps fabric gametest entrypoint when gametest entrypoint cleanup is disabled`() {
+        val gametest = gametestResourceProject(
+            """
+    gametestEntrypointCleanup = false
+            """.trimIndent()
+        )
+
+        gametest.run("clean", cacheTask = false)
+        gametest.run("buildAndCollect", cacheTask = false)
+
+        val fabricModJson = gametest.project().layout.projectDirectory
+            .file("versions/1.21.4-fabric/build/resources/main/fabric.mod.json")
+            .asFile
+        val entrypoints = readFabricEntrypoints(fabricModJson.readText())
+
+        assertTrue(
+            entrypoints.containsKey("fabric-gametest"),
+            "fabric-gametest entrypoint should remain in ${fabricModJson.absolutePath} when gametestEntrypointCleanup is false"
+        )
+    }
+
+    private fun assertGametestTargetKeepsFabricGametestEntrypoint(taskName: String) {
+        val gametest = gametestResourceProject()
+
+        gametest.run("clean", cacheTask = false)
+        gametest.run(taskName)
+
+        val fabricModJson = gametest.project().layout.projectDirectory
+            .file("versions/1.21.4-fabric/build/resources/main/fabric.mod.json")
+            .asFile
+        val entrypoints = readFabricEntrypoints(fabricModJson.readText())
+
+        assertTrue(
+            entrypoints.containsKey("fabric-gametest"),
+            "fabric-gametest entrypoint should remain in ${fabricModJson.absolutePath} for $taskName"
+        )
+    }
+
+    private fun gametestResourceProject(modSettings: String = ""): IntegrationTest.TestBuilder {
+        return gradleTest().buildScript(
+            """
+modSettings {
+    variableReplacements = mapOf(
+        "custom1" to "customValue1",
+        "custom2" to "customValue2",
+        "custom3" to "customValue3"
+    )
+$modSettings
+}
+
+tasks.withType<org.gradle.api.tasks.JavaExec>().configureEach {
+    onlyIf { false }
+}
+            """.trimIndent()
+        )
+            .setStonecutterVersion("1.21.4", "fabric")
+            .withProperties(
+                mapOf(
+                    "mod.id" to "examplemod",
+                    "mod.name" to "Test Example Mod",
+                    "mod.description" to "This is a test example mod description",
+                    "mod.group" to "net.example",
+                    "mod.version" to "1.0",
+                    "org.gradle.caching" to "false"
+                )
+            )
+    }
+
+    @Test
     fun `versioned replacements work as expected`() {
         val fabric1202Path = getPathsFor("1.20.2", "fabric", listOf("processResourcesTest/test.toml")).first()
         val forge1202Path = getPathsFor("1.20.2", "forge", listOf("processResourcesTest/test.toml")).first()
@@ -369,6 +478,13 @@ modSettings {
         files.forEach { path ->
             assertTrue(path.asFile.readText().contains("This is a line with a variable: %1\$s"))
         }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun readFabricEntrypoints(content: String): Map<String, Any> {
+        val gson = GsonBuilder().create()
+        val json = gson.fromJson(content, Map::class.java)
+        return json["entrypoints"] as Map<String, Any>
     }
 
     private fun getPathsFor(version: String, loader: String, files: List<String>): MutableList<FileSystemLocation> {

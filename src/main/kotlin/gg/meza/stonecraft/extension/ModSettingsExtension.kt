@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.file.Directory
 import org.gradle.api.file.RegularFile
 import org.gradle.api.provider.Provider
+import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
@@ -48,6 +49,9 @@ abstract class ModSettingsExtension @Inject constructor(
     @get:Nested
     abstract val clientOptions: MinecraftClientOptions
 
+    @Internal
+    internal val gametestEntrypointCleanupProp: Property<Boolean> = project.objects.property(Boolean::class.java)
+
     init {
         runDirectoryProp.convention(project.rootProject.layout.projectDirectory.dir("run"))
         generatedResourcesProp.convention(project.layout.projectDirectory.dir("src/main/generated"))
@@ -56,6 +60,7 @@ abstract class ModSettingsExtension @Inject constructor(
         fabricClientJunitReportLocationProp.convention(project.layout.buildDirectory.file("junit-client.xml"))
         fabricServerJunitReportLocationProp.convention(project.layout.buildDirectory.file("junit-server.xml"))
         variableReplacements.convention(emptyMap())
+        gametestEntrypointCleanupProp.convention(true)
     }
 
     var runDirectory: Directory
@@ -98,6 +103,13 @@ abstract class ModSettingsExtension @Inject constructor(
         set(value) {
             fabricServerJunitReportLocationProp.set(value)
             fabricServerJunitReportLocationProp.disallowChanges()
+        }
+
+    var gametestEntrypointCleanup: Boolean
+        get() = gametestEntrypointCleanupProp.get()
+        set(value) {
+            gametestEntrypointCleanupProp.set(value)
+            gametestEntrypointCleanupProp.disallowChanges()
         }
 
     fun clientOptions(configure: MinecraftClientOptions.() -> Unit) {
