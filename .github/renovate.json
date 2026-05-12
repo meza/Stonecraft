@@ -4,8 +4,7 @@
     "github>stateshifters/renovate-common:deps"
   ],
   "baseBranchPatterns": [
-    "main",
-    "v1.8.x"
+    "main"
   ],
   "packageRules": [
     {

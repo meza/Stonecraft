@@ -10,30 +10,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  determine-branches:
-    runs-on: self-hosted
-    outputs:
-      branches: ${{ steps.set-matrix.outputs.branches }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Build branch matrix
-        id: set-matrix
-        run: |
-          maintenance_branches=$(git ls-remote --heads origin 'v*.x' | awk '{print $2}' | sed 's#refs/heads/##' || true)
-          matrix=$(printf '%s\n' main $maintenance_branches | jq -Rsc '[split("\n")[] | select(length>0)]')
-          echo "branches=$matrix" >> "$GITHUB_OUTPUT"
-
   update:
-    needs: determine-branches
     runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
-        branch: ${{ fromJson(needs.determine-branches.outputs.branches) }}
+        branch:
+          - main
+          # Add active maintenance branches here, one per line.
+          # - v1.x
     name: Update pack versions (${{ matrix.branch }})
     steps:
       - name: Checkout
