@@ -1878,5 +1878,9 @@
   "26.2-pre-1": {
     "datapack": 106.1,
     "resourcepack": 88
+  },
+  "26.2-pre-2": {
+    "datapack": 107,
+    "resourcepack": 88
   }
 }
