@@ -2,11 +2,14 @@ package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.extension.ModSettingsExtension
+import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
-import org.gradle.kotlin.dsl.named
+import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.withType
+import java.io.File
 
 fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
     val currentModGroup = "mod"
@@ -78,5 +81,20 @@ fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: 
 
     project.tasks.named("runClient") {
         dependsOn(project.tasks.named("configureMinecraftClient"))
+    }
+
+    if (project.mod.isNeoforge) {
+        // Necessary to enable minecraft facing unit test facilities
+        project.tasks.withType<Test>().configureEach {
+            jvmArgs("--add-opens=java.base/java.lang.invoke=ALL-UNNAMED")
+            systemProperty(
+                "fml.modFolders",
+                listOf(
+                    "main%%${project.layout.buildDirectory.dir("resources/main").get().asFile.absolutePath}",
+                    "main%%${project.layout.buildDirectory.dir("classes/java/main").get().asFile.absolutePath}",
+                    "main%%${project.layout.buildDirectory.dir("classes/java/test").get().asFile.absolutePath}",
+                ).joinToString(File.pathSeparator)
+            )
+        }
     }
 }

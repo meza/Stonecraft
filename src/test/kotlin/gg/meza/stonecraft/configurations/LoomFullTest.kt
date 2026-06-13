@@ -28,8 +28,18 @@ class LoomFullTest : IntegrationTest {
         }
         gradleTest = gradleTest()
             .buildScript(loomTask)
+            .buildScript(
+                """
+                if (project.name == "26.1-neoforge") {
+                    loom {
+                        accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+                    }
+                }
+                """.trimIndent()
+            )
             .setStonecutterVersion("1.21", "fabric", "forge", "neoforge")
             .setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
+            .setStonecutterVersion("26.1", "neoforge")
 
         result = gradleTest.run("printLoomSettings")
     }
@@ -42,6 +52,7 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("1.21.4-fabric"))
         assertTrue(result.output.contains("1.21.4-forge"))
         assertTrue(result.output.contains("1.21.4-neoforge"))
+        assertTrue(result.output.contains("26.1-neoforge"))
     }
 
     @Test
@@ -86,6 +97,11 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21.4-neoforge] server runDir=$runDir"))
+
+        assertTrue(result.output.contains("[26.1-neoforge] client runDir=$runDir"))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
+        assertTrue(result.output.contains("[26.1-neoforge] server runDir=$runDir"))
     }
 
     @Test
@@ -121,6 +137,10 @@ class LoomFullTest : IntegrationTest {
         // This also needs to be true and like the above once arch-loom is fixed
         assertFalse(result.output.contains("[1.21-neoforge] datagen"), "Neoforge datagen settings exist even thought they shouldn't")
         assertTrue(result.output.contains("[1.21.4-neoforge] ClientDatagen"), "Neoforge datagen settings exist even thought they shouldn't")
+        assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen"), "Modern Neoforge client datagen settings should exist")
+        assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen"), "Modern Neoforge server datagen settings should exist")
+        assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen programArgs=\"${generatedDir("26.1", "neoforge")}\""))
+        assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen programArgs=\"${generatedDir("26.1", "neoforge")}\""))
     }
 
     @Test
@@ -153,6 +173,8 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21-neoforge] gameTestClient vmArgs=\"${neoforgeClient[1]}\""))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestClient vmArgs=\"${neoforgeClient[0]}\""))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestClient vmArgs=\"${neoforgeClient[1]}\""))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestClient vmArgs=\"${neoforgeClient[0]}\""))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestClient vmArgs=\"${neoforgeClient[1]}\""))
     }
 
     @Test
@@ -182,6 +204,10 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer vmArgs=\"${neoforgeServer[0]}\""))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer vmArgs=\"${neoforgeServer[1]}\""))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer vmArgs=\"${neoforgeServer[2]}\""))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer mainClass=net.neoforged.fml.startup.GameTestServer"))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"${neoforgeServer[0]}\""))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"${neoforgeServer[1]}\""))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"${neoforgeServer[2]}\""))
     }
 
     companion object {
@@ -206,6 +232,7 @@ class LoomFullTest : IntegrationTest {
             loom.runConfigs.forEach{
                 println("[" + projectName + "] "+ it.name + " isIdeConfigGenerated="+it.isIdeConfigGenerated)
                 println("[" + projectName + "] "+ it.name + " runDir="+it.runDir)
+                println("[" + projectName + "] "+ it.name + " mainClass="+it.mainClass.get())
                 it.programArgs.forEach { arg ->
                     println("[" + projectName + "] "+ it.name + " programArgs=\"" + arg + "\"")
                 }

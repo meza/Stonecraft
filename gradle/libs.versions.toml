@@ -1,6 +1,7 @@
 [versions]
 plugin-publish = "2.1.1"
 test-logger = "4.0.0"
+kover = "0.9.8"
 spotless = "8.4.0"
 gson = "2.14.0"
 stonecutter = "0.9+"
@@ -30,4 +31,5 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 [plugins]
 plugin-publish = { id = "com.gradle.plugin-publish", version.ref = "plugin-publish" }
 test-logger = { id = "com.adarshr.test-logger", version.ref = "test-logger" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

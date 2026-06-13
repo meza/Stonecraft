@@ -1,7 +1,16 @@
 import gg.meza.stonecraft.mod
+import org.gradle.api.tasks.testing.Test
 
 plugins {
     id("gg.meza.stonecraft")
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 modSettings {
@@ -13,7 +22,6 @@ modSettings {
         musicVolume = 0.0
     }
 }
-
 
 // Example of overriding publishing settings
 publishMods {

@@ -85,8 +85,11 @@ fun configureClientGameTests(
             if (mod.isFabric) {
                 fabricGameTestConfig(Side.CLIENT, modSettings.fabricClientJunitReportLocationProp)
             }
-            if (mod.isForgeLike) {
-                forgeLikeConfig(Side.CLIENT, mod.loader, stonecutter)
+            if (mod.isForge) {
+                forgeConfig(Side.CLIENT, mod.loader, stonecutter)
+            }
+            if (mod.isNeoforge) {
+                neoforgeConfig(Side.CLIENT, mod.loader, stonecutter)
             }
         }
 
@@ -117,13 +120,16 @@ fun configureServerGameTests(
 
     loom.runs {
         create("gameTestServer") {
-            server()
             runDir = testServerDir
             if (mod.isFabric) {
+                server()
                 fabricGameTestConfig(Side.SERVER, modSettings.fabricServerJunitReportLocationProp)
             }
-            if (mod.isForgeLike) {
-                forgeLikeConfig(Side.SERVER, mod.loader, stonecutter)
+            if (mod.isForge) {
+                forgeConfig(Side.SERVER, mod.loader, stonecutter)
+            }
+            if (mod.isNeoforge) {
+                neoforgeConfig(Side.SERVER, mod.loader, stonecutter)
             }
         }
     }
@@ -156,17 +162,35 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
 }
 
 /**
- * Configures the forge like game tests
+ * Configures the forge game tests
  *
  * On the server side it also sets the `forge.gameTestServer` property to `true`
  * which is mostly undocumented and took a lot of debugging to figure out
  *
  * @param side The side of the game test
  */
-private fun RunConfigSettings.forgeLikeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
+private fun RunConfigSettings.forgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
     if (side == Side.SERVER) {
         environment("gametestserver")
         forgeTemplate("gametestserver")
+        property("$loader.gameTestServer", "true")
+    }
+
+    mapOf(
+        "$loader.enabledGameTestNamespaces" to project.mod.id,
+        "$loader.enableGameTest" to "true"
+    ).forEach { (key, value) -> property(key, value) }
+}
+
+private fun RunConfigSettings.neoforgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
+    if (side == Side.SERVER) {
+        environment("gameTestServer")
+        forgeTemplate("gameTestServer")
+
+        if (stonecutter.current.parsed >= "1.21.5") {
+            defaultMainClass("net.neoforged.fml.startup.GameTestServer")
+        }
+
         property("$loader.gameTestServer", "true")
     }
 

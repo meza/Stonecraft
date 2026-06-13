@@ -67,9 +67,6 @@ plugins {
                     .sorted(Comparator.reverseOrder())
                     .forEach { source: Path ->
                         try {
-                            if (source.fileName.toString() == "examplemod.deobfuscated.accesswidener") {
-                                return@forEach
-                            }
                             val destination = projectDir.toPath().resolve(fixturesDir.toPath().relativize(source))
                             if (!Files.isDirectory(source)) {
                                 destination.parent.toFile().mkdirs()
@@ -145,26 +142,20 @@ plugins {
             return runner.run()
         }
 
-        fun build(): BuildResult {
-            return execute(cachedTasks.toList())
+        fun build(): BuildResult = execute(cachedTasks.toList())
+
+        fun run(task: String, cacheTask: Boolean = true): BuildResult = if (cacheTask) {
+            cachedTasks.add(task)
+            build()
+        } else {
+            execute(listOf(task))
         }
 
-        fun run(task: String, cacheTask: Boolean = true): BuildResult {
-            return if (cacheTask) {
-                cachedTasks.add(task)
-                build()
-            } else {
-                execute(listOf(task))
-            }
-        }
-
-        fun run(tasks: List<String>, cacheTask: Boolean = true): BuildResult {
-            return if (cacheTask) {
-                cachedTasks.addAll(tasks)
-                build()
-            } else {
-                execute(tasks)
-            }
+        fun run(tasks: List<String>, cacheTask: Boolean = true): BuildResult = if (cacheTask) {
+            cachedTasks.addAll(tasks)
+            build()
+        } else {
+            execute(tasks)
         }
 
         fun setModProperty(key: String, value: String): TestBuilder {
@@ -189,16 +180,24 @@ plugins {
         }
 
         private fun configureAccessWidenerFixture() {
-            val accessWidener = File(projectDir, "src/main/resources/examplemod.accesswidener")
             val source = File(fixturesDir, "src/main/resources/examplemod.deobfuscated.accesswidener")
 
-            if (getFirstMinecraftVersion().startsWith("2") && accessWidener.exists() && source.exists()) {
-                Files.copy(source.toPath(), accessWidener.toPath(), StandardCopyOption.REPLACE_EXISTING)
+            if (!source.exists()) {
+                return
             }
-        }
 
-        private fun getFirstMinecraftVersion(): String {
-            return supportedMinecraftVersions.keys.first()
+            supportedMinecraftVersions
+                .filterKeys { it.startsWith("2") }
+                .forEach { (version, loaders) ->
+                    loaders.forEach { loader ->
+                        val accessWidener = File(
+                            projectDir,
+                            "versions/$version-$loader/src/main/resources/examplemod.accesswidener"
+                        )
+                        accessWidener.parentFile.mkdirs()
+                        Files.copy(source.toPath(), accessWidener.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                    }
+                }
         }
     }
 

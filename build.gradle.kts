@@ -6,6 +6,7 @@ plugins {
     `kotlin-dsl`
     `maven-publish`
     alias(libs.plugins.plugin.publish) apply false
+    alias(libs.plugins.kover)
     alias(libs.plugins.test.logger)
 }
 
@@ -50,16 +51,41 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+val cleanE2ETestProjects by tasks.registering(Delete::class) {
+    delete(
+        layout.buildDirectory.dir("e2e_tests").map { e2eTestsDir ->
+            e2eTestsDir.asFile
+                .listFiles { file -> file.isDirectory && file.name.startsWith("project-") }
+                ?.toList()
+                .orEmpty()
+        }
+    )
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
     jvmArgs("-XX:+EnableDynamicAgentLoading")
     jvmArgs("--add-opens", "java.base/java.util=ALL-UNNAMED")
     jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
     maxHeapSize = "4G"
+    dependsOn(cleanE2ETestProjects)
 }
 
 testlogger {
     theme = ThemeType.PLAIN
+}
+
+kover {
+    reports {
+        total {
+            xml {
+                onCheck = true
+            }
+            html {
+                onCheck = true
+            }
+        }
+    }
 }
 
 java {

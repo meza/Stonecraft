@@ -138,4 +138,44 @@ class LoomBitsTest : IntegrationTest {
         assertTrue(result.output.contains("vmArgs=\"-Dfabric-api.gametest.report-file=${gradleTest.project().layout.projectDirectory.file("versions/1.20.2-fabric/build/fabric-client-junit-report.xml").asFile.absolutePath}"))
         assertTrue(result.output.contains("vmArgs=\"-Dfabric-api.gametest.report-file=${gradleTest.project().layout.projectDirectory.file("versions/1.20.2-fabric/build/fabric-server-junit-report.xml").asFile.absolutePath}"))
     }
+
+    @Test
+    fun `modern neoforge game test server uses the game test server main class`() {
+        gradleTest.setStonecutterVersion("26.1", "neoforge")
+        gradleTest.buildScript(
+            """
+            loom {
+                accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run("printLoomSettings")
+
+        assertFalse(result.output.contains("Could not find Forge run template with name 'gametestserver'"))
+        assertTrue(
+            result.output.contains(
+                "[26.1-neoforge] gameTestServer mainClass=net.neoforged.fml.startup.GameTestServer"
+            )
+        )
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"-Dneoforge.enabledGameTestNamespaces=examplemod\""))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"-Dneoforge.enableGameTest=true\""))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"-Dneoforge.gameTestServer=true\""))
+    }
+
+    @Test
+    fun `legacy neoforge game test server does not use the modern game test server main class`() {
+        gradleTest.setStonecutterVersion("1.21.4", "neoforge")
+
+        val result = gradleTest.run("printLoomSettings")
+
+        assertFalse(
+            result.output.contains(
+                "[1.21.4-neoforge] gameTestServer mainClass=net.neoforged.fml.startup.GameTestServer"
+            )
+        )
+        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer vmArgs=\"-Dneoforge.enabledGameTestNamespaces=examplemod\""))
+        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer vmArgs=\"-Dneoforge.enableGameTest=true\""))
+        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer vmArgs=\"-Dneoforge.gameTestServer=true\""))
+    }
 }

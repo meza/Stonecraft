@@ -3,6 +3,7 @@ package gg.meza.stonecraft.configurations
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import org.gradle.api.Project
+import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.maven
@@ -33,8 +34,11 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
     val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
     val deobfuscatedMinecraft = realMinecraftVersion.startsWith("2")
+
+    // Minecraft
     project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
 
+    // Mappings
     if (deobfuscatedMinecraft) {
         project.logger.info("Using deobfuscated Minecraft for version $realMinecraftVersion; no mappings will be applied.")
         if (useLegacyYarnMappings) {
@@ -59,14 +63,25 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
         }
     }
 
+    // Neoforge
     if (project.mod.isNeoforge) {
-        project.dependencies.add("neoForge", "net.neoforged:neoforge:${project.mod.prop("neoforge_version")}")
+        val neoforge = "net.neoforged:neoforge:${project.mod.prop("neoforge_version")}"
+
+        project.dependencies.add("neoForge", neoforge)
+        val neoforgeTestFixtures = project.dependencies.create(neoforge) as ExternalModuleDependency
+        neoforgeTestFixtures.capabilities {
+            requireCapability("net.neoforged:neoforge-moddev-test-fixtures")
+        }
+        project.dependencies.add("testRuntimeOnly", neoforgeTestFixtures)
+        project.dependencies.add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
     }
 
+    // Forge
     if (project.mod.isForge) {
         project.dependencies.add("forge", "net.minecraftforge:forge:${project.mod.prop("forge_version")}")
     }
 
+    // Fabric
     if (project.mod.isFabric) {
         if (deobfuscatedMinecraft) {
             project.dependencies.add(
@@ -76,6 +91,10 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
             project.dependencies.add(
                 "api",
                 "net.fabricmc.fabric-api:fabric-api:${project.mod.prop("fabric_version")}"
+            )
+            project.dependencies.add(
+                "testImplementation",
+                "net.fabricmc:fabric-loader-junit:${project.mod.prop("loader_version")}"
             )
             project.dependencies.add(
                 "api",
