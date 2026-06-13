@@ -18,5 +18,6 @@ fun configureStonecutterHandlers(controller: StonecutterControllerExtension) {
     controller.handlers {
         inherit("json5", "json", "mcmeta", "md", "txt", "accesswidener")
         inherit("cfg", "properties")
+        inherit("yaml", "toml")
     }
 }
