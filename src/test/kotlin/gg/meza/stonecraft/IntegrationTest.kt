@@ -22,7 +22,11 @@ plugins {
         """.trimIndent()
     }
 
-    class TestBuilder(addHeader: Boolean) {
+    class TestBuilder(
+        addHeader: Boolean,
+        private val fixturesDir: File = File("src/test/resources/fixtures"),
+        private val normalizePluginUnderTest: Boolean = false,
+    ) {
         private val runner = GradleRunner.create()
             .withPluginClasspath()
             .withArguments("-Dorg.gradle.jvmargs=-Xmx4G")
@@ -34,7 +38,6 @@ plugins {
         private val gradleProperties: File
         private val settingsFile: File
         private val stonecutterGradle: File
-        private val fixturesDir: File
         private val baseArguments = mutableListOf<String>()
         private val cachedTasks = LinkedHashSet<String>()
         private var supportedMinecraftVersions = mutableMapOf<String, List<String>>()
@@ -48,8 +51,6 @@ plugins {
             gradleProperties = File(projectDir, "gradle.properties")
             settingsFile = File(projectDir, "settings.gradle$ext")
             stonecutterGradle = File(projectDir, "stonecutter.gradle$ext")
-            fixturesDir = File("src/test/resources/fixtures")
-
             projectDir.mkdirs()
 
             // Clean up
@@ -62,26 +63,14 @@ plugins {
             val resources = File(projectDir, "src/main/resources")
             resources.mkdirs()
 
-            if (fixturesDir.exists() && fixturesDir.isDirectory()) {
-                Files.walk(fixturesDir.toPath())
-                    .sorted(Comparator.reverseOrder())
-                    .forEach { source: Path ->
-                        try {
-                            val destination = projectDir.toPath().resolve(fixturesDir.toPath().relativize(source))
-                            if (!Files.isDirectory(source)) {
-                                destination.parent.toFile().mkdirs()
-                                Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING)
-                            } else {
-                                destination.toFile().mkdirs()
-                            }
-                        } catch (e: IOException) {
-                            throw RuntimeException(e)
-                        }
-                    }
-            }
+            copyFixtureProject()
 
             if (addHeader) {
                 buildScript.appendText(kotlinHeader)
+            }
+
+            if (normalizePluginUnderTest) {
+                normalizePluginUnderTest()
             }
 
             runner.withProjectDir(projectDir)
@@ -124,19 +113,7 @@ plugins {
             .build()
 
         private fun execute(tasks: List<String>): BuildResult {
-            if (supportedMinecraftVersions.isEmpty()) {
-                setStonecutterVersion("1.21.4", "fabric")
-            }
-
-            val settings = settingsFile.readText()
-            val versions = getSupportedMinecraftVersions()
-            val newSettings = settings.replace("STONECUTTER_VERSIONS", versions, true)
-            settingsFile.writeText(newSettings)
-
-            val scGradle = stonecutterGradle.readText()
-            val newScGradle = scGradle.replace("ACTIVE_VERSION", getFirstVersion(), true)
-            stonecutterGradle.writeText(newScGradle)
-            configureAccessWidenerFixture()
+            prepareProjectForExecution()
 
             runner.withArguments(baseArguments + tasks)
             return runner.run()
@@ -179,6 +156,22 @@ plugins {
             return "$key-$loader"
         }
 
+        private fun prepareProjectForExecution() {
+            if (supportedMinecraftVersions.isEmpty()) {
+                setStonecutterVersion("1.21.4", "fabric")
+            }
+
+            val settings = settingsFile.readText()
+            val versions = getSupportedMinecraftVersions()
+            val newSettings = settings.replace("STONECUTTER_VERSIONS", versions, true)
+            settingsFile.writeText(newSettings)
+
+            val scGradle = stonecutterGradle.readText()
+            val newScGradle = scGradle.replace("ACTIVE_VERSION", getFirstVersion(), true)
+            stonecutterGradle.writeText(newScGradle)
+            configureAccessWidenerFixture()
+        }
+
         private fun configureAccessWidenerFixture() {
             val source = File(fixturesDir, "src/main/resources/examplemod.deobfuscated.accesswidener")
 
@@ -199,9 +192,64 @@ plugins {
                     }
                 }
         }
+
+        private fun copyFixtureProject() {
+            if (!fixturesDir.exists() || !fixturesDir.isDirectory) {
+                return
+            }
+
+            Files.walk(fixturesDir.toPath()).use { fixturePaths ->
+                fixturePaths
+                    .filter { source -> !isIgnoredFixturePath(source) }
+                    .forEach { source: Path ->
+                        try {
+                            val destination = projectDir.toPath().resolve(fixturesDir.toPath().relativize(source))
+                            if (!Files.isDirectory(source)) {
+                                destination.parent.toFile().mkdirs()
+                                Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING)
+                            } else {
+                                destination.toFile().mkdirs()
+                            }
+                        } catch (e: IOException) {
+                            throw RuntimeException(e)
+                        }
+                    }
+            }
+        }
+
+        private fun isIgnoredFixturePath(source: Path): Boolean {
+            val relativePath = fixturesDir.toPath().relativize(source)
+            return relativePath.any { path ->
+                path.toString() in setOf(".gradle", "build", "run", ".idea", ".kotlin")
+            }
+        }
+
+        private fun normalizePluginUnderTest() {
+            val settings = settingsFile.readText()
+            val publishedPluginRequest = "id(\"gg.meza.stonecraft\") version \"0.0-SNAPSHOT\""
+            val pluginUnderTestRequest = "id(\"gg.meza.stonecraft\")"
+
+            require(settings.contains(publishedPluginRequest)) {
+                "Expected copied fixture settings to request published Stonecraft plugin version."
+            }
+
+            settingsFile.writeText(
+                settings.replace(
+                    publishedPluginRequest,
+                    pluginUnderTestRequest
+                )
+            )
+        }
+
     }
 
     fun gradleTest(addHeader: Boolean = true): TestBuilder = TestBuilder(addHeader)
+
+    fun gradleTestMod(): TestBuilder = TestBuilder(
+        addHeader = false,
+        fixturesDir = File("e2e/testmod"),
+        normalizePluginUnderTest = true,
+    )
 
     fun Project.setProperties(properties: Map<String, String>) {
         properties.forEach { (key, value) ->
