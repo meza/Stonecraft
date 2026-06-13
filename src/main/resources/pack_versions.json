@@ -1870,5 +1870,41 @@
   "26.2-snapshot-7": {
     "datapack": 105.1,
     "resourcepack": 87
+  },
+  "26.2-snapshot-8": {
+    "datapack": 106,
+    "resourcepack": 87
+  },
+  "26.2-pre-1": {
+    "datapack": 106.1,
+    "resourcepack": 88
+  },
+  "26.2-pre-2": {
+    "datapack": 107,
+    "resourcepack": 88
+  },
+  "26.2-pre-3": {
+    "datapack": 107,
+    "resourcepack": 88
+  },
+  "26.2-pre-4": {
+    "datapack": 107.1,
+    "resourcepack": 88
+  },
+  "26.2-pre-5": {
+    "datapack": 107.1,
+    "resourcepack": 88
+  },
+  "26.2-pre-6": {
+    "datapack": 107.1,
+    "resourcepack": 88
+  },
+  "26.2-rc-1": {
+    "datapack": 107.1,
+    "resourcepack": 88
+  },
+  "26.2-rc-2": {
+    "datapack": 107.1,
+    "resourcepack": 88
   }
 }
