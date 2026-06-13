@@ -28,7 +28,7 @@ It's more likely to be a different Minecraft version/loader path managed by Ston
 
 We're using [Stonecutter](https://stonecutter.kikugie.dev/wiki/) to manage multiple Minecraft versions and loaders.
 
-### Switching versions
+### Switching between minecraft/loader permutations
 
 Gradle has a "Set active project to <version>-<loader>" tasks, those are the ones to use.
 
@@ -55,9 +55,11 @@ To make sure that the project tests and builds correctly:
 
 - `./gradlew chiseledGameTest`
 
-### DO NOT
+### DO NOT - CRITICAL
 
 Do not run traditional gradle compile tasks. The project uses a custom build process that includes additional steps beyond compilation. Running standard compile tasks may lead to incomplete builds and test failures.
+
+Do NOT manage the Stonecutter guard comments manually. Use the version switching tasks to switch between versions and loaders, and use the "Refresh active project" task to refresh the code based on the comment conditions. Manually changing the guard comments can lead to inconsistencies and errors in the build process.
 
 ## Documentation
 

@@ -1,4 +1,6 @@
 pluginManagement {
+    includeBuild("../..")
+
     repositories {
         mavenLocal()
         mavenCentral()
@@ -12,7 +14,7 @@ pluginManagement {
     }
 }
 plugins {
-    id("gg.meza.stonecraft") version "0.0-SNAPSHOT"
+    id("gg.meza.stonecraft")
     id("dev.kikugie.stonecutter") version "0.9.+"
 }
 
@@ -29,6 +31,7 @@ stonecutter {
         }
 
         mc("26.1", "fabric", "neoforge")
+        mc("1.20.4", "fabric", "neoforge")
 
         vcsVersion = "26.1-fabric"
     }

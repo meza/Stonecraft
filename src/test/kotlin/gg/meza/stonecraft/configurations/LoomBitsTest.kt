@@ -83,7 +83,7 @@ class LoomBitsTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21-forge] server runDir=$runDir"))
 
         assertTrue(result.output.contains("[1.21-neoforge] client runDir=$runDir"))
-        assertFalse(result.output.contains("[1.21-neoforge] datagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen runDir=$runDir"))
         assertTrue(result.output.contains("[1.21-neoforge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21-neoforge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21-neoforge] server runDir=$runDir"))
@@ -152,7 +152,6 @@ class LoomBitsTest : IntegrationTest {
 
         val result = gradleTest.run("printLoomSettings")
 
-        assertFalse(result.output.contains("Could not find Forge run template with name 'gametestserver'"))
         assertTrue(
             result.output.contains(
                 "[26.1-neoforge] gameTestServer mainClass=net.neoforged.fml.startup.GameTestServer"
@@ -161,6 +160,35 @@ class LoomBitsTest : IntegrationTest {
         assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"-Dneoforge.enabledGameTestNamespaces=examplemod\""))
         assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"-Dneoforge.enableGameTest=true\""))
         assertTrue(result.output.contains("[26.1-neoforge] gameTestServer vmArgs=\"-Dneoforge.gameTestServer=true\""))
+    }
+
+    @Test
+    fun `forge game test server uses the gameTestServer environment and template`() {
+        gradleTest.setStonecutterVersion("1.21", "forge")
+
+        val result = gradleTest.run("printLoomSettings")
+
+        assertTrue(result.output.contains("[1.21-forge] gameTestServer environment=gameTestServer"))
+        assertTrue(result.output.contains("[1.21-forge] gameTestServer vmArgs=\"-Dforge.gameTestServer=true\""))
+    }
+
+    @Test
+    fun `modern neoforge datagen uses dataClient and dataServer environments and templates`() {
+        gradleTest.setStonecutterVersion("26.1", "neoforge")
+        gradleTest.buildScript(
+            """
+            loom {
+                accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run("printLoomSettings")
+
+        assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen environment=dataClient"))
+        assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen environment=dataServer"))
+        assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen mainClass=net.neoforged.fml.startup.DataClient"))
+        assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen mainClass=net.neoforged.fml.startup.DataServer"))
     }
 
     @Test

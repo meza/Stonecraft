@@ -1,3 +1,4 @@
+//? if >= 1.21.5 {
 package gg.meza.stonecraft.e2e;
 
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -71,3 +72,4 @@ public class CodeGameTests {
         ctx.succeed();
     }
 }
+//? }

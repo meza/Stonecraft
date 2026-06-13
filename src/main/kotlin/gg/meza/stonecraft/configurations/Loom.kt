@@ -171,8 +171,8 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
  */
 private fun RunConfigSettings.forgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
     if (side == Side.SERVER) {
-        environment("gametestserver")
-        forgeTemplate("gametestserver")
+        environment("gameTestServer")
+        forgeTemplate("gameTestServer")
         property("$loader.gameTestServer", "true")
     }
 
@@ -247,8 +247,6 @@ fun configureDatagen(
             }
         }
 
-        // Neoforge datagen is simply broken in architectury loom
-        // @see https://github.com/architectury/architectury-loom/pull/258
         if (mod.isNeoforge) {
             if (stonecutter.eval(minecraftVersion, ">=1.21.4")) {
                 // @see https://neoforged.net/news/21.4release/#data-generation-splitting
@@ -256,24 +254,20 @@ fun configureDatagen(
                     serverData()
                     programArgs(getProgramArgs(modDefinition, outputFolder))
                     forgeLikeLogging()
-                    environment("dataserver")
-                    forgeTemplate("dataserver")
                 }
                 create("ClientDatagen") {
                     clientData()
                     programArgs(getProgramArgs(modDefinition, outputFolder))
                     forgeLikeLogging()
-                    environment("dataclient")
-                    forgeTemplate("dataclient")
                 }
             } else {
-                if (stonecutter.eval(minecraftVersion, ">1.21")) {
-                    create("Datagen") {
-                        data()
-                        programArgs(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
-                        forgeLikeLogging()
-                    }
+//                if (stonecutter.eval(minecraftVersion, ">1.21")) {
+                create("Datagen") {
+                    data()
+                    programArgs(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
+                    forgeLikeLogging()
                 }
+//                }
             }
         }
     }
@@ -284,14 +278,12 @@ fun configureDatagen(
         }
     }
 
-    if (mod.isNeoforge && stonecutter.eval(stonecutter.current.version, "<=1.21")) {
-        project.tasks.register("runDatagen") {
-            logger.error("Datagen is disabled for Neoforge 1.21.4 and below due to existing issues")
-        }
-    }
+//    if (mod.isNeoforge && stonecutter.eval(stonecutter.current.version, "<=1.21")) {
+//        project.tasks.register("runDatagen") {
+//            logger.error("Datagen is disabled for Neoforge 1.21 and below due to existing issues")
+//        }
+//    }
 
-    // NeoForge changed their datagen approach in 1.21.4
-    // This is disabled for now because Architectury Loom does not support it yet
     if (mod.isNeoforge && stonecutter.eval(stonecutter.current.version, ">=1.21.4")) {
         project.tasks.register("runDatagen") {
             dependsOn(project.tasks.named("runServerDatagen"), project.tasks.named("runClientDatagen"))

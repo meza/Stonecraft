@@ -12,6 +12,9 @@
   "entrypoints": {
     "main": [
       "${group}.TestMod"
+    ],
+    "fabric-datagen": [
+      "${group}.datagen.fabric.TestModDataGenerator"
     ]
   },
   "depends": {

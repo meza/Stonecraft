@@ -4,7 +4,6 @@ import gg.meza.stonecraft.IntegrationTest
 import okio.Path
 import org.gradle.testkit.runner.BuildResult
 import org.intellij.lang.annotations.Language
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -74,7 +73,7 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21-forge] server runDir=$runDir"))
 
         assertTrue(result.output.contains("[1.21-neoforge] client runDir=$runDir"))
-        assertFalse(result.output.contains("[1.21-neoforge] datagen runDir=$runDir"))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen runDir=$runDir"))
         assertTrue(result.output.contains("[1.21-neoforge] gameTestClient runDir=${testClientDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21-neoforge] gameTestServer runDir=${testServerDir}${Path.DIRECTORY_SEPARATOR}neoforge"))
         assertTrue(result.output.contains("[1.21-neoforge] server runDir=$runDir"))
@@ -134,9 +133,16 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.console.level=debug\""))
         assertTrue(result.output.contains("[1.21.4-forge] datagen vmArgs=\"-Dforge.logging.markers=REGISTRIES\""))
 
-        // This also needs to be true and like the above once arch-loom is fixed
-        assertFalse(result.output.contains("[1.21-neoforge] datagen"), "Neoforge datagen settings exist even thought they shouldn't")
-        assertTrue(result.output.contains("[1.21.4-neoforge] ClientDatagen"), "Neoforge datagen settings exist even thought they shouldn't")
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen programArgs=\"--all\""))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen programArgs=\"--mod\""))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen programArgs=\"examplemod\""))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen programArgs=\"--output\""))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen programArgs=\"${generatedDir("1.21", "neoforge")}\""))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen programArgs=\"--existing\""))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen programArgs=\"${existingDir}\""))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen vmArgs=\"-Dneoforge.logging.console.level=debug\""))
+        assertTrue(result.output.contains("[1.21-neoforge] Datagen vmArgs=\"-Dneoforge.logging.markers=REGISTRIES\""))
+        assertTrue(result.output.contains("[1.21.4-neoforge] ClientDatagen"))
         assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen"), "Modern Neoforge client datagen settings should exist")
         assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen"), "Modern Neoforge server datagen settings should exist")
         assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen programArgs=\"${generatedDir("26.1", "neoforge")}\""))
@@ -230,7 +236,9 @@ class LoomFullTest : IntegrationTest {
             }
     
             loom.runConfigs.forEach{
+                it.evaluateNow()
                 println("[" + projectName + "] "+ it.name + " isIdeConfigGenerated="+it.isIdeConfigGenerated)
+                println("[" + projectName + "] "+ it.name + " environment="+it.environment)
                 println("[" + projectName + "] "+ it.name + " runDir="+it.runDir)
                 println("[" + projectName + "] "+ it.name + " mainClass="+it.mainClass.get())
                 it.programArgs.forEach { arg ->

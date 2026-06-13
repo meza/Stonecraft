@@ -16,14 +16,7 @@ logoBlur = false
 
 [[dependencies.${id}]]
 modId = "minecraft"
-mandatory = true
+type = "required"
 versionRange = "[${minecraftVersion},)"
-ordering = "NONE"
-side = "CLIENT"
-
-[[dependencies.${id}]]
-modId = "forge"
-mandatory = true
-versionRange = "*"
 ordering = "NONE"
 side = "CLIENT"

@@ -2,6 +2,10 @@ package gg.meza.stonecraft.e2e;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*? if < 1.21.5 {*/
+/*import gg.meza.stonecraft.e2e.legacy.CodeGameTests;
+*//*?}*/
+
 /*? if fabric {*/
 import net.fabricmc.api.ModInitializer;
 /*?}*/
@@ -13,10 +17,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 /*?}*/
 
 /*? if neoforge {*/
-/*import net.neoforged.fml.ModContainer;
-import net.neoforged.bus.api.IEventBus;
+/*import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+//? if >= 1.21.5 {
+import net.neoforged.fml.ModContainer;
+//?}
 
+import gg.meza.stonecraft.e2e.datagen.neoforge.TestModDataGenerator;
 *//*?}*/
 
 
@@ -38,8 +45,13 @@ public class TestMod implements ModInitializer {
     /*?}*/
 
     /*? if neoforge {*/
-    /*public TestMod(IEventBus modEventBus, ModContainer modContainer) {
+    /*//? if >= 1.21.5 {
+    public TestMod(IEventBus modEventBus, ModContainer modContainer) {
+    //?} else {
+    /^public TestMod(IEventBus modEventBus) {
+    ^///?}
         CodeGameTests.register(modEventBus);
+        TestModDataGenerator.register(modEventBus);
         LOGGER.info("Hello Neoforge world!");
     }
     *//*?}*/
