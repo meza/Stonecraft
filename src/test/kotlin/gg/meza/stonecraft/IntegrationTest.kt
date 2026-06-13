@@ -229,6 +229,10 @@ plugins {
             val publishedPluginRequest = "id(\"gg.meza.stonecraft\") version \"0.0-SNAPSHOT\""
             val pluginUnderTestRequest = "id(\"gg.meza.stonecraft\")"
 
+            if (settings.contains(pluginUnderTestRequest) && !settings.contains(publishedPluginRequest)) {
+                return
+            }
+
             require(settings.contains(publishedPluginRequest)) {
                 "Expected copied fixture settings to request published Stonecraft plugin version."
             }
