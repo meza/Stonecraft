@@ -47,7 +47,8 @@ public class TestMod implements ModInitializer {
     /*? if neoforge {*/
     /*//? if >= 1.21.5 {
     public TestMod(IEventBus modEventBus, ModContainer modContainer) {
-    //?} else {
+    //?}
+    //? if < 1.21.5 {
     /^public TestMod(IEventBus modEventBus) {
     ^///?}
         CodeGameTests.register(modEventBus);
