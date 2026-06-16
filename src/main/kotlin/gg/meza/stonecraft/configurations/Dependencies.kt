@@ -1,9 +1,11 @@
 package gg.meza.stonecraft.configurations
 
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalModuleDependency
+import org.gradle.kotlin.dsl.exclude
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.maven
@@ -19,9 +21,10 @@ import java.util.*
  * @TODO: Add support for Quilt
  *
  * @param project The project to configure the dependencies for
- * @param canonicalMinecraftVersion The version of Minecraft to configure the dependencies for
+ * @param stonecutter The Stonecutter dependency
+ * @param realMinecraftVersion The version of Minecraft to configure the dependencies for
  */
-fun configureDependencies(project: Project, canonicalMinecraftVersion: String, realMinecraftVersion: String) {
+fun configureDependencies(project: Project, stonecutter: StonecutterBuildExtension, realMinecraftVersion: String) {
     // Set the basic repositories for a multiloader project
     project.repositories {
         mavenCentral()
@@ -33,7 +36,7 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
 
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
     val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
-    val deobfuscatedMinecraft = realMinecraftVersion.startsWith("2")
+    val deobfuscatedMinecraft = stonecutter.current.parsed >= "26.1"
 
     // Minecraft
     project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
@@ -71,6 +74,10 @@ fun configureDependencies(project: Project, canonicalMinecraftVersion: String, r
         val neoforgeTestFixtures = project.dependencies.create(neoforge) as ExternalModuleDependency
         neoforgeTestFixtures.capabilities {
             requireCapability("net.neoforged:neoforge-moddev-test-fixtures")
+        }
+
+        if (stonecutter.current.parsed < "1.20.6") {
+            neoforgeTestFixtures.exclude("net.neoforged.fancymodloader", "junit-fml")
         }
         project.dependencies.add("testRuntimeOnly", neoforgeTestFixtures)
         project.dependencies.add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")

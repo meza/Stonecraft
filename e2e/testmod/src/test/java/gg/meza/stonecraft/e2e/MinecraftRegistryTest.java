@@ -6,6 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+//? if fabric
 import net.minecraft.world.item.Items;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
