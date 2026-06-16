@@ -1906,5 +1906,9 @@
   "26.2-rc-2": {
     "datapack": 107.1,
     "resourcepack": 88
+  },
+  "26.2": {
+    "datapack": 107.1,
+    "resourcepack": 88
   }
 }
