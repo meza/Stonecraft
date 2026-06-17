@@ -36,7 +36,7 @@ fun configureDependencies(project: Project, stonecutter: StonecutterBuildExtensi
 
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
     val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
-    val deobfuscatedMinecraft = stonecutter.current.parsed >= "26.1"
+    val deobfuscatedMinecraft = stonecutter.eval(realMinecraftVersion, ">=26.1")
 
     // Minecraft
     project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
