@@ -1,9 +1,12 @@
 package gg.meza.stonecraft.tasks
 
 import org.gradle.api.DefaultTask
+import org.gradle.work.DisableCachingByDefault
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import java.nio.file.Files
 import kotlin.io.path.createFile
@@ -12,12 +15,14 @@ import kotlin.io.path.createFile
  *
  * Set some basic options on the minecraft client
  */
+@DisableCachingByDefault(because = "Configures mutable Minecraft client runtime state")
 abstract class ConfigureMinecraftClient : DefaultTask() {
 
     @get:Input
     val clientOptions = project.objects.mapProperty(String::class.java, String::class.java)
 
     @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
     val runDirectory = project.objects.directoryProperty()
 
     @get:Internal

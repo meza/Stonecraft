@@ -6,6 +6,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.DisableCachingByDefault
 import java.math.BigDecimal
 import java.nio.file.Files
 
@@ -23,6 +24,7 @@ data class SupportedFormat(
     val min_inclusive: BigDecimal
 )
 
+@DisableCachingByDefault(because = "Generation depends on project metadata and existing resource state")
 abstract class McMetaCreation : DefaultTask() {
 
     companion object {
