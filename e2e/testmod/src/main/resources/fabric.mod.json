@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+
+  "name": "${name}",
+  "description": "${description}",
+  "authors": [],
+  "contact": {},
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "${group}.TestMod"
+    ],
+    "fabric-datagen": [
+      "${group}.datagen.fabric.TestModDataGenerator"
+    ],
+    "fabric-gametest": [
+      "${group}.${gameTestPackage}.CodeGameTests"
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "fabric-api": ">=${fabricVersion}",
+    "minecraft": ">=${minecraftVersion}"
+  }
+}

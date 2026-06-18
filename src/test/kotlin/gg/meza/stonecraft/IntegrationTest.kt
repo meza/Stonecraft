@@ -22,7 +22,11 @@ plugins {
         """.trimIndent()
     }
 
-    class TestBuilder(addHeader: Boolean) {
+    class TestBuilder(
+        addHeader: Boolean,
+        private val fixturesDir: File = File("src/test/resources/fixtures"),
+        private val normalizePluginUnderTest: Boolean = false,
+    ) {
         private val runner = GradleRunner.create()
             .withPluginClasspath()
             .withArguments("-Dorg.gradle.jvmargs=-Xmx4G")
@@ -34,7 +38,6 @@ plugins {
         private val gradleProperties: File
         private val settingsFile: File
         private val stonecutterGradle: File
-        private val fixturesDir: File
         private val baseArguments = mutableListOf<String>()
         private val cachedTasks = LinkedHashSet<String>()
         private var supportedMinecraftVersions = mutableMapOf<String, List<String>>()
@@ -48,8 +51,6 @@ plugins {
             gradleProperties = File(projectDir, "gradle.properties")
             settingsFile = File(projectDir, "settings.gradle$ext")
             stonecutterGradle = File(projectDir, "stonecutter.gradle$ext")
-            fixturesDir = File("src/test/resources/fixtures")
-
             projectDir.mkdirs()
 
             // Clean up
@@ -62,29 +63,15 @@ plugins {
             val resources = File(projectDir, "src/main/resources")
             resources.mkdirs()
 
-            if (fixturesDir.exists() && fixturesDir.isDirectory()) {
-                Files.walk(fixturesDir.toPath())
-                    .sorted(Comparator.reverseOrder())
-                    .forEach { source: Path ->
-                        try {
-                            if (source.fileName.toString() == "examplemod.deobfuscated.accesswidener") {
-                                return@forEach
-                            }
-                            val destination = projectDir.toPath().resolve(fixturesDir.toPath().relativize(source))
-                            if (!Files.isDirectory(source)) {
-                                destination.parent.toFile().mkdirs()
-                                Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING)
-                            } else {
-                                destination.toFile().mkdirs()
-                            }
-                        } catch (e: IOException) {
-                            throw RuntimeException(e)
-                        }
-                    }
-            }
+            copyFixtureProject()
+            normalizeIncludedBuilds()
 
             if (addHeader) {
                 buildScript.appendText(kotlinHeader)
+            }
+
+            if (normalizePluginUnderTest) {
+                normalizePluginUnderTest()
             }
 
             runner.withProjectDir(projectDir)
@@ -127,44 +114,26 @@ plugins {
             .build()
 
         private fun execute(tasks: List<String>): BuildResult {
-            if (supportedMinecraftVersions.isEmpty()) {
-                setStonecutterVersion("1.21.4", "fabric")
-            }
-
-            val settings = settingsFile.readText()
-            val versions = getSupportedMinecraftVersions()
-            val newSettings = settings.replace("STONECUTTER_VERSIONS", versions, true)
-            settingsFile.writeText(newSettings)
-
-            val scGradle = stonecutterGradle.readText()
-            val newScGradle = scGradle.replace("ACTIVE_VERSION", getFirstVersion(), true)
-            stonecutterGradle.writeText(newScGradle)
-            configureAccessWidenerFixture()
+            prepareProjectForExecution()
 
             runner.withArguments(baseArguments + tasks)
             return runner.run()
         }
 
-        fun build(): BuildResult {
-            return execute(cachedTasks.toList())
+        fun build(): BuildResult = execute(cachedTasks.toList())
+
+        fun run(task: String, cacheTask: Boolean = true): BuildResult = if (cacheTask) {
+            cachedTasks.add(task)
+            build()
+        } else {
+            execute(listOf(task))
         }
 
-        fun run(task: String, cacheTask: Boolean = true): BuildResult {
-            return if (cacheTask) {
-                cachedTasks.add(task)
-                build()
-            } else {
-                execute(listOf(task))
-            }
-        }
-
-        fun run(tasks: List<String>, cacheTask: Boolean = true): BuildResult {
-            return if (cacheTask) {
-                cachedTasks.addAll(tasks)
-                build()
-            } else {
-                execute(tasks)
-            }
+        fun run(tasks: List<String>, cacheTask: Boolean = true): BuildResult = if (cacheTask) {
+            cachedTasks.addAll(tasks)
+            build()
+        } else {
+            execute(tasks)
         }
 
         fun setModProperty(key: String, value: String): TestBuilder {
@@ -188,21 +157,117 @@ plugins {
             return "$key-$loader"
         }
 
+        private fun prepareProjectForExecution() {
+            if (supportedMinecraftVersions.isEmpty()) {
+                setStonecutterVersion("1.21.4", "fabric")
+            }
+
+            val settings = settingsFile.readText()
+            val versions = getSupportedMinecraftVersions()
+            val newSettings = settings.replace("STONECUTTER_VERSIONS", versions, true)
+            settingsFile.writeText(newSettings)
+
+            val scGradle = stonecutterGradle.readText()
+            val newScGradle = scGradle.replace("ACTIVE_VERSION", getFirstVersion(), true)
+            stonecutterGradle.writeText(newScGradle)
+            configureAccessWidenerFixture()
+        }
+
         private fun configureAccessWidenerFixture() {
-            val accessWidener = File(projectDir, "src/main/resources/examplemod.accesswidener")
             val source = File(fixturesDir, "src/main/resources/examplemod.deobfuscated.accesswidener")
 
-            if (getFirstMinecraftVersion().startsWith("2") && accessWidener.exists() && source.exists()) {
-                Files.copy(source.toPath(), accessWidener.toPath(), StandardCopyOption.REPLACE_EXISTING)
+            if (!source.exists()) {
+                return
+            }
+
+            supportedMinecraftVersions
+                .filterKeys { it.startsWith("2") }
+                .forEach { (version, loaders) ->
+                    loaders.forEach { loader ->
+                        val accessWidener = File(
+                            projectDir,
+                            "versions/$version-$loader/src/main/resources/examplemod.accesswidener"
+                        )
+                        accessWidener.parentFile.mkdirs()
+                        Files.copy(source.toPath(), accessWidener.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                    }
+                }
+        }
+
+        private fun copyFixtureProject() {
+            if (!fixturesDir.exists() || !fixturesDir.isDirectory) {
+                return
+            }
+
+            Files.walk(fixturesDir.toPath()).use { fixturePaths ->
+                fixturePaths
+                    .filter { source -> !isIgnoredFixturePath(source) }
+                    .forEach { source: Path ->
+                        try {
+                            val destination = projectDir.toPath().resolve(fixturesDir.toPath().relativize(source))
+                            if (!Files.isDirectory(source)) {
+                                destination.parent.toFile().mkdirs()
+                                Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING)
+                            } else {
+                                destination.toFile().mkdirs()
+                            }
+                        } catch (e: IOException) {
+                            throw RuntimeException(e)
+                        }
+                    }
             }
         }
 
-        private fun getFirstMinecraftVersion(): String {
-            return supportedMinecraftVersions.keys.first()
+        private fun normalizeIncludedBuilds() {
+            if (!settingsFile.exists()) {
+                return
+            }
+
+            val stonecraftRoot = File(".").canonicalFile.invariantSeparatorsPath
+            val settings = settingsFile.readText()
+            val normalizedSettings = Regex("""includeBuild\(".*?"\)""").replace(settings) {
+                """includeBuild("$stonecraftRoot")"""
+            }
+
+            settingsFile.writeText(normalizedSettings)
+        }
+
+        private fun isIgnoredFixturePath(source: Path): Boolean {
+            val relativePath = fixturesDir.toPath().relativize(source)
+            return relativePath.any { path ->
+                path.toString() in setOf(".gradle", "build", "run", ".idea", ".kotlin")
+            }
+        }
+
+        private fun normalizePluginUnderTest() {
+            val settings = settingsFile.readText()
+            val publishedPluginRequest = "id(\"gg.meza.stonecraft\") version \"0.0-SNAPSHOT\""
+            val pluginUnderTestRequest = "id(\"gg.meza.stonecraft\")"
+
+            if (settings.contains(pluginUnderTestRequest) && !settings.contains(publishedPluginRequest)) {
+                return
+            }
+
+            require(settings.contains(publishedPluginRequest)) {
+                "Expected copied fixture settings to request published Stonecraft plugin version."
+            }
+
+            settingsFile.writeText(
+                settings.replace(
+                    publishedPluginRequest,
+                    pluginUnderTestRequest
+                )
+            )
         }
     }
 
     fun gradleTest(addHeader: Boolean = true): TestBuilder = TestBuilder(addHeader)
+
+    fun gradleTestMod(): TestBuilder = TestBuilder(
+        addHeader = false,
+        fixturesDir = File("e2e/testmod"),
+        normalizePluginUnderTest = true,
+    )
 
     fun Project.setProperties(properties: Map<String, String>) {
         properties.forEach { (key, value) ->

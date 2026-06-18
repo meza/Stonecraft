@@ -59,9 +59,9 @@ class ModPlugin : Plugin<Any> {
         base.archivesName.set("${project.mod.id}-${project.mod.loader}")
         project.version = "${project.mod.version}+mc$realMinecraftVersion"
 
-        configureDependencies(project, canonicalMinecraftVersion, realMinecraftVersion)
+        configureDependencies(project, stonecutter, realMinecraftVersion)
         configureStonecutterConstants(project, stonecutter)
-        configureProcessResources(project, realMinecraftVersion, modSettings)
+        configureProcessResources(project, realMinecraftVersion, modSettings, stonecutter)
         configureLoom(project, stonecutter, modSettings)
         patchAroundArchitecturyQuirks(project, stonecutter)
         configurePublishing(project, realMinecraftVersion, stonecutter)

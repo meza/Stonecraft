@@ -178,9 +178,16 @@ tasks.register("printDeps") {
         gradleTest.setStonecutterVersion("26.1", "fabric")
         gradleTest.buildScript(
             """
+loom {
+    accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+}
+            """.trimIndent()
+        )
+        gradleTest.buildScript(
+            """
 tasks.register("printConfigDeps") {
     doLast {
-        listOf("implementation", "modImplementation", "mappings").forEach { name ->
+        listOf("implementation", "modImplementation", "mappings", "testImplementation").forEach { name ->
             val config = configurations.findByName(name)
             if (config != null) {
                 config.allDependencies.forEach { dep ->
@@ -203,6 +210,10 @@ tasks.register("printConfigDeps") {
             buildResult.output.contains("dep.modImplementation=net.fabricmc:fabric-loader:0.19.2"),
             "Fabric loader should not be added to modImplementation for deobfuscated versions."
         )
+        assertTrue(
+            buildResult.output.contains("dep.testImplementation=net.fabricmc:fabric-loader-junit:0.19.2"),
+            "Fabric loader JUnit support should be added to testImplementation for deobfuscated versions."
+        )
         assertFalse(
             buildResult.output.contains("dep.mappings="),
             "No mappings should be added for deobfuscated versions."
@@ -220,6 +231,13 @@ tasks.register("printConfigDeps") {
     @Test
     fun `yarn mappings are ignored for deobfuscated versions with a warning`() {
         gradleTest.setStonecutterVersion("26.1", "fabric")
+        gradleTest.buildScript(
+            """
+loom {
+    accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+}
+            """.trimIndent()
+        )
         gradleTest.setModProperty("yarn_mappings", "1.21.4+build.4")
 
         val buildResult = gradleTest.run("printDeps")
@@ -233,6 +251,51 @@ tasks.register("printConfigDeps") {
         assertFalse(
             buildResult.output.contains("net.fabricmc:yarn"),
             "Yarn mappings should be ignored for deobfuscated versions."
+        )
+    }
+
+    @Test
+    fun `neoforge test runtime dependencies include game test fixtures`() {
+        gradleTest.setStonecutterVersion("26.1", "neoforge")
+        gradleTest.buildScript(
+            """
+loom {
+    accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+}
+            """.trimIndent()
+        )
+        gradleTest.buildScript(
+            """
+tasks.register("printTestRuntimeDeps") {
+    doLast {
+        configurations.getByName("testRuntimeOnly").allDependencies.forEach { dep ->
+            println("testRuntimeOnly.dep=" + dep)
+            if (dep is org.gradle.api.artifacts.ModuleDependency) {
+                dep.requestedCapabilities.forEach { capability ->
+                    println("testRuntimeOnly.capability=" + capability.group + ":" + capability.name)
+                }
+            }
+        }
+    }
+}
+            """.trimIndent()
+        )
+
+        val buildResult = gradleTest.run("printTestRuntimeDeps")
+
+        assertTrue(
+            buildResult.output.contains("testRuntimeOnly.dep=net.neoforged:neoforge:26.1.0.19-beta"),
+            "NeoForge should be added to testRuntimeOnly for its test fixtures."
+        )
+        assertTrue(
+            buildResult.output.contains(
+                "testRuntimeOnly.capability=net.neoforged:neoforge-moddev-test-fixtures"
+            ),
+            "NeoForge test runtime should request the moddev test fixtures capability."
+        )
+        assertTrue(
+            buildResult.output.contains("testRuntimeOnly.dep=org.junit.platform:junit-platform-launcher"),
+            "NeoForge test runtime should include the JUnit Platform launcher."
         )
     }
 }

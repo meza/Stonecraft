@@ -89,6 +89,13 @@ tasks.register("publishingSettings") {
     fun `publish uses jar output for deobfuscated versions`() {
         gradleTest.setStonecutterVersion("26.1", "fabric")
         gradleTest.setModProperty("mod.version", "1.3.4")
+        gradleTest.buildScript(
+            """
+loom {
+    accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+}
+            """.trimIndent()
+        )
 
         val br = gradleTest.run("publishingSettings")
         val expectedFile = gradleTest.project().layout.projectDirectory.file("versions/26.1-fabric/build/libs/examplemod-fabric-1.3.4+mc26.1.jar").asFile.absolutePath

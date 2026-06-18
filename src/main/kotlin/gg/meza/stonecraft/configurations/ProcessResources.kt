@@ -2,16 +2,17 @@ package gg.meza.stonecraft.configurations
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.getResourcePackFormat
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.tasks.McMetaCreation
 import org.gradle.api.Project
 import org.gradle.api.file.DuplicatesStrategy
+import org.gradle.api.tasks.bundling.AbstractArchiveTask
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.language.jvm.tasks.ProcessResources
-import org.gradle.api.tasks.bundling.AbstractArchiveTask
 import java.io.File
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -20,7 +21,12 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
-fun configureProcessResources(project: Project, minecraftVersion: String, modSettings: ModSettingsExtension) {
+fun configureProcessResources(
+    project: Project,
+    minecraftVersion: String,
+    modSettings: ModSettingsExtension,
+    stonecutter: StonecutterBuildExtension
+) {
     /**
      * If the mod is a forge mod, we need to generate the pack.mcmeta file
      * If one already exists, it will be used instead of generating a new one
@@ -113,7 +119,14 @@ fun configureProcessResources(project: Project, minecraftVersion: String, modSet
                 }
 
                 project.mod.isNeoforge -> {
-                    exclude("fabric.mod.json", "META-INF/mods.toml", "pack.mcmeta")
+                    exclude(
+                        "fabric.mod.json",
+                        when {
+                            stonecutter.current.parsed >= "1.20.5" -> "META-INF/mods.toml"
+                            else -> "META-INF/neoforge-mods.toml"
+                        },
+                        "pack.mcmeta"
+                    )
                 }
 
                 project.mod.isForge -> {
@@ -191,12 +204,10 @@ private fun configureFabricGametestEntrypointArchiveCleanup(project: Project, mo
     }
 }
 
-private fun isGametestTargetRequested(project: Project): Boolean {
-    return project.gradle.startParameter.taskNames.any { taskName ->
-        taskName.contains("gametest", ignoreCase = true) ||
-            taskName.contains("testActiveClient", ignoreCase = true) ||
-            taskName.contains("testActiveServer", ignoreCase = true)
-    }
+private fun isGametestTargetRequested(project: Project): Boolean = project.gradle.startParameter.taskNames.any { taskName ->
+    taskName.contains("gametest", ignoreCase = true) ||
+        taskName.contains("testActiveClient", ignoreCase = true) ||
+        taskName.contains("testActiveServer", ignoreCase = true)
 }
 
 private fun removeFabricGametestEntrypoint(project: Project) {

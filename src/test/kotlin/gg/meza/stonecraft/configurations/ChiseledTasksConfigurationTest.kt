@@ -132,6 +132,10 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
         gradleTest.setStonecutterVersion("26.1", "fabric")
         gradleTest.buildScript(
             """
+            loom {
+                accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+            }
+
             tasks.register("printBuildAndCollectDeps") {
                 doLast {
                     val task = tasks.named("buildAndCollect").get()
@@ -147,5 +151,45 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
             br.output.contains("buildAndCollect.dep=jar"),
             "Expected buildAndCollect to depend on jar for deobfuscated versions."
         )
+    }
+
+    @Test
+    fun `neoforge test tasks include minecraft unit test settings`() {
+        gradleTest.setStonecutterVersion("26.1", "neoforge")
+        gradleTest.buildScript(
+            """
+            loom {
+                accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+            }
+
+            tasks.register("printTestTaskSettings") {
+                doLast {
+                    tasks.withType(org.gradle.api.tasks.testing.Test::class.java).forEach { testTask ->
+                        println("test.jvmArgs=" + testTask.jvmArgs.joinToString("|"))
+                        println("test.fml.modFolders=" + testTask.systemProperties["fml.modFolders"])
+                    }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run("printTestTaskSettings")
+        val versionProject = "versions/26.1-neoforge"
+        val expectedFolders = listOf(
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/resources/main").asFile.absolutePath}",
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/main").asFile.absolutePath}",
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/test").asFile.absolutePath}"
+        )
+
+        assertTrue(
+            br.output.contains("test.jvmArgs=--add-opens=java.base/java.lang.invoke=ALL-UNNAMED"),
+            "NeoForge Test tasks should open java.lang.invoke for minecraft-facing unit tests."
+        )
+        expectedFolders.forEach { folder ->
+            assertTrue(
+                br.output.contains(folder),
+                "NeoForge Test tasks should include $folder in fml.modFolders."
+            )
+        }
     }
 }
