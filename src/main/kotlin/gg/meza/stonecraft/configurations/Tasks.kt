@@ -4,6 +4,7 @@ import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
+import net.fabricmc.loom.task.DownloadAssetsTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.testing.Test
@@ -81,6 +82,10 @@ fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: 
 
     project.tasks.named("runClient") {
         dependsOn(project.tasks.named("configureMinecraftClient"))
+    }
+
+    project.tasks.withType<DownloadAssetsTask>().configureEach {
+        legacyResourcesDirectory.set(project.layout.projectDirectory.file("run/resources"))
     }
 
     if (project.mod.isNeoforge) {

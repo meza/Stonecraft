@@ -32,13 +32,25 @@ class TestModBasicsTest : IntegrationTest {
     }
 
     @Test
-    @Timeout(value = 5, unit = TimeUnit.MINUTES)
+    @Timeout(value = 20, unit = TimeUnit.MINUTES)
     fun `testmod can run chiseled gametest`() {
         val gradleTest = gradleTestMod()
 
         val result = gradleTest.run("chiseledGameTest", cacheTask = false)
 
         assertNoGradleFailures(result.output)
+
+        val successMarkers = listOf(
+            "required tests pass",
+            "GAME TESTS COMPLETE"
+        )
+
+        successMarkers.forEach { marker ->
+            assertTrue(
+                result.output.contains(marker),
+                "Expected Gradle success marker '$marker'. Output:\n${result.output}"
+            )
+        }
     }
 
     private fun assertNoGradleFailures(output: String) {
@@ -46,6 +58,7 @@ class TestModBasicsTest : IntegrationTest {
             "BUILD FAILED",
             "FAILURE: Build failed",
             "There were failing tests",
+            "No test batches were given"
         )
 
         failureMarkers.forEach { marker ->

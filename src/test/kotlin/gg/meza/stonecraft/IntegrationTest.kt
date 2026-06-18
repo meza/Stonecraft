@@ -64,6 +64,7 @@ plugins {
             resources.mkdirs()
 
             copyFixtureProject()
+            normalizeIncludedBuilds()
 
             if (addHeader) {
                 buildScript.appendText(kotlinHeader)
@@ -217,6 +218,20 @@ plugins {
             }
         }
 
+        private fun normalizeIncludedBuilds() {
+            if (!settingsFile.exists()) {
+                return
+            }
+
+            val stonecraftRoot = File(".").canonicalFile.invariantSeparatorsPath
+            val settings = settingsFile.readText()
+            val normalizedSettings = Regex("""includeBuild\(".*?"\)""").replace(settings) {
+                """includeBuild("$stonecraftRoot")"""
+            }
+
+            settingsFile.writeText(normalizedSettings)
+        }
+
         private fun isIgnoredFixturePath(source: Path): Boolean {
             val relativePath = fixturesDir.toPath().relativize(source)
             return relativePath.any { path ->
@@ -244,7 +259,6 @@ plugins {
                 )
             )
         }
-
     }
 
     fun gradleTest(addHeader: Boolean = true): TestBuilder = TestBuilder(addHeader)

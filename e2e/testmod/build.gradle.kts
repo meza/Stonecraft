@@ -1,10 +1,3 @@
-import gg.meza.stonecraft.mod
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
-import com.google.gson.JsonParser
-import org.gradle.api.tasks.testing.Test
-import org.gradle.language.jvm.tasks.ProcessResources
-
 plugins {
     id("gg.meza.stonecraft")
 }
@@ -18,28 +11,6 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-if (
-    mod.isFabric &&
-    stonecutter.current.parsed < "1.21.5" &&
-    gradle.startParameter.taskNames.any { it.contains("gametest", ignoreCase = true) }
-) {
-    tasks.withType<ProcessResources>().configureEach {
-        doLast {
-            val fabricModJson = layout.buildDirectory.file("resources/main/fabric.mod.json").get().asFile
-            if (!fabricModJson.exists()) return@doLast
-
-            val json = JsonParser.parseString(fabricModJson.readText()).asJsonObject
-            val entrypoints = json.getAsJsonObject("entrypoints") ?: return@doLast
-            val gameTestEntrypoints = JsonArray().apply {
-                add("${mod.group}.legacy.CodeGameTests")
-            }
-
-            entrypoints.add("fabric-gametest", gameTestEntrypoints)
-            fabricModJson.writeText(GsonBuilder().setPrettyPrinting().create().toJson(json))
-        }
-    }
-}
-
 modSettings {
     clientOptions {
         fov = 90
@@ -48,6 +19,14 @@ modSettings {
         darkBackground = true
         musicVolume = 0.0
     }
+    variableReplacements =
+        mapOf(
+            "gameTestPackage" to
+                when {
+                    stonecutter.current.parsed < "1.21.5" -> "gametests.legacy"
+                    else -> "gametests"
+                },
+        )
 }
 
 stonecutter {
@@ -68,17 +47,4 @@ loom {
         rootProject.layout.projectDirectory
             .file("src/main/resources/$awFile")
             .asFile
-}
-
-// Example of overriding publishing settings
-publishMods {
-    modrinth {
-        if (mod.isFabric) requires("fabric-api")
-    }
-
-    curseforge {
-        client = true // Set as needed
-        server = false // Set as needed
-        if (mod.isFabric) requires("fabric-api")
-    }
 }

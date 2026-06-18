@@ -23,10 +23,6 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modS
                 "issues may arise when using it with Architectury Loom.\n" +
                 "Please consider using NeoForge instead if you can."
         )
-
-        project.tasks.withType<RemapJarTask>().configureEach {
-            targetNamespace.set(loom.runtimeIntermediaryNamespace)
-        }
     }
 
     loom.apply {
@@ -46,14 +42,13 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modS
         }
     }
     project.afterEvaluate {
-        val runString = project.layout.projectDirectory.asFile.toPath()
-            .relativize(modSettings.runDirectoryProp.get().asFile.toPath()).toString()
-
         loom.apply {
             runConfigs.all {
-                isIdeConfigGenerated = true
-                runDir = runString
-                if (environment == "client") programArgs("--username=developer")
+                generateRunConfig.set(true)
+                runDirectory.set(modSettings.runDirectoryProp)
+                if (name == "client") {
+                    programArguments.addAll("--username=developer")
+                }
             }
         }
         configureDatagen(project, loom, stonecutter, modSettings)
@@ -73,15 +68,10 @@ fun configureClientGameTests(
 ) {
     val mod = project.mod
 
-    val testClientDir =
-        project.layout.projectDirectory.asFile.toPath().relativize(
-            modSettings.testClientRunDirectoryProp.get().asFile.toPath()
-        ).toString()
-
     loom.runs {
         create("gameTestClient") {
             client()
-            runDir = testClientDir
+            runDirectory.set(modSettings.testClientRunDirectoryProp)
             if (mod.isFabric) {
                 fabricGameTestConfig(Side.CLIENT, modSettings.fabricClientJunitReportLocationProp)
             }
@@ -113,14 +103,9 @@ fun configureServerGameTests(
 ) {
     val mod = project.mod
 
-    val testServerDir =
-        project.layout.projectDirectory.asFile.toPath().relativize(
-            modSettings.testServerRunDirectoryProp.get().asFile.toPath()
-        ).toString()
-
     loom.runs {
         create("gameTestServer") {
-            runDir = testServerDir
+            runDirectory.set(modSettings.testServerRunDirectoryProp)
             if (mod.isFabric) {
                 server()
                 fabricGameTestConfig(Side.SERVER, modSettings.fabricServerJunitReportLocationProp)
@@ -153,9 +138,9 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
     ).forEach { (key, value) ->
         run {
             if (value.isNotEmpty()) {
-                vmArg("-D$key=$value")
+                jvmArguments.add("-D$key=$value")
             } else {
-                vmArg("-D$key")
+                jvmArguments.add("-D$key")
             }
         }
     }
@@ -171,33 +156,33 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
  */
 private fun RunConfigSettings.forgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
     if (side == Side.SERVER) {
-        environment("gameTestServer")
-        forgeTemplate("gameTestServer")
-        property("$loader.gameTestServer", "true")
+        runtimeEnvironment.set("gameTestServer")
+        forgeTemplate.set("gameTestServer")
+        systemProperties.put("$loader.gameTestServer", "true")
     }
 
     mapOf(
         "$loader.enabledGameTestNamespaces" to project.mod.id,
         "$loader.enableGameTest" to "true"
-    ).forEach { (key, value) -> property(key, value) }
+    ).forEach { (key, value) -> systemProperties.put(key, value) }
 }
 
 private fun RunConfigSettings.neoforgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
     if (side == Side.SERVER) {
-        environment("gameTestServer")
-        forgeTemplate("gameTestServer")
+        runtimeEnvironment.set("gameTestServer")
+        forgeTemplate.set("gameTestServer")
 
         if (stonecutter.current.parsed >= "1.21.5") {
-            defaultMainClass("net.neoforged.fml.startup.GameTestServer")
+            mainClass.set("net.neoforged.fml.startup.GameTestServer")
         }
 
-        property("$loader.gameTestServer", "true")
+        systemProperties.put("$loader.gameTestServer", "true")
     }
 
     mapOf(
         "$loader.enabledGameTestNamespaces" to project.mod.id,
         "$loader.enableGameTest" to "true"
-    ).forEach { (key, value) -> property(key, value) }
+    ).forEach { (key, value) -> systemProperties.put(key, value) }
 }
 
 /**
@@ -235,14 +220,14 @@ fun configureDatagen(
         mapOf(
             "${mod.loader}.logging.console.level" to "debug",
             "${mod.loader}.logging.markers" to "REGISTRIES"
-        ).forEach { (key, value) -> property(key, value) }
+        ).forEach { (key, value) -> systemProperties.put(key, value) }
     }
 
     loom.runs {
         if (mod.isForge) {
             create("datagen") {
                 data()
-                programArgs(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
+                programArguments.addAll(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
                 forgeLikeLogging()
             }
         }
@@ -252,19 +237,19 @@ fun configureDatagen(
                 // @see https://neoforged.net/news/21.4release/#data-generation-splitting
                 create("ServerDatagen") {
                     serverData()
-                    programArgs(getProgramArgs(modDefinition, outputFolder))
+                    programArguments.addAll(getProgramArgs(modDefinition, outputFolder))
                     forgeLikeLogging()
                 }
                 create("ClientDatagen") {
                     clientData()
-                    programArgs(getProgramArgs(modDefinition, outputFolder))
+                    programArguments.addAll(getProgramArgs(modDefinition, outputFolder))
                     forgeLikeLogging()
                 }
             } else {
 //                if (stonecutter.eval(minecraftVersion, ">1.21")) {
                 create("Datagen") {
                     data()
-                    programArgs(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
+                    programArguments.addAll(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
                     forgeLikeLogging()
                 }
 //                }
