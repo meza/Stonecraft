@@ -32,6 +32,21 @@ class TestModBasicsTest : IntegrationTest {
             collectedJars.any { file -> file.name.startsWith("stonecraft_testmod-") },
             "Expected buildAndCollect to collect testmod jars. Found: ${collectedJars.joinToString { it.name }}"
         )
+
+        assertFabricAccessWidener(
+            collectedJars.jarNamed("stonecraft_testmod-fabric-0.0-SNAPSHOT+mc1.20.4.jar"),
+            "stonecraft_testmod.old.accesswidener"
+        )
+        assertFabricAccessWidener(
+            collectedJars.jarNamed("stonecraft_testmod-fabric-0.0-SNAPSHOT+mc26.1.jar"),
+            "stonecraft_testmod.accesswidener"
+        )
+        assertNeoForgeAccessTransformer(
+            collectedJars.jarNamed("stonecraft_testmod-neoforge-0.0-SNAPSHOT+mc1.20.4.jar")
+        )
+        assertNeoForgeAccessTransformer(
+            collectedJars.jarNamed("stonecraft_testmod-neoforge-0.0-SNAPSHOT+mc26.1.jar")
+        )
     }
 
     @Test

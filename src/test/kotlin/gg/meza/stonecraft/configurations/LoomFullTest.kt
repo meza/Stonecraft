@@ -228,13 +228,11 @@ class LoomFullTest : IntegrationTest {
     inputs.property("projectName", project.name)
     val projectName = inputs.properties["projectName"]
         doLast {
-            if (loom.accessWidenerPath.isPresent) {
-                println("[" + projectName + "] "+ "loom.accessWidenerPath=\"" + loom.accessWidenerPath.get() + "\"")
-                if (mod.isForge) {
-                    println("[" + projectName + "] "+ "forge.convertAccessWideners=\"" + loom.forge.convertAccessWideners.get() + "\"")
-                }
+            println("[" + projectName + "] "+ "loom.accessWidenerPath=\"" + loom.accessWidenerPath.getOrNull() + "\"")
+            if (mod.isForge) {
+                println("[" + projectName + "] "+ "forge.convertAccessWideners=\"" + loom.forge.convertAccessWideners.getOrNull() + "\"")
             }
-    
+
             loom.decompilerOptions.getByName("vineflower").options.get().forEach { (key, value) ->
                 println("[" + projectName + "] "+ "decompilerOptions.vineflower.${'$'}key=\"${'$'}value\"")
             }

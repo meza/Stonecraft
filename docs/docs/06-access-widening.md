@@ -1,18 +1,22 @@
 # Access Wideners/Transformers
 
+_Since Stonecraft version: 1.12.0_
+
 Access widening provides a way to loosen the access limits of classes, methods or fields. This includes making them public, or making them extendable (subclassable).
 
 In Fabric, this would typically be done with **Access wideners**, while NeoForge uses **Access Transformers**. Please refer to their respective docs in order to understand the differences.
 
-Stonecraft leverages Stonecutter, which allows you to define a different access widening file for each version supported by your mod by using variable substitution.
+Stonecraft leverages Stonecutter and Architectury Loom, which allows you to define a different access widening file for each version supported by your mod by using variable substitution.
 
 ## Setting up
 
-### Fabric - Access wideners
+:::important
+Stonecraft and Loom will **automatically convert your access wideners to access transformers** for NeoForge and Forge, so you don't need to worry about that. You only need to define the access widener files for Fabric, and Stonecraft will handle the rest.
+:::
 
-#### Creating the files
+### Step 1: Creating the files
 
-In your Fabric mod project, create the needed files in a common folder inside `resources`. This depends on the versions your project is supporting.
+In your project, create the needed files in a common folder inside `resources`. This depends on the versions your project is supporting.
 
 ```
 src.main.resources
@@ -22,136 +26,132 @@ src.main.resources
     └── 1.21.accesswidener
 ```
 
-#### Using string template
+### Step 2: Define the variable
 
-Add the string template to `fabric.mod.json`, which will be dynamically replaced later in this guide.
+```kotlin title="build.gradle.kts"
+val awFile = // This is the main logic to determine which access widener file to use based on the current Minecraft version.
+    when {
+        stonecutter.current.parsed >= "1.21" -> {
+            project.rootProject.layout.projectDirectory
+                .file(
+                    "src/main/resources/accesswideners/1.21.accesswidener",
+                )
+        }
+
+        stonecutter.current.parsed >= "1.20" -> {
+            project.rootProject.layout.projectDirectory
+                .file(
+                    "src/main/resources/accesswideners/1.20.accesswidener",
+                )
+        }
+        
+        else -> {
+            project.rootProject.layout.projectDirectory
+                .file(
+                    "src/main/resources/accesswideners/1.19.accesswidener",
+                )
+        }
+    }
+
+modSettings {
+    
+    // ... rest of your modSettings configuration
+
+    accessWidenerLocation = awFile // This tells Stonecraft and Loom which AW to use
+}
+```
+
+## Opting out of automatic access widener handling
+
+:::warning
+This is completely optional and not recommended unless you have very specific needs
+:::
+
+In your `build.gradle.kts`, you need to add the following to your `modSettings`:
+
+```kotlin title="build.gradle.kts"
+
+val awFile = // This is the main logic to determine which access widener file to use based on the current Minecraft version.
+    when {
+        stonecutter.current.parsed >= "1.21"-> {
+            when {
+                project.mod.isFabric -> project.rootProject.layout.projectDirectory
+                    .file(
+                        "src/main/resources/accesswideners/1.21.accesswidener",
+                    )
+                else -> project.rootProject.layout.projectDirectory
+                    .file(
+                        "src/main/resources/accesstransformers/1.21.cfg",
+                    )
+            }
+        }
+
+        stonecutter.current.parsed >= "1.20" -> {
+            when {
+                project.mod.isFabric -> project.rootProject.layout.projectDirectory
+                    .file(
+                        "src/main/resources/accesswideners/1.20.accesswidener",
+                    )
+                else -> project.rootProject.layout.projectDirectory
+                    .file(
+                        "src/main/resources/accesstransformers/1.20.cfg",
+                    )
+            }
+        }
+        
+        else -> {
+            when {
+                project.mod.isFabric -> project.rootProject.layout.projectDirectory
+                    .file(
+                        "src/main/resources/accesswideners/1.19.accesswidener",
+                    )
+                else -> project.rootProject.layout.projectDirectory
+                    .file(
+                        "src/main/resources/accesstransformers/1.19.cfg",
+                    )
+            }
+        }
+    }
+
+modSettings {
+
+    // ... rest of your modSettings configuration
+    
+    accessWidenerProcessing = false // This tells Stonecraft and Loom to not handle the access widener automatically
+    variableReplacements =
+        mapOf(
+            "awFile" to awFile.asFile
+                .relativeTo(
+                    project.rootProject.layout.projectDirectory
+                        .dir("src/main/resources")
+                        .asFile,
+                ).invariantSeparatorsPath,
+        )
+}
+```
+
+This will give you access to the `awFile` variable in your metadata files to point them to the correct file.
+
+### Fabric
+
+In your `fabric.mod.json`, you need to add the following:
 
 ```json title="fabric.mod.json"
 {
-  ...
-  "accessWidener": "accesswideners/${aw_file}",
+  "accessWidener": "${awFile}"
 }
 ```
 
-#### Replacing template on build/run
+### NeoForge
 
-If you used Stonecutter before, this is where the main difference lies.
+In your `META-INF/neoforge.mods.toml`, you need to add the following:
 
-Stonecraft already defines variable replacements in the `processResources` task, so modifying the replaced templates in this task will override all the other variables defined and used by Stonecraft.
-
-Instead, we will use the convenient `variableReplacements` properties in `modSettings` to add a new variable replacement. You can read about [variableReplacements](/docs/configuration/modsettings/variableReplacements) in Stonecraft.
-
-In your `build.gradle(.kts)` file, you can add the following and edit it as needed for your use case:
-
-```kotlin title="build.gradle.kts"
-val minecraft = stonecutter.current.version
-val accesswidener = when {
-    stonecutter.eval(minecraft, ">=1.21") -> "1.21.accesswidener"
-    stonecutter.eval(minecraft, ">=1.20") -> "1.20.accesswidener"
-    else -> "1.19.accesswidener"
-}
-
-loom {
-    accessWidenerPath = rootProject.file("src/main/resources/accesswideners/$accesswidener")
-}
+```toml title="META-INF/neoforge.mods.toml"
+[[access-transformer]]
+file="${awFile}"
 ```
 
-Here is what is happening:
+### Forge
 
-- `stonecutter.eval(minecraft, ">=1.21.10") -> "1.21.10.accesswidener"` defines a condition. In this case, if `minecraft` is equal or above `1.21.10`, the file `1.21.10.accesswidener` will be loaded.
-- In the `loom` section, we define the variable `accessWidenerPath` to the according file using the previously defined `$accesswidener` variable.
-
-:::tip
-Please note, in the `when` expression, the versions are sorted in descending order, as we use the condition `>=`.
-Make sure to modify the versions accordingly when necessary.
-:::
-
-The last part to add to the file is in the `modSettings` section:
-
-```kotlin title="build.gradle.kts"
-modSettings {
-    clientOptions {
-        ...
-    }
-
-    variableReplacements.set(mapOf("aw_file", accesswidener))
-
-}
-```
-
-This will use the previously assigned value of `accesswidener` as the `aw_file` variable. We have previously set it up in our `fabric.mod.json` above ([Using string template](#using-string-template)).
-
-Building the project should run the necessary tasks in order to apply your access widening.
-
-### NeoForge - Access Transformers
-
-#### Creating the files
-
-In your NeoForge mod project, create the needed files in a common folder inside `resources`. This depends on the versions your project is supporting.
-
-```
-src.main.resources
-└── accesstransformers/
-    └── 1.20.cfg
-    └── 1.21.cfg
-```
-
-#### Using string template
-
-Add the string template to `neoforge.mods.toml`, which will be dynamically replaced later in this guide.
-
-```toml title="neoforge.mods.toml"
-[[accessTransformers]]
-file="accesstransformers/${at_file}"
-```
-
-#### Replacing template on build/run
-
-If you used Stonecutter before, this is where the main difference lies.
-
-Stonecraft already defines variable replacements in the `processResources` task, so modifying the replaced templates in this task will override all the other variables defined and used by Stonecraft.
-
-Instead, we will use the convenient `variableReplacements` properties in `modSettings` to add a new variable replacement. You can read about [variableReplacements](/docs/configuration/modsettings/variableReplacements) in Stonecraft.
-
-In your `build.gradle(.kts)` file, you can add the following and edit it as needed for your use case:
-
-```kotlin title="build.gradle.kts"
-val minecraft = stonecutter.current.version
-val accesstransformer = when {
-    stonecutter.eval(minecraft, ">=1.21") -> "1.21.cfg"
-    stonecutter.eval(minecraft, ">=1.20") -> "1.20.cfg"
-    else -> "1.20.cfg"
-}
-
-minecraft {
-    accessTransformers {
-        file(rootProject.file("src/main/resources/accesstransformers/$accesstransformer")
-    }
-}
-```
-
-Here is what is happening:
-
-- `stonecutter.eval(minecraft, ">=1.21") -> "1.21.cfg"` defines a condition. In this case, if `minecraft` is equal or above `1.21`, the file `1.21.cfg` will be loaded.
-- In the `minecraft` section, we define the configuration variable `accessTransformers` to the according file using the previously defined `$accesstransformer` variable.
-
-:::tip
-Please note, in the `when` expression, the versions are sorted in descending order, as we use the condition `>=`.
-Make sure to modify the versions accordingly when necessary.
-:::
-
-The last part to add to the file is in the `modSettings` section:
-
-```kotlin title="build.gradle.kts"
-modSettings {
-    clientOptions {
-        ...
-    }
-
-    variableReplacements.set(mapOf("at_file", accesstransformer))
-}
-```
-
-This will use the previously assigned value of `accesstransformer` as the `at_file` variable. We have previously set it up in our `neoforge.mods.toml` above ([Using string template](#using-string-template)).
-
-Building the project should run the necessary tasks in order to apply your access widening.
+For Forge, you need to rely on Stonecraft/Loom to do the work for you, you can't define the access transformer in your `mods.toml` file.
+Please refer to [Step 2](#step-2-define-the-variable)

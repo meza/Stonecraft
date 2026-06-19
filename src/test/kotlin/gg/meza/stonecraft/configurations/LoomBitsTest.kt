@@ -28,8 +28,8 @@ class LoomBitsTest : IntegrationTest {
         val br = gradleTest.run("printLoomSettings")
         gradleTest.assertNoGradleFailures(br)
 
-        assertFalse(br.output.contains("loom.accessWidenerPath"))
-        assertFalse(br.output.contains("forge.convertAccessWideners"))
+        assertTrue(br.output.contains("loom.accessWidenerPath=\"null\""))
+        assertTrue(br.output.contains("forge.convertAccessWideners=\"false\""))
     }
 
     @Test
@@ -48,6 +48,24 @@ class LoomBitsTest : IntegrationTest {
         assertTrue(br.output.contains(forgeString))
         assertEquals(2, pathCount, "Expected 2 occurrences of $awString, found $pathCount")
         assertEquals(1, forgeCount, "Expected 1 occurrence of $forgeString, found $forgeCount")
+    }
+
+    @Test
+    fun `access widener processing can be disabled`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
+        gradleTest.buildScript(
+            """
+        modSettings {
+            accessWidenerProcessing = false
+        }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(br.output.contains("loom.accessWidenerPath=\"null\""))
+        assertTrue(br.output.contains("forge.convertAccessWideners=\"false\""))
     }
 
     @Test

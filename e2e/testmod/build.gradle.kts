@@ -1,3 +1,5 @@
+import kotlin.io.relativeTo
+
 plugins {
     id("gg.meza.stonecraft")
 }
@@ -11,6 +13,23 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+val awFile =
+    when {
+        stonecutter.current.parsed >= "26.1" -> {
+            project.rootProject.layout.projectDirectory
+                .file(
+                    "src/main/resources/stonecraft_testmod.accesswidener",
+                )
+        }
+
+        else -> {
+            project.rootProject.layout.projectDirectory
+                .file(
+                    "src/main/resources/stonecraft_testmod.old.accesswidener",
+                )
+        }
+    }
+
 modSettings {
     clientOptions {
         fov = 90
@@ -19,6 +38,7 @@ modSettings {
         darkBackground = true
         musicVolume = 0.0
     }
+    accessWidenerLocation = awFile
     variableReplacements =
         mapOf(
             "gameTestPackage" to
@@ -34,17 +54,4 @@ stonecutter {
         replace("Identifier", "ResourceLocation")
         replace("ResourceLocationParameter", "ResourceLocationParameter")
     }
-}
-
-val awFile =
-    when {
-        stonecutter.current.parsed >= "26.1" -> "stonecraft_testmod.accesswidener"
-        else -> "stonecraft_testmod.old.accesswidener"
-    }
-
-loom {
-    accessWidenerPath =
-        rootProject.layout.projectDirectory
-            .file("src/main/resources/$awFile")
-            .asFile
 }
