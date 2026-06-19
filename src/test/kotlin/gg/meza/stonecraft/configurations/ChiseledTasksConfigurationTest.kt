@@ -34,6 +34,7 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
         )
 
         val br = gradleTest.run("printChiseledBuildAndCollectDeps")
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(
             Regex("chiseled\\.dep=.*:buildAndCollect").containsMatchIn(br.output),
             "Expected chiseledBuildAndCollect to depend on buildAndCollect. Output was:\n${br.output}"
@@ -99,6 +100,7 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
             )
 
             val br = gradleTest.run("tasks")
+            gradleTest.assertNoGradleFailures(br)
             expectedTasks.forEach { taskName ->
                 assertTrue(br.output.contains(taskName), "Task $taskName should be present in the tasks output")
             }
@@ -121,6 +123,7 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
         )
 
         val br = gradleTest.run("printBuildAndCollectDeps")
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(
             br.output.contains("buildAndCollect.dep=remapJar"),
             "Expected buildAndCollect to depend on remapJar for mapped versions."
@@ -147,6 +150,7 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
         )
 
         val br = gradleTest.run("printBuildAndCollectDeps")
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(
             br.output.contains("buildAndCollect.dep=jar"),
             "Expected buildAndCollect to depend on jar for deobfuscated versions."
@@ -174,6 +178,7 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
         )
 
         val br = gradleTest.run("printTestTaskSettings")
+        gradleTest.assertNoGradleFailures(br)
         val versionProject = "versions/26.1-neoforge"
         val expectedFolders = listOf(
             "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/resources/main").asFile.absolutePath}",

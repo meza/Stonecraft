@@ -39,7 +39,7 @@ tasks.register("getForcedModules") {
     fun `lwjgl is not present in the server`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
         val br = gradleTest.run("printClasspathServer")
-
+        gradleTest.assertNoGradleFailures(br)
         assertFalse(br.output.contains("org.lwjgl"), "LWJGL was not removed from the server classpath")
     }
 
@@ -47,7 +47,7 @@ tasks.register("getForcedModules") {
     fun `1241 forge gets treated accurately`() {
         gradleTest.setStonecutterVersion("1.21.4", "forge")
         val br = gradleTest.run("printClasspathServer1214Forge")
-
+        gradleTest.assertNoGradleFailures(br)
         assertFalse(br.output.contains("org.lwjgl"), "LWJGL was not removed from the server classpath")
     }
 
@@ -55,7 +55,7 @@ tasks.register("getForcedModules") {
     fun `forge jopt is set properly`() {
         gradleTest.setStonecutterVersion("1.21.4", "forge")
         val br = gradleTest.run("getForcedModules")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("net.sf.jopt-simple:jopt-simple:5.+"), "Jopt was not set properly for forge")
     }
 }

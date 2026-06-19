@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Timeout
+import java.io.File
 import java.util.concurrent.TimeUnit
+import java.util.zip.ZipFile
 
 @DisplayName("Testmod build")
 class TestModBasicsTest : IntegrationTest {
@@ -16,7 +18,7 @@ class TestModBasicsTest : IntegrationTest {
 
         val result = gradleTest.run("buildAndCollect", cacheTask = false)
 
-        assertNoGradleFailures(result.output)
+        gradleTest.assertNoGradleFailures(result)
 
         val collectedJars = gradleTest.project()
             .layout.projectDirectory
@@ -24,6 +26,7 @@ class TestModBasicsTest : IntegrationTest {
             .asFile
             .listFiles { file -> file.extension == "jar" }
             .orEmpty()
+            .toList()
 
         assertTrue(
             collectedJars.any { file -> file.name.startsWith("stonecraft_testmod-") },
@@ -38,7 +41,7 @@ class TestModBasicsTest : IntegrationTest {
 
         val result = gradleTest.run("chiseledGameTest", cacheTask = false)
 
-        assertNoGradleFailures(result.output)
+        gradleTest.assertNoGradleFailures(result)
 
         val successMarkers = listOf(
             "required tests pass",
@@ -53,24 +56,37 @@ class TestModBasicsTest : IntegrationTest {
         }
     }
 
-    private fun assertNoGradleFailures(output: String) {
-        val failureMarkers = listOf(
-            "BUILD FAILED",
-            "FAILURE: Build failed",
-            "There were failing tests",
-            "No test batches were given"
-        )
+    private fun assertFabricAccessWidener(jar: File, expectedAccessWidener: String) {
+        ZipFile(jar).use { zip ->
+            val fabricModJson = zip.readEntry("fabric.mod.json")
 
-        failureMarkers.forEach { marker ->
             assertTrue(
-                !output.contains(marker),
-                "Expected no Gradle failure marker '$marker'. Output:\n$output"
+                fabricModJson.contains("\"accessWidener\": \"$expectedAccessWidener\""),
+                "Expected ${jar.name} to declare accessWidener=$expectedAccessWidener. fabric.mod.json:\n$fabricModJson"
+            )
+            assertTrue(
+                zip.hasEntry(expectedAccessWidener),
+                "Expected ${jar.name} to contain $expectedAccessWidener"
             )
         }
+    }
 
-        assertTrue(
-            !Regex("""> Task .+ FAILED""").containsMatchIn(output),
-            "Expected no failed Gradle tasks. Output:\n$output"
-        )
+    private fun assertNeoForgeAccessTransformer(jar: File) {
+        ZipFile(jar).use { zip ->
+            assertTrue(
+                zip.hasEntry("META-INF/accesstransformer.cfg"),
+                "Expected ${jar.name} to contain META-INF/accesstransformer.cfg"
+            )
+        }
+    }
+
+    private fun List<File>.jarNamed(name: String): File = firstOrNull { it.name == name }
+        ?: error("Expected collected jar $name. Found: ${joinToString { it.name }}")
+
+    private fun ZipFile.hasEntry(name: String): Boolean = getEntry(name) != null
+
+    private fun ZipFile.readEntry(name: String): String {
+        val entry = getEntry(name) ?: error("Expected $name in $this")
+        return getInputStream(entry).bufferedReader().use { it.readText() }
     }
 }

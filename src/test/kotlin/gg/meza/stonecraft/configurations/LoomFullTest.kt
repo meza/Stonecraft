@@ -41,6 +41,7 @@ class LoomFullTest : IntegrationTest {
             .setStonecutterVersion("26.1", "neoforge")
 
         result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
     }
 
     @Test

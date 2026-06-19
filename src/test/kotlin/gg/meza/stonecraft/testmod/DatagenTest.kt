@@ -21,7 +21,7 @@ class DatagenTest : IntegrationTest {
             cacheTask = false
         )
 
-        assertNoGradleFailures(result.output)
+        gradleTest.assertNoGradleFailures(result)
 
         val versionProjects = versionProjectDirectories(
             result.output,
@@ -65,24 +65,4 @@ class DatagenTest : IntegrationTest {
         .distinct()
         .map { projectName -> File(projectDirectory, "versions/$projectName") }
         .toList()
-
-    private fun assertNoGradleFailures(output: String) {
-        val failureMarkers = listOf(
-            "BUILD FAILED",
-            "FAILURE: Build failed",
-            "There were failing tests",
-        )
-
-        failureMarkers.forEach { marker ->
-            assertTrue(
-                !output.contains(marker),
-                "Expected no Gradle failure marker '$marker'. Output:\n$output"
-            )
-        }
-
-        assertTrue(
-            !Regex("""> Task .+ FAILED""").containsMatchIn(output),
-            "Expected no failed Gradle tasks. Output:\n$output"
-        )
-    }
 }

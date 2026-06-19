@@ -39,6 +39,7 @@ plugins {
             """.trimIndent()
         )
         val br = gradleTest.run("printPlugins")
+        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("IllegalStateException: This plugin needs to be applied before the Architectury Loom plugin"))
         assertTrue(br.output.contains("Please move gg.meza.stonecraft plugin to the top of your build.gradle.kts file"))
@@ -47,6 +48,7 @@ plugins {
     @Test
     fun `plugins are properly applied`() {
         val br = gradleTest.run("printPlugins")
+        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("dev.kikugie.stonecutter.StonecutterPlugin"))
         assertTrue(br.output.contains("net.fabricmc.loom.LoomRepositoryPlugin"))
@@ -70,6 +72,7 @@ tasks.register("printPlatform") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
 
         val br = gradleTest.run("printPlatform")
+        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("loom.platform is set to fabric"))
         assertTrue(br.output.contains("loom.platform is set to forge"))

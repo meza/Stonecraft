@@ -42,6 +42,7 @@ tasks.register("printDeps") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
 
         val buildResult = gradleTest.run("printDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         val expectedDependencies = listOf(
             "net.fabricmc.fabric-api:fabric-api:0.114.0+1.21.4",
@@ -66,6 +67,7 @@ tasks.register("printDeps") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val buildResult = gradleTest.run("printDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         val expectedDependencies = listOf(
             "net.fabricmc.fabric-api:fabric-api:0.114.0+1.21.4",
@@ -97,6 +99,7 @@ tasks.register("printDeps") {
         gradleTest.setStonecutterVersion("1.21", "forge")
 
         val buildResult = gradleTest.run("printDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         val expectedDependencies = listOf(
             "net.minecraftforge:forge:1.21-51.0.33"
@@ -126,6 +129,7 @@ tasks.register("printDeps") {
     fun `the minecraft version can be overridden`() {
         gradleTest.setStonecutterVersion("1.21.6", "fabric")
         val buildResult = gradleTest.run("printDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains("com.mojang:minecraft:1.21.6-rc1"),
@@ -138,6 +142,7 @@ tasks.register("printDeps") {
         gradleTest.setStonecutterVersion("600.21.11", "fabric")
 
         val buildResult = gradleTest.run("printDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains("com.mojang:minecraft:1.21.11-rc2"),
@@ -150,6 +155,7 @@ tasks.register("printDeps") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
 
         val buildResult = gradleTest.run("printDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains("net.fabricmc:yarn"),
@@ -166,6 +172,7 @@ tasks.register("printDeps") {
         gradleTest.setStonecutterVersion("1.21.6", "fabric")
 
         val buildResult = gradleTest.run("printDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains("loom.mappings.1_21_6"),
@@ -201,6 +208,7 @@ tasks.register("printConfigDeps") {
         )
 
         val buildResult = gradleTest.run("printConfigDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains("dep.implementation=net.fabricmc:fabric-loader:0.19.2"),
@@ -241,6 +249,7 @@ loom {
         gradleTest.setModProperty("yarn_mappings", "1.21.4+build.4")
 
         val buildResult = gradleTest.run("printDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains(
@@ -282,6 +291,7 @@ tasks.register("printTestRuntimeDeps") {
         )
 
         val buildResult = gradleTest.run("printTestRuntimeDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains("testRuntimeOnly.dep=net.neoforged:neoforge:26.1.0.19-beta"),

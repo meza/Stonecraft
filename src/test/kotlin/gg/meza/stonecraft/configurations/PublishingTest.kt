@@ -62,6 +62,7 @@ tasks.register("publishingSettings") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
 
         val br = gradleTest.run("tasks")
+        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("chiseledPublishMods"), "chiseledPublishMods was not set up")
         assertTrue(br.output.contains("publishMods"), "publishMods was not set up")
@@ -74,6 +75,7 @@ tasks.register("publishingSettings") {
         gradleTest.setModProperty("mod.version", "1.3.4")
 
         val br = gradleTest.run("publishingSettings")
+        gradleTest.assertNoGradleFailures(br)
         val expectedFile = gradleTest.project().layout.projectDirectory.file("versions/1.21.4-fabric/build/libs/examplemod-fabric-1.3.4+mc1.21.4.jar").asFile.absolutePath
 
         assertTrue(br.output.contains("changelog=\"test changes\""), "Changelog has not been set correctly")
@@ -98,6 +100,7 @@ loom {
         )
 
         val br = gradleTest.run("publishingSettings")
+        gradleTest.assertNoGradleFailures(br)
         val expectedFile = gradleTest.project().layout.projectDirectory.file("versions/26.1-fabric/build/libs/examplemod-fabric-1.3.4+mc26.1.jar").asFile.absolutePath
 
         assertTrue(br.output.contains(expectedFile), "File path has not been set correctly. Expected: $expectedFile")
@@ -109,7 +112,7 @@ loom {
         gradleTest.setModProperty("mod.version", "1.3.4-beta.2")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
     }
 
@@ -119,7 +122,7 @@ loom {
         gradleTest.setModProperty("is_snapshot", "true")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
     }
 
@@ -128,7 +131,7 @@ loom {
         gradleTest.setModProperty("mod.version", "1.3.4-beta.3")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
     }
 
@@ -147,7 +150,7 @@ loom {
         gradleTest.setModProperty("mod.version", "1.3.4-alpha.2")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
     }
 
@@ -165,6 +168,7 @@ loom {
         gradleTest.setModProperty("mod.version", "5.6.7")
 
         val br = gradleTest.run("publishingSettings")
+        gradleTest.assertNoGradleFailures(br)
         val expectedFiles = listOf(
             gradleTest.project().layout.projectDirectory.file("versions/1.21.4-fabric/build/libs/examplemod-fabric-5.6.7+mc1.21.4.jar").asFile.absolutePath,
             gradleTest.project().layout.projectDirectory.file("versions/1.21.4-forge/build/libs/examplemod-forge-5.6.7+mc1.21.4.jar").asFile.absolutePath,
@@ -199,7 +203,7 @@ loom {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertFalse(br.output.contains("Essential Modrinth variables not found, skipping Modrinth publishing"))
         assertFalse(br.output.contains("If you want to use Modrinth, please set the MODRINTH_TOKEN and MODRINTH_ID environment variables"))
         assertFalse(br.output.contains("Essential CurseForge variables not found, skipping CurseForge publishing"))
@@ -212,7 +216,7 @@ loom {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("Essential Modrinth variables not found, skipping Modrinth publishing"))
         assertTrue(br.output.contains("If you want to use Modrinth, please set the MODRINTH_TOKEN and MODRINTH_ID environment variables"))
         assertTrue(br.output.contains("Essential CurseForge variables not found, skipping CurseForge publishing"))
@@ -227,7 +231,7 @@ loom {
         gradleTest.setModProperty("mod.version", "0.1.2")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("modrinth.accessToken=a-test-token-123"), "Modrinth access token has not been set correctly")
         assertTrue(br.output.contains("modrinth.projectId=an-even-better-test-id-456"), "Modrinth project ID has not been set correctly")
         assertTrue(br.output.contains("modrinth.minecraftVersions=[1.21.4]"), "Modrinth minecraft versions have not been set correctly")
@@ -243,7 +247,7 @@ loom {
         gradleTest.setModProperty("additional_versions", "1.21.3, 1.21.2")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(
             br.output.contains("modrinth.minecraftVersions=[1.21.4, 1.21.3, 1.21.2]"),
             "Modrinth minecraft versions have not been set correctly when additional versions are provided"
@@ -259,7 +263,7 @@ loom {
         gradleTest.setModProperty("mod.version", "3.4.5")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         val versionCount1 = Regex(Regex.escape("modrinth.minecraftVersions=[1.21.4]")).findAll(br.output).count()
         val versionCount2 = Regex(Regex.escape("modrinth.minecraftVersions=[1.21]")).findAll(br.output).count()
         val versionCount3 = Regex(Regex.escape("modrinth.accessToken=a-test-token-123.123")).findAll(br.output).count()
@@ -284,7 +288,7 @@ loom {
         gradleTest.setModProperty("mod.version", "0.1.2")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("curseforge.projectSlug=a-test-slug-123"), "CurseForge project slug has not been set correctly")
         assertTrue(br.output.contains("curseforge.projectId=an-even-better-test-id-456"), "CurseForge project ID has not been set correctly")
         assertTrue(br.output.contains("curseforge.accessToken=a-test-token-123"), "CurseForge access token has not been set correctly")
@@ -302,7 +306,7 @@ loom {
         gradleTest.setModProperty("additional_versions", "1.21.3, 1.21.2")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(
             br.output.contains("curseforge.minecraftVersions=[1.21.4, 1.21.3, 1.21.2]"),
             "CurseForge minecraft versions have not been set correctly when additional versions are provided"
@@ -319,7 +323,7 @@ loom {
         gradleTest.setModProperty("mod.version", "3.4.5")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         val versionCount1 = Regex(Regex.escape("curseforge.minecraftVersions=[1.21.4]")).findAll(br.output).count()
         val versionCount2 = Regex(Regex.escape("curseforge.minecraftVersions=[1.21]")).findAll(br.output).count()
         val versionCount3 = Regex(Regex.escape("curseforge.accessToken=a-test-token-123.123")).findAll(br.output).count()
@@ -346,7 +350,7 @@ loom {
         gradleTest.setModProperty("mod.version", "0.1.2")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("modrinth.accessToken=a-test-modrinth-token-123"), "Modrinth access token has not been set correctly")
         assertTrue(br.output.contains("modrinth.projectId=an-even-better-test-modrinth-id-456"), "Modrinth project ID has not been set correctly")
         assertTrue(br.output.contains("modrinth.minecraftVersions=[1.21.4]"), "Modrinth minecraft versions have not been set correctly")
@@ -371,7 +375,7 @@ loom {
         gradleTest.setModProperty("mod.version", "3.4.5")
 
         val br = gradleTest.run("publishingSettings")
-
+        gradleTest.assertNoGradleFailures(br)
         val versionCount1 = Regex(Regex.escape("modrinth.minecraftVersions=[1.21.4]")).findAll(br.output).count()
         val versionCount2 = Regex(Regex.escape("modrinth.minecraftVersions=[1.21]")).findAll(br.output).count()
         val versionCount3 =

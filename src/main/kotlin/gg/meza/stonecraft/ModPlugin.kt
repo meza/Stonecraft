@@ -2,7 +2,19 @@ package gg.meza.stonecraft
 
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import dev.kikugie.stonecutter.controller.StonecutterControllerExtension
-import gg.meza.stonecraft.configurations.*
+import gg.meza.stonecraft.configurations.configureChiseledTasks
+import gg.meza.stonecraft.configurations.configureDependencies
+import gg.meza.stonecraft.configurations.configureJava
+import gg.meza.stonecraft.configurations.configureLoom
+import gg.meza.stonecraft.configurations.configurePlugins
+import gg.meza.stonecraft.configurations.configureProcessResources
+import gg.meza.stonecraft.configurations.configurePublishing
+import gg.meza.stonecraft.configurations.configureStonecutterConstants
+import gg.meza.stonecraft.configurations.configureStonecutterHandlers
+import gg.meza.stonecraft.configurations.configureTasks
+import gg.meza.stonecraft.configurations.loadSpecificDependencyVersions
+import gg.meza.stonecraft.configurations.loadSpecificMinecraftVersion
+import gg.meza.stonecraft.configurations.patchAroundArchitecturyQuirks
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project

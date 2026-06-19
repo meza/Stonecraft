@@ -24,7 +24,7 @@ class RepositoriesTest : IntegrationTest {
 
         gt.setStonecutterVersion("1.21.4", "fabric")
         val buildResult = gt.run("printRepos")
-
+        gt.assertNoGradleFailures(buildResult)
         val expectedRepos = listOf(
             "LoomLocalRemappedMods",
             "LoomGlobalMinecraft",
