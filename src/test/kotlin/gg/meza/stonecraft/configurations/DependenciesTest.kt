@@ -14,7 +14,6 @@ import org.junit.jupiter.api.TestInstance
  *
  */
 @DisplayName("Test dependency setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DependenciesTest : IntegrationTest {
     private lateinit var gradleTest: IntegrationTest.TestBuilder
 

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.TestInstance
 import java.util.zip.ZipFile
 
 @Suppress("DEPRECATION")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProcessResourcesTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder

@@ -17,7 +17,6 @@ import java.io.File
  * constants are correctly activated based on the active project.
  */
 @DisplayName("Test stonecutter constants")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StonecutterTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder

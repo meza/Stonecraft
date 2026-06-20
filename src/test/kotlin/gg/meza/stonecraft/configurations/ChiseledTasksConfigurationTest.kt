@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test stonecutter task setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ChiseledTasksConfigurationTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
@@ -69,41 +68,46 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
             "Set active project to 1.21.4-fabric",
             "Set active project to 1.21.4-neoforge"
         )
+        val br = gradleTest.run("tasks")
+        gradleTest.assertNoGradleFailures(br)
+        expectedTasks.forEach { taskName ->
+            assertTrue(br.output.contains(taskName), "Task $taskName should be present in the tasks output")
+        }
+    }
 
-        @Test
-        fun `stonecutter tasks are configured for 1-20-4`() {
-            gradleTest.setStonecutterVersion("1.20", "fabric", "forge")
-            // Check that the chiseled tasks are listed in the tasks output
-            val expectedTasks = listOf(
-                "buildAndCollect",
-                "chiseledBuild",
-                "chiseledClean",
-                "chiseledDatagen",
-                "chiseledTest",
-                "chiseledGameTest",
-                "chiseledBuildAndCollect",
-                "chiseledPublishMods",
-                "runClient",
-                "runServer",
-                "runGameTestClient",
-                "runGameTestServer",
-                "runDatagen",
-                "buildActive",
-                "runActive",
-                "runActiveServer",
-                "dataGenActive",
-                "testActiveClient",
-                "testActiveServer",
-                "chiseledPublishMods",
-                "Set active project to 1.20-fabric",
-                "Set active project to 1.20-forge"
-            )
+    @Test
+    fun `stonecutter tasks are configured for 1-20-4`() {
+        gradleTest.setStonecutterVersion("1.20.2", "fabric", "forge")
+        // Check that the chiseled tasks are listed in the tasks output
+        val expectedTasks = listOf(
+            "buildAndCollect",
+            "chiseledBuild",
+            "chiseledClean",
+            "chiseledDatagen",
+            "chiseledTest",
+            "chiseledGameTest",
+            "chiseledBuildAndCollect",
+            "chiseledPublishMods",
+            "runClient",
+            "runServer",
+            "runGameTestClient",
+            "runGameTestServer",
+            "runDatagen",
+            "buildActive",
+            "runActive",
+            "runActiveServer",
+            "dataGenActive",
+            "testActiveClient",
+            "testActiveServer",
+            "chiseledPublishMods",
+            "Set active project to 1.20.2-fabric",
+            "Set active project to 1.20.2-forge"
+        )
 
-            val br = gradleTest.run("tasks")
-            gradleTest.assertNoGradleFailures(br)
-            expectedTasks.forEach { taskName ->
-                assertTrue(br.output.contains(taskName), "Task $taskName should be present in the tasks output")
-            }
+        val br = gradleTest.run("tasks")
+        gradleTest.assertNoGradleFailures(br)
+        expectedTasks.forEach { taskName ->
+            assertTrue(br.output.contains(taskName), "Task $taskName should be present in the tasks output")
         }
     }
 

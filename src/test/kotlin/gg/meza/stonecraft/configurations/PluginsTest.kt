@@ -8,25 +8,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test plugin setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PluginsTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
-
-    @BeforeEach
-    fun setUp() {
-        gradleTest = gradleTest().buildScript(
-            """
-tasks.register("printPlugins") {
-    doLast {
-        plugins.forEach { plugin ->
-            println(plugin.javaClass)
-        }
-    }
-}
-            """.trimIndent()
-        )
-    }
 
     @Test
     fun `plugin throws an error if architectury exists`() {
@@ -39,7 +23,6 @@ plugins {
             """.trimIndent()
         )
         val br = gradleTest.run("printPlugins")
-        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("IllegalStateException: This plugin needs to be applied before the Architectury Loom plugin"))
         assertTrue(br.output.contains("Please move gg.meza.stonecraft plugin to the top of your build.gradle.kts file"))
@@ -47,6 +30,17 @@ plugins {
 
     @Test
     fun `plugins are properly applied`() {
+        gradleTest = gradleTest().buildScript(
+            """
+tasks.register("printPlugins") {
+    doLast {
+        plugins.forEach { plugin ->
+            println(plugin.javaClass)
+        }
+    }
+}
+            """.trimIndent()
+        )
         val br = gradleTest.run("printPlugins")
         gradleTest.assertNoGradleFailures(br)
 
@@ -59,7 +53,7 @@ plugins {
 
     @Test
     fun `loom platform correctly gets applied`() {
-        gradleTest.buildScript(
+        gradleTest = gradleTest().buildScript(
             """
 tasks.register("printPlatform") {
     doLast {

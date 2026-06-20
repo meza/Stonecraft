@@ -30,10 +30,10 @@ plugins {
     ) {
         private val runner = GradleRunner.create()
             .withPluginClasspath()
-            .withArguments("-Dorg.gradle.jvmargs=-Xmx4G")
             .forwardOutput()
 
         private val gradleHome: File
+        private val projectCache: File
         private val projectDir: File
         private val buildScript: File
         private val gradleProperties: File
@@ -47,12 +47,14 @@ plugins {
             val testDir = File("build/e2e_tests")
             val ext = ".kts"
             gradleHome = File(testDir, "home")
+            projectCache = File(testDir, "cache")
             projectDir = File(testDir, "project-" + UUID.randomUUID().toString().replace("-", ""))
             buildScript = File(projectDir, "build.gradle$ext")
             gradleProperties = File(projectDir, "gradle.properties")
             settingsFile = File(projectDir, "settings.gradle$ext")
             stonecutterGradle = File(projectDir, "stonecutter.gradle$ext")
             projectDir.mkdirs()
+            projectCache.mkdirs()
 
             // Clean up
             File(projectDir, "build.gradle").delete()
@@ -78,8 +80,12 @@ plugins {
             runner.withProjectDir(projectDir)
             baseArguments.addAll(
                 listOf(
+                    "-Dorg.gradle.jvmargs=-Xmx4G",
+                    "--max-workers=1",
                     "--gradle-user-home",
                     gradleHome.absolutePath,
+                    "--project-cache-dir",
+                    projectCache.absolutePath,
                     "--stacktrace",
                     "--warning-mode",
                     "all"

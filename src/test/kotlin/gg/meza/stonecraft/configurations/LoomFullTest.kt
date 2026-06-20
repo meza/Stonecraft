@@ -15,7 +15,6 @@ import org.junit.jupiter.api.TestInstance
  * We run the loom print task once and run tests against the output
  */
 @DisplayName("Test loom configures everything")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoomFullTest : IntegrationTest {
     private lateinit var gradleTest: IntegrationTest.TestBuilder
     private lateinit var result: BuildResult

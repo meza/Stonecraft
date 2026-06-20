@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test java tooling setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JavaTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder

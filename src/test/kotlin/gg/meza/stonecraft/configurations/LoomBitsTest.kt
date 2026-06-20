@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test loom setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoomBitsTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder

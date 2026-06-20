@@ -11,7 +11,6 @@ import org.junit.jupiter.api.TestInstance
 import org.junitpioneer.jupiter.SetEnvironmentVariable
 
 @DisplayName("Test publishing setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PublishingTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder

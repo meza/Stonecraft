@@ -11,7 +11,6 @@ import org.junit.jupiter.api.TestInstance
 import java.io.File
 
 @DisplayName("Test minecraft client configuration")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ConfigureMinecraftClientTest : IntegrationTest {
 
     private lateinit var testBuilder: IntegrationTest.TestBuilder

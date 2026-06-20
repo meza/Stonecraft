@@ -68,6 +68,7 @@ tasks.withType<Test> {
     jvmArgs("--add-opens", "java.base/java.util=ALL-UNNAMED")
     jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
     maxHeapSize = "4G"
+    maxParallelForks = 1
     dependsOn(cleanE2ETestProjects)
 }
 

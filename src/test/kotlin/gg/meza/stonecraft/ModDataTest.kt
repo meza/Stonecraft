@@ -8,15 +8,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("ModData Tests")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ModDataTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
 
-    @BeforeEach
-    fun setUp() {
-        gradleTest = gradleTest().buildScript(
-            """
+    fun getBaseTest(): IntegrationTest.TestBuilder = gradleTest().buildScript(
+        """
 import gg.meza.stonecraft.mod
 
 tasks.register("testHasProp") {
@@ -38,12 +35,12 @@ tasks.register("testHasProp") {
         }
     }
 }
-            """.trimIndent()
-        )
-    }
+        """.trimIndent()
+    )
 
     @Test
     fun `hasProp returns true when property exists in version file`() {
+        gradleTest = getBaseTest()
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val buildResult = gradleTest.run("testHasProp")
@@ -56,6 +53,7 @@ tasks.register("testHasProp") {
 
     @Test
     fun `hasProp returns false when property does not exist`() {
+        gradleTest = getBaseTest()
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val buildResult = gradleTest.run("testHasProp")
@@ -67,6 +65,7 @@ tasks.register("testHasProp") {
 
     @Test
     fun `hasProp works with different minecraft versions`() {
+        gradleTest = getBaseTest()
         gradleTest.setStonecutterVersion("1.21", "fabric")
 
         val buildResult = gradleTest.run("testHasProp")
@@ -209,6 +208,7 @@ tasks.register("printMinecraftVersion") {
 
     @Test
     fun `hasProp works with forge properties`() {
+        gradleTest = getBaseTest()
         gradleTest.setStonecutterVersion("1.21.4", "forge")
 
         val buildResult = gradleTest.run("testHasProp")
