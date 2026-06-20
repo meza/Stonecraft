@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.util.zip.ZipFile
 
 @Suppress("DEPRECATION")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProcessResourcesTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
@@ -51,6 +50,7 @@ modSettings {
 
         gradleTest.run("clean", cacheTask = false)
         result = gradleTest.run("buildAndCollect")
+        gradleTest.assertNoGradleFailures(result)
     }
 
     @Test
@@ -450,9 +450,8 @@ modSettings {
         )
     }
 
-    private fun gametestResourceProject(modSettings: String = ""): IntegrationTest.TestBuilder {
-        return gradleTest().buildScript(
-            """
+    private fun gametestResourceProject(modSettings: String = ""): IntegrationTest.TestBuilder = gradleTest().buildScript(
+        """
 modSettings {
     variableReplacements = mapOf(
         "custom1" to "customValue1",
@@ -465,20 +464,19 @@ $modSettings
 tasks.withType<org.gradle.api.tasks.JavaExec>().configureEach {
     onlyIf { false }
 }
-            """.trimIndent()
-        )
-            .setStonecutterVersion("1.21.4", "fabric")
-            .withProperties(
-                mapOf(
-                    "mod.id" to "examplemod",
-                    "mod.name" to "Test Example Mod",
-                    "mod.description" to "This is a test example mod description",
-                    "mod.group" to "net.example",
-                    "mod.version" to "1.0",
-                    "org.gradle.caching" to "false"
-                )
+        """.trimIndent()
+    )
+        .setStonecutterVersion("1.21.4", "fabric")
+        .withProperties(
+            mapOf(
+                "mod.id" to "examplemod",
+                "mod.name" to "Test Example Mod",
+                "mod.description" to "This is a test example mod description",
+                "mod.group" to "net.example",
+                "mod.version" to "1.0",
+                "org.gradle.caching" to "false"
             )
-    }
+        )
 
     @Test
     fun `versioned replacements work as expected`() {

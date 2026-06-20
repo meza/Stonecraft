@@ -17,7 +17,6 @@ import java.io.File
  * constants are correctly activated based on the active project.
  */
 @DisplayName("Test stonecutter constants")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StonecutterTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
@@ -43,7 +42,8 @@ class StonecutterTest : IntegrationTest {
 
     @Test
     fun `when fabric is selected`() {
-        gradleTest.run("Set active project to 1.21.4-fabric")
+        val result = gradleTest.run("Set active project to 1.21.4-fabric")
+        gradleTest.assertNoGradleFailures(result)
         val contents = markerFile.readText()
 
         assertFalse(contents.contains("/*fabricline"), "Fabric line was not activated")
@@ -59,7 +59,8 @@ class StonecutterTest : IntegrationTest {
 
     @Test
     fun `when forge is selected`() {
-        gradleTest.run("Set active project to 1.21.4-forge")
+        val result = gradleTest.run("Set active project to 1.21.4-forge")
+        gradleTest.assertNoGradleFailures(result)
         val contents = markerFile.readText()
 
         assertTrue(contents.contains("/*fabricline"), "Fabric line was activated incorrectly")
@@ -76,7 +77,8 @@ class StonecutterTest : IntegrationTest {
 
     @Test
     fun `when neoforge is selected`() {
-        gradleTest.run("Set active project to 1.21.4-neoforge")
+        val result = gradleTest.run("Set active project to 1.21.4-neoforge")
+        gradleTest.assertNoGradleFailures(result)
         val contents = markerFile.readText()
 
         assertTrue(contents.contains("/*fabricline"), "Fabric line was activated incorrectly")

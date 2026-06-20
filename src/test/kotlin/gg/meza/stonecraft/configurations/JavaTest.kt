@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test java tooling setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JavaTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
@@ -44,6 +43,7 @@ tasks.register("checkSourceSets") {
     fun `java tool versions are set to 21 correctly above`() {
         gradleTest.setStonecutterVersion("1.20.6", "fabric")
         val br = gradleTest.run("checkJavaExtension")
+        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("sourceCompatibility=21"))
         assertTrue(br.output.contains("targetCompatibility=21"))
@@ -54,6 +54,7 @@ tasks.register("checkSourceSets") {
     fun `java tool versions are set to 17 correctly above`() {
         gradleTest.setStonecutterVersion("1.20.5", "fabric")
         val br = gradleTest.run("checkJavaExtension")
+        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("sourceCompatibility=17"))
         assertTrue(br.output.contains("targetCompatibility=17"))
@@ -71,6 +72,7 @@ modSettings {
         )
 
         val br = gradleTest.run("checkSourceSets")
+        gradleTest.assertNoGradleFailures(br)
         val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-forge/build/src/main/generatedForTests")
         assertTrue(br.output.contains(expectedDirectory.asFile.absolutePath))
     }
@@ -86,6 +88,7 @@ modSettings {
         )
 
         val br = gradleTest.run("checkSourceSets")
+        gradleTest.assertNoGradleFailures(br)
         val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-forge/build/src/main/generatedForTests")
         assertFalse(br.output.contains(expectedDirectory.asFile.absolutePath))
     }

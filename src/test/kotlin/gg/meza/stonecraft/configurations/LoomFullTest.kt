@@ -15,7 +15,6 @@ import org.junit.jupiter.api.TestInstance
  * We run the loom print task once and run tests against the output
  */
 @DisplayName("Test loom configures everything")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoomFullTest : IntegrationTest {
     private lateinit var gradleTest: IntegrationTest.TestBuilder
     private lateinit var result: BuildResult
@@ -41,6 +40,7 @@ class LoomFullTest : IntegrationTest {
             .setStonecutterVersion("26.1", "neoforge")
 
         result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
     }
 
     @Test
@@ -227,13 +227,11 @@ class LoomFullTest : IntegrationTest {
     inputs.property("projectName", project.name)
     val projectName = inputs.properties["projectName"]
         doLast {
-            if (loom.accessWidenerPath.isPresent) {
-                println("[" + projectName + "] "+ "loom.accessWidenerPath=\"" + loom.accessWidenerPath.get() + "\"")
-                if (mod.isForge) {
-                    println("[" + projectName + "] "+ "forge.convertAccessWideners=\"" + loom.forge.convertAccessWideners.get() + "\"")
-                }
+            println("[" + projectName + "] "+ "loom.accessWidenerPath=\"" + loom.accessWidenerPath.getOrNull() + "\"")
+            if (mod.isForge) {
+                println("[" + projectName + "] "+ "forge.convertAccessWideners=\"" + loom.forge.convertAccessWideners.getOrNull() + "\"")
             }
-    
+
             loom.decompilerOptions.getByName("vineflower").options.get().forEach { (key, value) ->
                 println("[" + projectName + "] "+ "decompilerOptions.vineflower.${'$'}key=\"${'$'}value\"")
             }

@@ -8,25 +8,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test plugin setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PluginsTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
-
-    @BeforeEach
-    fun setUp() {
-        gradleTest = gradleTest().buildScript(
-            """
-tasks.register("printPlugins") {
-    doLast {
-        plugins.forEach { plugin ->
-            println(plugin.javaClass)
-        }
-    }
-}
-            """.trimIndent()
-        )
-    }
 
     @Test
     fun `plugin throws an error if architectury exists`() {
@@ -46,7 +30,19 @@ plugins {
 
     @Test
     fun `plugins are properly applied`() {
+        gradleTest = gradleTest().buildScript(
+            """
+tasks.register("printPlugins") {
+    doLast {
+        plugins.forEach { plugin ->
+            println(plugin.javaClass)
+        }
+    }
+}
+            """.trimIndent()
+        )
         val br = gradleTest.run("printPlugins")
+        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("dev.kikugie.stonecutter.StonecutterPlugin"))
         assertTrue(br.output.contains("net.fabricmc.loom.LoomRepositoryPlugin"))
@@ -57,7 +53,7 @@ plugins {
 
     @Test
     fun `loom platform correctly gets applied`() {
-        gradleTest.buildScript(
+        gradleTest = gradleTest().buildScript(
             """
 tasks.register("printPlatform") {
     doLast {
@@ -70,6 +66,7 @@ tasks.register("printPlatform") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
 
         val br = gradleTest.run("printPlatform")
+        gradleTest.assertNoGradleFailures(br)
 
         assertTrue(br.output.contains("loom.platform is set to fabric"))
         assertTrue(br.output.contains("loom.platform is set to forge"))

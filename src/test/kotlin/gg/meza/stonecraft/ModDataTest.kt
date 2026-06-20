@@ -8,15 +8,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("ModData Tests")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ModDataTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
 
-    @BeforeEach
-    fun setUp() {
-        gradleTest = gradleTest().buildScript(
-            """
+    fun getBaseTest(): IntegrationTest.TestBuilder = gradleTest().buildScript(
+        """
 import gg.meza.stonecraft.mod
 
 tasks.register("testHasProp") {
@@ -38,15 +35,16 @@ tasks.register("testHasProp") {
         }
     }
 }
-            """.trimIndent()
-        )
-    }
+        """.trimIndent()
+    )
 
     @Test
     fun `hasProp returns true when property exists in version file`() {
+        gradleTest = getBaseTest()
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val buildResult = gradleTest.run("testHasProp")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(buildResult.output.contains("fabric_version exists: true"), "hasProp should return true for fabric_version property from 1.21.4.properties")
         assertTrue(buildResult.output.contains("yarn_mappings exists: true"), "hasProp should return true for yarn_mappings property from 1.21.4.properties")
@@ -55,9 +53,11 @@ tasks.register("testHasProp") {
 
     @Test
     fun `hasProp returns false when property does not exist`() {
+        gradleTest = getBaseTest()
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val buildResult = gradleTest.run("testHasProp")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertFalse(buildResult.output.contains("non_existent_property exists: true"), "hasProp should return false for non-existent property")
         assertTrue(buildResult.output.contains("non_existent_property exists: false"), "hasProp should return false for non-existent property")
@@ -65,9 +65,11 @@ tasks.register("testHasProp") {
 
     @Test
     fun `hasProp works with different minecraft versions`() {
+        gradleTest = getBaseTest()
         gradleTest.setStonecutterVersion("1.21", "fabric")
 
         val buildResult = gradleTest.run("testHasProp")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(buildResult.output.contains("fabric_version exists: true"), "hasProp should return true for fabric_version property from 1.21.properties")
         assertTrue(buildResult.output.contains("fabric_version value: 0.102.0+1.21"), "Should load fabric_version from 1.21.properties")
@@ -110,6 +112,7 @@ tasks.register("testPropIntegration") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val buildResult = gradleTest.run("testPropIntegration")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(buildResult.output.contains("hasProp existing: true"), "hasProp should return true for existing property")
         assertTrue(buildResult.output.contains("hasProp missing: false"), "hasProp should return false for missing property")
@@ -146,6 +149,7 @@ tasks.register("testConditionalDeps") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val buildResult = gradleTest.run("testConditionalDeps")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(buildResult.output.contains("Should load fabric-api: true"), "Should load fabric-api when version is available")
         assertTrue(buildResult.output.contains("Should load sodium: false"), "Should not load sodium when version is not available")
@@ -169,6 +173,7 @@ tasks.register("printMinecraftVersion") {
         gradleTest.setStonecutterVersion("1.21.6", "fabric")
 
         val buildResult = gradleTest.run("printMinecraftVersion")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains("Resolved Minecraft Version: 1.21.6-rc1"),
@@ -193,6 +198,7 @@ tasks.register("printMinecraftVersion") {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
 
         val buildResult = gradleTest.run("printMinecraftVersion")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(
             buildResult.output.contains("Resolved Minecraft Version: 1.21.4"),
@@ -202,9 +208,11 @@ tasks.register("printMinecraftVersion") {
 
     @Test
     fun `hasProp works with forge properties`() {
+        gradleTest = getBaseTest()
         gradleTest.setStonecutterVersion("1.21.4", "forge")
 
         val buildResult = gradleTest.run("testHasProp")
+        gradleTest.assertNoGradleFailures(buildResult)
 
         assertTrue(buildResult.output.contains("forge_version exists: true"), "hasProp should return true for forge_version property from 1.21.4.properties")
         assertTrue(buildResult.output.contains("forge_version value: 1.21.4-54.0.16"), "Should load forge_version from 1.21.4.properties")

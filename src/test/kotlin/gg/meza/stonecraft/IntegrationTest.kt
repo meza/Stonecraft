@@ -5,6 +5,7 @@ import org.gradle.testfixtures.ProjectBuilder
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.intellij.lang.annotations.Language
+import org.junit.jupiter.api.Assertions.assertTrue
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
@@ -29,10 +30,10 @@ plugins {
     ) {
         private val runner = GradleRunner.create()
             .withPluginClasspath()
-            .withArguments("-Dorg.gradle.jvmargs=-Xmx4G")
             .forwardOutput()
 
         private val gradleHome: File
+        private val projectCache: File
         private val projectDir: File
         private val buildScript: File
         private val gradleProperties: File
@@ -46,12 +47,14 @@ plugins {
             val testDir = File("build/e2e_tests")
             val ext = ".kts"
             gradleHome = File(testDir, "home")
+            projectCache = File(testDir, "cache")
             projectDir = File(testDir, "project-" + UUID.randomUUID().toString().replace("-", ""))
             buildScript = File(projectDir, "build.gradle$ext")
             gradleProperties = File(projectDir, "gradle.properties")
             settingsFile = File(projectDir, "settings.gradle$ext")
             stonecutterGradle = File(projectDir, "stonecutter.gradle$ext")
             projectDir.mkdirs()
+            projectCache.mkdirs()
 
             // Clean up
             File(projectDir, "build.gradle").delete()
@@ -77,8 +80,12 @@ plugins {
             runner.withProjectDir(projectDir)
             baseArguments.addAll(
                 listOf(
+                    "-Dorg.gradle.jvmargs=-Xmx4G",
+                    "--max-workers=1",
                     "--gradle-user-home",
                     gradleHome.absolutePath,
+                    "--project-cache-dir",
+                    projectCache.absolutePath,
                     "--stacktrace",
                     "--warning-mode",
                     "all"
@@ -134,6 +141,27 @@ plugins {
             build()
         } else {
             execute(tasks)
+        }
+
+        fun assertNoGradleFailures(result: BuildResult) {
+            val failureMarkers = listOf(
+                "BUILD FAILED",
+                "FAILURE: Build failed",
+                "There were failing tests",
+                "No test batches were given"
+            )
+
+            failureMarkers.forEach { marker ->
+                assertTrue(
+                    !result.output.contains(marker),
+                    "Expected no Gradle failure marker '$marker'. Output:\n$result.output"
+                )
+            }
+
+            assertTrue(
+                !Regex("""> Task .+ FAILED""").containsMatchIn(result.output),
+                "Expected no failed Gradle tasks. Output:\n$result.output"
+            )
         }
 
         fun setModProperty(key: String, value: String): TestBuilder {

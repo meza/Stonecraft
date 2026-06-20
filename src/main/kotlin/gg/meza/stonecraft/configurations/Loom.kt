@@ -11,8 +11,8 @@ import net.fabricmc.loom.configuration.ide.RunConfigSettings
 import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.withType
 
 fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
@@ -26,15 +26,10 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modS
     }
 
     loom.apply {
-        val awFile =
-            project.rootProject.layout.projectDirectory.file("src/main/resources/${project.mod.id}.accesswidener")
+        accessWidenerPath.set(modSettings.effectiveAccessWidenerLocationProp)
 
-        if (awFile.asFile.exists()) {
-            accessWidenerPath.set(awFile)
-
-            if (project.mod.isForge) {
-                forge.convertAccessWideners.set(true)
-            }
+        if (project.mod.isForge) {
+            forge.convertAccessWideners.set(modSettings.effectiveAccessWidenerProcessingProp)
         }
 
         decompilers {
@@ -43,6 +38,25 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modS
     }
     project.afterEvaluate {
         loom.apply {
+            val awFile = modSettings.effectiveAccessWidenerLocationProp.orNull
+            if (awFile != null) {
+                val relativeLocation =
+                    awFile.asFile.relativeTo(project.rootProject.layout.projectDirectory.dir("src/main/resources").asFile).invariantSeparatorsPath
+
+                val task = when {
+                    stonecutter.current.parsed >= "26.1" -> project.tasks.named("jar", Jar::class.java)
+                    else -> project.tasks.named("remapJar", RemapJarTask::class.java)
+                }
+
+                if (project.mod.isFabricLike) {
+                    injectAccessWidener(task)
+                }
+
+                if (project.mod.isNeoforge) {
+                    neoForge.convertAccessWideners(task, relativeLocation)
+                }
+            }
+
             runConfigs.all {
                 generateRunConfig.set(true)
                 runDirectory.set(modSettings.runDirectoryProp)

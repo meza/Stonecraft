@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @DisplayName("Test loom setup")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoomBitsTest : IntegrationTest {
 
     private lateinit var gradleTest: IntegrationTest.TestBuilder
@@ -26,15 +25,17 @@ class LoomBitsTest : IntegrationTest {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
         gradleTest.project().layout.projectDirectory.file("src/main/resources/examplemod.accesswidener").asFile.delete()
         val br = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(br)
 
-        assertFalse(br.output.contains("loom.accessWidenerPath"))
-        assertFalse(br.output.contains("forge.convertAccessWideners"))
+        assertTrue(br.output.contains("loom.accessWidenerPath=\"null\""))
+        assertTrue(br.output.contains("forge.convertAccessWideners=\"false\""))
     }
 
     @Test
     fun `test access wideners when there is an access widener in the project`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge")
         val br = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(br)
         val awPath = gradleTest.project().layout.projectDirectory.file("src/main/resources/examplemod.accesswidener").asFile.absolutePath
 
         val awString = "loom.accessWidenerPath=\"$awPath\""
@@ -49,6 +50,24 @@ class LoomBitsTest : IntegrationTest {
     }
 
     @Test
+    fun `access widener processing can be disabled`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
+        gradleTest.buildScript(
+            """
+        modSettings {
+            accessWidenerProcessing = false
+        }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(br.output.contains("loom.accessWidenerPath=\"null\""))
+        assertTrue(br.output.contains("forge.convertAccessWideners=\"false\""))
+    }
+
+    @Test
     fun `test with a custom run directory`() {
         gradleTest.setStonecutterVersion("1.21", "fabric", "forge", "neoforge")
         gradleTest.buildScript(
@@ -60,6 +79,7 @@ class LoomBitsTest : IntegrationTest {
         )
 
         val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
 
         val runDir = gradleTest.project().rootProject.layout.projectDirectory.dir("run-test")
         val versionRunDir = gradleTest.project().layout.projectDirectory.dir("versions/1.21-fabric/run")
@@ -104,6 +124,7 @@ class LoomBitsTest : IntegrationTest {
         val versionRunDir = gradleTest.project().layout.projectDirectory.dir("versions/1.20.2-fabric/run")
 
         val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
 
         System.out.println(result.output)
         System.out.println("runDir: $runDir")
@@ -134,6 +155,7 @@ class LoomBitsTest : IntegrationTest {
         )
 
         val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
 
         assertTrue(result.output.contains("jvmArguments=\"-Dfabric-api.gametest.report-file=${gradleTest.project().layout.projectDirectory.file("versions/1.20.2-fabric/build/fabric-client-junit-report.xml").asFile.absolutePath}"))
         assertTrue(result.output.contains("jvmArguments=\"-Dfabric-api.gametest.report-file=${gradleTest.project().layout.projectDirectory.file("versions/1.20.2-fabric/build/fabric-server-junit-report.xml").asFile.absolutePath}"))
@@ -151,6 +173,7 @@ class LoomBitsTest : IntegrationTest {
         )
 
         val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
 
         assertTrue(
             result.output.contains(
@@ -167,6 +190,7 @@ class LoomBitsTest : IntegrationTest {
         gradleTest.setStonecutterVersion("1.21", "forge")
 
         val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
 
         assertTrue(result.output.contains("[1.21-forge] gameTestServer runtimeEnvironment=gameTestServer"))
         assertTrue(result.output.contains("[1.21-forge] gameTestServer jvmArguments=\"-Dforge.gameTestServer=true\""))
@@ -184,6 +208,7 @@ class LoomBitsTest : IntegrationTest {
         )
 
         val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
 
         assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen runtimeEnvironment=dataClient"))
         assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen runtimeEnvironment=dataServer"))
@@ -196,6 +221,7 @@ class LoomBitsTest : IntegrationTest {
         gradleTest.setStonecutterVersion("1.21.4", "neoforge")
 
         val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
 
         assertFalse(
             result.output.contains(

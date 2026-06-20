@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.extension
 
 import gg.meza.stonecraft.data.MinecraftClientOptions
+import gg.meza.stonecraft.mod
 import org.gradle.api.Project
 import org.gradle.api.file.Directory
 import org.gradle.api.file.RegularFile
@@ -21,6 +22,10 @@ abstract class ModSettingsExtension @Inject constructor(
     @Optional
     @get:Input
     val variableReplacements = project.objects.mapProperty(String::class.java, Any::class.java)
+
+    @Optional
+    @get:Input
+    val accessWidenerProcessingProp: Property<Boolean> = project.objects.property(Boolean::class.java)
 
     @Internal
     @get:InputDirectory
@@ -46,6 +51,40 @@ abstract class ModSettingsExtension @Inject constructor(
     @get:InputFile
     internal val fabricServerJunitReportLocationProp = project.objects.fileProperty()
 
+    @Internal
+    @get:InputFile
+    internal val accessWidenerLocationProp = project.objects.fileProperty()
+
+    /**
+     * Ensure that we only return access widener location if the processing is enabled
+     * This is necessary to get around the fact that loom needs this setting before
+     * we get the chance to read the user settings.
+     *
+     * Baking it into the provider allows us to evaluate this at runtime
+     */
+    @Internal
+    internal val effectiveAccessWidenerLocationProp: Provider<RegularFile> =
+        project.providers.provider {
+            val accessWidener = accessWidenerLocationProp.orNull
+
+            if (
+                accessWidenerProcessingProp.get() &&
+                accessWidener != null &&
+                accessWidener.asFile.exists()
+            ) {
+                accessWidener
+            } else {
+                null
+            }
+        }
+
+    @Internal
+    internal val effectiveAccessWidenerProcessingProp: Provider<Boolean> =
+        project.providers.provider {
+            accessWidenerProcessingProp.get() &&
+                accessWidenerLocationProp.orNull?.asFile?.exists() == true
+        }
+
     @get:Nested
     abstract val clientOptions: MinecraftClientOptions
 
@@ -59,7 +98,9 @@ abstract class ModSettingsExtension @Inject constructor(
         testServerRunDirectoryProp.convention(runDirectoryProp.dir("testserver/$loader"))
         fabricClientJunitReportLocationProp.convention(project.layout.buildDirectory.file("junit-client.xml"))
         fabricServerJunitReportLocationProp.convention(project.layout.buildDirectory.file("junit-server.xml"))
+        accessWidenerLocationProp.convention(project.rootProject.layout.projectDirectory.file("src/main/resources/${project.mod.id}.accesswidener"))
         variableReplacements.convention(emptyMap())
+        accessWidenerProcessingProp.convention(true)
         gametestEntrypointCleanupProp.convention(true)
     }
 
@@ -103,6 +144,18 @@ abstract class ModSettingsExtension @Inject constructor(
         set(value) {
             fabricServerJunitReportLocationProp.set(value)
             fabricServerJunitReportLocationProp.disallowChanges()
+        }
+
+    var accessWidenerLocation: RegularFile
+        get() = accessWidenerLocationProp.get()
+        set(value) {
+            accessWidenerLocationProp.set(value)
+        }
+
+    var accessWidenerProcessing: Boolean
+        get() = accessWidenerProcessingProp.get()
+        set(value) {
+            accessWidenerProcessingProp.set(value)
         }
 
     var gametestEntrypointCleanup: Boolean
