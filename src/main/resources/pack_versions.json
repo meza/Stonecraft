@@ -1910,5 +1910,9 @@
   "26.2": {
     "datapack": 107.1,
     "resourcepack": 88
+  },
+  "26.3-snapshot-1": {
+    "datapack": 108,
+    "resourcepack": 89
   }
 }
