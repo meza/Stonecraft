@@ -90,7 +90,7 @@ kover {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     withSourcesJar()
 }
 
@@ -119,7 +119,7 @@ gradlePlugin {
 }
 
 kotlin {
-    jvmToolchain(25)
+    jvmToolchain(21)
 }
 
 val isPrereleaseChannel = providers.environmentVariable("STONECRAFT_PRERELEASE")
