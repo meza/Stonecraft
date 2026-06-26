@@ -46,8 +46,14 @@ plugins {
         init {
             val testDir = File("build/e2e_tests")
             val ext = ".kts"
-            gradleHome = File(testDir, "home")
-            projectCache = File(testDir, "cache")
+            gradleHome = System.getenv("STONECRAFT_TEST_GRADLE_HOME")
+                ?.takeIf { it.isNotBlank() }
+                ?.let(::File)
+                ?: File(testDir, "home")
+            projectCache = System.getenv("STONECRAFT_TEST_PROJECT_CACHE")
+                ?.takeIf { it.isNotBlank() }
+                ?.let(::File)
+                ?: File(testDir, "cache")
             projectDir = File(testDir, "project-" + UUID.randomUUID().toString().replace("-", ""))
             buildScript = File(projectDir, "build.gradle$ext")
             gradleProperties = File(projectDir, "gradle.properties")
