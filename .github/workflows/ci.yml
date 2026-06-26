@@ -45,6 +45,7 @@ jobs:
             *.gradle.kts
           java-version: |
             25
+            21
           check-latest: true
           distribution: 'temurin'
       - name: Setup Gradle
