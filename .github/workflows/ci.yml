@@ -18,6 +18,9 @@ permissions:
 concurrency:
     group:  ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
     cancel-in-progress: true
+env:
+  STONECRAFT_TEST_GRADLE_HOME: /cache/e2e_tests/home
+  STONECRAFT_TEST_PROJECT_CACHE: /cache/e2e_tests/cache
 
 jobs:
   build:
@@ -90,16 +93,10 @@ jobs:
         working-directory: ${{ github.workspace }}
         # This step updates the version in gradle.properties using the semantic-release output
 
-      - name: Cache Gradle Test dependencies
-        id: cache-gradle-dependencies
-        uses: actions/cache@v5.0.5
-        with:
-          path: |
-            build/e2e_tests/home
-            build/e2e_tests/cache
-          key: ${{ runner.os }}-e2e-gradle-${{ hashFiles('gradle.properties', 'build.gradle.kts', 'gradle/libs.versions.toml', 'src/test/resources/**/*.gradle*', 'src/test/resources/**/*.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-e2e-gradle-
+      - name: Prepare Gradle Test cache directories
+        run: |
+          mkdir -p "$STONECRAFT_TEST_GRADLE_HOME"
+          mkdir -p "$STONECRAFT_TEST_PROJECT_CACHE"
 
       - name: "🧪 Run tests"
         run: ./gradlew build --stacktrace --no-configuration-cache
