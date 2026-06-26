@@ -46,6 +46,7 @@ jobs:
           java-version: |
             25
             21
+            17
           check-latest: true
           distribution: 'temurin'
       - name: Setup Gradle
