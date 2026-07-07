@@ -1918,5 +1918,9 @@
   "26.3-snapshot-2": {
     "datapack": 109,
     "resourcepack": 90
+  },
+  "26.3-snapshot-3": {
+    "datapack": 110,
+    "resourcepack": 91
   }
 }
