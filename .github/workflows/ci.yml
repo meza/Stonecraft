@@ -63,7 +63,7 @@ jobs:
       - name: Determine Version
         id: version
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           GRADLE_PUBLISH_KEY: ${{ vars.GRADLE_PUBLISH_KEY }}
           GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
           MEZA_MAVEN_USER: ${{ secrets.MEZA_MAVEN_USER }}
@@ -114,7 +114,7 @@ jobs:
 
       - name: Semantic Release to channel ${{ steps.version.outputs.new_release_channel }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           GRADLE_PUBLISH_KEY: ${{ vars.GRADLE_PUBLISH_KEY }}
           GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
           MEZA_MAVEN_USER: ${{ secrets.MEZA_MAVEN_USER }}
