@@ -46,7 +46,7 @@ jobs:
             path: ./docs/build
 
     deploy_pages:
-      runs-on: ubuntu-latest
+      runs-on: self-hosted
       needs: build
       environment:
         name: github-pages
