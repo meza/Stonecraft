@@ -22,13 +22,13 @@ jobs:
     name: Update pack versions (${{ matrix.branch }})
     steps:
       - name: Checkout
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ matrix.branch }}
           fetch-depth: 0
 
       - name: Update pack formats
-        uses: meza/action-minecraft-pack-versions@v1.0.24
+        uses: meza/action-minecraft-pack-versions@ef4f7c431f8306915688b04dab45553554af98c2 # v1.0.24
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           output_path: src/main/resources/pack_versions.json
