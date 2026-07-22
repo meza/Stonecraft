@@ -11,7 +11,7 @@ on:
 
 jobs:
   update:
-    runs-on: self-hosted
+    runs-on: meza-ubuntu-slim
     strategy:
       fail-fast: false
       matrix:
