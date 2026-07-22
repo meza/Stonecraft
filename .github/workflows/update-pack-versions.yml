@@ -1,7 +1,7 @@
 name: Update pack versions
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 on:
@@ -30,7 +30,7 @@ jobs:
       - name: Update pack formats
         uses: meza/action-minecraft-pack-versions@ef4f7c431f8306915688b04dab45553554af98c2 # v1.0.24
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ github.token }}
           output_path: src/main/resources/pack_versions.json
           pr_branch: 'bot/pack-format/${{ matrix.branch }}'
           pr_base: ${{ matrix.branch }}
