@@ -56,7 +56,9 @@ jobs:
           validate-wrappers: true
           cache-provider: basic
       - name: Install XVFB
-        run: sudo apt install -y xvfb
+        run: |
+          sudo apt update
+          sudo apt install -y xvfb
       - name: Determine Version
         id: version
         env:
