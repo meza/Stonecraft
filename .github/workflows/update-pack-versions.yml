@@ -30,7 +30,7 @@ jobs:
       - name: Update pack formats
         uses: meza/action-minecraft-pack-versions@6718a39243a5c34a166e46c84e8738617a77636f # v1.0.25
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ github.token }}
           output_path: src/main/resources/pack_versions.json
           pr_branch: 'bot/pack-format/${{ matrix.branch }}'
           pr_base: ${{ matrix.branch }}
