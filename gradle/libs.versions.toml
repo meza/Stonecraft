@@ -1,5 +1,5 @@
 [versions]
-plugin-publish = "2.1.1"
+plugin-publish = "2.2.0"
 test-logger = "4.0.0"
 kover = "0.9.9"
 spotless = "8.10.2"
