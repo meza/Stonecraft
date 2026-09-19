@@ -1,6 +1,4 @@
 allowBuilds:
   core-js: true
+  pnpm: true
 minimumReleaseAge: 10080
-onlyBuiltDependencies:
-  - core-js
-  - core-js-pure
