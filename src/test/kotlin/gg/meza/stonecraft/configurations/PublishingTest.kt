@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junitpioneer.jupiter.SetEnvironmentVariable
+import org.junitpioneer.jupiter.ClearEnvironmentVariable
 
 @DisplayName("Test publishing setup")
 class PublishingTest : IntegrationTest {
@@ -153,11 +154,36 @@ loom {
         assertTrue(br.output.contains("type=BETA"), "Publishing type has not been set correctly")
     }
 
-    @SetEnvironmentVariable(key = "DO_PUBLISH", value = "anything-but-true")
+    @SetEnvironmentVariable(key = "DO_PUBLISH", value = "true")
     @Test
     fun `dry run can be turned off with the correct setting`() {
         val br = gradleTest.run("publishingSettings")
+        gradleTest.assertNoGradleFailures(br)
         assertTrue(br.output.contains("dryRun=false"), "Dry run has been set incorrectly")
+    }
+
+    @SetEnvironmentVariable(key = "DO_PUBLISH", value = "false")
+    @Test
+    fun `publishing remains a dry run when explicitly disabled`() {
+        val br = gradleTest.run("publishingSettings")
+        gradleTest.assertNoGradleFailures(br)
+        assertTrue(br.output.contains("dryRun=true"), "Publishing must be a dry run when disabled")
+    }
+
+    @ClearEnvironmentVariable(key = "DO_PUBLISH")
+    @Test
+    fun `publishing defaults to a dry run`() {
+        val br = gradleTest.run("publishingSettings")
+        gradleTest.assertNoGradleFailures(br)
+        assertTrue(br.output.contains("dryRun=true"), "Publishing must default to a dry run")
+    }
+
+    @SetEnvironmentVariable(key = "DO_PUBLISH", value = "anything-but-true")
+    @Test
+    fun `invalid publishing flag remains a dry run`() {
+        val br = gradleTest.run("publishingSettings")
+        gradleTest.assertNoGradleFailures(br)
+        assertTrue(br.output.contains("dryRun=true"), "Invalid flags must leave publishing in dry run mode")
     }
 
     @Test
@@ -209,7 +235,7 @@ loom {
         assertFalse(br.output.contains("If you want to use CurseForge, please set the CURSEFORGE_SLUG, CURSEFORGE_ID, and CURSEFORGE_TOKEN environment variables"))
     }
 
-    @SetEnvironmentVariable(key = "DO_PUBLISH", value = "anything-but-true")
+    @SetEnvironmentVariable(key = "DO_PUBLISH", value = "true")
     @Test
     fun `appropriate warnings are shown when the platform environment variables are not defined in non-dry run mode`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")

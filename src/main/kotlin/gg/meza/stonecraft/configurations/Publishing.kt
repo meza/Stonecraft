@@ -48,7 +48,7 @@ fun configurePublishing(project: Project, minecraftVersion: String, stonecutter:
         version.set("${mod.version}+${mod.loader}-$minecraftVersion")
         modLoaders.add(mod.loader)
         displayName.set("${mod.version} for ${mod.loader.upperCaseFirst()} $minecraftVersion")
-        dryRun.set(project.providers.environmentVariable("DO_PUBLISH").getOrElse("true").toBoolean())
+        dryRun.set(!project.providers.environmentVariable("DO_PUBLISH").getOrElse("false").toBoolean())
 
         if (modrinthVariables.all { project.providers.environmentVariable(it).isPresent }) {
             modrinth {
