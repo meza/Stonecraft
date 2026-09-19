@@ -41,6 +41,7 @@ plugins {
         private val stonecutterGradle: File
         private val baseArguments = mutableListOf<String>()
         private val cachedTasks = LinkedHashSet<String>()
+        private val environment = System.getenv().toMutableMap()
         private var supportedMinecraftVersions = mutableMapOf<String, List<String>>()
 
         init {
@@ -117,6 +118,17 @@ plugins {
             return this
         }
 
+        fun withEnvironmentVariables(variables: Map<String, String?>): TestBuilder {
+            variables.forEach { (key, value) ->
+                if (value == null) {
+                    environment.remove(key)
+                } else {
+                    environment[key] = value
+                }
+            }
+            return this
+        }
+
         fun buildScript(@Language("gradle") script: String): TestBuilder {
             buildScript.appendText("\n" + script + "\n")
             return this
@@ -129,7 +141,9 @@ plugins {
         private fun execute(tasks: List<String>): BuildResult {
             prepareProjectForExecution()
 
-            runner.withArguments(baseArguments + tasks)
+            runner
+                .withEnvironment(environment)
+                .withArguments(baseArguments + tasks)
             return runner.run()
         }
 

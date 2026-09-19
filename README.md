@@ -28,6 +28,14 @@ plugins {
 
 Need unreleased changes early? Follow the [snapshot channel guide](https://stonecraft.meza.gg/docs/stonecraft-and-stonecutter-compatibility#experimental-snapshot-channel) on the documentation site.
 
+### If you're using an AI coding agent:
+
+Run this to install a Stonecraft and Stonecutter agent skill
+
+```shell
+./gradlew installStonecraftSkill
+```
+
 ### Set up Stonecutter
 
 #### Setting up supported version
@@ -89,6 +97,13 @@ plugins {
 stonecutter active "1.21.4-fabric" /* [SC] DO NOT EDIT */
 ```
 
+## Social?
+
+Please join our [discord] server for any questions, and help us make Stonecraft better.
+
+---
+
 [stonecutter]: https://stonecutter.kikugie.dev/
 [architectury]: https://docs.architectury.dev/
 [github]: https://github.com/meza/Stonecraft
+[dicord]: https://discord.gg/dvg3tcQCPW

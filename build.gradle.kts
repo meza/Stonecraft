@@ -94,6 +94,10 @@ java {
     withSourcesJar()
 }
 
+tasks.jar {
+    manifest.attributes["Implementation-Version"] = project.version.toString()
+}
+
 gradlePlugin {
     website = "https://stonecraft.meza.gg"
     vcsUrl = "https://github.com/meza/Stonecraft.git"

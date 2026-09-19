@@ -1,6 +1,4 @@
 ---
-sidebar_position: 6
-title: Stonecraft and Stonecutter Compatibility
 description: Reference chart for how each Stonecraft version line maps to Stonecutter releases.
 ---
 
