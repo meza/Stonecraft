@@ -48,7 +48,7 @@
     "jsdom": "30.0.1",
     "pnpm": "12.4.1",
     "typescript": "5.9.3",
-    "vitest": "4.1.10",
+    "vitest": "4.1.11",
     "vitest-axe": "0.1.0",
     "webpack": "5.110.3"
   },
