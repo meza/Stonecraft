@@ -1,0 +1,121 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+      - beta
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+__STONECRAFT_#AUTOMATED_RELEASES__
+permissions:
+  issues: write
+  checks: write
+  contents: write
+  pull-requests: write
+
+env:
+  RELEASE_TYPE: ${{ endsWith(github.ref_name, 'main') && 'stable' || (endsWith(github.ref_name, 'beta') && 'beta' || 'alpha') }}
+
+__STONECRAFT_/AUTOMATED_RELEASES__
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ !endsWith(github.ref_name, 'main') && !endsWith(github.ref_name, 'beta') }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "⬇️ Checkout"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+__STONECRAFT_#AUTOMATED_RELEASES__
+        with:
+          fetch-depth: 0
+__STONECRAFT_/AUTOMATED_RELEASES__
+
+      - name: "☕ Setup JDK"
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          cache: gradle
+          cache-dependency-path: |
+            versions/dependencies/*.properties
+            *.properties
+            *.gradle.kts
+          java-version: |
+            25
+          check-latest: true
+          distribution: temurin
+
+      - name: "🛂 Setup Gradle"
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        with:
+          validate-wrappers: true
+          cache-provider: basic
+
+      - name: "🔓 Adjust script permissions"
+        run: chmod +x ./gradlew__STONECRAFT_#DATAGEN__ ./scripts/datagen.sh__STONECRAFT_/DATAGEN____STONECRAFT_#AUTOMATED_RELEASES__ ./scripts/release.sh__STONECRAFT_/AUTOMATED_RELEASES__
+
+__STONECRAFT_#AUTOMATED_RELEASES__
+      - name: "🔎 Determine version"
+        id: get-next-version
+        uses: cycjimmy/semantic-release-action@b12c8f6015dc215fe37bc154d4ad456dd3833c90 # v6.0.0
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          dry_run: true
+          extra_plugins: |
+            @meza/mezas-conventional-changelog
+            @semantic-release/changelog@6.0.0
+            @semantic-release/exec
+            @semantic-release/github
+            conventional-changelog-conventionalcommits
+            semantic-release-export-data
+
+__STONECRAFT_/AUTOMATED_RELEASES____STONECRAFT_#DATAGEN__
+      - name: "🔨 Generate data"
+        run: ./scripts/datagen.sh
+
+__STONECRAFT_/DATAGEN__
+      - name: "🧪 Run Dev Build"
+__STONECRAFT_#AUTOMATED_RELEASES__
+        if: ${{ steps.get-next-version.outputs.new_release_published != 'true' }}
+__STONECRAFT_/AUTOMATED_RELEASES__
+        run: ./gradlew __STONECRAFT_#GAMETESTS__runGameTestServer __STONECRAFT_/GAMETESTS__buildAndCollect --stacktrace
+
+__STONECRAFT_#AUTOMATED_RELEASES__
+      - name: "🏗️ Build, Test & Release"
+        if: ${{ steps.get-next-version.outputs.new_release_published == 'true' }}
+        uses: cycjimmy/semantic-release-action@b12c8f6015dc215fe37bc154d4ad456dd3833c90 # v6.0.0
+        env:
+          GH_TOKEN: ${{ github.token }}
+__STONECRAFT_#PUBLISHING__
+          DO_PUBLISH: ${{ steps.get-next-version.outputs.new_release_published == 'true' }}
+          MODRINTH_ID: ${{ vars.MODRINTH_ID }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_ID: ${{ vars.CURSEFORGE_ID }}
+          CURSEFORGE_SLUG: ${{ vars.CURSEFORGE_SLUG }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+__STONECRAFT_/PUBLISHING__
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          extra_plugins: |
+            @meza/mezas-conventional-changelog
+            @semantic-release/changelog@6.0.0
+            @semantic-release/exec
+            @semantic-release/github
+            conventional-changelog-conventionalcommits
+            semantic-release-export-data
+
+__STONECRAFT_/AUTOMATED_RELEASES__
+      - name: "🕵️‍♂️ Collect artifacts"
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Artifacts
+          path: |
+            build/libs/*.jar
+            build/reports/**/*
+            versions/*/build/reports/**/*

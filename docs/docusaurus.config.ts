@@ -1,6 +1,7 @@
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import {themes} from "prism-react-renderer";
+import templateArchivePlugin from './plugins/templateArchive';
 
 const lightTheme = themes.oceanicNext;
 const darkTheme = themes.oceanicNext;
@@ -20,6 +21,7 @@ const config: Config = {
         defaultLocale: "en",
         locales: ["en"],
     },
+    plugins: [templateArchivePlugin],
     presets: [
         [
             '@docusaurus/preset-classic',
@@ -109,6 +111,11 @@ const config: Config = {
                 src: "img/stonecraft@0.5x.png",
             },
             items:[
+                {
+                    to: '/generator',
+                    label: 'Generator',
+                    position: 'right',
+                },
                 {
                     to: '/docs',
                     label: 'Docs',

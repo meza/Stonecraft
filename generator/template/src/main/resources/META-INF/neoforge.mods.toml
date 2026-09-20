@@ -1,0 +1,24 @@
+modLoader = "javafml"
+loaderVersion = "*"
+license = "MIT"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+__STONECRAFT_#REPOSITORY__
+displayURL = "__STONECRAFT_REPOSITORY_URL__"
+__STONECRAFT_/REPOSITORY__
+authors = "__STONECRAFT_AUTHOR__"
+description = '''
+${description}
+'''
+${neoforgeLogo} = "assets/${id}/icon.png"
+logoBlur = false
+
+[[dependencies.${id}]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[${minecraftVersionVirtual},)"
+ordering = "NONE"
+side = "BOTH"

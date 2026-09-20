@@ -1,0 +1,6 @@
+__STONECRAFT_#RENOVATE__
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>stateshifters/renovate-common"]
+}
+__STONECRAFT_/RENOVATE__
