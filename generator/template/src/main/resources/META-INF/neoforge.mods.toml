@@ -14,7 +14,7 @@ authors = "__STONECRAFT_AUTHOR__"
 description = '''
 ${description}
 '''
-${neoforgeLogo} = "assets/${id}/icon.png"
+logoFile = "assets/${id}/icon.png"
 logoBlur = false
 
 [[dependencies.${id}]]

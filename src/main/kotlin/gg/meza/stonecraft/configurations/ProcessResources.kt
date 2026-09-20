@@ -104,6 +104,14 @@ fun configureProcessResources(
                 }
             }
 
+            if (project.mod.isNeoforge) {
+                val usesIconMetadata = stonecutter.current.parsed >= "26.2"
+
+                filesMatching("META-INF/neoforge.mods.toml") {
+                    filter { line -> normalizeNeoForgeMetadata(line, usesIconMetadata) }
+                }
+            }
+
             // Exclude the correct mod metadata file based on the loader
             when {
                 project.mod.isFabric -> {
@@ -169,6 +177,17 @@ fun configureProcessResources(
             }
         }
     }
+}
+
+internal fun normalizeNeoForgeMetadata(line: String, usesIconMetadata: Boolean): String {
+    val currentName = line.substringBefore('=').trim()
+    val targetName = when (currentName) {
+        "logoFile", "iconFile" -> if (usesIconMetadata) "iconFile" else "logoFile"
+        "logoBlur", "iconBlur" -> if (usesIconMetadata) "iconBlur" else "logoBlur"
+        else -> return line
+    }
+
+    return line.replaceFirst(currentName, targetName)
 }
 
 private fun configureFabricGametestEntrypointArchiveCleanup(project: Project, modSettings: ModSettingsExtension) {
