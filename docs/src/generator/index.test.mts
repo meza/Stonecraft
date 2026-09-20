@@ -12,12 +12,18 @@ import {
 } from './index.ts';
 
 const ORIGINAL_FETCH = globalThis.fetch;
+const RELEASE_URL = 'https://api.github.com/repos/meza/Stonecraft/releases/latest';
 const OPTIONS: GenerateStonecraftProjectOptions = {
     modName: 'Sounds Be Gone',
     modId: 'soundsbegone',
     group: 'gg.meza',
     author: 'Meza',
     repository: 'https://codeberg.org/meza/SoundsBeGone',
+    loaders: {
+        fabric: true,
+        forge: true,
+        neoForge: true,
+    },
     features: {
         dataGeneration: true,
         gameTests: true,
@@ -33,6 +39,10 @@ test.afterEach(() => {
 
 function mockTemplate(bytes: Uint8Array): void {
     globalThis.fetch = (async (input) => {
+        if (input === RELEASE_URL) {
+            return Response.json({tag_name: 'v1.13.0'});
+        }
+
         assert.equal(input, '/generator/template.zip');
         return new Response(new Blob([Uint8Array.from(bytes)]), {status: 200});
     }) as typeof fetch;
@@ -88,7 +98,6 @@ test('renders the Stonecraft template', async () => {
 
     const zip = await JSZip.loadAsync(firstBytes);
     const files = Object.values(zip.files);
-    assert.equal(files.length, 30);
     assert.ok(zip.file('src/main/java/gg/meza/soundsbegone/SoundsBeGone.java'));
     assert.ok(zip.file('src/main/resources/soundsbegone.accesswidener'));
     assert.ok(zip.file('src/main/resources/assets/soundsbegone/icon.png'));
@@ -104,6 +113,9 @@ test('renders the Stonecraft template', async () => {
     assert.match(properties, /mod\.group=gg\.meza/);
     assert.match(properties, /mod\.description=A Minecraft mod called Sounds Be Gone\./);
 
+    const settings = await zip.file('settings.gradle.kts')!.async('string');
+    assert.match(settings, /id\("gg\.meza\.stonecraft"\) version "1\.13\.0"/);
+
     const fabricMetadata = JSON.parse(
         await zip.file('src/main/resources/fabric.mod.json')!.async('string'),
     );
@@ -118,6 +130,9 @@ test('renders the Stonecraft template', async () => {
         .async('string');
     assert.ok(neoForgeMetadata.indexOf('[[mods]]') < neoForgeMetadata.indexOf('displayURL'));
     assert.match(neoForgeMetadata, /displayURL = "https:\/\/codeberg\.org\/meza\/SoundsBeGone"/);
+
+    const forgeMetadata = await zip.file('src/main/resources/META-INF/mods.toml')!.async('string');
+    assert.match(forgeMetadata, /authors = "Meza"/);
 
     const java = await zip
         .file('src/main/java/gg/meza/soundsbegone/SoundsBeGone.java')!
@@ -191,6 +206,7 @@ test('omits every disabled project capability', async () => {
 
     const build = await zip.file('build.gradle.kts')!.async('string');
     assert.doesNotMatch(build, /publishMods|CLIENT_OR_SERVER_PREFERS_BOTH/);
+    assert.match(build, /import gg\.meza\.stonecraft\.mod/);
 
     const workflow = await zip.file('.github/workflows/build.yml')!.async('string');
     assert.doesNotMatch(workflow, /runDatagen|runGameTestServer|semantic-release|DO_PUBLISH/);
@@ -198,6 +214,42 @@ test('omits every disabled project capability', async () => {
 
     const readme = await zip.file('README.md')!.async('string');
     assert.doesNotMatch(readme, /DataGen|GameTest|Publishing configuration|semantic-release|Renovate/);
+});
+
+test('includes only selected mod loaders', async () => {
+    const source = await archiveTemplateDirectory();
+    const project = await generate(source, {
+        ...OPTIONS,
+        loaders: {fabric: false, forge: true, neoForge: false},
+    });
+    const zip = await JSZip.loadAsync(await project.archive.arrayBuffer());
+
+    assert.equal(zip.file('src/main/resources/fabric.mod.json'), null);
+    assert.ok(zip.file('src/main/resources/META-INF/mods.toml'));
+    assert.equal(zip.file('src/main/resources/META-INF/neoforge.mods.toml'), null);
+    assert.equal(
+        zip.file('src/main/java/gg/meza/soundsbegone/datagen/fabric/ExampleDataGenerator.java'),
+        null,
+    );
+    assert.equal(
+        zip.file('src/main/java/gg/meza/soundsbegone/datagen/neoforge/ExampleDataGenerator.java'),
+        null,
+    );
+
+    const readme = await zip.file('README.md')!.async('string');
+    assert.match(readme, /build for Forge/);
+});
+
+test('requires at least one mod loader', async () => {
+    const source = await archiveTemplateDirectory();
+
+    await assert.rejects(
+        generate(source, {
+            ...OPTIONS,
+            loaders: {fabric: false, forge: false, neoForge: false},
+        }),
+        /Select at least one mod loader/,
+    );
 });
 
 test('omits repository metadata when no repository URL is provided', async () => {
@@ -286,7 +338,30 @@ test('derives entrypoint class names', async () => {
 });
 
 test('reports an unsuccessful template response', async () => {
-    globalThis.fetch = (async () => new Response(null, {status: 503})) as typeof fetch;
+    globalThis.fetch = (async (input) =>
+        input === RELEASE_URL
+            ? Response.json({tag_name: 'v1.13.0'})
+            : new Response(null, {status: 503})) as typeof fetch;
 
     await assert.rejects(generateStonecraftProject(OPTIONS), /HTTP 503/);
+});
+
+test('reports an unsuccessful latest release response', async () => {
+    globalThis.fetch = (async (input) => {
+        assert.equal(input, RELEASE_URL);
+        return new Response(null, {status: 503});
+    }) as typeof fetch;
+
+    await assert.rejects(generateStonecraftProject(OPTIONS), /latest Stonecraft release: HTTP 503/);
+});
+
+test('rejects a latest release without a usable tag', async () => {
+    for (const tag_name of [undefined, 'v']) {
+        globalThis.fetch = (async (input) => {
+            assert.equal(input, RELEASE_URL);
+            return Response.json({tag_name});
+        }) as typeof fetch;
+
+        await assert.rejects(generateStonecraftProject(OPTIONS), /usable tag_name/);
+    }
 });

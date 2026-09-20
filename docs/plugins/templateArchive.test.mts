@@ -11,6 +11,7 @@ import webpack, {type Compiler} from 'webpack';
 
 import {
     createTemplateArchive,
+    readStonecutterVersion,
     templateArchivePlugin,
     TemplateArchiveWebpackPlugin,
 } from './templateArchive.ts';
@@ -23,6 +24,10 @@ async function createFixture(): Promise<string> {
     await writeFile(path.join(directory, 'gradlew'), '#!/bin/sh\n');
     await writeFile(path.join(directory, 'scripts', 'release.sh'), '#!/bin/sh\n');
     await writeFile(path.join(directory, '.gitignore'), 'build/\n');
+    await writeFile(
+        path.join(directory, 'settings.gradle.kts'),
+        'id("dev.kikugie.stonecutter") version "__STONECUTTER_VERSION__"\n',
+    );
     await writeFile(path.join(directory, 'Z.txt'), 'uppercase\n');
     await writeFile(path.join(directory, 'a.txt'), 'lowercase\n');
     await writeFile(path.join(directory, 'ä.txt'), 'unicode\n');
@@ -44,15 +49,23 @@ function sha256(content: Buffer): string {
 
 test('creates a deterministic archive with exact content and permissions', async () => {
     await withFixture(async (directory) => {
-        const first = await createTemplateArchive(directory);
-        const second = await createTemplateArchive(directory);
+        const first = await createTemplateArchive(directory, '0.9+');
+        const second = await createTemplateArchive(directory, '0.9+');
         assert.equal(sha256(first.archive), sha256(second.archive));
 
         const zip = await JSZip.loadAsync(first.archive);
         const entries = Object.values(zip.files).filter((entry) => !entry.dir);
         assert.deepEqual(
             entries.map((entry) => entry.name),
-            ['.gitignore', 'Z.txt', 'a.txt', 'gradlew', 'scripts/release.sh', 'ä.txt'],
+            [
+                '.gitignore',
+                'Z.txt',
+                'a.txt',
+                'gradlew',
+                'scripts/release.sh',
+                'settings.gradle.kts',
+                'ä.txt',
+            ],
         );
 
         for (const entry of entries) {
@@ -60,7 +73,14 @@ test('creates a deterministic archive with exact content and permissions', async
             const expected = await import('node:fs/promises').then((fs) =>
                 fs.readFile(path.join(directory, ...entry.name.split('/'))),
             );
-            assert.deepEqual(await entry.async('nodebuffer'), expected);
+            if (entry.name === 'settings.gradle.kts') {
+                assert.equal(
+                    await entry.async('string'),
+                    'id("dev.kikugie.stonecutter") version "0.9+"\n',
+                );
+            } else {
+                assert.deepEqual(await entry.async('nodebuffer'), expected);
+            }
             const permissions =
                 typeof entry.unixPermissions === 'string'
                     ? Number.parseInt(entry.unixPermissions, 8)
@@ -79,7 +99,7 @@ test('creates identical archives in different time zones', async () => {
         const script = `
             import {createHash} from 'node:crypto';
             import {createTemplateArchive} from ${JSON.stringify(moduleUrl)};
-            const {archive} = await createTemplateArchive(process.env.TEMPLATE_DIRECTORY);
+            const {archive} = await createTemplateArchive(process.env.TEMPLATE_DIRECTORY, '0.9+');
             process.stdout.write(createHash('sha256').update(archive).digest('hex'));
         `;
 
@@ -100,7 +120,7 @@ test('creates identical archives in different time zones', async () => {
 test('rejects empty templates', async () => {
     const directory = await mkdtemp(path.join(tmpdir(), 'stonecraft-template-empty-'));
     try {
-        await assert.rejects(createTemplateArchive(directory), /template is empty/);
+        await assert.rejects(createTemplateArchive(directory, '0.9+'), /template is empty/);
     } finally {
         await rm(directory, {recursive: true, force: true});
     }
@@ -111,7 +131,10 @@ test('rejects Git metadata at any depth', async () => {
         const directory = await mkdtemp(path.join(tmpdir(), 'stonecraft-template-git-'));
         try {
             await mkdir(path.join(directory, relativePath), {recursive: true});
-            await assert.rejects(createTemplateArchive(directory), /must not contain Git metadata/);
+            await assert.rejects(
+                createTemplateArchive(directory, '0.9+'),
+                /must not contain Git metadata/,
+            );
         } finally {
             await rm(directory, {recursive: true, force: true});
         }
@@ -123,7 +146,10 @@ test('rejects unsupported filesystem entries', async () => {
     try {
         await writeFile(path.join(directory, 'target.txt'), 'target\n');
         await symlink(path.join(directory, 'target.txt'), path.join(directory, 'link.txt'));
-        await assert.rejects(createTemplateArchive(directory), /Unsupported template entry/);
+        await assert.rejects(
+            createTemplateArchive(directory, '0.9+'),
+            /Unsupported template entry/,
+        );
     } finally {
         await rm(directory, {recursive: true, force: true});
     }
@@ -131,6 +157,8 @@ test('rejects unsupported filesystem entries', async () => {
 
 test('emits the archive and registers source dependencies', async () => {
     await withFixture(async (directory) => {
+        const versionCatalogPath = path.join(directory, 'libs.versions.toml');
+        await writeFile(versionCatalogPath, '[versions]\nstonecutter = "0.9+"\n');
         let compilationHandler: ((compilation: unknown) => void) | undefined;
         let processAssetsHandler: (() => Promise<void>) | undefined;
         let emittedName: string | undefined;
@@ -150,7 +178,7 @@ test('emits the archive and registers source dependencies', async () => {
             webpack,
         } as unknown as Compiler;
 
-        new TemplateArchiveWebpackPlugin(directory).apply(compiler);
+        new TemplateArchiveWebpackPlugin(directory, versionCatalogPath).apply(compiler);
         assert.ok(compilationHandler);
 
         compilationHandler({
@@ -183,8 +211,22 @@ test('emits the archive and registers source dependencies', async () => {
         assert.ok(emittedSource);
         assert.ok(emittedSource.buffer().length > 0);
         assert.deepEqual([...contextDependencies], [directory]);
-        assert.equal(fileDependencies.size, 6);
+        assert.equal(fileDependencies.size, 8);
     });
+});
+
+test('reads the Stonecutter version from the Gradle version catalog', async () => {
+    const directory = await mkdtemp(path.join(tmpdir(), 'stonecraft-version-catalog-'));
+    const versionCatalogPath = path.join(directory, 'libs.versions.toml');
+    try {
+        await writeFile(versionCatalogPath, '[versions]\nstonecutter = "0.9+"\n');
+        assert.equal(await readStonecutterVersion(versionCatalogPath), '0.9+');
+
+        await writeFile(versionCatalogPath, '[versions]\nother = "1.0"\n');
+        await assert.rejects(readStonecutterVersion(versionCatalogPath), /Stonecutter version/);
+    } finally {
+        await rm(directory, {recursive: true, force: true});
+    }
 });
 
 test('registers the archive emitter only for client compilations', () => {

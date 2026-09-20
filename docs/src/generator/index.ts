@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import Mustache from 'mustache';
 
 const TEMPLATE_URL = '/generator/template.zip';
+const LATEST_RELEASE_URL = 'https://api.github.com/repos/meza/Stonecraft/releases/latest';
 const MUSTACHE_OPTIONS = {
     escape: String,
     tags: ['__STONECRAFT_', '__'] as [string, string],
@@ -16,6 +17,13 @@ export type StonecraftProjectFeatures = {
     renovate: boolean;
 };
 
+/** Mod loaders targeted by a generated Stonecraft project. */
+export type StonecraftProjectLoaders = {
+    fabric: boolean;
+    forge: boolean;
+    neoForge: boolean;
+};
+
 /** Values used to render a new Stonecraft project. */
 export type GenerateStonecraftProjectOptions = {
     modName: string;
@@ -23,6 +31,7 @@ export type GenerateStonecraftProjectOptions = {
     group: string;
     author: string;
     repository?: string;
+    loaders: StonecraftProjectLoaders;
     features: StonecraftProjectFeatures;
 };
 
@@ -47,7 +56,19 @@ function entrypointClassFor(modName: string, modId: string): string {
     return /^\d/.test(className) ? `Mod${className}` : className;
 }
 
-function templateValues(options: GenerateStonecraftProjectOptions): TemplateValues {
+function templateValues(
+    options: GenerateStonecraftProjectOptions,
+    stonecraftVersion: string,
+): TemplateValues {
+    const selectedLoaders = [
+        ['Fabric', 'fabric', options.loaders.fabric],
+        ['Forge', 'forge', options.loaders.forge],
+        ['NeoForge', 'neoforge', options.loaders.neoForge],
+    ] as const;
+    const loaderNames = selectedLoaders.filter(([, , selected]) => selected).map(([name]) => name);
+    const loaderList = new Intl.ListFormat('en', {type: 'conjunction'}).format(loaderNames);
+    const primaryLoader = selectedLoaders.find(([, , selected]) => selected)![1];
+
     return {
         AUTHOR: options.author,
         BASE_PACKAGE: `${options.group}.${options.modId}`,
@@ -58,6 +79,12 @@ function templateValues(options: GenerateStonecraftProjectOptions): TemplateValu
         MOD_GROUP: options.group,
         MOD_ID: options.modId,
         MOD_NAME: options.modName,
+        VERSION: stonecraftVersion,
+        FABRIC: options.loaders.fabric,
+        FORGE: options.loaders.forge,
+        NEOFORGE: options.loaders.neoForge,
+        LOADERS: loaderList,
+        PRIMARY_LOADER: primaryLoader,
         PACKAGE_PATH: `${options.group.replaceAll('.', '/')}/${options.modId}`,
         REPOSITORY: Boolean(options.repository),
         REPOSITORY_URL: options.repository ?? '',
@@ -67,6 +94,25 @@ function templateValues(options: GenerateStonecraftProjectOptions): TemplateValu
         AUTOMATED_RELEASES: options.features.automatedReleases,
         RENOVATE: options.features.renovate,
     };
+}
+
+async function loadLatestStonecraftVersion(): Promise<string> {
+    const response = await fetch(LATEST_RELEASE_URL);
+    if (!response.ok) {
+        throw new Error(`Unable to fetch latest Stonecraft release: HTTP ${response.status}`);
+    }
+
+    const {tag_name: tagName}: {tag_name?: unknown} = await response.json();
+    if (typeof tagName !== 'string') {
+        throw new Error('Latest Stonecraft release does not contain a usable tag_name');
+    }
+
+    const version = tagName.replace(/^v/, '');
+    if (!version) {
+        throw new Error('Latest Stonecraft release does not contain a usable tag_name');
+    }
+
+    return version;
 }
 
 async function loadTemplate(): Promise<JSZip> {
@@ -113,7 +159,15 @@ async function renderTemplate(template: JSZip, values: TemplateValues): Promise<
 export async function generateStonecraftProject(
     options: GenerateStonecraftProjectOptions,
 ): Promise<GeneratedStonecraftProject> {
-    const archive = await renderTemplate(await loadTemplate(), templateValues(options));
+    if (!Object.values(options.loaders).some(Boolean)) {
+        throw new Error('Select at least one mod loader');
+    }
+
+    const stonecraftVersion = await loadLatestStonecraftVersion();
+    const archive = await renderTemplate(
+        await loadTemplate(),
+        templateValues(options, stonecraftVersion),
+    );
 
     return {
         filename: `${options.modId}.zip`,

@@ -3,4 +3,4 @@ plugins {
     id("gg.meza.stonecraft")
 }
 
-stonecutter active "26.3-fabric" /* [SC] DO NOT EDIT */
+stonecutter active "26.3-__STONECRAFT_PRIMARY_LOADER__" /* [SC] DO NOT EDIT */

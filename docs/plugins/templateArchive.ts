@@ -8,6 +8,7 @@ import type {Compiler} from 'webpack';
 const PLUGIN_NAME = 'stonecraft-template-archive';
 const ARCHIVE_PATH = 'generator/template.zip';
 const ARCHIVE_DATE = new Date(Date.UTC(1980, 0, 1, 0, 0, 0, 0));
+const STONECUTTER_VERSION_TOKEN = '__STONECUTTER_VERSION__';
 
 type TemplateFile = {
     absolutePath: string;
@@ -52,7 +53,20 @@ function isExecutable(archivePath: string): boolean {
     return archivePath === 'gradlew' || /^scripts\/[^/]+\.sh$/.test(archivePath);
 }
 
-export async function createTemplateArchive(templateDirectory: string): Promise<{
+export async function readStonecutterVersion(versionCatalogPath: string): Promise<string> {
+    const versionCatalog = await fs.readFile(versionCatalogPath, 'utf8');
+    const match = /^stonecutter\s*=\s*"([^"]+)"\s*$/m.exec(versionCatalog);
+    if (!match) {
+        throw new Error(`Stonecutter version not found in ${versionCatalogPath}`);
+    }
+
+    return match[1];
+}
+
+export async function createTemplateArchive(
+    templateDirectory: string,
+    stonecutterVersion: string,
+): Promise<{
     archive: Buffer;
     files: TemplateFile[];
 }> {
@@ -64,7 +78,12 @@ export async function createTemplateArchive(templateDirectory: string): Promise<
 
     const zip = new JSZip();
     for (const file of files) {
-        zip.file(file.archivePath, await fs.readFile(file.absolutePath), {
+        const source = await fs.readFile(file.absolutePath);
+        const content =
+            file.archivePath === 'settings.gradle.kts'
+                ? source.toString('utf8').replace(STONECUTTER_VERSION_TOKEN, stonecutterVersion)
+                : source;
+        zip.file(file.archivePath, content, {
             binary: true,
             createFolders: false,
             date: ARCHIVE_DATE,
@@ -85,9 +104,11 @@ export async function createTemplateArchive(templateDirectory: string): Promise<
 
 export class TemplateArchiveWebpackPlugin {
     private readonly templateDirectory: string;
+    private readonly versionCatalogPath: string;
 
-    constructor(templateDirectory: string) {
+    constructor(templateDirectory: string, versionCatalogPath: string) {
         this.templateDirectory = templateDirectory;
+        this.versionCatalogPath = versionCatalogPath;
     }
 
     apply(compiler: Compiler): void {
@@ -100,8 +121,15 @@ export class TemplateArchiveWebpackPlugin {
                     stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
                 },
                 async () => {
-                    const {archive, files} = await createTemplateArchive(this.templateDirectory);
+                    const stonecutterVersion = await readStonecutterVersion(
+                        this.versionCatalogPath,
+                    );
+                    const {archive, files} = await createTemplateArchive(
+                        this.templateDirectory,
+                        stonecutterVersion,
+                    );
                     files.forEach((file) => compilation.fileDependencies.add(file.absolutePath));
+                    compilation.fileDependencies.add(this.versionCatalogPath);
                     compilation.emitAsset(
                         ARCHIVE_PATH,
                         new compiler.webpack.sources.RawSource(archive),
@@ -114,6 +142,7 @@ export class TemplateArchiveWebpackPlugin {
 
 export function templateArchivePlugin(context: LoadContext): Plugin {
     const templateDirectory = path.resolve(context.siteDir, '..', 'generator', 'template');
+    const versionCatalogPath = path.resolve(context.siteDir, '..', 'gradle', 'libs.versions.toml');
 
     return {
         name: PLUGIN_NAME,
@@ -123,7 +152,9 @@ export function templateArchivePlugin(context: LoadContext): Plugin {
             }
 
             return {
-                plugins: [new TemplateArchiveWebpackPlugin(templateDirectory)],
+                plugins: [
+                    new TemplateArchiveWebpackPlugin(templateDirectory, versionCatalogPath),
+                ],
             };
         },
     };

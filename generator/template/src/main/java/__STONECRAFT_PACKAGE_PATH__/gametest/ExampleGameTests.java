@@ -3,19 +3,32 @@ package __STONECRAFT_BASE_PACKAGE__.gametest;
 
 import __STONECRAFT_BASE_PACKAGE__.__STONECRAFT_ENTRYPOINT_CLASS__;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.Identifier;
 
 /*? if fabric {*/
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
 /*?}*/
 
-/*? if neoforge {*/
+/*? if forgeLike {*/
 /*import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+*//*?}*/
+
+/*? if forge {*/
+/*import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.RegisterEvent;
+*//*?}*/
+
+/*? if neoforge {*/
+/*
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.RegisterEvent;
+*//*?}*/
+
+/*? if forge {*/
+/*@Mod.EventBusSubscriber(modid = __STONECRAFT_ENTRYPOINT_CLASS__.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 *//*?}*/
 
 /*? if neoforge {*/
@@ -34,7 +47,7 @@ public final class ExampleGameTests {
     }
     /*?}*/
 
-    /*? if neoforge {*/
+    /*? if forgeLike {*/
     /*@SubscribeEvent
     public static void registerTestFunctions(RegisterEvent event) {
         Identifier noopFunctionId = Identifier.fromNamespaceAndPath(__STONECRAFT_ENTRYPOINT_CLASS__.MOD_ID, NOOP_TEST_FUNCTION);
