@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+
+  "name": "${name}",
+  "description": "${description}",
+  "authors": [
+    "__STONECRAFT_AUTHOR__"
+  ],
+__STONECRAFT_#REPOSITORY__
+  "contact": {
+    "sources": "__STONECRAFT_REPOSITORY_URL__"
+  },
+__STONECRAFT_/REPOSITORY__
+
+  "license": "MIT",
+  "icon": "assets/${id}/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "${group}.${id}.__STONECRAFT_ENTRYPOINT_CLASS__"
+    ]__STONECRAFT_#DATAGEN__,
+    "fabric-datagen": [
+      "${group}.${id}.datagen.fabric.ExampleDataGenerator"
+    ]__STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__,
+    "fabric-gametest": [
+      "${group}.${id}.gametest.ExampleGameTests"
+    ]__STONECRAFT_/GAMETESTS__
+  },
+  "depends": {
+    "fabricloader": "*",
+    "fabric-api": ">=${fabricVersion}",
+    "minecraft": ">=${minecraftVersionVirtual}"
+  }
+}

@@ -9,11 +9,16 @@ For the full documentation, please visit [Stonecraft](https://stonecraft.meza.gg
 
 ## Quickstart
 
-### Use the Stonecraft template
+### Generate a Stonecraft project
 
-The simplest way to get started with a brand new mod project is to use the Stonecraft template.
+The simplest way to start a new mod is with the [Stonecraft project generator](https://stonecraft.meza.gg/generator).
+It creates the complete workspace locally in your browser without uploading your project details.
+The generator keeps the form state in the page URL, so you can copy the address to share a setup.
+The URL contains those project details, so share it only with people who should be able to read them.
 
-Simply go to https://github.com/meza/Stonecraft-template and click the "Use this template" button.
+Download the ZIP, unzip it into a new directory, and follow the generated README.
+
+If you generated a project, stop here. The remaining steps are only for adding Stonecraft to an existing Architectury project.
 
 ### Add the plugin to build.gradle[.kts]
 

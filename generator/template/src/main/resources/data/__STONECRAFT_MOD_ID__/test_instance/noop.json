@@ -1,0 +1,11 @@
+__STONECRAFT_#GAMETESTS__
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "__STONECRAFT_MOD_ID__:noop",
+  "max_ticks": 1,
+  "required": true,
+  "setup_ticks": 1,
+  "structure": "minecraft:empty"
+}
+__STONECRAFT_/GAMETESTS__

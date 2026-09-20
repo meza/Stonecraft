@@ -2,6 +2,7 @@
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["src/*.d.ts", "node"]
-  }
+    "types": ["node", "react", "react-dom"]
+  },
+  "exclude": ["**/*.test.mts", "**/*.test.tsx", "src/test"]
 }

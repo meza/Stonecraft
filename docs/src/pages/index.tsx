@@ -24,9 +24,9 @@ const features: Feature[] = [
   {
     title: 'Minutes to First Build',
     description:
-      'Use the official template or drop the plugin into an existing Architectury project to generate loader-specific modules, pack metadata, and default run configs.',
-    link: '/docs/Quickstart',
-    linkLabel: 'Follow the quickstart',
+      'Generate a complete Stonecraft workspace in your browser, then unzip it and start building across supported Minecraft versions and loaders.',
+    link: '/generator',
+    linkLabel: 'Generate a project',
   },
   {
     title: 'Automate Publishing',
@@ -102,7 +102,7 @@ function RecentPosts() {
     return `${minutes} min read`;
   };
 
-  const formatDate = (isoDate: string) =>
+  const formatDate = (isoDate: string | Date) =>
     new Date(isoDate).toLocaleDateString(undefined, {
       year: 'numeric',
       month: 'short',
@@ -161,7 +161,7 @@ function RecentPosts() {
   );
 }
 
-export default function Home(): JSX.Element {
+export default function Home(): React.JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout description={siteConfig.tagline}>
@@ -176,8 +176,8 @@ export default function Home(): JSX.Element {
             and publish to every platform without duplicating effort.
           </p>
           <div className={styles.heroButtons}>
-            <Link className="button button--primary button--lg" to="/docs/Quickstart">
-              Get started
+            <Link className="button button--primary button--lg" to="/generator">
+              Generate a project
             </Link>
             <Link className="button button--outline button--lg" to="https://github.com/meza/Stonecraft">
               View on GitHub
@@ -200,15 +200,15 @@ export default function Home(): JSX.Element {
           <div className="container">
             <div className="row">
               <div className="col col--7">
-                <h2>Ready-made template</h2>
+                <h2>Start a Stonecraft project</h2>
                 <p>
-                  Spin up a new project with Fabric, Forge, and NeoForge targets preconfigured, or bring the plugin
-                  into an existing Architectury workspace.
+                  Create a complete Fabric and NeoForge workspace locally in your browser. Download the ZIP,
+                  unzip it, and follow its README.
                 </p>
               </div>
               <div className="col col--5 text--right">
-                <Link className="button button--secondary button--lg" to="https://github.com/meza/Stonecraft-template">
-                  Use the template
+                <Link className="button button--secondary button--lg" to="/generator">
+                  Generate a project
                 </Link>
               </div>
             </div>
