@@ -11,6 +11,10 @@
       "matchManagers": [
         "npm"
       ],
+      "vulnerabilityAlerts": {
+        "groupName": "vulnerability updates",
+        "semanticCommitType": "docs"
+      },
       "semanticCommitType": "docs",
       "automerge": true
     },
