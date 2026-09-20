@@ -14,9 +14,23 @@ ${description}
 logoFile = "assets/${id}/icon.png"
 logoBlur = false
 
+#? if forge {
+[[dependencies.${id}]]
+modId = "forge"
+mandatory = true
+versionRange = "[${forgeLoaderVersion},)"
+ordering = "NONE"
+side = "CLIENT"
+#?}
+
 [[dependencies.${id}]]
 modId = "minecraft"
+#? if forge {
+mandatory = true
+#?}
+#? if neoforge {
 type = "required"
+#?}
 versionRange = "[${minecraftVersion},)"
 ordering = "NONE"
 side = "CLIENT"

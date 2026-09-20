@@ -65,6 +65,7 @@ Do NOT manage the Stonecutter guard comments manually. Use the version switching
 
 - For the project, look in the docs folder.
 - For fabric, use: https://docs.fabricmc.net/develop/
+- For Forge, use: https://docs.minecraftforge.net/
 - For neoforge, use: https://docs.neoforged.net/docs/gettingstarted/
 - For Minecraft: use the embedded code itself
 - For Stonecraft: https://stonecraft.meza.gg/

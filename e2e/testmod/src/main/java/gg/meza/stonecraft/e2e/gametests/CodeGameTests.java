@@ -3,19 +3,31 @@ package gg.meza.stonecraft.e2e.gametests;
 
 import gg.meza.stonecraft.e2e.TestMod;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.Identifier;
 
 /*? if fabric {*/
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
 /*?}*/
 
-/*? if neoforge {*/
+/*? if forgeLike {*/
 /*import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
-import net.neoforged.bus.api.SubscribeEvent;
+*//*?}*/
+
+/*? if forge {*/
+/*import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.RegisterEvent;
+*//*?}*/
+
+/*? if neoforge {*/
+/*import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.RegisterEvent;
+*//*?}*/
+
+/*? if forge {*/
+/*@Mod.EventBusSubscriber(modid = TestMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 *//*?}*/
 
 /*? if neoforge {*/
@@ -37,7 +49,7 @@ public class CodeGameTests {
 
     /*?}*/
 
-    /*? if neoforge {*/
+    /*? if forgeLike {*/
     /*@SubscribeEvent
     public static void registerTestFunctions(RegisterEvent event) {
         Identifier noopFunctionId = Identifier.fromNamespaceAndPath(TestMod.MOD_ID, NOOP_TEST_FUNCTION);

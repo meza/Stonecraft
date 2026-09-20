@@ -27,7 +27,7 @@ public class MinecraftRegistryTest {
     }
     //? }
 
-    //? if neoforge {
+    //? if forgeLike {
     /*@Test
     void itemRegistryCanResolveVanillaItems() {
         Identifier stoneId = minecraft("stone");

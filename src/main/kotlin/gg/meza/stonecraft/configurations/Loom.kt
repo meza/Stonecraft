@@ -17,14 +17,6 @@ import org.gradle.kotlin.dsl.getByType
 fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
 
-    if (project.mod.isForge && stonecutter.eval(stonecutter.current.version, ">=1.21")) {
-        project.logger.warn(
-            "Forge 1.21 and above is not really supported by Architectury anymore and " +
-                "issues may arise when using it with Architectury Loom.\n" +
-                "Please consider using NeoForge instead if you can."
-        )
-    }
-
     loom.apply {
         accessWidenerPath.set(modSettings.effectiveAccessWidenerLocationProp)
 
@@ -97,11 +89,6 @@ fun configureClientGameTests(
             }
         }
 
-        if (mod.isForge) {
-            project.tasks.named("runGameTestClient") {
-                dependsOn("generatePackMCMetaJson")
-            }
-        }
     }
 //
 }
@@ -133,11 +120,6 @@ fun configureServerGameTests(
         }
     }
 
-    if (mod.isForge) {
-        project.tasks.named("runGameTestServer") {
-            dependsOn("generatePackMCMetaJson")
-        }
-    }
 }
 
 /**
@@ -268,12 +250,6 @@ fun configureDatagen(
                 }
 //                }
             }
-        }
-    }
-
-    if (mod.isForge) {
-        project.tasks.named("runDatagen") {
-            dependsOn("generatePackMCMetaJson")
         }
     }
 

@@ -5,7 +5,7 @@ kover = "0.9.9"
 spotless = "8.10.2"
 gson = "2.14.0"
 stonecutter = "0.9+"
-architectury-loom = "1.17.493"
+architectury-loom = "1.17-20260912.095804-1"
 mod-publish = "2.2.0"
 junit = "6.1.3"
 junit-pioneer = "2.3.0"
@@ -17,7 +17,7 @@ kotlinx-serialization = "1.11.0"
 [libraries]
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 stonecutter = { module = "dev.kikugie.stonecutter:dev.kikugie.stonecutter.gradle.plugin", version.ref = "stonecutter" }
-architectury-loom = { module = "dev.architectury.loom:dev.architectury.loom.gradle.plugin", version.ref = "architectury-loom" }
+architectury-loom = { module = "dev.architectury:architectury-loom", version.ref = "architectury-loom" }
 mod-publish = { module = "me.modmuss50.mod-publish-plugin:me.modmuss50.mod-publish-plugin.gradle.plugin", version.ref = "mod-publish" }
 
 junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }

@@ -13,8 +13,8 @@ fun patchAroundArchitecturyQuirks(project: Project, stonecutter: StonecutterBuil
 }
 
 /**
- * Architectury loom is adding LWGJL natives but not the actual LWJGL dependency causing Forge to not boot
- * We are removing the natives from the classpath from the SERVER because it's not needed
+ * Removes unneeded LWJGL natives from dedicated-server classpaths configured by Architectury Loom.
+ * Forge GameTest servers through Minecraft 1.20.3 retain their existing classpath requirements.
  *
  * @see https://github.com/architectury/architectury-loom/issues/191#issuecomment-2030567486
  */
