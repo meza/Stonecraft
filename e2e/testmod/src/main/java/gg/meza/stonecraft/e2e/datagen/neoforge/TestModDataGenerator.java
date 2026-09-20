@@ -24,7 +24,7 @@ public final class TestModDataGenerator {
 
     //? if >= 1.21.5 {
     @SubscribeEvent
-    public static void gatherServerData(GatherDataEvent.Server event) {
+    public static void gatherClientData(GatherDataEvent.Client event) {
         event.createProvider((output, lookupProvider) ->
             new AdvancementProvider(output, lookupProvider, List.of((AdvancementSubProvider) (registries, exporter) ->
                 TestModAdvancements.generate(exporter)

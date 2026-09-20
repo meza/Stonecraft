@@ -194,6 +194,8 @@ fun configureDatagen(
 
     val mod = project.mod
     val generatedResources = modSettings.generatedResourcesProp.get()
+    val clientGeneratedResources = generatedResources.dir("client")
+    val serverGeneratedResources = generatedResources.dir("server")
 
     val modDefinition = listOf("--mod", mod.id)
     val generateAll = listOf("--all")
@@ -233,12 +235,22 @@ fun configureDatagen(
                 // @see https://neoforged.net/news/21.4release/#data-generation-splitting
                 create("ServerDatagen") {
                     serverData()
-                    programArguments.addAll(getProgramArgs(modDefinition, outputFolder))
+                    programArguments.addAll(
+                        getProgramArgs(
+                            modDefinition,
+                            listOf("--output", serverGeneratedResources.asFile.absolutePath)
+                        )
+                    )
                     forgeLikeLogging()
                 }
                 create("ClientDatagen") {
                     clientData()
-                    programArguments.addAll(getProgramArgs(modDefinition, outputFolder))
+                    programArguments.addAll(
+                        getProgramArgs(
+                            modDefinition,
+                            listOf("--output", clientGeneratedResources.asFile.absolutePath)
+                        )
+                    )
                     forgeLikeLogging()
                 }
             } else {

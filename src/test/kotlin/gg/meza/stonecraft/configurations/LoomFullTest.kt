@@ -105,7 +105,13 @@ class LoomFullTest : IntegrationTest {
 
     @Test
     fun `datagen options are set for all targets`() {
-        fun generatedDir(version: String, loader: String): String = gradleTest.project().layout.projectDirectory.dir("versions/$version-$loader/src/main/generated").asFile.absolutePath
+        fun generatedDir(version: String, loader: String): String = gradleTest.project().layout.projectDirectory
+            .dir("versions/$version-$loader/src/main/generated")
+            .asFile.absolutePath
+
+        fun generatedDir(version: String, loader: String, side: String): String = gradleTest.project().layout.projectDirectory
+            .dir("versions/$version-$loader/src/main/generated/$side")
+            .asFile.absolutePath
         val existingDir = gradleTest.project().layout.projectDirectory.dir("src/main/resources").asFile.absolutePath
         assertTrue(result.output.contains("[1.21-fabric] datagen jvmArguments=\"-Dfabric-api.datagen\""))
         assertTrue(result.output.contains("[1.21-fabric] datagen jvmArguments=\"-Dfabric-api.datagen.output-dir=${generatedDir("1.21", "fabric")}\""))
@@ -143,10 +149,12 @@ class LoomFullTest : IntegrationTest {
         assertTrue(result.output.contains("[1.21-neoforge] Datagen jvmArguments=\"-Dneoforge.logging.console.level=debug\""))
         assertTrue(result.output.contains("[1.21-neoforge] Datagen jvmArguments=\"-Dneoforge.logging.markers=REGISTRIES\""))
         assertTrue(result.output.contains("[1.21.4-neoforge] ClientDatagen"))
+        assertTrue(result.output.contains("[1.21.4-neoforge] ClientDatagen programArguments=\"${generatedDir("1.21.4", "neoforge", "client")}\""))
+        assertTrue(result.output.contains("[1.21.4-neoforge] ServerDatagen programArguments=\"${generatedDir("1.21.4", "neoforge", "server")}\""))
         assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen"), "Modern Neoforge client datagen settings should exist")
         assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen"), "Modern Neoforge server datagen settings should exist")
-        assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen programArguments=\"${generatedDir("26.1", "neoforge")}\""))
-        assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen programArguments=\"${generatedDir("26.1", "neoforge")}\""))
+        assertTrue(result.output.contains("[26.1-neoforge] ClientDatagen programArguments=\"${generatedDir("26.1", "neoforge", "client")}\""))
+        assertTrue(result.output.contains("[26.1-neoforge] ServerDatagen programArguments=\"${generatedDir("26.1", "neoforge", "server")}\""))
     }
 
     @Test
