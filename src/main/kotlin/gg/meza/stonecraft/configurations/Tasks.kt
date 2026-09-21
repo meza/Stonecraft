@@ -44,7 +44,7 @@ fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: 
 
         project.rootProject.tasks.register("testActiveClient") {
             group = currentModGroup
-            dependsOn(project.tasks.named("runGameTestClient"), project.tasks.named("configureMinecraftTestClient"))
+            dependsOn(project.tasks.named("runGameTestClient"))
         }
         project.rootProject.tasks.register("testActiveServer") {
             group = currentModGroup
@@ -82,6 +82,10 @@ fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: 
 
     project.tasks.named("runClient") {
         dependsOn(project.tasks.named("configureMinecraftClient"))
+    }
+
+    project.tasks.named("runGameTestClient") {
+        dependsOn(project.tasks.named("configureMinecraftTestClient"))
     }
 
     // Version projects share the configured game run directory, but each download task must own distinct outputs.

@@ -30,6 +30,7 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modS
 
         runConfigs.configureEach {
             generateRunConfig.set(true)
+            preferGradleTask.set(true)
             runDirectory.set(modSettings.runDirectoryProp)
             if (name == "client") {
                 programArguments.addAll("--username=developer")

@@ -112,6 +112,47 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
     }
 
     @Test
+    fun `run tasks own their setup and generated IDE configurations delegate to Gradle`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+        gradleTest.buildScript(
+            """
+            tasks.register("printRunTaskConfiguration") {
+                doLast {
+                    listOf("runClient", "runGameTestClient").forEach { taskName ->
+                        val task = tasks.named(taskName).get()
+                        val dependencies = task.taskDependencies.getDependencies(task).map { it.name }.sorted()
+                        dependencies.forEach { println(taskName + ".dep=" + it) }
+                    }
+
+                    val testActiveClient = rootProject.tasks.named("testActiveClient").get()
+                    val wrapperDependencies = testActiveClient.taskDependencies
+                        .getDependencies(testActiveClient)
+                        .map { it.path }
+                        .sorted()
+                    wrapperDependencies.forEach { println("testActiveClient.dep=" + it) }
+
+                    loom.runConfigs.forEach { runConfig ->
+                        println(runConfig.name + ".preferGradleTask=" + runConfig.preferGradleTask.get())
+                    }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run("printRunTaskConfiguration")
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(br.output.contains("runClient.dep=configureMinecraftClient"))
+        assertTrue(br.output.contains("runGameTestClient.dep=configureMinecraftTestClient"))
+        assertTrue(br.output.contains("testActiveClient.dep=:1.21.4-fabric:runGameTestClient"))
+        assertTrue(!br.output.contains("testActiveClient.dep=:1.21.4-neoforge:runGameTestClient"))
+        assertTrue(!br.output.contains("testActiveClient.dep=:1.21.4-fabric:configureMinecraftTestClient"))
+        assertTrue(!br.output.contains("preferGradleTask=false"))
+        assertTrue(br.output.contains("client.preferGradleTask=true"))
+        assertTrue(br.output.contains("gameTestClient.preferGradleTask=true"))
+    }
+
+    @Test
     fun `build and collect depends on remapJar for mapped versions`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
         gradleTest.buildScript(
