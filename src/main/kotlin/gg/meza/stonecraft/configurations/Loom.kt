@@ -6,8 +6,8 @@ import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.getProgramArgs
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import net.fabricmc.loom.api.RunConfiguration
 import net.fabricmc.loom.api.fabricapi.FabricApiExtension
-import net.fabricmc.loom.configuration.ide.RunConfigSettings
 import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
@@ -82,10 +82,10 @@ fun configureClientGameTests(
                 fabricGameTestConfig(Side.CLIENT, modSettings.fabricClientJunitReportLocationProp)
             }
             if (mod.isForge) {
-                forgeConfig(Side.CLIENT, mod.loader, stonecutter)
+                forgeConfig(Side.CLIENT, mod.loader, mod.id)
             }
             if (mod.isNeoforge) {
-                neoforgeConfig(Side.CLIENT, mod.loader, stonecutter)
+                neoforgeConfig(Side.CLIENT, mod.loader, mod.id, stonecutter)
             }
         }
 
@@ -112,10 +112,10 @@ fun configureServerGameTests(
                 fabricGameTestConfig(Side.SERVER, modSettings.fabricServerJunitReportLocationProp)
             }
             if (mod.isForge) {
-                forgeConfig(Side.SERVER, mod.loader, stonecutter)
+                forgeConfig(Side.SERVER, mod.loader, mod.id)
             }
             if (mod.isNeoforge) {
-                neoforgeConfig(Side.SERVER, mod.loader, stonecutter)
+                neoforgeConfig(Side.SERVER, mod.loader, mod.id, stonecutter)
             }
         }
     }
@@ -127,7 +127,7 @@ fun configureServerGameTests(
  * @param side The side of the game test
  *
  */
-private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: RegularFileProperty) {
+private fun RunConfiguration.fabricGameTestConfig(side: Side, junitFile: RegularFileProperty) {
     mapOf(
         "fabric-api.gametest" to "",
         "fabric-api.gametest.report-file" to junitFile.get().asFile.absolutePath
@@ -150,7 +150,7 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
  *
  * @param side The side of the game test
  */
-private fun RunConfigSettings.forgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
+private fun RunConfiguration.forgeConfig(side: Side, loader: String, modId: String) {
     if (side == Side.SERVER) {
         runtimeEnvironment.set("gameTestServer")
         forgeTemplate.set("gameTestServer")
@@ -158,12 +158,17 @@ private fun RunConfigSettings.forgeConfig(side: Side, loader: String, stonecutte
     }
 
     mapOf(
-        "$loader.enabledGameTestNamespaces" to project.mod.id,
+        "$loader.enabledGameTestNamespaces" to modId,
         "$loader.enableGameTest" to "true"
     ).forEach { (key, value) -> systemProperties.put(key, value) }
 }
 
-private fun RunConfigSettings.neoforgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
+private fun RunConfiguration.neoforgeConfig(
+    side: Side,
+    loader: String,
+    modId: String,
+    stonecutter: StonecutterBuildExtension
+) {
     if (side == Side.SERVER) {
         runtimeEnvironment.set("gameTestServer")
         forgeTemplate.set("gameTestServer")
@@ -176,7 +181,7 @@ private fun RunConfigSettings.neoforgeConfig(side: Side, loader: String, stonecu
     }
 
     mapOf(
-        "$loader.enabledGameTestNamespaces" to project.mod.id,
+        "$loader.enabledGameTestNamespaces" to modId,
         "$loader.enableGameTest" to "true"
     ).forEach { (key, value) -> systemProperties.put(key, value) }
 }
@@ -214,7 +219,7 @@ fun configureDatagen(
         }
     }
 
-    val forgeLikeLogging: RunConfigSettings.() -> Unit = {
+    val forgeLikeLogging: RunConfiguration.() -> Unit = {
         mapOf(
             "${mod.loader}.logging.console.level" to "debug",
             "${mod.loader}.logging.markers" to "REGISTRIES"
