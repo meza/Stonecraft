@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
+import gg.meza.stonecraft.MinecraftObfuscation
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
@@ -12,10 +13,15 @@ import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import java.io.File
 
-fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
+fun configureTasks(
+    project: Project,
+    stonecutter: StonecutterBuildExtension,
+    modSettings: ModSettingsExtension,
+    minecraftObfuscation: MinecraftObfuscation,
+) {
     val currentModGroup = "mod"
     val buildAndCollect = project.tasks.register<Copy>("buildAndCollect") {
-        val jarTask = resolveJarTask(project, stonecutter, realMinecraftVersion)
+        val jarTask = resolveJarTask(project, minecraftObfuscation)
         group = "build"
         from(jarTask.flatMap { it.archiveFile })
         into(project.rootProject.layout.buildDirectory.file("libs"))

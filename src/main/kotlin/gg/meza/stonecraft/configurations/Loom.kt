@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
+import gg.meza.stonecraft.MinecraftObfuscation
 import gg.meza.stonecraft.Side
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.getProgramArgs
@@ -8,13 +9,16 @@ import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.api.RunConfiguration
 import net.fabricmc.loom.api.fabricapi.FabricApiExtension
-import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.getByType
 
-fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
+fun configureLoom(
+    project: Project,
+    stonecutter: StonecutterBuildExtension,
+    modSettings: ModSettingsExtension,
+    minecraftObfuscation: MinecraftObfuscation,
+) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
 
     loom.apply {
@@ -48,10 +52,7 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modS
             val relativeLocation =
                 awFile.asFile.relativeTo(project.rootProject.layout.projectDirectory.dir("src/main/resources").asFile).invariantSeparatorsPath
 
-            val task = when {
-                stonecutter.current.parsed >= "26.1" -> project.tasks.named("jar", Jar::class.java)
-                else -> project.tasks.named("remapJar", RemapJarTask::class.java)
-            }
+            val task = resolveJarTask(project, minecraftObfuscation)
 
             if (project.mod.isFabricLike) {
                 loom.injectAccessWidener(task)

@@ -1,6 +1,6 @@
 package gg.meza.stonecraft.configurations
 
-import dev.kikugie.stonecutter.build.StonecutterBuildExtension
+import gg.meza.stonecraft.MinecraftObfuscation
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.upperCaseFirst
 import me.modmuss50.mpp.ModPublishExtension
@@ -8,7 +8,11 @@ import me.modmuss50.mpp.ReleaseType
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 
-fun configurePublishing(project: Project, minecraftVersion: String, stonecutter: StonecutterBuildExtension) {
+fun configurePublishing(
+    project: Project,
+    minecraftVersion: String,
+    minecraftObfuscation: MinecraftObfuscation,
+) {
     val publishing = project.extensions.getByType(ModPublishExtension::class)
     val modrinthVariables = listOf("MODRINTH_TOKEN", "MODRINTH_ID")
     val curseforgeVariables = listOf("CURSEFORGE_SLUG", "CURSEFORGE_ID", "CURSEFORGE_TOKEN")
@@ -43,7 +47,7 @@ fun configurePublishing(project: Project, minecraftVersion: String, stonecutter:
             )
         }
 
-        val jarTask = resolveJarTask(project, stonecutter, minecraftVersion)
+        val jarTask = resolveJarTask(project, minecraftObfuscation)
         file.set(jarTask.flatMap { it.archiveFile })
         version.set("${mod.version}+${mod.loader}-$minecraftVersion")
         modLoaders.add(mod.loader)

@@ -1,17 +1,15 @@
 package gg.meza.stonecraft.configurations
 
-import dev.kikugie.stonecutter.build.StonecutterBuildExtension
+import gg.meza.stonecraft.MinecraftObfuscation
 import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.api.tasks.bundling.AbstractArchiveTask
-import org.gradle.api.tasks.bundling.Jar
+import org.gradle.jvm.tasks.Jar
 
 fun resolveJarTask(
     project: Project,
-    stonecutter: StonecutterBuildExtension,
-    minecraftVersion: String
-): TaskProvider<out AbstractArchiveTask> = if (stonecutter.eval(minecraftVersion, ">1.21.11")) {
+    minecraftObfuscation: MinecraftObfuscation,
+): TaskProvider<out Jar> = if (minecraftObfuscation == MinecraftObfuscation.UNOBFUSCATED) {
     project.tasks.named("jar", Jar::class.java)
 } else {
     project.tasks.named("remapJar", RemapJarTask::class.java)

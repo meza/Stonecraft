@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
+import gg.meza.stonecraft.MinecraftObfuscation
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import org.gradle.api.Project
@@ -14,27 +15,42 @@ import java.util.*
 /**
  * Configures dependencies for each loader/version pair.
  *
- * Mojmap is the default namespace. Older branches can stay on Yarn by providing the legacy
- * `yarn_mappings` (and optional patch properties).
+ * [realMinecraftVersion] is the resolved artifact version, including any `minecraft_version`
+ * alias. [minecraftObfuscation] is the shared build classification derived from that version:
+ * [MinecraftObfuscation.MAPPED] through 1.21.11 and [MinecraftObfuscation.UNOBFUSCATED] for the
+ * 26.1 release line onward, including prereleases. Callers must pass the same classification to
+ * every obfuscation consumer so Loom, mappings and Fabric dependency routing, artifact and
+ * access-widener selection, collection, and publishing remain aligned.
+ *
+ * Mojmap is the default namespace for mapped versions. They can instead use Yarn by providing
+ * the legacy `yarn_mappings`; NeoForge also requires `yarn_mappings_neoforge_patch`.
+ * Unobfuscated versions install no mappings. Fabric dependencies use Loom's `modImplementation`
+ * and `modApi` configurations when mapped, and standard `implementation`, `api`, and
+ * `testImplementation` configurations when unobfuscated.
  *
  * @TODO: Add support for Quilt
  *
  * @param project The project to configure the dependencies for
  * @param stonecutter The Stonecutter dependency
- * @param realMinecraftVersion The version of Minecraft to configure the dependencies for
+ * @param realMinecraftVersion The resolved Minecraft artifact version to configure
+ * @param minecraftObfuscation The shared classification derived from [realMinecraftVersion]
  */
-fun configureDependencies(project: Project, stonecutter: StonecutterBuildExtension, realMinecraftVersion: String) {
+fun configureDependencies(
+    project: Project,
+    stonecutter: StonecutterBuildExtension,
+    realMinecraftVersion: String,
+    minecraftObfuscation: MinecraftObfuscation,
+) {
     configureDependencyRepositories(project)
 
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
     val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
-    val deobfuscatedMinecraft = stonecutter.eval(realMinecraftVersion, ">=26.1")
 
     // Minecraft
     project.dependencies.add("minecraft", "com.mojang:minecraft:$realMinecraftVersion")
 
     // Mappings
-    if (deobfuscatedMinecraft) {
+    if (minecraftObfuscation == MinecraftObfuscation.UNOBFUSCATED) {
         project.logger.info("Using deobfuscated Minecraft for version $realMinecraftVersion; no mappings will be applied.")
         if (useLegacyYarnMappings) {
             project.logger.warn(
@@ -82,7 +98,7 @@ fun configureDependencies(project: Project, stonecutter: StonecutterBuildExtensi
 
     // Fabric
     if (project.mod.isFabric) {
-        if (deobfuscatedMinecraft) {
+        if (minecraftObfuscation == MinecraftObfuscation.UNOBFUSCATED) {
             project.dependencies.add(
                 "implementation",
                 "net.fabricmc:fabric-loader:${project.mod.prop("loader_version")}"
