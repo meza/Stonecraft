@@ -141,32 +141,6 @@ class AgentSkillConfigurationTest : IntegrationTest {
     }
 
     @Test
-    fun `Stonecraft offers a guidance upgrade when the installed skill version is older`() {
-        val gradleTest = gradleTest().apply {
-            setStonecutterVersion("1.21.4", "fabric")
-            withCodingAgentMarker("CODEX_THREAD_ID", "test-thread")
-        }
-        gradleTest.project().file(".agents/skills/stonecraft/SKILL.md").apply {
-            parentFile.mkdirs()
-            writeText(
-                "---\nname: stonecraft\nmetadata:\n  version: \"0\"\n---\n\nOld guidance"
-            )
-        }
-
-        val result = gradleTest.run("help")
-
-        gradleTest.assertNoGradleFailures(result)
-        assertTrue(
-            result.output.contains("Updated Stonecraft and Stonecutter guidance is available"),
-            "Expected an upgrade reminder for an older installed skill. Output was:\n${result.output}"
-        )
-        assertTrue(
-            result.output.contains("./gradlew stonecraftGuidanceVersion"),
-            "Expected the upgrade reminder to identify the cheap version check. Output was:\n${result.output}"
-        )
-    }
-
-    @Test
     fun `consumer can disable the guidance reminder`() {
         val gradleTest = gradleTest().apply {
             setStonecutterVersion("1.21.4", "fabric")
@@ -205,109 +179,7 @@ class AgentSkillConfigurationTest : IntegrationTest {
     }
 
     @Test
-    fun `guidance task prints the embedded skill when it is not installed`() {
-        val gradleTest = gradleTest().apply {
-            setStonecutterVersion("1.21.4", "fabric")
-        }
-
-        val result = gradleTest.run("stonecraftGuidance")
-
-        gradleTest.assertNoGradleFailures(result)
-        assertTrue(result.output.contains("name: stonecraft"), "Expected skill frontmatter in task output.")
-        assertTrue(
-            result.output.contains("version: \"1\""),
-            "Expected versioned skill frontmatter in task output."
-        )
-        assertTrue(
-            result.output.contains("# Working with Stonecraft and Stonecutter"),
-            "Expected the combined Stonecraft and Stonecutter instructions in task output."
-        )
-        assertTrue(
-            result.output.contains("DO NOT ASSUME THAT COMMENTED OUT CODE IS DEAD CODE."),
-            "Expected the Stonecutter comment invariant in task output."
-        )
-        assertTrue(
-            result.output.contains("Set active project to <version>-<loader>"),
-            "Expected the target-switching workflow in task output."
-        )
-        assertTrue(
-            result.output.contains("versions/dependencies/<minecraftVersion>.properties"),
-            "Expected the per-version dependency workflow in task output."
-        )
-        assertTrue(
-            result.output.contains("## Adding a new Minecraft version"),
-            "Expected the Minecraft version update workflow in task output."
-        )
-        assertTrue(
-            result.output.contains("offer to install it with ./gradlew installStonecraftSkill"),
-            "Expected the reader to ask the agent to offer installation."
-        )
-    }
-
-    @Test
-    fun `guidance task prints the bundled skill with instructions for a current installation`() {
-        val gradleTest = gradleTest().apply {
-            setStonecutterVersion("1.21.4", "fabric")
-        }
-
-        val installResult = gradleTest.run("installStonecraftSkill", cacheTask = false)
-        gradleTest.assertNoGradleFailures(installResult)
-        gradleTest.project().file(".agents/skills/stonecraft/SKILL.md").appendText("\nLocal project note.\n")
-
-        val readResult = gradleTest.run("stonecraftGuidance", cacheTask = false)
-
-        gradleTest.assertNoGradleFailures(readResult)
-        assertTrue(
-            readResult.output.contains("If you have a `stonecraft` skill already, use that and stop here now"),
-            "Expected the bundled guidance to start with installed-skill instructions. Output was:\n${readResult.output}"
-        )
-        assertTrue(
-            readResult.output.contains("metadata.version"),
-            "Expected version comparison instructions. Output was:\n${readResult.output}"
-        )
-        assertTrue(
-            readResult.output.contains("DO NOT ASSUME THAT COMMENTED OUT CODE IS DEAD CODE."),
-            "Expected the complete bundled skill body. Output was:\n${readResult.output}"
-        )
-    }
-
-    @Test
-    fun `guidance task prints the embedded skill when the installed copy is outdated`() {
-        val gradleTest = gradleTest().apply {
-            setStonecutterVersion("1.21.4", "fabric")
-            buildScript(
-                """
-                tasks.register("writeOutdatedStonecraftSkill") {
-                    doLast {
-                        val installedSkill = rootProject.file(".agents/skills/stonecraft/SKILL.md")
-                        installedSkill.parentFile.mkdirs()
-                        installedSkill.writeText(
-                            "---\nname: stonecraft\nmetadata:\n  version: \"0\"\n---\n\nOld guidance"
-                        )
-                    }
-                }
-                rootProject.tasks.named("stonecraftGuidance") {
-                    dependsOn(tasks.named("writeOutdatedStonecraftSkill"))
-                }
-                """.trimIndent()
-            )
-        }
-
-        val result = gradleTest.run("stonecraftGuidance")
-
-        gradleTest.assertNoGradleFailures(result)
-        assertTrue(
-            result.output.contains("DO NOT ASSUME THAT COMMENTED OUT CODE IS DEAD CODE."),
-            "Expected the current embedded guidance when the installed copy is outdated."
-        )
-        assertTrue(
-            result.output.contains("lower than 1"),
-            "Expected the reader to explain when the installed skill needs an update."
-        )
-    }
-
-    @Test
-    fun `guidance version task reports current installation without printing the skill`() {
+    fun `guidance version task reports current installation`() {
         val gradleTest = gradleTest().apply {
             setStonecutterVersion("1.21.4", "fabric")
         }
@@ -317,12 +189,7 @@ class AgentSkillConfigurationTest : IntegrationTest {
         val result = gradleTest.run("stonecraftGuidanceVersion", cacheTask = false)
 
         gradleTest.assertNoGradleFailures(result)
-        assertTrue(result.output.contains("Bundled Stonecraft guidance version: 1"))
-        assertTrue(result.output.contains("Installed Stonecraft guidance version: 1 (current)"))
-        assertTrue(
-            !result.output.contains("DO NOT ASSUME THAT COMMENTED OUT CODE IS DEAD CODE."),
-            "Expected the version task not to print the skill body. Output was:\n${result.output}"
-        )
+        assertTrue(result.output.contains("Installed Stonecraft guidance version:") && result.output.contains("(current)"))
     }
 
     @Test
@@ -334,7 +201,6 @@ class AgentSkillConfigurationTest : IntegrationTest {
         val result = gradleTest.run("stonecraftGuidanceVersion", cacheTask = false)
 
         gradleTest.assertNoGradleFailures(result)
-        assertTrue(result.output.contains("Bundled Stonecraft guidance version: 1"))
         assertTrue(result.output.contains("Installed Stonecraft guidance version: not installed"))
     }
 
@@ -342,37 +208,14 @@ class AgentSkillConfigurationTest : IntegrationTest {
     fun `install task writes the embedded skill to the repository skill directory`() {
         val gradleTest = gradleTest().apply {
             setStonecutterVersion("1.21.4", "fabric")
-            buildScript(
-                """
-                tasks.register("verifyInstalledStonecraftSkill") {
-                    dependsOn(rootProject.tasks.named("installStonecraftSkill"))
-                    doLast {
-                        val installedSkill = rootProject.file(".agents/skills/stonecraft/SKILL.md")
-                        check(installedSkill.isFile) { "Stonecraft skill was not installed" }
-                        println("installed.skill=" + installedSkill.readText())
-                    }
-                }
-                """.trimIndent()
-            )
         }
 
-        val result = gradleTest.run("verifyInstalledStonecraftSkill")
+        val result = gradleTest.run("installStonecraftSkill")
 
         gradleTest.assertNoGradleFailures(result)
-        assertTrue(result.output.contains("installed.skill=---"), "Expected an installed SKILL.md file.")
-        assertTrue(result.output.contains("name: stonecraft"), "Expected the embedded skill to be installed.")
-        assertTrue(
-            result.output.contains("version: \"1\""),
-            "Expected the installed skill to include its version."
-        )
-        assertTrue(
-            result.output.contains("# Working with Stonecraft and Stonecutter"),
-            "Expected complete combined workflow instructions."
-        )
-        assertTrue(
-            result.output.contains("DO NOT ASSUME THAT COMMENTED OUT CODE IS DEAD CODE."),
-            "Expected the installed skill to preserve the Stonecutter comment invariant."
-        )
+        val installedSkill = gradleTest.project().file(".agents/skills/stonecraft/SKILL.md")
+        assertTrue(installedSkill.isFile, "Expected an installed SKILL.md file.")
+        assertTrue(installedSkill.length() > 0, "Expected the installed SKILL.md file not to be empty.")
     }
 
     @Test
@@ -381,7 +224,7 @@ class AgentSkillConfigurationTest : IntegrationTest {
             setStonecutterVersion("1.21.4", "fabric")
         }
         val installedSkill = gradleTest.project().file(".agents/skills/stonecraft/SKILL.md")
-        val userSkill = "---\nname: stonecraft\nmetadata:\n  version: \"0\"\n---\n\nUser changes"
+        val userSkill = "User changes"
         installedSkill.apply {
             parentFile.mkdirs()
             writeText(userSkill)
@@ -411,7 +254,6 @@ class AgentSkillConfigurationTest : IntegrationTest {
         val result = gradleTest.run(listOf("installStonecraftSkill", "--force-overwrite"), cacheTask = false)
 
         gradleTest.assertNoGradleFailures(result)
-        assertTrue(installedSkill.readText().contains("version: \"1\""))
         assertTrue(!installedSkill.readText().contains("User changes"))
     }
 

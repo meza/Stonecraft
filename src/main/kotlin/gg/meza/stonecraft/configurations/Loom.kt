@@ -225,6 +225,9 @@ fun configureDatagen(
         if (mod.isForge) {
             create("datagen") {
                 data()
+                if (stonecutter.eval(minecraftVersion, ">=26.1")) {
+                    programArguments.addAll("--launchTarget", "forge_userdev_data", "--gameDir", ".")
+                }
                 programArguments.addAll(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
                 forgeLikeLogging()
             }
