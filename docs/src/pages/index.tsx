@@ -202,8 +202,8 @@ export default function Home(): React.JSX.Element {
               <div className="col col--7">
                 <h2>Start a Stonecraft project</h2>
                 <p>
-                  Create a complete Fabric and NeoForge workspace locally in your browser. Download the ZIP,
-                  unzip it, and follow its README.
+                  Choose Fabric, Forge, NeoForge, or any combination of them and create a complete
+                  workspace locally in your browser. Download the ZIP, unzip it, and follow its README.
                 </p>
               </div>
               <div className="col col--5 text--right">

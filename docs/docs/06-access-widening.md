@@ -4,7 +4,7 @@ _Since Stonecraft version: 1.12.0_
 
 Access widening provides a way to loosen the access limits of classes, methods or fields. This includes making them public, or making them extendable (subclassable).
 
-In Fabric, this would typically be done with **Access wideners**, while NeoForge uses **Access Transformers**. Please refer to their respective docs in order to understand the differences.
+Fabric uses **access wideners**, while Forge and NeoForge use **access transformers**. Refer to each loader's documentation for the differences between these formats.
 
 Stonecraft leverages Stonecutter and Architectury Loom, which allows you to define a different access widening file for each version supported by your mod by using variable substitution.
 

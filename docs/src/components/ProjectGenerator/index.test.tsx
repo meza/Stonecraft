@@ -13,6 +13,11 @@ const project = {
     author: 'Example Author',
     repository: 'https://codeberg.org/example/copper-tools',
 };
+const latestReleaseUrl = 'https://api.github.com/repos/meza/Stonecraft/releases/latest';
+
+function releaseResponse(): Response {
+    return Response.json({tag_name: 'v1.13.0'});
+}
 
 async function templateResponse(): Promise<Response> {
     const template = new JSZip();
@@ -24,6 +29,10 @@ async function templateResponse(): Promise<Response> {
             '__STONECRAFT_MOD_GROUP__',
             '__STONECRAFT_MOD_DESCRIPTION__',
             '__STONECRAFT_AUTHOR__',
+            'version=__STONECRAFT_VERSION__',
+            'fabric=__STONECRAFT_#FABRIC__yes__STONECRAFT_/FABRIC__',
+            'forge=__STONECRAFT_#FORGE__yes__STONECRAFT_/FORGE__',
+            'neoforge=__STONECRAFT_#NEOFORGE__yes__STONECRAFT_/NEOFORGE__',
             '__STONECRAFT_#REPOSITORY__repository=__STONECRAFT_REPOSITORY_URL____STONECRAFT_/REPOSITORY__',
             'datagen=__STONECRAFT_#DATAGEN__yes__STONECRAFT_/DATAGEN__',
             'gametests=__STONECRAFT_#GAMETESTS__yes__STONECRAFT_/GAMETESTS__',
@@ -34,6 +43,10 @@ async function templateResponse(): Promise<Response> {
     );
 
     return new Response(await template.generateAsync({type: 'uint8array'}), {status: 200});
+}
+
+async function generatorResponse(input: RequestInfo | URL): Promise<Response> {
+    return input === latestReleaseUrl ? releaseResponse() : templateResponse();
 }
 
 async function fillForm(user: ReturnType<typeof userEvent.setup>): Promise<void> {
@@ -149,7 +162,7 @@ describe('ProjectGenerator', () => {
         window.history.replaceState(
             {},
             '',
-            '/generator?modName=Copper+Tools&modId=copper_tools_plus&group=dev.example&description=Legacy+value&githubOwner=legacy-owner&githubRepository=legacy-repository&author=Example+Author&repository=https%3A%2F%2Fcodeberg.org%2Fexample%2Fcopper-tools&features=datagen,publishing,unknown&ignored=value#generator',
+            '/generator?modName=Copper+Tools&modId=copper_tools_plus&group=dev.example&description=Legacy+value&githubOwner=legacy-owner&githubRepository=legacy-repository&author=Example+Author&repository=https%3A%2F%2Fcodeberg.org%2Fexample%2Fcopper-tools&loaders=forge,neoforge,unknown&features=datagen,publishing,unknown&ignored=value#generator',
         );
         const user = userEvent.setup();
         render(<ProjectGenerator />);
@@ -166,16 +179,21 @@ describe('ProjectGenerator', () => {
         expect((screen.getByRole('checkbox', {name: 'Mod publishing'}) as HTMLInputElement).checked).toBe(true);
         expect((screen.getByRole('checkbox', {name: 'Automated releases'}) as HTMLInputElement).checked).toBe(false);
         expect((screen.getByRole('checkbox', {name: 'Renovate dependency updates'}) as HTMLInputElement).checked).toBe(false);
+        expect((screen.getByRole('checkbox', {name: 'Fabric'}) as HTMLInputElement).checked).toBe(false);
+        expect((screen.getByRole('checkbox', {name: 'Forge'}) as HTMLInputElement).checked).toBe(true);
+        expect((screen.getByRole('checkbox', {name: 'NeoForge'}) as HTMLInputElement).checked).toBe(true);
 
         await user.clear(screen.getByLabelText('Mod name'));
         await user.type(screen.getByLabelText('Mod name'), 'Tin Tools');
         await user.click(screen.getByRole('checkbox', {name: 'GameTests'}));
+        await user.click(screen.getByRole('checkbox', {name: 'Fabric'}));
 
         await waitFor(() => {
             const parameters = new URLSearchParams(window.location.search);
             expect(parameters.get('modName')).toBe('Tin Tools');
             expect(parameters.get('modId')).toBe('copper_tools_plus');
             expect(parameters.get('features')).toBe('datagen,gametests,publishing');
+            expect(parameters.get('loaders')).toBe('fabric,forge,neoforge');
             expect(parameters.has('description')).toBe(false);
             expect(parameters.has('githubOwner')).toBe(false);
             expect(parameters.has('githubRepository')).toBe(false);
@@ -217,6 +235,9 @@ describe('ProjectGenerator', () => {
         render(<ProjectGenerator />);
 
         for (const name of [
+            'Fabric',
+            'Forge',
+            'NeoForge',
             'Data generation',
             'GameTests',
             'Mod publishing',
@@ -233,7 +254,12 @@ describe('ProjectGenerator', () => {
         const fetchPromise = new Promise<Response>((resolve) => {
             resolveFetch = resolve;
         });
-        vi.stubGlobal('fetch', vi.fn(() => fetchPromise));
+        vi.stubGlobal(
+            'fetch',
+            vi.fn((input: RequestInfo | URL) =>
+                input === latestReleaseUrl ? fetchPromise : templateResponse(),
+            ),
+        );
         render(<ProjectGenerator />);
         await fillForm(user);
 
@@ -241,7 +267,7 @@ describe('ProjectGenerator', () => {
 
         const loadingButton = screen.getByRole('button', {name: 'Generating project...'});
         expect((loadingButton as HTMLButtonElement).disabled).toBe(true);
-        resolveFetch(await templateResponse());
+        resolveFetch(releaseResponse());
 
         await screen.findByText('copper_tools.zip is ready. Unzip it and follow the README to get started.');
         expect((screen.getByRole('button', {name: 'Generate project'}) as HTMLButtonElement).disabled).toBe(false);
@@ -260,6 +286,10 @@ describe('ProjectGenerator', () => {
                 project.group,
                 `A Minecraft mod called ${project.modName}.`,
                 project.author,
+                'version=1.13.0',
+                'fabric=yes',
+                'forge=yes',
+                'neoforge=yes',
                 `repository=${project.repository}`,
                 'datagen=yes',
                 'gametests=yes',
@@ -272,7 +302,7 @@ describe('ProjectGenerator', () => {
 
     it('excludes unchecked project capabilities', async () => {
         const user = userEvent.setup();
-        vi.stubGlobal('fetch', vi.fn(templateResponse));
+        vi.stubGlobal('fetch', vi.fn(generatorResponse));
         render(<ProjectGenerator />);
         await fillForm(user);
 
@@ -300,6 +330,10 @@ describe('ProjectGenerator', () => {
                 project.group,
                 `A Minecraft mod called ${project.modName}.`,
                 project.author,
+                'version=1.13.0',
+                'fabric=yes',
+                'forge=yes',
+                'neoforge=yes',
                 `repository=${project.repository}`,
                 'datagen=',
                 'gametests=',
@@ -312,7 +346,7 @@ describe('ProjectGenerator', () => {
 
     it('generates a project without repository metadata', async () => {
         const user = userEvent.setup();
-        vi.stubGlobal('fetch', vi.fn(templateResponse));
+        vi.stubGlobal('fetch', vi.fn(generatorResponse));
         render(<ProjectGenerator />);
 
         await user.type(screen.getByLabelText('Mod name'), project.modName);
@@ -330,6 +364,10 @@ describe('ProjectGenerator', () => {
                 project.group,
                 `A Minecraft mod called ${project.modName}.`,
                 project.author,
+                'version=1.13.0',
+                'fabric=yes',
+                'forge=yes',
+                'neoforge=yes',
                 '',
                 'datagen=yes',
                 'gametests=yes',
@@ -345,6 +383,7 @@ describe('ProjectGenerator', () => {
         const fetchMock = vi
             .fn<typeof fetch>()
             .mockResolvedValueOnce(new Response(null, {status: 503}))
+            .mockResolvedValueOnce(releaseResponse())
             .mockImplementationOnce(templateResponse);
         vi.stubGlobal('fetch', fetchMock);
         render(<ProjectGenerator />);
@@ -353,11 +392,29 @@ describe('ProjectGenerator', () => {
         await user.click(screen.getByRole('button', {name: 'Generate project'}));
 
         const alert = await screen.findByRole('alert');
-        expect(alert.textContent).toContain('Unable to fetch /generator/template.zip: HTTP 503');
+        expect(alert.textContent).toContain('Unable to fetch latest Stonecraft release: HTTP 503');
         expect((screen.getByRole('button', {name: 'Generate project'}) as HTMLButtonElement).disabled).toBe(false);
 
         await user.click(screen.getByRole('button', {name: 'Generate project'}));
         await waitFor(() => expect(createObjectURL).toHaveBeenCalledOnce());
-        expect(fetchMock).toHaveBeenCalledTimes(2);
+        expect(fetchMock).toHaveBeenCalledTimes(3);
+    });
+
+    it('requires at least one mod loader', async () => {
+        const user = userEvent.setup();
+        const fetchMock = vi.fn();
+        vi.stubGlobal('fetch', fetchMock);
+        render(<ProjectGenerator />);
+        await fillForm(user);
+
+        for (const name of ['Fabric', 'Forge', 'NeoForge']) {
+            await user.click(screen.getByRole('checkbox', {name}));
+        }
+        await user.click(screen.getByRole('button', {name: 'Generate project'}));
+
+        expect((await screen.findByRole('alert')).textContent).toContain(
+            'Select at least one mod loader',
+        );
+        expect(fetchMock).not.toHaveBeenCalled();
     });
 });

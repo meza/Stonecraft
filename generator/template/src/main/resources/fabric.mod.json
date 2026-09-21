@@ -1,3 +1,4 @@
+__STONECRAFT_#FABRIC__
 {
   "schemaVersion": 1,
   "id": "${id}",
@@ -35,3 +36,4 @@ __STONECRAFT_/REPOSITORY__
     "minecraft": ">=${minecraftVersionVirtual}"
   }
 }
+__STONECRAFT_/FABRIC__

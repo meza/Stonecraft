@@ -2,15 +2,15 @@
 
 __STONECRAFT_MOD_DESCRIPTION__
 
-This project uses [Stonecraft](https://stonecraft.meza.gg) to target Minecraft 26.1, 26.2, and 26.3 on Fabric and NeoForge. It includes:
+This project uses [Stonecraft](https://stonecraft.meza.gg) to build for __STONECRAFT_LOADERS__. It includes:
 
-- a shared Fabric and NeoForge mod entrypoint;
+- a shared mod entrypoint across the selected loaders;
 __STONECRAFT_#DATAGEN__
-- data generation for both loaders;
+- example data generation for selected loaders that provide an example generator;
 __STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__
 - a cross-loader GameTest;
 __STONECRAFT_/GAMETESTS__
-- an access widener that Stonecraft converts for NeoForge;
+- an access widener that Stonecraft converts for loaders that require it;
 __STONECRAFT_#PUBLISHING__
 - artifact publishing for Modrinth and CurseForge;
 __STONECRAFT_/PUBLISHING____STONECRAFT_#AUTOMATED_RELEASES__
@@ -45,9 +45,9 @@ __STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__
 __STONECRAFT_/GAMETESTS__
 ```
 
-`buildAndCollect` builds every configured Minecraft-version and loader pair, then collects six JARs under `build/libs`.
+`buildAndCollect` builds every configured Minecraft-version and loader pair, then collects the resulting JARs under `build/libs`.
 __STONECRAFT_#DATAGEN__
-`runDatagen` runs the example advancement generator for every pair and writes into each `versions/*/src/main/generated` directory.
+`runDatagen` runs data generation for every configured pair and writes into each `versions/*/src/main/generated` directory. The example advancement provider is registered for selected Fabric and NeoForge pairs.
 __STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__
 `runGameTestServer` succeeds only after the no-op GameTest passes for every pair. Failures are reported by the corresponding version-loader Gradle task.
 __STONECRAFT_/GAMETESTS__
@@ -102,12 +102,12 @@ Data generation writes to `src/main/generated` inside each generated Stonecutter
 __STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__
 ## GameTests
 
-The Fabric GameTest entrypoint is available to GameTest runs. Stonecraft removes it from normal production JARs.
+The loader-specific GameTest entrypoints are available to GameTest runs. Stonecraft removes them from normal production JARs.
 
 __STONECRAFT_/GAMETESTS__
 ## Access widening
 
-Add access-widener entries to `src/main/resources/__STONECRAFT_MOD_ID__.accesswidener`. Stonecraft uses it directly for Fabric and converts it for NeoForge.
+Add access-widener entries to `src/main/resources/__STONECRAFT_MOD_ID__.accesswidener`. Stonecraft uses it directly where supported and converts it for loaders that use access transformers.
 
 __STONECRAFT_#RENOVATE__
 ## Dependency updates

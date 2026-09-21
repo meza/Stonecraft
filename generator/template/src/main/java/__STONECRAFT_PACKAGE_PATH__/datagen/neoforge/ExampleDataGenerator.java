@@ -1,4 +1,5 @@
 __STONECRAFT_#DATAGEN__
+__STONECRAFT_#NEOFORGE__
 /*? if neoforge {*/
 /*package __STONECRAFT_BASE_PACKAGE__.datagen.neoforge;
 
@@ -62,4 +63,5 @@ public final class ExampleDataGenerator {
     //?}
 }
 *//*?}*/
+__STONECRAFT_/NEOFORGE__
 __STONECRAFT_/DATAGEN__

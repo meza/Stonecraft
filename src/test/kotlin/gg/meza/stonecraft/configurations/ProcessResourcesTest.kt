@@ -496,6 +496,13 @@ tasks.withType<org.gradle.api.tasks.JavaExec>().configureEach {
         val neoToml = neoforge121Path.asFile.readText()
         assertTrue(neoToml.contains("fabricVersion=\"0.102.0+1.21\""))
         assertTrue(neoToml.contains("packVersion=\"34\""))
+
+        val neoForgeMetadata = getPathsFor("1.21", "neoforge", listOf("META-INF/neoforge.mods.toml"))
+            .first()
+            .asFile
+            .readText()
+        assertTrue(neoForgeMetadata.contains("logoFile = \"assets/examplemod/icon.png\""))
+        assertTrue(neoForgeMetadata.contains("logoBlur = false"))
     }
 
     @Test

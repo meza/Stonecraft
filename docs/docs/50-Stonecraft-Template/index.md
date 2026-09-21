@@ -1,16 +1,17 @@
 # Stonecraft project generator
 
-Use the [Stonecraft project generator](/generator) to create a complete mod workspace for Fabric
-and NeoForge across the supported Minecraft versions.
+Use the [Stonecraft project generator](/generator) to create a complete mod workspace for Fabric,
+Forge, NeoForge, or any combination of them across the supported Minecraft versions.
 
-The generator runs entirely in your browser. It downloads the project template, applies the details
-you enter, and gives you a ZIP without uploading those details or contacting a repository host.
+The generator runs entirely in your browser. It fetches the latest Stonecraft release version from
+GitHub, downloads the project template, applies the details you enter, and gives you a ZIP.
 
 Your project details and complete feature selection are reflected in the page URL as you edit them.
-Copy that URL to share a setup; opening it restores the same form state. Project details still remain
-in the browser, but anyone who receives the URL can read the values encoded in it.
+Copy that URL to share a setup; opening it restores the same form state. The URL can be visible to
+the Stonecraft site host and anyone you share it with, so do not enter confidential values.
 
-The generated workspace targets Minecraft 26.1, 26.2, and 26.3 with both Fabric and NeoForge.
+The generated workspace targets Minecraft 26.1, 26.2, and 26.3 for every loader you select. Fabric,
+Forge, and NeoForge are all selected by default, and at least one loader is required.
 
 Four project-detail fields are required. The repository URL is optional. The Mod ID is derived from
 the Mod name as you type and remains editable:
@@ -30,7 +31,7 @@ The feature selector controls complete project capabilities. All five are includ
 
 | Feature | Included files and configuration |
 | --- | --- |
-| Data generation | Example providers, loader metadata, the DataGen script, CI commands, and generated-project guidance |
+| Data generation | Example providers for supported selected loaders, loader metadata, the DataGen script, CI commands, and generated-project guidance |
 | GameTests | Cross-loader test source and resources, CI commands, and generated-project guidance |
 | Mod publishing | Modrinth and CurseForge Gradle configuration, release integration, and generated-project guidance |
 | Automated releases | Semantic-release configuration, release script, and release-aware GitHub Actions workflow |
@@ -42,10 +43,11 @@ publishing to either mod platform.
 
 1. Open the [project generator](/generator).
 2. Enter the four required project details and, optionally, a repository URL.
-3. Keep or clear each project feature.
-4. Select **Generate project** to download the ZIP.
-5. Unzip it into a new directory.
-6. Follow the generated README for the capabilities you selected.
+3. Select one or more mod loaders.
+4. Keep or clear each project feature.
+5. Select **Generate project** to download the ZIP.
+6. Unzip it into a new directory.
+7. Follow the generated README for the loaders and capabilities you selected.
 
 The generated README contains only the commands and configuration relevant to the selected
 capabilities.

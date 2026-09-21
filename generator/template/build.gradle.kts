@@ -1,6 +1,4 @@
-__STONECRAFT_#PUBLISHING__
 import gg.meza.stonecraft.mod
-__STONECRAFT_/PUBLISHING__
 
 plugins {
     id("gg.meza.stonecraft")
@@ -18,10 +16,14 @@ modSettings {
     variableReplacements =
         mapOf(
             "minecraftVersionVirtual" to stonecutter.current.version,
-            "neoforgeLogo" to
-                when (stonecutter.current.parsed < "26.3") {
-                    true -> "logoFile"
-                    false -> "iconFile"
+            "forgeLoaderVersion" to
+                if (project.mod.isForge) {
+                    project.mod
+                        .prop("forge_version")
+                        .substringAfter("-")
+                        .substringBefore(".")
+                } else {
+                    ""
                 },
         )
 }

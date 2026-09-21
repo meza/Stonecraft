@@ -17,14 +17,6 @@ import org.gradle.kotlin.dsl.getByType
 fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
 
-    if (project.mod.isForge && stonecutter.eval(stonecutter.current.version, ">=1.21")) {
-        project.logger.warn(
-            "Forge 1.21 and above is not really supported by Architectury anymore and " +
-                "issues may arise when using it with Architectury Loom.\n" +
-                "Please consider using NeoForge instead if you can."
-        )
-    }
-
     loom.apply {
         accessWidenerPath.set(modSettings.effectiveAccessWidenerLocationProp)
 
@@ -97,11 +89,6 @@ fun configureClientGameTests(
             }
         }
 
-        if (mod.isForge) {
-            project.tasks.named("runGameTestClient") {
-                dependsOn("generatePackMCMetaJson")
-            }
-        }
     }
 //
 }
@@ -133,11 +120,6 @@ fun configureServerGameTests(
         }
     }
 
-    if (mod.isForge) {
-        project.tasks.named("runGameTestServer") {
-            dependsOn("generatePackMCMetaJson")
-        }
-    }
 }
 
 /**
@@ -212,6 +194,8 @@ fun configureDatagen(
 
     val mod = project.mod
     val generatedResources = modSettings.generatedResourcesProp.get()
+    val clientGeneratedResources = generatedResources.dir("client")
+    val serverGeneratedResources = generatedResources.dir("server")
 
     val modDefinition = listOf("--mod", mod.id)
     val generateAll = listOf("--all")
@@ -241,6 +225,9 @@ fun configureDatagen(
         if (mod.isForge) {
             create("datagen") {
                 data()
+                if (stonecutter.eval(minecraftVersion, ">=26.1")) {
+                    programArguments.addAll("--launchTarget", "forge_userdev_data", "--gameDir", ".")
+                }
                 programArguments.addAll(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
                 forgeLikeLogging()
             }
@@ -251,12 +238,22 @@ fun configureDatagen(
                 // @see https://neoforged.net/news/21.4release/#data-generation-splitting
                 create("ServerDatagen") {
                     serverData()
-                    programArguments.addAll(getProgramArgs(modDefinition, outputFolder))
+                    programArguments.addAll(
+                        getProgramArgs(
+                            modDefinition,
+                            listOf("--output", serverGeneratedResources.asFile.absolutePath)
+                        )
+                    )
                     forgeLikeLogging()
                 }
                 create("ClientDatagen") {
                     clientData()
-                    programArguments.addAll(getProgramArgs(modDefinition, outputFolder))
+                    programArguments.addAll(
+                        getProgramArgs(
+                            modDefinition,
+                            listOf("--output", clientGeneratedResources.asFile.absolutePath)
+                        )
+                    )
                     forgeLikeLogging()
                 }
             } else {
@@ -268,12 +265,6 @@ fun configureDatagen(
                 }
 //                }
             }
-        }
-    }
-
-    if (mod.isForge) {
-        project.tasks.named("runDatagen") {
-            dependsOn("generatePackMCMetaJson")
         }
     }
 

@@ -2,7 +2,7 @@
 name: stonecraft
 description: MUST USE when working on Minecraft mods
 metadata:
-  version: "1"
+  version: "2"
 ---
 
 # Working with Stonecraft and Stonecutter
@@ -145,6 +145,7 @@ Follow these steps in order.
 
 - Check FabricMC release notes for relevant Minecraft changes.
 - Use Fabric's developer resources for compatible Fabric Loader, mappings, and Fabric API versions.
+- Use Forge's files and documentation for a compatible Forge version when the project supports Forge.
 - Use NeoForge's project resources for a compatible NeoForge version when the project supports NeoForge.
 - Check the build's declared repositories and authoritative upstream sources for every remaining dependency.
 - Identify source incompatibilities that require Stonecutter-controlled branches or replacements; do not assume dependency changes alone are sufficient.
@@ -193,6 +194,7 @@ Immediately before handover, reset once more and confirm that the active project
 - Use https://stonecraft.meza.gg/ for Stonecraft behavior.
 - Use https://stonecutter.kikugie.dev/wiki/ for Stonecutter behavior.
 - Use https://docs.fabricmc.net/develop/ for Fabric development.
+- Use https://docs.minecraftforge.net/ for Forge development.
 - Use https://docs.neoforged.net/docs/gettingstarted/ for NeoForge development.
 
 Match guidance to the Stonecraft and Stonecutter versions applied by the repository. Do not replace repository-specific support policy, loader coverage, verification, or handover rules with assumptions from another project.

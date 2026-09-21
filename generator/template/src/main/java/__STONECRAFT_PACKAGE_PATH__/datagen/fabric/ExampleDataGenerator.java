@@ -1,4 +1,5 @@
 __STONECRAFT_#DATAGEN__
+__STONECRAFT_#FABRIC__
 /*? if fabric {*/
 package __STONECRAFT_BASE_PACKAGE__.datagen.fabric;
 
@@ -37,4 +38,5 @@ public final class ExampleDataGenerator implements DataGeneratorEntrypoint {
     }
 }
 /*?}*/
+__STONECRAFT_/FABRIC__
 __STONECRAFT_/DATAGEN__

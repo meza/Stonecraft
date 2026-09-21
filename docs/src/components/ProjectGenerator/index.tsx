@@ -18,12 +18,23 @@ const featureParameters = [
     ['renovate', 'renovate'],
 ] as const;
 
+const loaderParameters = [
+    ['fabric', 'fabric'],
+    ['forge', 'forge'],
+    ['neoforge', 'neoForge'],
+] as const;
+
 const emptyProject: GenerateStonecraftProjectOptions = {
     modName: '',
     modId: '',
     group: '',
     author: '',
     repository: '',
+    loaders: {
+        fabric: true,
+        forge: true,
+        neoForge: true,
+    },
     features: {
         dataGeneration: true,
         gameTests: true,
@@ -54,6 +65,10 @@ function readProjectFromUrl(search: string): {
     const selectedFeatures = suppliedFeatures !== null
         ? new Set(suppliedFeatures.split(','))
         : new Set(featureParameters.map(([parameter]) => parameter));
+    const suppliedLoaders = parameters.get('loaders');
+    const selectedLoaders = suppliedLoaders !== null
+        ? new Set(suppliedLoaders.split(','))
+        : new Set(loaderParameters.map(([parameter]) => parameter));
 
     return {
         project: {
@@ -62,6 +77,12 @@ function readProjectFromUrl(search: string): {
             group: parameters.get('group') ?? '',
             author: parameters.get('author') ?? '',
             repository: parameters.get('repository') ?? '',
+            loaders: Object.fromEntries(
+                loaderParameters.map(([parameter, loader]) => [
+                    loader,
+                    selectedLoaders.has(parameter),
+                ]),
+            ) as GenerateStonecraftProjectOptions['loaders'],
             features: Object.fromEntries(
                 featureParameters.map(([parameter, feature]) => [
                     feature,
@@ -92,6 +113,14 @@ function writeProjectToUrl(
     if (modIdEdited) {
         parameters.set('modId', project.modId);
     }
+
+    parameters.set(
+        'loaders',
+        loaderParameters
+            .filter(([, loader]) => project.loaders[loader])
+            .map(([parameter]) => parameter)
+            .join(','),
+    );
 
     parameters.set(
         'features',
@@ -149,8 +178,18 @@ export default function ProjectGenerator(): React.JSX.Element {
         }));
     }
 
+    function updateLoader(
+        loader: keyof GenerateStonecraftProjectOptions['loaders'],
+        checked: boolean,
+    ): void {
+        setProject((current) => ({
+            ...current,
+            loaders: {...current.loaders, [loader]: checked},
+        }));
+    }
+
     function updateField(
-        field: Exclude<keyof GenerateStonecraftProjectOptions, 'features'>,
+        field: Exclude<keyof GenerateStonecraftProjectOptions, 'features' | 'loaders'>,
         value: string,
     ): void {
         setProject((current) => ({...current, [field]: value}));
@@ -182,7 +221,7 @@ export default function ProjectGenerator(): React.JSX.Element {
                     <p className={styles.eyebrow}>Stonecraft project generator</p>
                     <h1>Create a Stonecraft project</h1>
                     <p>
-                        Enter your project details and download a ready-to-build Fabric and NeoForge
+                        Enter your project details, choose your loaders, and download a ready-to-build
                         workspace.
                     </p>
                 </header>
@@ -287,6 +326,49 @@ export default function ProjectGenerator(): React.JSX.Element {
                     </div>
 
                     <fieldset className={styles.features}>
+                        <legend>Mod loaders</legend>
+                        <p>Choose at least one loader. All loaders are selected by default.</p>
+                        <div className={styles.featureGrid}>
+                            <label className={styles.featureOption}>
+                                <input
+                                    type="checkbox"
+                                    name="fabric"
+                                    checked={project.loaders.fabric}
+                                    onChange={(event) =>
+                                        updateLoader('fabric', event.currentTarget.checked)
+                                    }
+                                    aria-label="Fabric"
+                                />
+                                <span><strong>Fabric</strong></span>
+                            </label>
+                            <label className={styles.featureOption}>
+                                <input
+                                    type="checkbox"
+                                    name="forge"
+                                    checked={project.loaders.forge}
+                                    onChange={(event) =>
+                                        updateLoader('forge', event.currentTarget.checked)
+                                    }
+                                    aria-label="Forge"
+                                />
+                                <span><strong>Forge</strong></span>
+                            </label>
+                            <label className={styles.featureOption}>
+                                <input
+                                    type="checkbox"
+                                    name="neoForge"
+                                    checked={project.loaders.neoForge}
+                                    onChange={(event) =>
+                                        updateLoader('neoForge', event.currentTarget.checked)
+                                    }
+                                    aria-label="NeoForge"
+                                />
+                                <span><strong>NeoForge</strong></span>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset className={styles.features}>
                         <legend>Project features</legend>
                         <p>Choose what the generated workspace includes. Everything is selected by default.</p>
                         <div className={styles.featureGrid}>
@@ -385,8 +467,8 @@ export default function ProjectGenerator(): React.JSX.Element {
 
                     <div className={styles.actions}>
                         <p className={styles.privacy}>
-                            Everything is generated in your browser. Your project details are not
-                            uploaded.
+                            Everything is generated in your browser. Your project details are included
+                            in the page URL, so do not enter confidential values.
                         </p>
                         <button
                             className="button button--primary button--lg"

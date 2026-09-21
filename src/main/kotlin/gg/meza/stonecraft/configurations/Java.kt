@@ -26,7 +26,15 @@ fun configureJava(project: Project, stonecutter: StonecutterBuildExtension, modS
             // Add the generated resources directory to the resources source set for ForgeLike mods
             // This is to allow them to read the generated resources
             if (project.mod.isForgeLike) {
-                sourceSets.named("main").get().resources.srcDir(generatedResources.get())
+                sourceSets.named("main").get().resources.apply {
+                    val generatedResourcesDirectory = generatedResources.get()
+                    if (project.mod.isNeoforge && stonecutter.eval(stonecutter.current.version, ">=1.21.4")) {
+                        srcDir(generatedResourcesDirectory.dir("client"))
+                        srcDir(generatedResourcesDirectory.dir("server"))
+                    } else {
+                        srcDir(generatedResourcesDirectory)
+                    }
+                }
             }
         }
     }

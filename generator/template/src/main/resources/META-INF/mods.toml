@@ -1,4 +1,4 @@
-__STONECRAFT_#NEOFORGE__
+__STONECRAFT_#FORGE__
 modLoader = "javafml"
 loaderVersion = "*"
 license = "MIT"
@@ -18,9 +18,16 @@ logoFile = "assets/${id}/icon.png"
 logoBlur = false
 
 [[dependencies.${id}]]
+modId = "forge"
+mandatory = true
+versionRange = "[${forgeLoaderVersion},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${id}]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[${minecraftVersionVirtual},)"
 ordering = "NONE"
 side = "BOTH"
-__STONECRAFT_/NEOFORGE__
+__STONECRAFT_/FORGE__

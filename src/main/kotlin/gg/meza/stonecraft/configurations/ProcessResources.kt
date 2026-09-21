@@ -10,6 +10,7 @@ import gg.meza.stonecraft.tasks.McMetaCreation
 import org.gradle.api.Project
 import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.tasks.bundling.AbstractArchiveTask
+import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.language.jvm.tasks.ProcessResources
@@ -31,30 +32,21 @@ fun configureProcessResources(
      * If the mod is a forge mod, we need to generate the pack.mcmeta file
      * If one already exists, it will be used instead of generating a new one
      */
-    if (project.mod.isForge) {
+    val generatedPackMetadata = if (project.mod.isForge) {
         project.tasks.register<McMetaCreation>("generatePackMCMetaJson") {
             resourcePackVersion.set(getResourcePackFormat(minecraftVersion).toBigDecimal())
+            packDescription.set(project.mod.description)
+            sourcePackFiles.from(project.rootProject.layout.projectDirectory.file("src/main/resources/pack.mcmeta"))
         }
+    } else {
+        null
     }
 
-    if (project.mod.isForge) {
-        project.tasks.named("runClient") {
-            dependsOn(project.tasks.named("generatePackMCMetaJson"))
-        }
-
-        project.tasks.named("runServer") {
-            dependsOn(project.tasks.named("generatePackMCMetaJson"))
-        }
-    }
-
-    if (project.mod.isForge) {
-        project.tasks.named("jar") {
-            dependsOn(project.tasks.named("generatePackMCMetaJson"))
-        }
-    }
-
-    project.tasks.named("processResources") {
+    project.tasks.named<ProcessResources>("processResources") {
         dependsOn(project.tasks.named("stonecutterGenerate"))
+        if (generatedPackMetadata != null) {
+            from(generatedPackMetadata.flatMap { it.outputFile })
+        }
     }
 
     configureFabricGametestEntrypointArchiveCleanup(project, modSettings)
@@ -109,6 +101,14 @@ fun configureProcessResources(
 
                 if (!shouldSkip) {
                     expand(basicModDetails)
+                }
+            }
+
+            if (project.mod.isNeoforge) {
+                val usesIconMetadata = stonecutter.current.parsed >= "26.2"
+
+                filesMatching("META-INF/neoforge.mods.toml") {
+                    filter { line -> normalizeNeoForgeMetadata(line, usesIconMetadata) }
                 }
             }
 
@@ -167,10 +167,6 @@ fun configureProcessResources(
                 }
             }
 
-            if (project.mod.isForge) {
-                finalizedBy("generatePackMCMetaJson")
-            }
-
             doLast {
                 if (project.mod.isFabric && gametestEntrypointCleanup && !keepFabricGametestEntrypoint) {
                     removeFabricGametestEntrypoint(project)
@@ -181,6 +177,17 @@ fun configureProcessResources(
             }
         }
     }
+}
+
+internal fun normalizeNeoForgeMetadata(line: String, usesIconMetadata: Boolean): String {
+    val currentName = line.substringBefore('=').trim()
+    val targetName = when (currentName) {
+        "logoFile", "iconFile" -> if (usesIconMetadata) "iconFile" else "logoFile"
+        "logoBlur", "iconBlur" -> if (usesIconMetadata) "iconBlur" else "logoBlur"
+        else -> return line
+    }
+
+    return line.replaceFirst(currentName, targetName)
 }
 
 private fun configureFabricGametestEntrypointArchiveCleanup(project: Project, modSettings: ModSettingsExtension) {

@@ -1,3 +1,4 @@
+import gg.meza.stonecraft.mod
 import kotlin.io.relativeTo
 
 plugins {
@@ -45,6 +46,12 @@ modSettings {
                 when {
                     stonecutter.current.parsed < "1.21.5" -> "gametests.legacy"
                     else -> "gametests"
+                },
+            "forgeLoaderVersion" to
+                if (project.mod.isForge) {
+                    project.mod.prop("forge_loader_version")
+                } else {
+                    ""
                 },
         )
 }

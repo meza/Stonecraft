@@ -92,4 +92,23 @@ modSettings {
         val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-forge/build/src/main/generatedForTests")
         assertFalse(br.output.contains(expectedDirectory.asFile.absolutePath))
     }
+
+    @Test
+    fun `modern neoforge adds isolated client and server generated resource roots`() {
+        gradleTest.setStonecutterVersion("1.21.4", "neoforge")
+        gradleTest.buildScript(
+            """
+modSettings {
+    generatedResources = layout.buildDirectory.dir("src/main/generatedForTests").get()
+}"""
+        )
+
+        val br = gradleTest.run("checkSourceSets")
+        gradleTest.assertNoGradleFailures(br)
+        val generatedResources = gradleTest.project().layout.projectDirectory
+            .dir("versions/1.21.4-neoforge/build/src/main/generatedForTests")
+
+        assertTrue(br.output.contains(generatedResources.dir("client").asFile.absolutePath))
+        assertTrue(br.output.contains(generatedResources.dir("server").asFile.absolutePath))
+    }
 }

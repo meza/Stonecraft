@@ -28,7 +28,7 @@ class McMetaCreationTest : IntegrationTest {
         description = UUID.randomUUID().toString()
         project = gradleTest().project()
         project.setProperties(mapOf("mod.description" to description))
-        outputFile = project.layout.buildDirectory.file("resources/main/pack.mcmeta").get().asFile
+        outputFile = project.layout.buildDirectory.file("generated/stonecraft/resources/pack.mcmeta").get().asFile
         outputFile.parentFile.mkdirs()
 
         inputFile = project.rootProject.file("src/main/resources/pack.mcmeta")
@@ -46,6 +46,8 @@ class McMetaCreationTest : IntegrationTest {
     fun `packfile can be generated for old versions`() {
         val mcMetaCreation = project.tasks.register<McMetaCreation>("mcMetaCreation") {
             resourcePackVersion.set(BigDecimal.valueOf(6L))
+            packDescription.set(this@McMetaCreationTest.description)
+            sourcePackFiles.from(inputFile)
         }.get()
 
         mcMetaCreation.generateMcMeta()
@@ -72,6 +74,8 @@ class McMetaCreationTest : IntegrationTest {
     fun `packfile correctly generates for the first version supporting the new format`() {
         val mcMetaCreation = project.tasks.register<McMetaCreation>("mcMetaCreation") {
             resourcePackVersion.set(BigDecimal.valueOf(18L))
+            packDescription.set(this@McMetaCreationTest.description)
+            sourcePackFiles.from(inputFile)
         }.get()
 
         mcMetaCreation.generateMcMeta()
@@ -99,6 +103,8 @@ class McMetaCreationTest : IntegrationTest {
     fun `packfile correctly generates for the new versions`() {
         val mcMetaCreation = project.tasks.register<McMetaCreation>("mcMetaCreation") {
             resourcePackVersion.set(BigDecimal.valueOf(21L))
+            packDescription.set(this@McMetaCreationTest.description)
+            sourcePackFiles.from(inputFile)
         }.get()
 
         mcMetaCreation.generateMcMeta()
@@ -127,13 +133,19 @@ class McMetaCreationTest : IntegrationTest {
         val packFileContents = UUID.randomUUID().toString()
 
         inputFile.writeText(packFileContents)
+        outputFile.writeText("stale generated metadata")
 
         val mcMetaCreation = project.tasks.register<McMetaCreation>("mcMetaCreation") {
             resourcePackVersion.set(BigDecimal.valueOf(21L))
+            packDescription.set(this@McMetaCreationTest.description)
+            sourcePackFiles.from(inputFile)
         }.get()
 
         mcMetaCreation.generateMcMeta()
 
-        assertFalse(outputFile.exists(), "The pack.mcmeta file should not exist as the processResources will take care of it.")
+        assertFalse(
+            outputFile.exists(),
+            "The generated pack.mcmeta should be removed so processResources can use the source-owned file."
+        )
     }
 }

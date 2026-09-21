@@ -12,7 +12,7 @@ For the full documentation, please visit [Stonecraft](https://stonecraft.meza.gg
 ### Generate a Stonecraft project
 
 The simplest way to start a new mod is with the [Stonecraft project generator](https://stonecraft.meza.gg/generator).
-It creates the complete workspace locally in your browser without uploading your project details.
+It creates the complete workspace locally in your browser.
 The generator keeps the form state in the page URL, so you can copy the address to share a setup.
 The URL contains those project details, so share it only with people who should be able to read them.
 
@@ -77,8 +77,8 @@ stonecutter {
         }
 
         mc("1.20", "fabric", "forge", "neoforge")
-        mc("1.21.3", "fabric", "neoforge")
-        mc("1.21.4", "fabric", "neoforge")
+        mc("1.21.3", "fabric", "forge", "neoforge")
+        mc("1.21.4", "fabric", "forge", "neoforge")
 
     }
     create(rootProject)

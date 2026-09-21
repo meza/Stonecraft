@@ -12,6 +12,61 @@ import java.util.concurrent.TimeUnit
 class DatagenTest : IntegrationTest {
 
     @Test
+    fun `modern neoforge server datagen preserves client generated resources`() {
+        val gradleTest = gradleTestMod()
+        deleteCopiedGeneratedResources(gradleTest)
+
+        val aggregate = gradleTest.run(
+            listOf("--dry-run", "--no-configuration-cache", ":26.1-neoforge:runDatagen"),
+            cacheTask = false
+        )
+        gradleTest.assertNoGradleFailures(aggregate)
+        assertTrue(aggregate.output.contains(":26.1-neoforge:runClientDatagen SKIPPED"))
+        assertTrue(aggregate.output.contains(":26.1-neoforge:runServerDatagen SKIPPED"))
+
+        val clientDatagen = gradleTest.run(
+            listOf("--no-configuration-cache", ":26.1-neoforge:runClientDatagen"),
+            cacheTask = false
+        )
+        gradleTest.assertNoGradleFailures(clientDatagen)
+
+        val versionProject = File(gradleTest.project().projectDir, "versions/26.1-neoforge")
+        val generatedAdvancement = File(
+            versionProject,
+            "src/main/generated/client/data/stonecraft_testmod/advancement/datagen/stone.json"
+        )
+        assertTrue(
+            generatedAdvancement.isFile,
+            "Expected client datagen to produce the advancement"
+        )
+
+        val serverDatagen = gradleTest.run(
+            listOf("--no-configuration-cache", ":26.1-neoforge:runServerDatagen"),
+            cacheTask = false
+        )
+        gradleTest.assertNoGradleFailures(serverDatagen)
+        assertTrue(
+            generatedAdvancement.isFile,
+            "Expected the client-generated advancement to survive server datagen"
+        )
+
+        val processResources = gradleTest.run(
+            listOf("--no-configuration-cache", ":26.1-neoforge:processResources"),
+            cacheTask = false
+        )
+        gradleTest.assertNoGradleFailures(processResources)
+
+        val processedAdvancement = File(
+            versionProject,
+            "build/resources/main/data/stonecraft_testmod/advancement/datagen/stone.json"
+        )
+        assertTrue(
+            processedAdvancement.isFile,
+            "Expected the client output root to be included in processed resources"
+        )
+    }
+
+    @Test
     fun `testmod chiseled datagen generates stone advancement for every version project`() {
         val gradleTest = gradleTestMod()
         deleteCopiedGeneratedResources(gradleTest)
