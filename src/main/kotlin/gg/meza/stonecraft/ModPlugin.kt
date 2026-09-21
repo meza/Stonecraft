@@ -85,9 +85,6 @@ class ModPlugin : Plugin<Any> {
         configurePublishing(project, realMinecraftVersion, stonecutter)
         configureTasks(project, realMinecraftVersion, stonecutter, modSettings)
         configureJava(project, stonecutter, modSettings)
-
-        project.afterEvaluate {
-        }
     }
 
     private fun printBanner(project: Project) {

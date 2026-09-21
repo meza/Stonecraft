@@ -84,6 +84,7 @@ fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: 
         dependsOn(project.tasks.named("configureMinecraftClient"))
     }
 
+    // Version projects share the configured game run directory, but each download task must own distinct outputs.
     project.tasks.withType<DownloadAssetsTask>().configureEach {
         legacyResourcesDirectory.set(project.layout.projectDirectory.file("run/resources"))
     }
