@@ -9,7 +9,6 @@ import org.gradle.kotlin.dsl.exclude
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.maven
-import org.gradle.kotlin.dsl.repositories
 import java.util.*
 
 /**
@@ -25,14 +24,7 @@ import java.util.*
  * @param realMinecraftVersion The version of Minecraft to configure the dependencies for
  */
 fun configureDependencies(project: Project, stonecutter: StonecutterBuildExtension, realMinecraftVersion: String) {
-    // Set the basic repositories for a multiloader project
-    project.repositories {
-        mavenCentral()
-        maven("https://maven.fabricmc.net/")
-        maven("https://maven.architectury.dev")
-        maven("https://maven.minecraftforge.net")
-        maven("https://maven.neoforged.net/releases/")
-    }
+    configureDependencyRepositories(project)
 
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
     val useLegacyYarnMappings = project.mod.hasProp("yarn_mappings")
@@ -117,6 +109,19 @@ fun configureDependencies(project: Project, stonecutter: StonecutterBuildExtensi
                 "modApi",
                 "net.fabricmc.fabric-api:fabric-gametest-api-v1:${project.mod.prop("fabric_version")}"
             )
+        }
+    }
+}
+
+internal fun configureDependencyRepositories(project: Project) {
+    if (project.mod.isNeoforge) {
+        project.repositories.maven("https://maven.neoforged.net/releases/") {
+            name = "NeoForge"
+            content {
+                includeGroupAndSubgroups("net.neoforged")
+                // NeoForge's launcher dependencies are published under this namespace.
+                includeGroupAndSubgroups("cpw.mods")
+            }
         }
     }
 }
