@@ -153,6 +153,56 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
     }
 
     @Test
+    fun `active client IntelliJ configuration debugs the complete runActive task graph`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+        gradleTest.buildScript(
+            """
+            tasks.register("printIdeaSyncOutputs") {
+                doLast {
+                    rootProject.allprojects.forEach { candidate ->
+                        candidate.tasks.findByName("ideaSyncTask")?.let { ideaSyncTask ->
+                            ideaSyncTask.outputs.files.files
+                                .map { it.invariantSeparatorsPath }
+                                .sorted()
+                                .forEach { println(candidate.path + ".ideaSync.output=" + it) }
+                        }
+                    }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run(
+            listOf(
+                "printIdeaSyncOutputs",
+                ":1.21.4-fabric:ideaSyncTask"
+            )
+        )
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(
+            Regex(
+                ":1\\.21\\.4-fabric\\.ideaSync\\.output=.*" +
+                    "Stonecraft_Active_Minecraft_Client\\.xml"
+            ).containsMatchIn(br.output)
+        )
+        assertTrue(
+            !Regex(
+                ":1\\.21\\.4-neoforge\\.ideaSync\\.output=.*" +
+                    "Stonecraft_Active_Minecraft_Client\\.xml"
+            ).containsMatchIn(br.output)
+        )
+
+        val configuration = gradleTest.project().projectDir
+            .resolve(".idea/runConfigurations/Stonecraft_Active_Minecraft_Client.xml")
+            .readText()
+        assertTrue(configuration.contains("name=\"Run the Active Minecraft Client\""))
+        assertTrue(configuration.contains("<option value=\":runActive\" />"))
+        assertTrue(configuration.contains("<ExternalSystemReattachDebugProcess>true"))
+        assertTrue(configuration.contains("<DebugAllEnabled>true"))
+    }
+
+    @Test
     fun `build and collect depends on remapJar for mapped versions`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
         gradleTest.buildScript(

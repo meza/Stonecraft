@@ -90,6 +90,7 @@ class ModPlugin : Plugin<Any> {
         patchAroundArchitecturyQuirks(project, stonecutter)
         configurePublishing(project, realMinecraftVersion, minecraftObfuscation)
         configureTasks(project, stonecutter, modSettings, minecraftObfuscation)
+        configureIntellij(project, stonecutter)
         configureJava(project, stonecutter, modSettings)
     }
 
