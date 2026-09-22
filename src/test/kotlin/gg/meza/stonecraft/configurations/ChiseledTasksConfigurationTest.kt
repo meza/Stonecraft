@@ -228,7 +228,8 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
         val expectedFolders = listOf(
             "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/resources/main").asFile.absolutePath}",
             "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/main").asFile.absolutePath}",
-            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/test").asFile.absolutePath}"
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/test").asFile.absolutePath}",
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/resources/test").asFile.absolutePath}"
         )
 
         assertTrue(
@@ -241,5 +242,9 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
                 "NeoForge Test tasks should include $folder in fml.modFolders."
             )
         }
+        assertTrue(
+            !br.output.contains("junit-fml"),
+            "NeoForge Test tasks should rely on the published fixture capability rather than a hard-coded junit-fml module."
+        )
     }
 }
