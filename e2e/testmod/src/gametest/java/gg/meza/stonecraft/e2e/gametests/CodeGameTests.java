@@ -21,7 +21,8 @@ import net.minecraftforge.registries.RegisterEvent;
 *//*?}*/
 
 /*? if neoforge {*/
-/*import net.neoforged.bus.api.SubscribeEvent;
+/*
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.RegisterEvent;
 *//*?}*/

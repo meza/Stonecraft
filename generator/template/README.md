@@ -49,7 +49,7 @@ __STONECRAFT_/GAMETESTS__
 __STONECRAFT_#DATAGEN__
 `runDatagen` runs data generation for every configured pair and writes into each `versions/*/src/main/generated` directory. The example advancement provider is registered for selected Fabric and NeoForge pairs.
 __STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__
-`runGameTestServer` succeeds only after the no-op GameTest passes for every pair. Failures are reported by the corresponding version-loader Gradle task.
+`runGameTestServer` is Stonecutter's aggregate task. It succeeds only after the no-op GameTest passes for every pair. `chiseledGameTest` is a backward-compatible alias. Failures are reported by the corresponding version-loader Gradle task.
 __STONECRAFT_/GAMETESTS__
 
 __STONECRAFT_#PUBLISHING__
@@ -102,7 +102,7 @@ Data generation writes to `src/main/generated` inside each generated Stonecutter
 __STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__
 ## GameTests
 
-The loader-specific GameTest entrypoints are available to GameTest runs. Stonecraft removes them from normal production JARs.
+GameTest code and data live under the shared project root at `src/gametest`, while loader descriptors live under `src/gametestModule/resources`. Stonecraft adds both source sets to the loader-specific GameTest runs without including them in normal production JARs. See the [Stonecraft GameTests guide](https://stonecraft.meza.gg/docs/configuration/gametests) for manifests, dependencies, registration boundaries and migration guidance.
 
 __STONECRAFT_/GAMETESTS__
 ## Access widening

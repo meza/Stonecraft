@@ -82,10 +82,15 @@ class ModPlugin : Plugin<Any> {
         base.archivesName.set("${project.mod.id}-${project.mod.loader}")
         project.version = "${project.mod.version}+mc$realMinecraftVersion"
 
+        val gameTestSourceSet = configureGameTestSourceSet(
+            project,
+            minecraftObfuscation,
+            modSettings.gametestModuleNameProp,
+        )
         configureDependencies(project, stonecutter, realMinecraftVersion, minecraftObfuscation)
         configureStonecutterConstants(project, stonecutter)
         configureProcessResources(project, realMinecraftVersion, modSettings, stonecutter)
-        configureLoom(project, stonecutter, modSettings, minecraftObfuscation)
+        configureLoom(project, stonecutter, modSettings, minecraftObfuscation, gameTestSourceSet)
         patchAroundArchitecturyQuirks(project, stonecutter)
         configurePublishing(project, realMinecraftVersion, minecraftObfuscation)
         configureTasks(project, stonecutter, modSettings, minecraftObfuscation)

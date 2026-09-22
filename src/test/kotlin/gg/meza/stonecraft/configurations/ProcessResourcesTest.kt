@@ -506,6 +506,40 @@ tasks.withType<org.gradle.api.tasks.JavaExec>().configureEach {
     }
 
     @Test
+    fun `gametest module name is available to resource manifests`() {
+        val gameTestProject = gradleTest().buildScript(
+            """
+            modSettings {
+                gametestModuleName = "custom_gametest_module"
+            }
+            """.trimIndent()
+        )
+            .setStonecutterVersion("1.21.4", "fabric")
+            .withProperties(
+                mapOf(
+                    "mod.id" to "examplemod",
+                    "mod.name" to "Test Example Mod",
+                    "mod.description" to "This is a test example mod description",
+                    "mod.group" to "net.example",
+                    "mod.version" to "1.0",
+                )
+            )
+        val manifest = gameTestProject.project().layout.projectDirectory
+            .file("src/gametestModule/resources/fabric.mod.json")
+            .asFile
+        manifest.parentFile.mkdirs()
+        manifest.writeText("""{"id":"${'$'}{gametestModuleName}"}""")
+
+        val buildResult = gameTestProject.run("processGametestModuleResources")
+        gameTestProject.assertNoGradleFailures(buildResult)
+
+        val processedManifest = gameTestProject.project().layout.projectDirectory
+            .file("versions/1.21.4-fabric/build/resources/gametestModule/fabric.mod.json")
+            .asFile
+        assertEquals("""{"id":"custom_gametest_module"}""", processedManifest.readText())
+    }
+
+    @Test
     fun `language files are excluded from the variable replacement`() {
         val fabric1202Path = getPathsFor("1.20.2", "fabric", listOf("assets/examplemod/lang/en_us.json")).first()
         val forge1202Path = getPathsFor("1.20.2", "forge", listOf("assets/examplemod/lang/en_us.json")).first()

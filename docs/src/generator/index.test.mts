@@ -101,7 +101,11 @@ test('renders the Stonecraft template', async () => {
     assert.ok(zip.file('src/main/java/gg/meza/soundsbegone/SoundsBeGone.java'));
     assert.ok(zip.file('src/main/resources/soundsbegone.accesswidener'));
     assert.ok(zip.file('src/main/resources/assets/soundsbegone/icon.png'));
-    assert.ok(zip.file('src/main/resources/data/soundsbegone/test_instance/noop.json'));
+    assert.ok(zip.file('src/gametest/java/gg/meza/soundsbegone/gametest/ExampleGameTests.java'));
+    assert.ok(zip.file('src/gametest/resources/data/soundsbegone/test_instance/noop.json'));
+    assert.ok(zip.file('src/gametestModule/resources/fabric.mod.json'));
+    assert.ok(zip.file('src/gametestModule/resources/META-INF/mods.toml'));
+    assert.ok(zip.file('src/gametestModule/resources/META-INF/neoforge.mods.toml'));
     assert.ok(zip.file('scripts/datagen.sh'));
     assert.ok(zip.file('scripts/release.sh'));
     assert.ok(zip.file('.releaserc.json'));
@@ -124,6 +128,27 @@ test('renders the Stonecraft template', async () => {
         sources: 'https://codeberg.org/meza/SoundsBeGone',
     });
     assert.deepEqual(fabricMetadata.entrypoints.main, ['${group}.${id}.SoundsBeGone']);
+    assert.equal(fabricMetadata.entrypoints['fabric-gametest'], undefined);
+
+    const fabricGameTestMetadata = JSON.parse(
+        await zip.file('src/gametestModule/resources/fabric.mod.json')!.async('string'),
+    );
+    assert.equal(fabricGameTestMetadata.id, '${gametestModuleName}');
+    assert.deepEqual(fabricGameTestMetadata.entrypoints['fabric-gametest'], [
+        '${group}.${id}.gametest.ExampleGameTests',
+    ]);
+
+    const forgeGameTestMetadata = await zip
+        .file('src/gametestModule/resources/META-INF/mods.toml')!
+        .async('string');
+    assert.match(forgeGameTestMetadata, /modId = "\$\{gametestModuleName\}"/);
+    assert.match(forgeGameTestMetadata, /modId = "\$\{id\}"/);
+
+    const neoForgeGameTestMetadata = await zip
+        .file('src/gametestModule/resources/META-INF/neoforge.mods.toml')!
+        .async('string');
+    assert.match(neoForgeGameTestMetadata, /modId = "\$\{gametestModuleName\}"/);
+    assert.match(neoForgeGameTestMetadata, /modId = "\$\{id\}"/);
 
     const neoForgeMetadata = await zip
         .file('src/main/resources/META-INF/neoforge.mods.toml')!
@@ -195,9 +220,12 @@ test('omits every disabled project capability', async () => {
     assert.equal(zip.file('scripts/release.sh'), null);
     assert.equal(zip.file('.releaserc.json'), null);
     assert.equal(zip.file('renovate.json'), null);
-    assert.equal(zip.file('src/main/java/gg/meza/soundsbegone/gametest/ExampleGameTests.java'), null);
+    assert.equal(zip.file('src/gametest/java/gg/meza/soundsbegone/gametest/ExampleGameTests.java'), null);
     assert.equal(zip.file('src/main/java/gg/meza/soundsbegone/datagen/ExampleAdvancements.java'), null);
-    assert.equal(zip.file('src/main/resources/data/soundsbegone/test_instance/noop.json'), null);
+    assert.equal(zip.file('src/gametest/resources/data/soundsbegone/test_instance/noop.json'), null);
+    assert.equal(zip.file('src/gametestModule/resources/fabric.mod.json'), null);
+    assert.equal(zip.file('src/gametestModule/resources/META-INF/mods.toml'), null);
+    assert.equal(zip.file('src/gametestModule/resources/META-INF/neoforge.mods.toml'), null);
 
     const fabricMetadata = JSON.parse(
         await zip.file('src/main/resources/fabric.mod.json')!.async('string'),
@@ -225,6 +253,9 @@ test('includes only selected mod loaders', async () => {
     const zip = await JSZip.loadAsync(await project.archive.arrayBuffer());
 
     assert.equal(zip.file('src/main/resources/fabric.mod.json'), null);
+    assert.equal(zip.file('src/gametestModule/resources/fabric.mod.json'), null);
+    assert.ok(zip.file('src/gametestModule/resources/META-INF/mods.toml'));
+    assert.equal(zip.file('src/gametestModule/resources/META-INF/neoforge.mods.toml'), null);
     assert.ok(zip.file('src/main/resources/META-INF/mods.toml'));
     assert.equal(zip.file('src/main/resources/META-INF/neoforge.mods.toml'), null);
     assert.equal(

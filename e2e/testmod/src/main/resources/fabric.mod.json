@@ -15,9 +15,6 @@
     ],
     "fabric-datagen": [
       "${group}.datagen.fabric.TestModDataGenerator"
-    ],
-    "fabric-gametest": [
-      "${group}.${gameTestPackage}.CodeGameTests"
     ]
   },
   "depends": {

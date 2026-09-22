@@ -16,6 +16,8 @@ All the settings are optional, and you can override them if you want to.
 
 ### All modSettings
 
+The block below shows example overrides, not the defaults. See the setting pages for their defaults and behavior, including [`gametestModuleName`](gametestModuleName.md) and [`gametestEntrypointCleanup`](gametestEntrypointCleanup.md).
+
 ```kotlin
 // build.gradle.kts
 plugins {
@@ -43,6 +45,7 @@ modSettings {
 
     variableReplacements = mapOf<String, Any>()
 
+    gametestModuleName = "my_mod_gametest"
     gametestEntrypointCleanup = true
 }
 ```

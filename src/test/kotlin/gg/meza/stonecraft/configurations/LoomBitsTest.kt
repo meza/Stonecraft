@@ -237,6 +237,119 @@ class LoomBitsTest : IntegrationTest {
     }
 
     @Test
+    fun `game tests use an isolated source set on every loader`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "forge", "neoforge")
+        gradleTest.buildScript(
+            """
+            tasks.register("printGameTestSourceSet") {
+                doLast {
+                    val gameTest = sourceSets.getByName("gametest")
+                    val gameTestModule = sourceSets.getByName("gametestModule")
+                    println("gametest.java=" + gameTest.java.srcDirs.joinToString())
+                    println("gametestModule.resources=" + gameTestModule.resources.srcDirs.joinToString())
+                    println(
+                        "gametest.compile.extends=" +
+                            configurations.getByName(gameTest.compileClasspathConfigurationName)
+                                .extendsFrom.joinToString { it.name }
+                    )
+                    println(
+                        "gametest.runtime.extends=" +
+                            configurations.getByName(gameTest.runtimeClasspathConfigurationName)
+                                .extendsFrom.joinToString { it.name }
+                    )
+                }
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run(listOf("printLoomSettings", "printGameTestSourceSet"))
+        gradleTest.assertNoGradleFailures(result)
+
+        assertTrue(result.output.contains("gametest.java="))
+        assertTrue(result.output.contains("src${Path.DIRECTORY_SEPARATOR}gametest${Path.DIRECTORY_SEPARATOR}java"))
+        assertTrue(result.output.contains("gametestModule.resources="))
+        assertTrue(result.output.contains("src${Path.DIRECTORY_SEPARATOR}gametestModule${Path.DIRECTORY_SEPARATOR}resources"))
+        assertTrue(Regex("gametest\\.compile\\.extends=.*(?:^|, )compileClasspath(?:,|\\r?\\n)").containsMatchIn(result.output))
+        assertTrue(Regex("gametest\\.runtime\\.extends=.*(?:^|, )runtimeClasspath(?:,|\\r?\\n)").containsMatchIn(result.output))
+
+        listOf("fabric", "forge", "neoforge").forEach { loader ->
+            assertTrue(result.output.contains("[1.21.4-$loader] gameTestClient sourceSet=gametest"))
+            assertTrue(result.output.contains("[1.21.4-$loader] gameTestServer sourceSet=gametest"))
+        }
+
+        listOf("forge", "neoforge").forEach { loader ->
+            assertTrue(result.output.contains("[1.21.4-$loader] gameTestClient mod=examplemod"))
+            assertTrue(result.output.contains("[1.21.4-$loader] gameTestServer mod=examplemod"))
+            assertTrue(result.output.contains("[1.21.4-$loader] gameTestClient mod=examplemod_gametest"))
+            assertTrue(result.output.contains("[1.21.4-$loader] gameTestServer mod=examplemod_gametest"))
+            assertTrue(
+                result.output.contains(
+                    "[1.21.4-$loader] gameTestClient modFile=" +
+                        gradleTest.project().layout.projectDirectory.dir("versions/1.21.4-$loader/build/classes/java/gametest")
+                )
+            )
+            assertTrue(
+                result.output.contains(
+                    "[1.21.4-$loader] gameTestServer modFile=" +
+                        gradleTest.project().layout.projectDirectory.dir("versions/1.21.4-$loader/build/classes/java/gametest")
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `forge-like game test runs preserve global mod groups`() {
+        gradleTest.setStonecutterVersion("1.21.4", "forge", "neoforge")
+        gradleTest.buildScript(
+            """
+            loom {
+                mods {
+                    maybeCreate("consumer_support").sourceSet("main")
+                }
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
+
+        listOf("forge", "neoforge").forEach { loader ->
+            listOf("gameTestClient", "gameTestServer").forEach { run ->
+                assertTrue(result.output.contains("[1.21.4-$loader] $run mod=consumer_support"))
+                assertTrue(result.output.contains("[1.21.4-$loader] $run mod=examplemod"))
+                assertTrue(result.output.contains("[1.21.4-$loader] $run mod=examplemod_gametest"))
+            }
+        }
+    }
+
+    @Test
+    fun `game test module override controls forge-like run identity and namespaces`() {
+        gradleTest.setStonecutterVersion("1.21.4", "forge", "neoforge")
+        gradleTest.buildScript(
+            """
+            modSettings {
+                gametestModuleName = "example_integration_tests"
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
+
+        listOf("forge", "neoforge").forEach { loader ->
+            listOf("gameTestClient", "gameTestServer").forEach { run ->
+                assertTrue(result.output.contains("[1.21.4-$loader] $run mod=example_integration_tests"))
+                assertTrue(
+                    result.output.contains(
+                        "[1.21.4-$loader] $run jvmArguments=\"-D$loader.enabledGameTestNamespaces=" +
+                            "examplemod,example_integration_tests\""
+                    )
+                )
+            }
+        }
+    }
+
+    @Test
     fun `modern neoforge game test server uses the game test server main class`() {
         gradleTest.setStonecutterVersion("26.1", "neoforge")
         gradleTest.buildScript(
@@ -255,7 +368,7 @@ class LoomBitsTest : IntegrationTest {
                 "[26.1-neoforge] gameTestServer mainClass=net.neoforged.fml.startup.GameTestServer"
             )
         )
-        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer jvmArguments=\"-Dneoforge.enabledGameTestNamespaces=examplemod\""))
+        assertTrue(result.output.contains("[26.1-neoforge] gameTestServer jvmArguments=\"-Dneoforge.enabledGameTestNamespaces=examplemod,examplemod_gametest\""))
         assertTrue(result.output.contains("[26.1-neoforge] gameTestServer jvmArguments=\"-Dneoforge.enableGameTest=true\""))
         assertTrue(result.output.contains("[26.1-neoforge] gameTestServer jvmArguments=\"-Dneoforge.gameTestServer=true\""))
     }
@@ -303,7 +416,7 @@ class LoomBitsTest : IntegrationTest {
                 "[1.21.4-neoforge] gameTestServer mainClass=net.neoforged.fml.startup.GameTestServer"
             )
         )
-        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer jvmArguments=\"-Dneoforge.enabledGameTestNamespaces=examplemod\""))
+        assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer jvmArguments=\"-Dneoforge.enabledGameTestNamespaces=examplemod,examplemod_gametest\""))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer jvmArguments=\"-Dneoforge.enableGameTest=true\""))
         assertTrue(result.output.contains("[1.21.4-neoforge] gameTestServer jvmArguments=\"-Dneoforge.gameTestServer=true\""))
     }

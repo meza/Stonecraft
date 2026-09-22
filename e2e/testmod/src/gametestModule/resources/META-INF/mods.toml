@@ -1,0 +1,23 @@
+modLoader = "lowcodefml"
+loaderVersion = "*"
+license = "GPL-3.0"
+
+[[mods]]
+modId = "${gametestModuleName}"
+version = "${version}"
+displayName = "${name} Game Tests"
+description = '''
+GameTests for ${name}
+'''
+
+[[dependencies.${gametestModuleName}]]
+modId = "${id}"
+#? if forge {
+mandatory = true
+#?}
+#? if neoforge {
+type = "required"
+#?}
+versionRange = "*"
+ordering = "AFTER"
+side = "BOTH"

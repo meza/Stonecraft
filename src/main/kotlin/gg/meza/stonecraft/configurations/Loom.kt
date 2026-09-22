@@ -11,13 +11,35 @@ import net.fabricmc.loom.api.RunConfiguration
 import net.fabricmc.loom.api.fabricapi.FabricApiExtension
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.Provider
+import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.kotlin.dsl.getByType
+
+/**
+ * Retains the pre-2.0 configuration API for convention plugins compiled against Stonecraft.
+ */
+@Deprecated("Use the overload that accepts the configured gametest source set")
+fun configureLoom(
+    project: Project,
+    stonecutter: StonecutterBuildExtension,
+    modSettings: ModSettingsExtension,
+    minecraftObfuscation: MinecraftObfuscation,
+) {
+    val gameTestSourceSet = configureGameTestSourceSet(
+        project,
+        minecraftObfuscation,
+        modSettings.gametestModuleNameProp,
+    )
+    configureLoom(project, stonecutter, modSettings, minecraftObfuscation, gameTestSourceSet)
+}
 
 fun configureLoom(
     project: Project,
     stonecutter: StonecutterBuildExtension,
     modSettings: ModSettingsExtension,
     minecraftObfuscation: MinecraftObfuscation,
+    gameTestSourceSet: SourceSet,
 ) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
 
@@ -43,8 +65,8 @@ fun configureLoom(
     }
 
     configureDatagen(project, loom, stonecutter, modSettings)
-    configureClientGameTests(project, loom, stonecutter, modSettings)
-    configureServerGameTests(project, loom, stonecutter, modSettings)
+    configureClientGameTests(project, loom, stonecutter, modSettings, gameTestSourceSet)
+    configureServerGameTests(project, loom, stonecutter, modSettings, gameTestSourceSet)
 
     project.afterEvaluate {
         val awFile = modSettings.effectiveAccessWidenerLocationProp.orNull
@@ -68,26 +90,50 @@ fun configureLoom(
 /**
  * Configures the client game test tasks for the project
  */
+@Deprecated("Use the overload that accepts the configured gametest source set")
 fun configureClientGameTests(
     project: Project,
     loom: LoomGradleExtensionAPI,
     stonecutter: StonecutterBuildExtension,
-    modSettings: ModSettingsExtension
+    modSettings: ModSettingsExtension,
+) {
+    val mainSourceSet = project.extensions.getByType<SourceSetContainer>().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
+    configureClientGameTests(project, loom, stonecutter, modSettings, mainSourceSet)
+}
+
+fun configureClientGameTests(
+    project: Project,
+    loom: LoomGradleExtensionAPI,
+    stonecutter: StonecutterBuildExtension,
+    modSettings: ModSettingsExtension,
+    gameTestSourceSet: SourceSet,
 ) {
     val mod = project.mod
 
     loom.runs {
         create("gameTestClient") {
             client()
+            useGameTestSourceSet(
+                project,
+                gameTestSourceSet,
+                modSettings.gametestModuleNameProp,
+                stonecutter.eval(stonecutter.current.version, ">=1.21.5"),
+            )
             runDirectory.set(modSettings.testClientRunDirectoryProp)
             if (mod.isFabric) {
                 fabricGameTestConfig(Side.CLIENT, modSettings.fabricClientJunitReportLocationProp)
             }
             if (mod.isForge) {
-                forgeConfig(Side.CLIENT, mod.loader, mod.id)
+                forgeConfig(Side.CLIENT, mod.loader, mod.id, modSettings.gametestModuleNameProp)
             }
             if (mod.isNeoforge) {
-                neoforgeConfig(Side.CLIENT, mod.loader, mod.id, stonecutter)
+                neoforgeConfig(
+                    Side.CLIENT,
+                    mod.loader,
+                    mod.id,
+                    modSettings.gametestModuleNameProp,
+                    stonecutter,
+                )
             }
         }
 
@@ -98,26 +144,50 @@ fun configureClientGameTests(
 /**
  * Configures the client game test tasks for the project
  */
+@Deprecated("Use the overload that accepts the configured gametest source set")
 fun configureServerGameTests(
     project: Project,
     loom: LoomGradleExtensionAPI,
     stonecutter: StonecutterBuildExtension,
-    modSettings: ModSettingsExtension
+    modSettings: ModSettingsExtension,
+) {
+    val mainSourceSet = project.extensions.getByType<SourceSetContainer>().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
+    configureServerGameTests(project, loom, stonecutter, modSettings, mainSourceSet)
+}
+
+fun configureServerGameTests(
+    project: Project,
+    loom: LoomGradleExtensionAPI,
+    stonecutter: StonecutterBuildExtension,
+    modSettings: ModSettingsExtension,
+    gameTestSourceSet: SourceSet,
 ) {
     val mod = project.mod
 
     loom.runs {
         create("gameTestServer") {
+            useGameTestSourceSet(
+                project,
+                gameTestSourceSet,
+                modSettings.gametestModuleNameProp,
+                stonecutter.eval(stonecutter.current.version, ">=1.21.5"),
+            )
             runDirectory.set(modSettings.testServerRunDirectoryProp)
             if (mod.isFabric) {
                 server()
                 fabricGameTestConfig(Side.SERVER, modSettings.fabricServerJunitReportLocationProp)
             }
             if (mod.isForge) {
-                forgeConfig(Side.SERVER, mod.loader, mod.id)
+                forgeConfig(Side.SERVER, mod.loader, mod.id, modSettings.gametestModuleNameProp)
             }
             if (mod.isNeoforge) {
-                neoforgeConfig(Side.SERVER, mod.loader, mod.id, stonecutter)
+                neoforgeConfig(
+                    Side.SERVER,
+                    mod.loader,
+                    mod.id,
+                    modSettings.gametestModuleNameProp,
+                    stonecutter,
+                )
             }
         }
     }
@@ -146,23 +216,28 @@ private fun RunConfiguration.fabricGameTestConfig(side: Side, junitFile: Regular
  *
  * @param side The side of the game test
  */
-private fun RunConfiguration.forgeConfig(side: Side, loader: String, modId: String) {
+private fun RunConfiguration.forgeConfig(
+    side: Side,
+    loader: String,
+    modId: String,
+    gameTestModuleName: Provider<String>,
+) {
     if (side == Side.SERVER) {
         runtimeEnvironment.set("gameTestServer")
         forgeTemplate.set("gameTestServer")
         systemProperties.put("$loader.gameTestServer", "true")
     }
 
-    mapOf(
-        "$loader.enabledGameTestNamespaces" to modId,
-        "$loader.enableGameTest" to "true"
-    ).forEach { (key, value) -> systemProperties.put(key, value) }
+    val enabledNamespaces = gameTestModuleName.map { moduleName -> "$modId,$moduleName" }
+    systemProperties.put("$loader.enableGameTest", "true")
+    systemProperties.put("$loader.enabledGameTestNamespaces", enabledNamespaces)
 }
 
 private fun RunConfiguration.neoforgeConfig(
     side: Side,
     loader: String,
     modId: String,
+    gameTestModuleName: Provider<String>,
     stonecutter: StonecutterBuildExtension
 ) {
     if (side == Side.SERVER) {
@@ -176,10 +251,9 @@ private fun RunConfiguration.neoforgeConfig(
         systemProperties.put("$loader.gameTestServer", "true")
     }
 
-    mapOf(
-        "$loader.enabledGameTestNamespaces" to modId,
-        "$loader.enableGameTest" to "true"
-    ).forEach { (key, value) -> systemProperties.put(key, value) }
+    val enabledNamespaces = gameTestModuleName.map { moduleName -> "$modId,$moduleName" }
+    systemProperties.put("$loader.enableGameTest", "true")
+    systemProperties.put("$loader.enabledGameTestNamespaces", enabledNamespaces)
 }
 
 /**

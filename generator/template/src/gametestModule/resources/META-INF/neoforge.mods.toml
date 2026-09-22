@@ -1,0 +1,22 @@
+__STONECRAFT_#NEOFORGE__
+__STONECRAFT_#GAMETESTS__
+modLoader = "lowcodefml"
+loaderVersion = "*"
+license = "MIT"
+
+[[mods]]
+modId = "${gametestModuleName}"
+version = "${version}"
+displayName = "${name} Game Tests"
+description = '''
+GameTests for ${name}
+'''
+
+[[dependencies.${gametestModuleName}]]
+modId = "${id}"
+type = "required"
+versionRange = "*"
+ordering = "AFTER"
+side = "BOTH"
+__STONECRAFT_/GAMETESTS__
+__STONECRAFT_/NEOFORGE__

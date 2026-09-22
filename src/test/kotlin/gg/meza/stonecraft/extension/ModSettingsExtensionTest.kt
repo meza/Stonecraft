@@ -33,6 +33,7 @@ class ModSettingsExtensionTest {
         assertEquals(project.rootProject.layout.projectDirectory.file("src/main/resources/${MOD_ID}.accesswidener"), settings.accessWidenerLocation)
         assertEquals(true, settings.accessWidenerProcessing)
         assertEquals(emptyMap<String, Any>(), settings.variableReplacements.get())
+        assertEquals("${MOD_ID}_gametest", settings.gametestModuleName)
         assertEquals(true, settings.gametestEntrypointCleanup)
         assertEquals(
             mapOf(
@@ -64,6 +65,7 @@ class ModSettingsExtensionTest {
         settings.fabricClientJunitReportLocation = customClientJunitReport
         settings.fabricServerJunitReportLocation = customServerJunitReport
         settings.variableReplacements.set(mapOf("custom" to "replacement"))
+        settings.gametestModuleName = "custom_gametest_module"
         settings.gametestEntrypointCleanup = false
         settings.accessWidenerLocation = customAccessWidener
         settings.accessWidenerProcessing = false
@@ -83,6 +85,7 @@ class ModSettingsExtensionTest {
         assertEquals(customClientJunitReport.get(), settings.fabricClientJunitReportLocation.get())
         assertEquals(customServerJunitReport.get(), settings.fabricServerJunitReportLocation.get())
         assertEquals(mapOf("custom" to "replacement"), settings.variableReplacements.get())
+        assertEquals("custom_gametest_module", settings.gametestModuleName)
         assertEquals(customAccessWidener, settings.accessWidenerLocation)
         assertEquals(false, settings.accessWidenerProcessing)
         assertEquals(false, settings.gametestEntrypointCleanup)

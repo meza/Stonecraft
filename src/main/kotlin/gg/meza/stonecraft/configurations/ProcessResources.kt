@@ -44,8 +44,12 @@ fun configureProcessResources(
 
     project.tasks.named<ProcessResources>("processResources") {
         dependsOn(project.tasks.named("stonecutterGenerate"))
-        if (generatedPackMetadata != null) {
+    }
+
+    if (generatedPackMetadata != null) {
+        project.tasks.withType<ProcessResources>().configureEach {
             from(generatedPackMetadata.flatMap { it.outputFile })
+            dependsOn(generatedPackMetadata)
         }
     }
 
@@ -75,6 +79,7 @@ fun configureProcessResources(
                 "fabricVersion" to project.mod.prop("fabric_version", "not set"),
                 "forgeVersion" to project.mod.prop("forge_version", "not set"),
                 "neoforgeVersion" to project.mod.prop("neoforge_version", "not set"),
+                "gametestModuleName" to modSettings.gametestModuleNameProp.get(),
             ) + modSettings.variableReplacements.get()
 
             inputs.property(

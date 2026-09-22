@@ -25,10 +25,7 @@ __STONECRAFT_/REPOSITORY__
     ]__STONECRAFT_#DATAGEN__,
     "fabric-datagen": [
       "${group}.${id}.datagen.fabric.ExampleDataGenerator"
-    ]__STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__,
-    "fabric-gametest": [
-      "${group}.${id}.gametest.ExampleGameTests"
-    ]__STONECRAFT_/GAMETESTS__
+    ]__STONECRAFT_/DATAGEN__
   },
   "depends": {
     "fabricloader": "*",

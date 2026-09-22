@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "${gametestModuleName}",
+  "version": "${version}",
+  "name": "${name} Game Tests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "${group}.${gameTestPackage}.CodeGameTests"
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "fabric-api": ">=${fabricVersion}",
+    "minecraft": ">=${minecraftVersion}",
+    "${id}": "*"
+  }
+}

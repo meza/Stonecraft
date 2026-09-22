@@ -4,6 +4,7 @@ import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.MinecraftObfuscation
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import net.fabricmc.loom.api.fabricapi.FabricApiExtension
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.kotlin.dsl.exclude
@@ -98,6 +99,11 @@ fun configureDependencies(
 
     // Fabric
     if (project.mod.isFabric) {
+        val gameTestApi = project.extensions.getByType<FabricApiExtension>().module(
+            "fabric-gametest-api-v1",
+            project.mod.prop("fabric_version")
+        )
+
         if (minecraftObfuscation == MinecraftObfuscation.UNOBFUSCATED) {
             project.dependencies.add(
                 "implementation",
@@ -112,8 +118,8 @@ fun configureDependencies(
                 "net.fabricmc:fabric-loader-junit:${project.mod.prop("loader_version")}"
             )
             project.dependencies.add(
-                "api",
-                "net.fabricmc.fabric-api:fabric-gametest-api-v1:${project.mod.prop("fabric_version")}"
+                "${GAME_TEST_SOURCE_SET_NAME}Implementation",
+                gameTestApi
             )
         } else {
             project.dependencies.add(
@@ -122,8 +128,8 @@ fun configureDependencies(
             )
             project.dependencies.add("modApi", "net.fabricmc.fabric-api:fabric-api:${project.mod.prop("fabric_version")}")
             project.dependencies.add(
-                "modApi",
-                "net.fabricmc.fabric-api:fabric-gametest-api-v1:${project.mod.prop("fabric_version")}"
+                "mod${GAME_TEST_SOURCE_SET_NAME.replaceFirstChar(Char::uppercase)}Implementation",
+                gameTestApi
             )
         }
     }

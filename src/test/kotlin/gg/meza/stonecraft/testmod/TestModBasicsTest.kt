@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.testmod
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -79,6 +80,8 @@ class TestModBasicsTest : IntegrationTest {
             collectedJars.jarNamed("stonecraft_testmod-forge-0.0-SNAPSHOT+mc26.1.jar"),
             "62.0.9"
         )
+
+        collectedJars.forEach(::assertProductionJarExcludesGameTests)
     }
 
     @Test
@@ -99,6 +102,13 @@ class TestModBasicsTest : IntegrationTest {
             assertTrue(
                 result.output.contains(marker),
                 "Expected Gradle success marker '$marker'. Output:\n${result.output}"
+            )
+        }
+
+        listOf("All 0 required tests passed", "0 GAME TESTS COMPLETE").forEach { zeroTestsMarker ->
+            assertFalse(
+                result.output.contains(zeroTestsMarker),
+                "Expected every configured pair to discover at least one GameTest, but found '$zeroTestsMarker'. Output:\n${result.output}"
             )
         }
     }
@@ -134,6 +144,26 @@ class TestModBasicsTest : IntegrationTest {
             assertTrue(
                 modsToml.contains("versionRange = \"[$expectedLoaderVersion,)\""),
                 "Expected ${jar.name} to require Forge loader $expectedLoaderVersion. mods.toml:\n$modsToml"
+            )
+        }
+    }
+
+    private fun assertProductionJarExcludesGameTests(jar: File) {
+        ZipFile(jar).use { zip ->
+            val gameTestEntries = zip.entries().asSequence()
+                .map { it.name }
+                .filter { name ->
+                    name.contains("/gametests/") ||
+                        name.contains("/gametest/") ||
+                        name.contains("/test_instance/") ||
+                        name.contains("/structure/codegametests.") ||
+                        name.contains("/structures/codegametests.")
+                }
+                .toList()
+
+            assertTrue(
+                gameTestEntries.isEmpty(),
+                "Expected ${jar.name} to exclude GameTest classes and resources. Found: ${gameTestEntries.joinToString()}"
             )
         }
     }

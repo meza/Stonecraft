@@ -91,6 +91,9 @@ abstract class ModSettingsExtension @Inject constructor(
     @Internal
     internal val gametestEntrypointCleanupProp: Property<Boolean> = project.objects.property(Boolean::class.java)
 
+    @Internal
+    internal val gametestModuleNameProp: Property<String> = project.objects.property(String::class.java)
+
     init {
         runDirectoryProp.convention(project.rootProject.layout.projectDirectory.dir("run"))
         generatedResourcesProp.convention(project.layout.projectDirectory.dir("src/main/generated"))
@@ -102,6 +105,7 @@ abstract class ModSettingsExtension @Inject constructor(
         variableReplacements.convention(emptyMap())
         accessWidenerProcessingProp.convention(true)
         gametestEntrypointCleanupProp.convention(true)
+        gametestModuleNameProp.convention("${project.mod.id}_gametest")
     }
 
     var runDirectory: Directory
@@ -163,6 +167,13 @@ abstract class ModSettingsExtension @Inject constructor(
         set(value) {
             gametestEntrypointCleanupProp.set(value)
             gametestEntrypointCleanupProp.disallowChanges()
+        }
+
+    var gametestModuleName: String
+        get() = gametestModuleNameProp.get()
+        set(value) {
+            gametestModuleNameProp.set(value)
+            gametestModuleNameProp.disallowChanges()
         }
 
     fun clientOptions(configure: MinecraftClientOptions.() -> Unit) {

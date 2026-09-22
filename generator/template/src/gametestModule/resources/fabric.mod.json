@@ -1,0 +1,22 @@
+__STONECRAFT_#FABRIC__
+__STONECRAFT_#GAMETESTS__
+{
+  "schemaVersion": 1,
+  "id": "${gametestModuleName}",
+  "version": "${version}",
+  "name": "${name} Game Tests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "${group}.${id}.gametest.ExampleGameTests"
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "fabric-api": ">=${fabricVersion}",
+    "minecraft": ">=${minecraftVersionVirtual}",
+    "${id}": "*"
+  }
+}
+__STONECRAFT_/GAMETESTS__
+__STONECRAFT_/FABRIC__

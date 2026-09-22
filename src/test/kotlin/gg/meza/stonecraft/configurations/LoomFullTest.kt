@@ -163,11 +163,11 @@ class LoomFullTest : IntegrationTest {
             "-Dfabric-api.gametest"
         )
         val forgeClient = listOf(
-            "-Dforge.enabledGameTestNamespaces=examplemod",
+            "-Dforge.enabledGameTestNamespaces=examplemod,examplemod_gametest",
             "-Dforge.enableGameTest=true"
         )
         val neoforgeClient = listOf(
-            "-Dneoforge.enabledGameTestNamespaces=examplemod",
+            "-Dneoforge.enabledGameTestNamespaces=examplemod,examplemod_gametest",
             "-Dneoforge.enableGameTest=true"
         )
 
@@ -194,12 +194,12 @@ class LoomFullTest : IntegrationTest {
     @Test
     fun `gameTestServer is properly set up`() {
         val forgeServer = listOf(
-            "-Dforge.enabledGameTestNamespaces=examplemod",
+            "-Dforge.enabledGameTestNamespaces=examplemod,examplemod_gametest",
             "-Dforge.enableGameTest=true",
             "-Dforge.gameTestServer=true"
         )
         val neoforgeServer = listOf(
-            "-Dneoforge.enabledGameTestNamespaces=examplemod",
+            "-Dneoforge.enabledGameTestNamespaces=examplemod,examplemod_gametest",
             "-Dneoforge.enableGameTest=true",
             "-Dneoforge.gameTestServer=true"
         )
@@ -251,6 +251,13 @@ class LoomFullTest : IntegrationTest {
                 println("[" + projectName + "] "+ runConfig.name + " runtimeEnvironment="+runConfig.runtimeEnvironment.get())
                 println("[" + projectName + "] "+ runConfig.name + " runDirectory="+runConfig.runDirectory.get())
                 println("[" + projectName + "] "+ runConfig.name + " mainClass="+runConfig.mainClass.get())
+                println("[" + projectName + "] "+ runConfig.name + " sourceSet="+runConfig.sourceSet.get())
+                runConfig.mods.forEach { mod ->
+                    println("[" + projectName + "] "+ runConfig.name + " mod=" + mod.name)
+                    mod.modFiles.files.forEach { file ->
+                        println("[" + projectName + "] "+ runConfig.name + " modFile=" + file)
+                    }
+                }
                 runConfig.programArguments.get().forEach { arg ->
                     println("[" + projectName + "] "+ it.name + " programArguments=\"" + arg + "\"")
                 }
