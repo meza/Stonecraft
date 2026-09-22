@@ -34,6 +34,7 @@ class ModSettingsExtensionTest {
         assertEquals(true, settings.accessWidenerProcessing)
         assertEquals(emptyMap<String, Any>(), settings.variableReplacements.get())
         assertEquals(true, settings.gametestEntrypointCleanup)
+        assertEquals(true, settings.enableJunit)
         assertEquals(
             mapOf(
                 "guiScale" to "3",
@@ -65,6 +66,7 @@ class ModSettingsExtensionTest {
         settings.fabricServerJunitReportLocation = customServerJunitReport
         settings.variableReplacements.set(mapOf("custom" to "replacement"))
         settings.gametestEntrypointCleanup = false
+        settings.enableJunit = false
         settings.accessWidenerLocation = customAccessWidener
         settings.accessWidenerProcessing = false
         settings.clientOptions {
@@ -86,6 +88,7 @@ class ModSettingsExtensionTest {
         assertEquals(customAccessWidener, settings.accessWidenerLocation)
         assertEquals(false, settings.accessWidenerProcessing)
         assertEquals(false, settings.gametestEntrypointCleanup)
+        assertEquals(false, settings.enableJunit)
         assertEquals(
             mapOf(
                 "guiScale" to "4",

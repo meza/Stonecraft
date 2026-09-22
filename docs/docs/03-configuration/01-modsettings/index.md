@@ -44,5 +44,6 @@ modSettings {
     variableReplacements = mapOf<String, Any>()
 
     gametestEntrypointCleanup = true
+    enableJunit = true
 }
 ```

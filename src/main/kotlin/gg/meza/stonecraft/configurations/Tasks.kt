@@ -1,21 +1,25 @@
 package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
+import gg.meza.stonecraft.MinecraftObfuscation
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.mod
 import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
 import net.fabricmc.loom.task.DownloadAssetsTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
-import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
-import java.io.File
 
-fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
+fun configureTasks(
+    project: Project,
+    stonecutter: StonecutterBuildExtension,
+    modSettings: ModSettingsExtension,
+    minecraftObfuscation: MinecraftObfuscation,
+) {
     val currentModGroup = "mod"
     val buildAndCollect = project.tasks.register<Copy>("buildAndCollect") {
-        val jarTask = resolveJarTask(project, stonecutter, realMinecraftVersion)
+        val jarTask = resolveJarTask(project, minecraftObfuscation)
         group = "build"
         from(jarTask.flatMap { it.archiveFile })
         into(project.rootProject.layout.buildDirectory.file("libs"))
@@ -44,7 +48,7 @@ fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: 
 
         project.rootProject.tasks.register("testActiveClient") {
             group = currentModGroup
-            dependsOn(project.tasks.named("runGameTestClient"), project.tasks.named("configureMinecraftTestClient"))
+            dependsOn(project.tasks.named("runGameTestClient"))
         }
         project.rootProject.tasks.register("testActiveServer") {
             group = currentModGroup
@@ -84,22 +88,13 @@ fun configureTasks(project: Project, realMinecraftVersion: String, stonecutter: 
         dependsOn(project.tasks.named("configureMinecraftClient"))
     }
 
+    project.tasks.named("runGameTestClient") {
+        dependsOn(project.tasks.named("configureMinecraftTestClient"))
+    }
+
+    // Version projects share the configured game run directory, but each download task must own distinct outputs.
     project.tasks.withType<DownloadAssetsTask>().configureEach {
         legacyResourcesDirectory.set(project.layout.projectDirectory.file("run/resources"))
     }
 
-    if (project.mod.isNeoforge) {
-        // Necessary to enable minecraft facing unit test facilities
-        project.tasks.withType<Test>().configureEach {
-            jvmArgs("--add-opens=java.base/java.lang.invoke=ALL-UNNAMED")
-            systemProperty(
-                "fml.modFolders",
-                listOf(
-                    "main%%${project.layout.buildDirectory.dir("resources/main").get().asFile.absolutePath}",
-                    "main%%${project.layout.buildDirectory.dir("classes/java/main").get().asFile.absolutePath}",
-                    "main%%${project.layout.buildDirectory.dir("classes/java/test").get().asFile.absolutePath}",
-                ).joinToString(File.pathSeparator)
-            )
-        }
-    }
 }

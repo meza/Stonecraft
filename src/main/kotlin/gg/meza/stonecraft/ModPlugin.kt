@@ -65,7 +65,12 @@ class ModPlugin : Plugin<Any> {
         }
 
         project.group = project.mod.group
-        configurePlugins(project)
+        val minecraftObfuscation = if (stonecutter.eval(realMinecraftVersion, ">1.21.11")) {
+            MinecraftObfuscation.UNOBFUSCATED
+        } else {
+            MinecraftObfuscation.MAPPED
+        }
+        configurePlugins(project, minecraftObfuscation)
 
         val base = project.extensions.getByType(BasePluginExtension::class)
         val modSettings =
@@ -77,17 +82,16 @@ class ModPlugin : Plugin<Any> {
         base.archivesName.set("${project.mod.id}-${project.mod.loader}")
         project.version = "${project.mod.version}+mc$realMinecraftVersion"
 
-        configureDependencies(project, stonecutter, realMinecraftVersion)
+        configureDependencies(project, stonecutter, realMinecraftVersion, minecraftObfuscation)
+        configureJunit(project, modSettings)
         configureStonecutterConstants(project, stonecutter)
         configureProcessResources(project, realMinecraftVersion, modSettings, stonecutter)
-        configureLoom(project, stonecutter, modSettings)
+        configureLoom(project, stonecutter, modSettings, minecraftObfuscation)
         patchAroundArchitecturyQuirks(project, stonecutter)
-        configurePublishing(project, realMinecraftVersion, stonecutter)
-        configureTasks(project, realMinecraftVersion, stonecutter, modSettings)
+        configurePublishing(project, realMinecraftVersion, minecraftObfuscation)
+        configureTasks(project, stonecutter, modSettings, minecraftObfuscation)
+        configureIntellij(project, stonecutter)
         configureJava(project, stonecutter, modSettings)
-
-        project.afterEvaluate {
-        }
     }
 
     private fun printBanner(project: Project) {

@@ -72,4 +72,56 @@ tasks.register("printPlatform") {
         assertTrue(br.output.contains("loom.platform is set to forge"))
         assertTrue(br.output.contains("loom.platform is set to neoforge"))
     }
+
+    @Test
+    fun `last mapped minecraft version explicitly enables obfuscation`() {
+        gradleTest = gradleTest().buildScript(
+            """
+tasks.register("printDisableObfuscation") {
+    doLast {
+        val rawValue = project.findProperty("fabric.loom.disableObfuscation")
+        val effectiveValue = net.fabricmc.loom.LoomGradleExtension.get(project).disableObfuscation()
+        println(project.name + ".disableObfuscation.raw=" + rawValue)
+        println(project.name + ".disableObfuscation.effective=" + effectiveValue)
+    }
+}
+            """.trimIndent()
+        )
+
+        gradleTest.setStonecutterVersion("600.21.11", "fabric")
+
+        val br = gradleTest.run("printDisableObfuscation")
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(br.output.contains("600.21.11-fabric.disableObfuscation.raw=false"))
+        assertTrue(br.output.contains("600.21.11-fabric.disableObfuscation.effective=false"))
+    }
+
+    @Test
+    fun `obfuscation mode uses the resolved minecraft version`() {
+        gradleTest = gradleTest().buildScript(
+            """
+loom {
+    accessWidenerPath = rootProject.layout.projectDirectory.file("src/main/resources/examplemod.deobfuscated.accesswidener")
+}
+
+tasks.register("printDisableObfuscation") {
+    doLast {
+        val rawValue = project.findProperty("fabric.loom.disableObfuscation")
+        val effectiveValue = net.fabricmc.loom.LoomGradleExtension.get(project).disableObfuscation()
+        println(project.name + ".disableObfuscation.raw=" + rawValue)
+        println(project.name + ".disableObfuscation.effective=" + effectiveValue)
+    }
+}
+            """.trimIndent()
+        )
+
+        gradleTest.setStonecutterVersion("current", "fabric")
+
+        val br = gradleTest.run("printDisableObfuscation")
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(br.output.contains("current-fabric.disableObfuscation.raw=true"))
+        assertTrue(br.output.contains("current-fabric.disableObfuscation.effective=true"))
+    }
 }

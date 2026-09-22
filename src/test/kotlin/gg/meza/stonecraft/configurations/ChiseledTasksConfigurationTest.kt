@@ -112,6 +112,97 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
     }
 
     @Test
+    fun `run tasks own their setup and generated IDE configurations delegate to Gradle`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+        gradleTest.buildScript(
+            """
+            tasks.register("printRunTaskConfiguration") {
+                doLast {
+                    listOf("runClient", "runGameTestClient").forEach { taskName ->
+                        val task = tasks.named(taskName).get()
+                        val dependencies = task.taskDependencies.getDependencies(task).map { it.name }.sorted()
+                        dependencies.forEach { println(taskName + ".dep=" + it) }
+                    }
+
+                    val testActiveClient = rootProject.tasks.named("testActiveClient").get()
+                    val wrapperDependencies = testActiveClient.taskDependencies
+                        .getDependencies(testActiveClient)
+                        .map { it.path }
+                        .sorted()
+                    wrapperDependencies.forEach { println("testActiveClient.dep=" + it) }
+
+                    loom.runConfigs.forEach { runConfig ->
+                        println(runConfig.name + ".preferGradleTask=" + runConfig.preferGradleTask.get())
+                    }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run("printRunTaskConfiguration")
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(br.output.contains("runClient.dep=configureMinecraftClient"))
+        assertTrue(br.output.contains("runGameTestClient.dep=configureMinecraftTestClient"))
+        assertTrue(br.output.contains("testActiveClient.dep=:1.21.4-fabric:runGameTestClient"))
+        assertTrue(!br.output.contains("testActiveClient.dep=:1.21.4-neoforge:runGameTestClient"))
+        assertTrue(!br.output.contains("testActiveClient.dep=:1.21.4-fabric:configureMinecraftTestClient"))
+        assertTrue(!br.output.contains("preferGradleTask=false"))
+        assertTrue(br.output.contains("client.preferGradleTask=true"))
+        assertTrue(br.output.contains("gameTestClient.preferGradleTask=true"))
+    }
+
+    @Test
+    fun `active client IntelliJ configuration debugs the complete runActive task graph`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+        gradleTest.buildScript(
+            """
+            tasks.register("printIdeaSyncOutputs") {
+                doLast {
+                    rootProject.allprojects.forEach { candidate ->
+                        candidate.tasks.findByName("ideaSyncTask")?.let { ideaSyncTask ->
+                            ideaSyncTask.outputs.files.files
+                                .map { it.invariantSeparatorsPath }
+                                .sorted()
+                                .forEach { println(candidate.path + ".ideaSync.output=" + it) }
+                        }
+                    }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run(
+            listOf(
+                "printIdeaSyncOutputs",
+                ":1.21.4-fabric:ideaSyncTask"
+            )
+        )
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(
+            Regex(
+                ":1\\.21\\.4-fabric\\.ideaSync\\.output=.*" +
+                    "Stonecraft_Active_Minecraft_Client\\.xml"
+            ).containsMatchIn(br.output)
+        )
+        assertTrue(
+            !Regex(
+                ":1\\.21\\.4-neoforge\\.ideaSync\\.output=.*" +
+                    "Stonecraft_Active_Minecraft_Client\\.xml"
+            ).containsMatchIn(br.output)
+        )
+
+        val configuration = gradleTest.project().projectDir
+            .resolve(".idea/runConfigurations/Stonecraft_Active_Minecraft_Client.xml")
+            .readText()
+        assertTrue(configuration.contains("name=\"Run the Active Minecraft Client\""))
+        assertTrue(configuration.contains("<option value=\":runActive\" />"))
+        assertTrue(configuration.contains("<ExternalSystemReattachDebugProcess>true"))
+        assertTrue(configuration.contains("<DebugAllEnabled>true"))
+    }
+
+    @Test
     fun `build and collect depends on remapJar for mapped versions`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
         gradleTest.buildScript(
@@ -187,7 +278,8 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
         val expectedFolders = listOf(
             "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/resources/main").asFile.absolutePath}",
             "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/main").asFile.absolutePath}",
-            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/test").asFile.absolutePath}"
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/test").asFile.absolutePath}",
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/resources/test").asFile.absolutePath}"
         )
 
         assertTrue(
@@ -200,5 +292,9 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
                 "NeoForge Test tasks should include $folder in fml.modFolders."
             )
         }
+        assertTrue(
+            !br.output.contains("junit-fml"),
+            "NeoForge Test tasks should rely on the published fixture capability rather than a hard-coded junit-fml module."
+        )
     }
 }

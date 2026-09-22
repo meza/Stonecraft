@@ -1,20 +1,24 @@
 package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
+import gg.meza.stonecraft.MinecraftObfuscation
 import gg.meza.stonecraft.Side
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.getProgramArgs
 import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import net.fabricmc.loom.api.RunConfiguration
 import net.fabricmc.loom.api.fabricapi.FabricApiExtension
-import net.fabricmc.loom.configuration.ide.RunConfigSettings
-import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.getByType
 
-fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
+fun configureLoom(
+    project: Project,
+    stonecutter: StonecutterBuildExtension,
+    modSettings: ModSettingsExtension,
+    minecraftObfuscation: MinecraftObfuscation,
+) {
     val loom = project.extensions.getByType(LoomGradleExtensionAPI::class)
 
     loom.apply {
@@ -27,39 +31,37 @@ fun configureLoom(project: Project, stonecutter: StonecutterBuildExtension, modS
         decompilers {
             getByName("vineflower").apply { options.put("mark-corresponding-synthetics", "1") }
         }
-    }
-    project.afterEvaluate {
-        loom.apply {
-            val awFile = modSettings.effectiveAccessWidenerLocationProp.orNull
-            if (awFile != null) {
-                val relativeLocation =
-                    awFile.asFile.relativeTo(project.rootProject.layout.projectDirectory.dir("src/main/resources").asFile).invariantSeparatorsPath
 
-                val task = when {
-                    stonecutter.current.parsed >= "26.1" -> project.tasks.named("jar", Jar::class.java)
-                    else -> project.tasks.named("remapJar", RemapJarTask::class.java)
-                }
-
-                if (project.mod.isFabricLike) {
-                    injectAccessWidener(task)
-                }
-
-                if (project.mod.isNeoforge) {
-                    neoForge.convertAccessWideners(task, relativeLocation)
-                }
-            }
-
-            runConfigs.all {
-                generateRunConfig.set(true)
-                runDirectory.set(modSettings.runDirectoryProp)
-                if (name == "client") {
-                    programArguments.addAll("--username=developer")
-                }
+        runConfigs.configureEach {
+            generateRunConfig.set(true)
+            preferGradleTask.set(true)
+            runDirectory.set(modSettings.runDirectoryProp)
+            if (name == "client") {
+                programArguments.addAll("--username=developer")
             }
         }
-        configureDatagen(project, loom, stonecutter, modSettings)
-        configureClientGameTests(project, loom, stonecutter, modSettings)
-        configureServerGameTests(project, loom, stonecutter, modSettings)
+    }
+
+    configureDatagen(project, loom, stonecutter, modSettings)
+    configureClientGameTests(project, loom, stonecutter, modSettings)
+    configureServerGameTests(project, loom, stonecutter, modSettings)
+
+    project.afterEvaluate {
+        val awFile = modSettings.effectiveAccessWidenerLocationProp.orNull
+        if (awFile != null) {
+            val relativeLocation =
+                awFile.asFile.relativeTo(project.rootProject.layout.projectDirectory.dir("src/main/resources").asFile).invariantSeparatorsPath
+
+            val task = resolveJarTask(project, minecraftObfuscation)
+
+            if (project.mod.isFabricLike) {
+                loom.injectAccessWidener(task)
+            }
+
+            if (project.mod.isNeoforge) {
+                loom.neoForge.convertAccessWideners(task, relativeLocation)
+            }
+        }
     }
 }
 
@@ -82,10 +84,10 @@ fun configureClientGameTests(
                 fabricGameTestConfig(Side.CLIENT, modSettings.fabricClientJunitReportLocationProp)
             }
             if (mod.isForge) {
-                forgeConfig(Side.CLIENT, mod.loader, stonecutter)
+                forgeConfig(Side.CLIENT, mod.loader, mod.id)
             }
             if (mod.isNeoforge) {
-                neoforgeConfig(Side.CLIENT, mod.loader, stonecutter)
+                neoforgeConfig(Side.CLIENT, mod.loader, mod.id, stonecutter)
             }
         }
 
@@ -112,10 +114,10 @@ fun configureServerGameTests(
                 fabricGameTestConfig(Side.SERVER, modSettings.fabricServerJunitReportLocationProp)
             }
             if (mod.isForge) {
-                forgeConfig(Side.SERVER, mod.loader, stonecutter)
+                forgeConfig(Side.SERVER, mod.loader, mod.id)
             }
             if (mod.isNeoforge) {
-                neoforgeConfig(Side.SERVER, mod.loader, stonecutter)
+                neoforgeConfig(Side.SERVER, mod.loader, mod.id, stonecutter)
             }
         }
     }
@@ -127,19 +129,13 @@ fun configureServerGameTests(
  * @param side The side of the game test
  *
  */
-private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: RegularFileProperty) {
-    mapOf(
-        "fabric-api.gametest" to "",
-        "fabric-api.gametest.report-file" to junitFile.get().asFile.absolutePath
-    ).forEach { (key, value) ->
-        run {
-            if (value.isNotEmpty()) {
-                jvmArguments.add("-D$key=$value")
-            } else {
-                jvmArguments.add("-D$key")
-            }
+private fun RunConfiguration.fabricGameTestConfig(side: Side, junitFile: RegularFileProperty) {
+    jvmArguments.add("-Dfabric-api.gametest")
+    jvmArguments.add(
+        junitFile.map { reportFile ->
+            "-Dfabric-api.gametest.report-file=${reportFile.asFile.absolutePath}"
         }
-    }
+    )
 }
 
 /**
@@ -150,7 +146,7 @@ private fun RunConfigSettings.fabricGameTestConfig(side: Side, junitFile: Regula
  *
  * @param side The side of the game test
  */
-private fun RunConfigSettings.forgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
+private fun RunConfiguration.forgeConfig(side: Side, loader: String, modId: String) {
     if (side == Side.SERVER) {
         runtimeEnvironment.set("gameTestServer")
         forgeTemplate.set("gameTestServer")
@@ -158,12 +154,17 @@ private fun RunConfigSettings.forgeConfig(side: Side, loader: String, stonecutte
     }
 
     mapOf(
-        "$loader.enabledGameTestNamespaces" to project.mod.id,
+        "$loader.enabledGameTestNamespaces" to modId,
         "$loader.enableGameTest" to "true"
     ).forEach { (key, value) -> systemProperties.put(key, value) }
 }
 
-private fun RunConfigSettings.neoforgeConfig(side: Side, loader: String, stonecutter: StonecutterBuildExtension) {
+private fun RunConfiguration.neoforgeConfig(
+    side: Side,
+    loader: String,
+    modId: String,
+    stonecutter: StonecutterBuildExtension
+) {
     if (side == Side.SERVER) {
         runtimeEnvironment.set("gameTestServer")
         forgeTemplate.set("gameTestServer")
@@ -176,7 +177,7 @@ private fun RunConfigSettings.neoforgeConfig(side: Side, loader: String, stonecu
     }
 
     mapOf(
-        "$loader.enabledGameTestNamespaces" to project.mod.id,
+        "$loader.enabledGameTestNamespaces" to modId,
         "$loader.enableGameTest" to "true"
     ).forEach { (key, value) -> systemProperties.put(key, value) }
 }
@@ -193,13 +194,12 @@ fun configureDatagen(
     val minecraftVersion = stonecutter.current.version
 
     val mod = project.mod
-    val generatedResources = modSettings.generatedResourcesProp.get()
-    val clientGeneratedResources = generatedResources.dir("client")
-    val serverGeneratedResources = generatedResources.dir("server")
+    val generatedResources = modSettings.generatedResourcesProp
+    val clientGeneratedResources = generatedResources.map { directory -> directory.dir("client") }
+    val serverGeneratedResources = generatedResources.map { directory -> directory.dir("server") }
 
     val modDefinition = listOf("--mod", mod.id)
     val generateAll = listOf("--all")
-    val outputFolder = listOf("--output", generatedResources.asFile.absolutePath)
     val existingResources = listOf("--existing", project.rootProject.file("src/main/resources").absolutePath)
 
     if (project.mod.isFabric) {
@@ -209,12 +209,12 @@ fun configureDatagen(
                 if (stonecutter.eval(stonecutter.current.version, ">=1.21.4")) {
                     client.set(true)
                 }
-                outputDirectory.set(generatedResources.asFile)
+                outputDirectory.set(project.layout.file(generatedResources.map { directory -> directory.asFile }))
             }
         }
     }
 
-    val forgeLikeLogging: RunConfigSettings.() -> Unit = {
+    val forgeLikeLogging: RunConfiguration.() -> Unit = {
         mapOf(
             "${mod.loader}.logging.console.level" to "debug",
             "${mod.loader}.logging.markers" to "REGISTRIES"
@@ -228,7 +228,16 @@ fun configureDatagen(
                 if (stonecutter.eval(minecraftVersion, ">=26.1")) {
                     programArguments.addAll("--launchTarget", "forge_userdev_data", "--gameDir", ".")
                 }
-                programArguments.addAll(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
+                programArguments.addAll(
+                    generatedResources.map { directory ->
+                        getProgramArgs(
+                            generateAll,
+                            modDefinition,
+                            listOf("--output", directory.asFile.absolutePath),
+                            existingResources
+                        )
+                    }
+                )
                 forgeLikeLogging()
             }
         }
@@ -239,20 +248,24 @@ fun configureDatagen(
                 create("ServerDatagen") {
                     serverData()
                     programArguments.addAll(
-                        getProgramArgs(
-                            modDefinition,
-                            listOf("--output", serverGeneratedResources.asFile.absolutePath)
-                        )
+                        serverGeneratedResources.map { directory ->
+                            getProgramArgs(
+                                modDefinition,
+                                listOf("--output", directory.asFile.absolutePath)
+                            )
+                        }
                     )
                     forgeLikeLogging()
                 }
                 create("ClientDatagen") {
                     clientData()
                     programArguments.addAll(
-                        getProgramArgs(
-                            modDefinition,
-                            listOf("--output", clientGeneratedResources.asFile.absolutePath)
-                        )
+                        clientGeneratedResources.map { directory ->
+                            getProgramArgs(
+                                modDefinition,
+                                listOf("--output", directory.asFile.absolutePath)
+                            )
+                        }
                     )
                     forgeLikeLogging()
                 }
@@ -260,7 +273,16 @@ fun configureDatagen(
 //                if (stonecutter.eval(minecraftVersion, ">1.21")) {
                 create("Datagen") {
                     data()
-                    programArguments.addAll(getProgramArgs(generateAll, modDefinition, outputFolder, existingResources))
+                    programArguments.addAll(
+                        generatedResources.map { directory ->
+                            getProgramArgs(
+                                generateAll,
+                                modDefinition,
+                                listOf("--output", directory.asFile.absolutePath),
+                                existingResources
+                            )
+                        }
+                    )
                     forgeLikeLogging()
                 }
 //                }

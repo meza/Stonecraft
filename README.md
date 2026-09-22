@@ -102,6 +102,12 @@ plugins {
 stonecutter active "1.21.4-fabric" /* [SC] DO NOT EDIT */
 ```
 
+When IntelliJ imports the Gradle project, Stonecraft generates the **Run the Active Minecraft Client** run
+configuration. Run it normally to launch the active client, or start it with **Debug** to attach the
+IntelliJ debugger to the Minecraft process. See the
+[Quickstart guide](https://stonecraft.meza.gg/docs/Quickstart#run-or-debug-the-active-client-in-intellij)
+for details.
+
 ## Social?
 
 Please join our [discord] server for any questions, and help us make Stonecraft better.

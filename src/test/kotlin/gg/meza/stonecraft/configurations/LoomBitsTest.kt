@@ -105,6 +105,81 @@ class LoomBitsTest : IntegrationTest {
     }
 
     @Test
+    fun `direct loom run directory overrides the stonecraft convention`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        gradleTest.buildScript(
+            """
+            modSettings {
+                runDirectory = rootProject.layout.projectDirectory.dir("stonecraft-run")
+            }
+            loom {
+                runs.named("client") {
+                    runDirectory.set(rootProject.layout.projectDirectory.dir("consumer-run"))
+                }
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
+
+        val consumerRunDirectory = gradleTest.project().rootProject.layout.projectDirectory.dir("consumer-run")
+        assertTrue(result.output.contains("[1.21.4-fabric] client runDirectory=$consumerRunDirectory"))
+    }
+
+    @Test
+    fun `download assets keeps legacy resources isolated in the version project`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+        gradleTest.buildScript(
+            """
+            modSettings {
+                runDirectory = rootProject.layout.projectDirectory.dir("stonecraft-run")
+            }
+            tasks.register("printLegacyResourcesDirectory") {
+                doLast {
+                    val downloadAssets = tasks.named<net.fabricmc.loom.task.DownloadAssetsTask>("downloadAssets").get()
+                    println("legacyResourcesDirectory=" + downloadAssets.legacyResourcesDirectory.get())
+                }
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run("printLegacyResourcesDirectory")
+        gradleTest.assertNoGradleFailures(result)
+
+        val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21.4-fabric/run/resources")
+        assertTrue(result.output.contains("legacyResourcesDirectory=$expectedDirectory"))
+    }
+
+    @Test
+    fun `custom generated resources remain lazy inputs to datagen`() {
+        gradleTest.setStonecutterVersion("1.21.4", "forge", "neoforge")
+        gradleTest.buildScript(
+            """
+            modSettings {
+                generatedResources = rootProject.layout.projectDirectory.dir("generated-test")
+            }
+            """.trimIndent()
+        )
+
+        val result = gradleTest.run("printLoomSettings")
+        gradleTest.assertNoGradleFailures(result)
+
+        val generatedResources = gradleTest.project().rootProject.layout.projectDirectory.dir("generated-test")
+        assertTrue(result.output.contains("[1.21.4-forge] datagen programArguments=\"${generatedResources.asFile.absolutePath}\""))
+        assertTrue(
+            result.output.contains(
+                "[1.21.4-neoforge] ClientDatagen programArguments=\"${generatedResources.dir("client").asFile.absolutePath}\""
+            )
+        )
+        assertTrue(
+            result.output.contains(
+                "[1.21.4-neoforge] ServerDatagen programArguments=\"${generatedResources.dir("server").asFile.absolutePath}\""
+            )
+        )
+    }
+
+    @Test
     fun `test with custom directories`() {
         gradleTest.setStonecutterVersion("1.20.2", "fabric", "forge")
         gradleTest.buildScript(
