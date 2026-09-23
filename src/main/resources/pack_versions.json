@@ -1,1986 +1,2482 @@
 {
   "1.21.6": {
     "datapack": 80,
-    "resourcepack": 63
+    "resourcepack": 63,
+    "releaseTime": "2025-06-17T11:10:28+00:00"
   },
   "1.21.6-pre2": {
     "datapack": 79,
-    "resourcepack": 63
+    "resourcepack": 63,
+    "releaseTime": "2025-06-02T13:40:47+00:00"
   },
   "25w20a": {
     "datapack": 77,
-    "resourcepack": 61
+    "resourcepack": 61,
+    "releaseTime": "2025-05-13T11:46:28+00:00"
   },
   "1.21.6-pre3": {
     "datapack": 80,
-    "resourcepack": 63
+    "resourcepack": 63,
+    "releaseTime": "2025-06-04T13:33:25+00:00"
   },
   "1.21.6-rc1": {
     "datapack": 80,
-    "resourcepack": 63
+    "resourcepack": 63,
+    "releaseTime": "2025-06-12T12:04:37+00:00"
   },
   "1.21.6-pre4": {
     "datapack": 80,
-    "resourcepack": 63
+    "resourcepack": 63,
+    "releaseTime": "2025-06-10T12:22:36+00:00"
   },
   "25w19a": {
     "datapack": 76,
-    "resourcepack": 60
+    "resourcepack": 60,
+    "releaseTime": "2025-05-06T12:57:57+00:00"
   },
   "25w17a": {
     "datapack": 74,
-    "resourcepack": 58
+    "resourcepack": 58,
+    "releaseTime": "2025-04-22T12:51:30+00:00"
   },
   "25w21a": {
     "datapack": 78,
-    "resourcepack": 62
+    "resourcepack": 62,
+    "releaseTime": "2025-05-20T12:09:09+00:00"
   },
   "25w18a": {
     "datapack": 75,
-    "resourcepack": 59
+    "resourcepack": 59,
+    "releaseTime": "2025-04-29T12:21:01+00:00"
   },
   "25w16a": {
     "datapack": 73,
-    "resourcepack": 57
+    "resourcepack": 57,
+    "releaseTime": "2025-04-15T12:01:58+00:00"
   },
   "1.21.5-rc2": {
     "datapack": 71,
-    "resourcepack": 55
+    "resourcepack": 55,
+    "releaseTime": "2025-03-24T13:07:03+00:00"
   },
   "1.21.5": {
     "datapack": 71,
-    "resourcepack": 55
+    "resourcepack": 55,
+    "releaseTime": "2025-03-25T12:14:58+00:00"
   },
   "25w15a": {
     "datapack": 72,
-    "resourcepack": 56
+    "resourcepack": 56,
+    "releaseTime": "2025-04-08T12:16:59+00:00"
   },
   "25w14craftmine": {
     "datapack": 71,
-    "resourcepack": 55
+    "resourcepack": 55,
+    "releaseTime": "2025-04-01T15:50:09+00:00"
   },
   "1.21.5-rc1": {
     "datapack": 71,
-    "resourcepack": 55
+    "resourcepack": 55,
+    "releaseTime": "2025-03-20T13:45:48+00:00"
   },
   "1.21.5-pre3": {
     "datapack": 71,
-    "resourcepack": 55
+    "resourcepack": 55,
+    "releaseTime": "2025-03-18T13:58:30+00:00"
   },
   "1.21.5-pre2": {
     "datapack": 71,
-    "resourcepack": 55
+    "resourcepack": 55,
+    "releaseTime": "2025-03-12T12:36:02+00:00"
   },
   "1.21.5-pre1": {
     "datapack": 70,
-    "resourcepack": 55
+    "resourcepack": 55,
+    "releaseTime": "2025-03-11T12:49:44+00:00"
   },
   "25w09b": {
     "datapack": 69,
-    "resourcepack": 53
+    "resourcepack": 53,
+    "releaseTime": "2025-02-27T11:07:08+00:00"
   },
   "25w10a": {
     "datapack": 70,
-    "resourcepack": 54
+    "resourcepack": 54,
+    "releaseTime": "2025-03-05T13:11:13+00:00"
   },
   "25w09a": {
     "datapack": 69,
-    "resourcepack": 53
+    "resourcepack": 53,
+    "releaseTime": "2025-02-26T15:16:02+00:00"
   },
   "25w08a": {
     "datapack": 68,
-    "resourcepack": 53
+    "resourcepack": 53,
+    "releaseTime": "2025-02-19T13:41:43+00:00"
   },
   "25w07a": {
     "datapack": 67,
-    "resourcepack": 52
+    "resourcepack": 52,
+    "releaseTime": "2025-02-13T12:55:37+00:00"
   },
   "25w05a": {
     "datapack": 65,
-    "resourcepack": 50
+    "resourcepack": 50,
+    "releaseTime": "2025-01-29T14:03:54+00:00"
   },
   "25w06a": {
     "datapack": 66,
-    "resourcepack": 51
+    "resourcepack": 51,
+    "releaseTime": "2025-02-05T12:41:17+00:00"
   },
   "1.21.4-rc3": {
     "datapack": 61,
-    "resourcepack": 46
+    "resourcepack": 46,
+    "releaseTime": "2024-11-29T17:02:53+00:00"
   },
   "25w04a": {
     "datapack": 64,
-    "resourcepack": 49
+    "resourcepack": 49,
+    "releaseTime": "2025-01-22T13:14:44+00:00"
   },
   "25w02a": {
     "datapack": 62,
-    "resourcepack": 47
+    "resourcepack": 47,
+    "releaseTime": "2025-01-08T13:42:18+00:00"
   },
   "25w03a": {
     "datapack": 63,
-    "resourcepack": 48
+    "resourcepack": 48,
+    "releaseTime": "2025-01-15T14:28:04+00:00"
   },
   "1.21.4": {
     "datapack": 61,
-    "resourcepack": 46
+    "resourcepack": 46,
+    "releaseTime": "2024-12-03T10:12:57+00:00"
   },
   "1.21.4-rc2": {
     "datapack": 61,
-    "resourcepack": 46
+    "resourcepack": 46,
+    "releaseTime": "2024-11-29T10:33:13+00:00"
   },
   "1.21.4-pre3": {
     "datapack": 61,
-    "resourcepack": 46
+    "resourcepack": 46,
+    "releaseTime": "2024-11-26T15:07:29+00:00"
   },
   "1.21.4-rc1": {
     "datapack": 61,
-    "resourcepack": 46
+    "resourcepack": 46,
+    "releaseTime": "2024-11-28T10:19:01+00:00"
   },
   "1.21.4-pre1": {
     "datapack": 60,
-    "resourcepack": 46
+    "resourcepack": 46,
+    "releaseTime": "2024-11-20T13:45:00+00:00"
   },
   "1.21.4-pre2": {
     "datapack": 61,
-    "resourcepack": 46
+    "resourcepack": 46,
+    "releaseTime": "2024-11-25T13:18:35+00:00"
   },
   "24w45a": {
     "datapack": 59,
-    "resourcepack": 44
+    "resourcepack": 44,
+    "releaseTime": "2024-11-06T13:31:58+00:00"
   },
   "24w46a": {
     "datapack": 60,
-    "resourcepack": 45
+    "resourcepack": 45,
+    "releaseTime": "2024-11-13T13:12:38+00:00"
   },
   "24w44a": {
     "datapack": 58,
-    "resourcepack": 43
+    "resourcepack": 43,
+    "releaseTime": "2024-10-30T12:53:55+00:00"
   },
   "1.21.3": {
     "datapack": 57,
-    "resourcepack": 42
+    "resourcepack": 42,
+    "releaseTime": "2024-10-23T12:28:15+00:00"
   },
   "1.21.2": {
     "datapack": 57,
-    "resourcepack": 42
+    "resourcepack": 42,
+    "releaseTime": "2024-10-22T09:58:55+00:00"
   },
   "1.21.2-rc1": {
     "datapack": 57,
-    "resourcepack": 42
+    "resourcepack": 42,
+    "releaseTime": "2024-10-17T12:43:18+00:00"
   },
   "1.21.2-rc2": {
     "datapack": 57,
-    "resourcepack": 42
+    "resourcepack": 42,
+    "releaseTime": "2024-10-21T15:53:05+00:00"
   },
   "1.21.2-pre5": {
     "datapack": 57,
-    "resourcepack": 42
+    "resourcepack": 42,
+    "releaseTime": "2024-10-16T13:30:35+00:00"
   },
   "1.21.2-pre4": {
     "datapack": 57,
-    "resourcepack": 42
+    "resourcepack": 42,
+    "releaseTime": "2024-10-15T11:59:11+00:00"
   },
   "1.21.2-pre3": {
     "datapack": 57,
-    "resourcepack": 42
+    "resourcepack": 42,
+    "releaseTime": "2024-10-11T12:32:27+00:00"
   },
   "1.21.2-pre2": {
     "datapack": 57,
-    "resourcepack": 41
+    "resourcepack": 41,
+    "releaseTime": "2024-10-10T12:59:14+00:00"
   },
   "1.21.2-pre1": {
     "datapack": 57,
-    "resourcepack": 41
+    "resourcepack": 41,
+    "releaseTime": "2024-10-08T13:22:12+00:00"
   },
   "24w40a": {
     "datapack": 56,
-    "resourcepack": 40
+    "resourcepack": 40,
+    "releaseTime": "2024-10-02T13:15:42+00:00"
   },
   "24w39a": {
     "datapack": 55,
-    "resourcepack": 39
+    "resourcepack": 39,
+    "releaseTime": "2024-09-25T13:08:41+00:00"
   },
   "24w38a": {
     "datapack": 54,
-    "resourcepack": 39
+    "resourcepack": 39,
+    "releaseTime": "2024-09-18T12:32:07+00:00"
   },
   "24w35a": {
     "datapack": 51,
-    "resourcepack": 36
+    "resourcepack": 36,
+    "releaseTime": "2024-08-28T12:25:10+00:00"
   },
   "24w33a": {
     "datapack": 49,
-    "resourcepack": 35
+    "resourcepack": 35,
+    "releaseTime": "2024-08-15T12:39:34+00:00"
   },
   "24w37a": {
     "datapack": 53,
-    "resourcepack": 38
+    "resourcepack": 38,
+    "releaseTime": "2024-09-11T13:01:31+00:00"
   },
   "24w36a": {
     "datapack": 52,
-    "resourcepack": 37
+    "resourcepack": 37,
+    "releaseTime": "2024-09-04T12:44:12+00:00"
   },
   "24w34a": {
     "datapack": 50,
-    "resourcepack": 36
+    "resourcepack": 36,
+    "releaseTime": "2024-08-21T14:14:13+00:00"
   },
   "1.21.1": {
     "datapack": 48,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-08-08T12:24:45+00:00"
   },
   "1.21.1-rc1": {
     "datapack": 48,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-08-07T14:29:18+00:00"
   },
   "1.21": {
     "datapack": 48,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-06-13T08:24:03+00:00"
   },
   "1.21-pre3": {
     "datapack": 48,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-06-05T08:51:44+00:00"
   },
   "1.21-rc1": {
     "datapack": 48,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-06-10T12:24:08+00:00"
   },
   "1.21-pre4": {
     "datapack": 48,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-06-07T12:00:15+00:00"
   },
   "1.21-pre1": {
     "datapack": 46,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-05-29T12:04:43+00:00"
   },
   "1.21-pre2": {
     "datapack": 47,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-05-31T12:44:56+00:00"
   },
   "24w21b": {
     "datapack": 45,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-05-22T16:25:41+00:00"
   },
   "24w21a": {
     "datapack": 45,
-    "resourcepack": 34
+    "resourcepack": 34,
+    "releaseTime": "2024-05-22T14:18:26+00:00"
   },
   "24w20a": {
     "datapack": 44,
-    "resourcepack": 33
+    "resourcepack": 33,
+    "releaseTime": "2024-05-15T12:00:35+00:00"
   },
   "24w19a": {
     "datapack": 43,
-    "resourcepack": 33
+    "resourcepack": 33,
+    "releaseTime": "2024-05-10T12:15:31+00:00"
   },
   "1.20.6-rc1": {
     "datapack": 41,
-    "resourcepack": 32
+    "resourcepack": 32,
+    "releaseTime": "2024-04-26T10:12:17+00:00"
   },
   "24w19b": {
     "datapack": 43,
-    "resourcepack": 33
+    "resourcepack": 33,
+    "releaseTime": "2024-05-10T14:32:42+00:00"
   },
   "1.20.6": {
     "datapack": 41,
-    "resourcepack": 32
+    "resourcepack": 32,
+    "releaseTime": "2024-04-29T12:40:45+00:00"
   },
   "24w18a": {
     "datapack": 42,
-    "resourcepack": 33
+    "resourcepack": 33,
+    "releaseTime": "2024-05-03T12:08:27+00:00"
   },
   "1.20.5": {
     "datapack": 41,
-    "resourcepack": 32
+    "resourcepack": 32,
+    "releaseTime": "2024-04-23T11:54:12+00:00"
   },
   "1.20.5-rc3": {
     "datapack": 41,
-    "resourcepack": 32
+    "resourcepack": 32,
+    "releaseTime": "2024-04-22T13:42:34+00:00"
   },
   "1.20.5-rc2": {
     "datapack": 41,
-    "resourcepack": 32
+    "resourcepack": 32,
+    "releaseTime": "2024-04-19T13:13:15+00:00"
   },
   "1.20.5-pre4": {
     "datapack": 41,
-    "resourcepack": 32
+    "resourcepack": 32,
+    "releaseTime": "2024-04-17T11:56:02+00:00"
   },
   "1.20.5-pre3": {
     "datapack": 41,
-    "resourcepack": 31
+    "resourcepack": 31,
+    "releaseTime": "2024-04-16T11:57:30+00:00"
   },
   "1.20.5-pre2": {
     "datapack": 40,
-    "resourcepack": 31
+    "resourcepack": 31,
+    "releaseTime": "2024-04-15T12:36:05+00:00"
   },
   "1.20.5-rc1": {
     "datapack": 41,
-    "resourcepack": 32
+    "resourcepack": 32,
+    "releaseTime": "2024-04-18T11:45:40+00:00"
   },
   "1.20.5-pre1": {
     "datapack": 39,
-    "resourcepack": 31
+    "resourcepack": 31,
+    "releaseTime": "2024-04-10T12:44:25+00:00"
   },
   "24w14a": {
     "datapack": 38,
-    "resourcepack": 31
+    "resourcepack": 31,
+    "releaseTime": "2024-04-03T11:49:39+00:00"
   },
   "24w13a": {
     "datapack": 37,
-    "resourcepack": 31
+    "resourcepack": 31,
+    "releaseTime": "2024-03-27T14:30:20+00:00"
   },
   "24w14potato": {
     "datapack": 36,
-    "resourcepack": 30
+    "resourcepack": 30,
+    "releaseTime": "2024-04-01T11:07:19+00:00"
   },
   "24w12a": {
     "datapack": 36,
-    "resourcepack": 30
+    "resourcepack": 30,
+    "releaseTime": "2024-03-20T14:38:37+00:00"
   },
   "24w07a": {
     "datapack": 32,
-    "resourcepack": 26
+    "resourcepack": 26,
+    "releaseTime": "2024-02-14T12:51:01+00:00"
   },
   "24w11a": {
     "datapack": 35,
-    "resourcepack": 29
+    "resourcepack": 29,
+    "releaseTime": "2024-03-14T14:21:33+00:00"
   },
   "24w09a": {
     "datapack": 33,
-    "resourcepack": 28
+    "resourcepack": 28,
+    "releaseTime": "2024-02-28T12:38:12+00:00"
   },
   "24w10a": {
     "datapack": 34,
-    "resourcepack": 28
+    "resourcepack": 28,
+    "releaseTime": "2024-03-06T10:37:35+00:00"
   },
   "24w06a": {
     "datapack": 31,
-    "resourcepack": 26
+    "resourcepack": 26,
+    "releaseTime": "2024-02-07T14:47:18+00:00"
   },
   "24w05b": {
     "datapack": 30,
-    "resourcepack": 25
+    "resourcepack": 25,
+    "releaseTime": "2024-02-01T12:55:14+00:00"
   },
   "24w05a": {
     "datapack": 30,
-    "resourcepack": 25
+    "resourcepack": 25,
+    "releaseTime": "2024-01-31T13:05:26+00:00"
   },
   "24w04a": {
     "datapack": 29,
-    "resourcepack": 24
+    "resourcepack": 24,
+    "releaseTime": "2024-01-24T13:42:45+00:00"
   },
   "23w51b": {
     "datapack": 27,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-12-18T15:39:14+00:00"
   },
   "23w51a": {
     "datapack": 27,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-12-18T13:36:46+00:00"
   },
   "1.20.4": {
     "datapack": 26,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-12-07T12:56:20+00:00"
   },
   "24w03b": {
     "datapack": 28,
-    "resourcepack": 24
+    "resourcepack": 24,
+    "releaseTime": "2024-01-18T12:42:37+00:00"
   },
   "24w03a": {
     "datapack": 28,
-    "resourcepack": 24
+    "resourcepack": 24,
+    "releaseTime": "2024-01-17T13:19:20+00:00"
   },
   "1.20.4-rc1": {
     "datapack": 26,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-12-06T14:38:01+00:00"
   },
   "1.20.3": {
     "datapack": 26,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-12-04T12:10:32+00:00"
   },
   "1.20.3-rc1": {
     "datapack": 26,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-11-30T13:41:45+00:00"
   },
   "23w46a": {
     "datapack": 25,
-    "resourcepack": 21
+    "resourcepack": 21,
+    "releaseTime": "2023-11-16T14:11:33+00:00"
   },
   "1.20.3-pre2": {
     "datapack": 26,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-11-22T12:21:26+00:00"
   },
   "1.20.3-pre1": {
     "datapack": 26,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-11-20T15:40:14+00:00"
   },
   "1.20.3-pre3": {
     "datapack": 26,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-11-27T14:24:36+00:00"
   },
   "1.20.3-pre4": {
     "datapack": 26,
-    "resourcepack": 22
+    "resourcepack": 22,
+    "releaseTime": "2023-11-28T13:47:32+00:00"
   },
   "23w44a": {
     "datapack": 23,
-    "resourcepack": 20
+    "resourcepack": 20,
+    "releaseTime": "2023-11-01T12:30:52+00:00"
   },
   "23w43b": {
     "datapack": 22,
-    "resourcepack": 20
+    "resourcepack": 20,
+    "releaseTime": "2023-10-26T13:46:16+00:00"
   },
   "23w42a": {
     "datapack": 21,
-    "resourcepack": 19
+    "resourcepack": 19,
+    "releaseTime": "2023-10-18T11:37:28+00:00"
   },
   "23w45a": {
     "datapack": 24,
-    "resourcepack": 21
+    "resourcepack": 21,
+    "releaseTime": "2023-11-08T13:59:58+00:00"
   },
   "23w41a": {
     "datapack": 20,
-    "resourcepack": 18
+    "resourcepack": 18,
+    "releaseTime": "2023-10-11T12:32:46+00:00"
   },
   "23w43a": {
     "datapack": 22,
-    "resourcepack": 20
+    "resourcepack": 20,
+    "releaseTime": "2023-10-25T13:34:37+00:00"
   },
   "1.21.6-pre1": {
     "datapack": 79,
-    "resourcepack": 63
+    "resourcepack": 63,
+    "releaseTime": "2025-05-28T09:34:04+00:00"
   },
   "23w40a": {
     "datapack": 19,
-    "resourcepack": 18
+    "resourcepack": 18,
+    "releaseTime": "2023-10-04T12:48:53+00:00"
   },
   "1.20.2": {
     "datapack": 18,
-    "resourcepack": 18
+    "resourcepack": 18,
+    "releaseTime": "2023-09-20T09:02:57+00:00"
   },
   "1.20.2-rc2": {
     "datapack": 18,
-    "resourcepack": 18
+    "resourcepack": 18,
+    "releaseTime": "2023-09-18T12:34:57+00:00"
   },
   "1.20.2-rc1": {
     "datapack": 18,
-    "resourcepack": 18
+    "resourcepack": 18,
+    "releaseTime": "2023-09-15T13:10:30+00:00"
   },
   "1.20.2-pre4": {
     "datapack": 18,
-    "resourcepack": 18
+    "resourcepack": 18,
+    "releaseTime": "2023-09-13T15:06:51+00:00"
   },
   "1.20.2-pre3": {
     "datapack": 18,
-    "resourcepack": 18
+    "resourcepack": 18,
+    "releaseTime": "2023-09-12T12:15:08+00:00"
   },
   "23w35a": {
     "datapack": 17,
-    "resourcepack": 17
+    "resourcepack": 17,
+    "releaseTime": "2023-08-30T11:24:35+00:00"
   },
   "1.20.2-pre2": {
     "datapack": 18,
-    "resourcepack": 18
+    "resourcepack": 18,
+    "releaseTime": "2023-09-07T12:42:32+00:00"
   },
   "1.20.2-pre1": {
     "datapack": 18,
-    "resourcepack": 17
+    "resourcepack": 17,
+    "releaseTime": "2023-09-05T12:06:20+00:00"
   },
   "23w33a": {
     "datapack": 17,
-    "resourcepack": 17
+    "resourcepack": 17,
+    "releaseTime": "2023-08-17T11:39:08+00:00"
   },
   "1.20.1": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-06-12T13:25:51+00:00"
   },
   "23w31a": {
     "datapack": 16,
-    "resourcepack": 16
+    "resourcepack": 16,
+    "releaseTime": "2023-08-01T10:03:13+00:00"
   },
   "23w32a": {
     "datapack": 17,
-    "resourcepack": 17
+    "resourcepack": 17,
+    "releaseTime": "2023-08-09T12:14:25+00:00"
   },
   "1.20.1-rc1": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-06-09T14:15:49+00:00"
   },
   "1.20": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-06-02T08:36:17+00:00"
   },
   "1.20-pre7": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-29T13:44:34+00:00"
   },
   "1.20-rc1": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-31T12:33:33+00:00"
   },
   "1.20-pre5": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-23T12:22:52+00:00"
   },
   "1.20-pre6": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-25T12:22:00+00:00"
   },
   "1.20-pre2": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-16T11:34:54+00:00"
   },
   "1.20-pre4": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-19T13:13:45+00:00"
   },
   "1.20-pre1": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-10T12:19:34+00:00"
   },
   "1.20-pre3": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-19T11:39:46+00:00"
   },
   "23w16a": {
     "datapack": 14,
-    "resourcepack": 14
+    "resourcepack": 14,
+    "releaseTime": "2023-04-20T11:55:19+00:00"
   },
   "23w18a": {
     "datapack": 15,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-05-03T11:29:26+00:00"
   },
   "23w17a": {
     "datapack": 14,
-    "resourcepack": 15
+    "resourcepack": 15,
+    "releaseTime": "2023-04-26T12:09:48+00:00"
   },
   "23w14a": {
     "datapack": 13,
-    "resourcepack": 14
+    "resourcepack": 14,
+    "releaseTime": "2023-04-05T12:05:17+00:00"
   },
   "23w13a_or_b": {
     "datapack": 13,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-04-01T12:52:18+00:00"
   },
   "1.19.4-rc2": {
     "datapack": 12,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-03-10T12:42:54+00:00"
   },
   "23w12a": {
     "datapack": 13,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-03-22T13:28:42+00:00"
   },
   "23w13a": {
     "datapack": 13,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-03-29T13:54:16+00:00"
   },
   "1.19.4-rc3": {
     "datapack": 12,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-03-13T10:03:11+00:00"
   },
   "1.19.4": {
     "datapack": 12,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-03-14T12:56:18+00:00"
   },
   "1.19.4-pre4": {
     "datapack": 12,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-03-08T13:08:22+00:00"
   },
   "1.19.4-rc1": {
     "datapack": 12,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-03-09T14:35:50+00:00"
   },
   "1.19.4-pre1": {
     "datapack": 12,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-02-22T16:00:34+00:00"
   },
   "1.19.4-pre2": {
     "datapack": 12,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-02-27T13:38:53+00:00"
   },
   "1.19.4-pre3": {
     "datapack": 12,
-    "resourcepack": 13
+    "resourcepack": 13,
+    "releaseTime": "2023-03-01T14:11:05+00:00"
   },
   "23w07a": {
     "datapack": 12,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2023-02-15T14:32:29+00:00"
   },
   "23w06a": {
     "datapack": 12,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2023-02-08T15:00:04+00:00"
   },
   "23w04a": {
     "datapack": 11,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2023-01-24T15:19:06+00:00"
   },
   "23w05a": {
     "datapack": 11,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2023-02-01T14:20:33+00:00"
   },
   "23w03a": {
     "datapack": 11,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2023-01-18T13:10:31+00:00"
   },
   "1.19.3-rc2": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-12-05T13:21:34+00:00"
   },
   "1.19.3": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-12-07T08:17:18+00:00"
   },
   "1.19.3-rc1": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-12-01T13:45:18+00:00"
   },
   "1.19.3-rc3": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-12-06T10:24:01+00:00"
   },
   "1.19.3-pre3": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-11-29T14:28:08+00:00"
   },
   "1.19.3-pre2": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-11-23T16:12:25+00:00"
   },
   "1.19.3-pre1": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-11-22T13:59:37+00:00"
   },
   "22w46a": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-11-16T13:32:50+00:00"
   },
   "22w44a": {
     "datapack": 10,
-    "resourcepack": 11
+    "resourcepack": 11,
+    "releaseTime": "2022-11-02T13:15:43+00:00"
   },
   "22w45a": {
     "datapack": 10,
-    "resourcepack": 12
+    "resourcepack": 12,
+    "releaseTime": "2022-11-09T14:30:16+00:00"
   },
   "22w43a": {
     "datapack": 10,
-    "resourcepack": 11
+    "resourcepack": 11,
+    "releaseTime": "2022-10-26T11:55:59+00:00"
   },
   "1.19.2": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-08-05T11:57:05+00:00"
   },
   "1.19.2-rc2": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-08-04T15:19:44+00:00"
   },
   "1.19.1": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-07-27T09:25:33+00:00"
   },
   "1.19.2-rc1": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-08-04T10:07:26+00:00"
   },
   "22w42a": {
     "datapack": 10,
-    "resourcepack": 11
+    "resourcepack": 11,
+    "releaseTime": "2022-10-19T09:34:22+00:00"
   },
   "1.19.1-rc3": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-07-26T15:34:35+00:00"
   },
   "1.19.1-rc2": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-07-21T16:25:50+00:00"
   },
   "1.19.1-pre4": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-07-08T11:41:59+00:00"
   },
   "1.19.1-pre6": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-07-20T15:49:31+00:00"
   },
   "1.19.1-pre3": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-07-06T14:50:46+00:00"
   },
   "1.19.1-pre2": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-06-30T15:57:20+00:00"
   },
   "1.19.1-pre5": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-07-15T11:51:44+00:00"
   },
   "22w24a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-06-15T16:21:49+00:00"
   },
   "1.19.1-pre1": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-06-21T17:13:59+00:00"
   },
   "1.19": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-06-07T09:42:18+00:00"
   },
   "1.19.1-rc1": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-06-23T16:32:41+00:00"
   },
   "1.19-rc2": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-06-03T11:47:25+00:00"
   },
   "1.19-rc1": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-06-02T12:12:52+00:00"
   },
   "1.19-pre4": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-05-30T14:43:01+00:00"
   },
   "1.19-pre5": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-06-01T10:56:23+00:00"
   },
   "22w19a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-05-12T15:36:11+00:00"
   },
   "1.19-pre2": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-05-23T14:54:00+00:00"
   },
   "1.19-pre1": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-05-18T13:51:54+00:00"
   },
   "1.19-pre3": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-05-25T09:56:47+00:00"
   },
   "22w16a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-04-20T14:37:07+00:00"
   },
   "22w18a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-05-04T14:41:35+00:00"
   },
   "22w17a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-04-27T15:54:15+00:00"
   },
   "22w16b": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-04-20T17:25:32+00:00"
   },
   "22w14a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-04-06T13:37:12+00:00"
   },
   "22w15a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-04-13T15:41:17+00:00"
   },
   "22w13oneblockatatime": {
     "datapack": 9,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-04-01T11:56:58+00:00"
   },
   "22w13a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-03-31T14:53:25+00:00"
   },
   "22w12a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-03-24T16:15:02+00:00"
   },
   "22w11a": {
     "datapack": 10,
-    "resourcepack": 9
+    "resourcepack": 9,
+    "releaseTime": "2022-03-16T15:55:38+00:00"
   },
   "1.18.2": {
     "datapack": 9,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-02-28T10:42:45+00:00"
   },
   "1.18.2-pre3": {
     "datapack": 9,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-02-23T15:23:12+00:00"
   },
   "1.18.2-rc1": {
     "datapack": 9,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-02-25T13:25:40+00:00"
   },
   "1.18.2-pre1": {
     "datapack": 9,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-02-18T16:00:32+00:00"
   },
   "1.18.2-pre2": {
     "datapack": 9,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-02-21T15:26:19+00:00"
   },
   "22w07a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-02-16T16:13:58+00:00"
   },
   "22w06a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-02-09T16:47:48+00:00"
   },
   "22w05a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-02-02T16:08:39+00:00"
   },
   "1.18.1-rc2": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-12-08T12:29:36+00:00"
   },
   "22w03a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2022-01-19T16:04:59+00:00"
   },
   "1.18.1-rc3": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-12-10T03:36:38+00:00"
   },
   "1.18.1": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-12-10T08:23:00+00:00"
   },
   "1.18.1-rc1": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-12-07T15:52:47+00:00"
   },
   "1.18.1-pre1": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-12-03T13:45:38+00:00"
   },
   "1.18-rc3": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-26T15:51:56+00:00"
   },
   "1.18": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-30T09:16:29+00:00"
   },
   "1.18-rc4": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-29T13:43:42+00:00"
   },
   "1.18-rc2": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-26T10:02:04+00:00"
   },
   "1.18-rc1": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-25T14:28:49+00:00"
   },
   "1.18-pre7": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-23T16:37:41+00:00"
   },
   "1.18-pre5": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-19T15:47:09+00:00"
   },
   "1.18-pre8": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-24T14:57:32+00:00"
   },
   "1.18-pre6": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-22T17:09:05+00:00"
   },
   "1.18-pre4": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-17T18:07:56+00:00"
   },
   "1.18-pre3": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-17T16:04:25+00:00"
   },
   "21w43a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-10-27T14:38:55+00:00"
   },
   "1.18-pre1": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-11T16:14:06+00:00"
   },
   "1.18-pre2": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-16T17:04:48+00:00"
   },
   "21w44a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-11-03T16:14:34+00:00"
   },
   "21w42a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-10-20T12:41:25+00:00"
   },
   "21w41a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-10-13T15:23:23+00:00"
   },
   "21w38a": {
     "datapack": 8,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-09-23T14:36:06+00:00"
   },
   "21w40a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-10-07T11:17:50+00:00"
   },
   "1.17.1": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-07-06T12:01:34+00:00"
   },
   "21w39a": {
     "datapack": 8,
-    "resourcepack": 8
+    "resourcepack": 8,
+    "releaseTime": "2021-09-29T16:27:05+00:00"
   },
   "21w37a": {
     "datapack": 8,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-09-15T16:04:30+00:00"
   },
   "1.17.1-rc1": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-07-01T15:23:37+00:00"
   },
   "1.17.1-pre3": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-30T15:43:16+00:00"
   },
   "1.17.1-pre2": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-29T15:14:12+00:00"
   },
   "1.17.1-rc2": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-07-05T12:58:01+00:00"
   },
   "1.17.1-pre1": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-18T12:24:40+00:00"
   },
   "1.17-rc2": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-07T11:46:28+00:00"
   },
   "1.17": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-08T11:00:40+00:00"
   },
   "1.17-rc1": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-04T13:24:48+00:00"
   },
   "1.17-pre4": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-02T16:15:43+00:00"
   },
   "1.17-pre3": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-01T15:43:46+00:00"
   },
   "1.17-pre5": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-06-03T17:01:28+00:00"
   },
   "1.17-pre2": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-05-31T15:54:05+00:00"
   },
   "21w20a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-05-19T15:22:02+00:00"
   },
   "1.17-pre1": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-05-27T09:39:21+00:00"
   },
   "21w19a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-05-12T11:19:15+00:00"
   },
   "21w17a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-04-28T13:54:05+00:00"
   },
   "21w13a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-03-31T16:17:46+00:00"
   },
   "21w16a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-04-21T16:41:14+00:00"
   },
   "21w15a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-04-14T13:41:34+00:00"
   },
   "21w18a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-05-05T15:24:35+00:00"
   },
   "21w14a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-04-07T14:04:09+00:00"
   },
   "21w11a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-03-17T15:05:50+00:00"
   },
   "21w10a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-03-10T15:24:38+00:00"
   },
   "21w08b": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-02-25T11:46:34+00:00"
   },
   "21w08a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-02-24T14:38:51+00:00"
   },
   "21w07a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-02-17T16:35:40+00:00"
   },
   "21w05b": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-02-04T15:09:29+00:00"
   },
   "21w05a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-02-03T15:56:54+00:00"
   },
   "21w06a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-02-10T17:13:54+00:00"
   },
   "21w03a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2021-01-20T14:56:29+00:00"
   },
   "1.16.5": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2021-01-14T16:05:32+00:00"
   },
   "20w51a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2020-12-16T16:27:57+00:00"
   },
   "1.16.5-rc1": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2021-01-13T15:58:55+00:00"
   },
   "20w49a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2020-12-02T16:47:20+00:00"
   },
   "20w45a": {
     "datapack": 6,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2020-11-04T16:42:00+00:00"
   },
   "1.16.4-rc1": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-10-27T16:31:08+00:00"
   },
   "20w46a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2020-11-11T15:30:32+00:00"
   },
   "20w48a": {
     "datapack": 7,
-    "resourcepack": 7
+    "resourcepack": 7,
+    "releaseTime": "2020-11-25T15:42:24+00:00"
   },
   "1.16.4": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-10-29T15:49:37+00:00"
   },
   "1.16.4-pre2": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-10-22T15:32:17+00:00"
   },
   "1.16.4-pre1": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-10-13T14:36:07+00:00"
   },
   "1.16.3-rc1": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-09-07T12:34:06+00:00"
   },
   "1.16.3": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-09-10T13:42:37+00:00"
   },
   "1.16.2": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-08-11T10:13:46+00:00"
   },
   "1.16.2-pre3": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-08-06T16:44:52+00:00"
   },
   "1.16.2-rc2": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-08-10T11:43:36+00:00"
   },
   "1.16.2-pre2": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-08-05T15:30:50+00:00"
   },
   "1.16.2-rc1": {
     "datapack": 6,
-    "resourcepack": 6
+    "resourcepack": 6,
+    "releaseTime": "2020-08-07T14:35:39+00:00"
   },
   "20w30a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-07-22T15:05:15+00:00"
   },
   "20w29a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-07-15T14:13:47+00:00"
   },
   "20w28a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-07-08T15:10:40+00:00"
   },
   "20w27a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-07-01T15:07:35+00:00"
   },
   "1.16.1": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-24T10:31:40+00:00"
   },
   "1.16-pre8": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-17T14:45:23+00:00"
   },
   "1.16": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-23T16:20:52+00:00"
   },
   "1.16.2-pre1": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-07-29T13:19:05+00:00"
   },
   "1.16-rc1": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-18T12:49:28+00:00"
   },
   "1.16-pre5": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-12T14:33:59+00:00"
   },
   "1.16-pre7": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-16T15:31:35+00:00"
   },
   "1.16-pre6": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-15T16:57:57+00:00"
   },
   "1.16-pre4": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-11T15:45:55+00:00"
   },
   "1.16-pre2": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-05T10:47:59+00:00"
   },
   "1.16-pre3": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-10T14:57:43+00:00"
   },
   "20w22a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-05-29T11:25:02+00:00"
   },
   "20w21a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-05-20T12:07:18+00:00"
   },
   "1.16-pre1": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-06-04T18:17:51+00:00"
   },
   "20w18a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-04-29T15:16:34+00:00"
   },
   "20w20b": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-05-14T08:16:26+00:00"
   },
   "20w19a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-05-06T16:23:24+00:00"
   },
   "20w20a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-05-13T15:11:43+00:00"
   },
   "20w17a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-04-22T13:47:50+00:00"
   },
   "20w14a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-04-02T14:28:06+00:00"
   },
   "20w16a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-04-15T14:13:01+00:00"
   },
   "20w15a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-04-08T12:29:24+00:00"
   },
   "20w13b": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-03-26T13:00:34+00:00"
   },
   "20w13a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-03-25T17:05:33+00:00"
   },
   "20w10a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-03-04T16:21:41+00:00"
   },
   "20w14infinite": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-04-01T12:47:08+00:00"
   },
   "20w12a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-03-18T16:42:06+00:00"
   },
   "20w11a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-03-11T16:28:27+00:00"
   },
   "1.15.2": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-01-17T10:03:52+00:00"
   },
   "20w09a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-02-26T16:43:08+00:00"
   },
   "20w08a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-02-19T13:30:09+00:00"
   },
   "20w06a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-02-05T16:05:22+00:00"
   },
   "20w07a": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-02-14T13:20:49+00:00"
   },
   "1.15.2-pre2": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-01-16T12:35:57+00:00"
   },
   "1.15.2-pre1": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2020-01-14T16:19:31+00:00"
   },
   "1.15.1-pre1": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-12-12T14:02:30+00:00"
   },
   "1.15.1": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-12-16T10:29:47+00:00"
   },
   "1.15": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-12-09T13:13:38+00:00"
   },
   "1.15-pre7": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-12-09T12:14:11+00:00"
   },
   "1.15-pre6": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-12-06T12:04:30+00:00"
   },
   "1.15-pre2": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-11-25T18:09:38+00:00"
   },
   "1.15-pre4": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-12-03T12:24:24+00:00"
   },
   "1.15-pre5": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-12-05T13:20:00+00:00"
   },
   "1.15-pre3": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-11-28T17:17:50+00:00"
   },
   "19w46a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-11-13T16:37:46+00:00"
   },
   "19w45b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-11-08T12:42:44+00:00"
   },
   "19w45a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-11-07T16:19:20+00:00"
   },
   "19w46b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-11-14T13:29:24+00:00"
   },
   "1.15-pre1": {
     "datapack": 5,
-    "resourcepack": 5
+    "resourcepack": 5,
+    "releaseTime": "2019-11-21T17:01:17+00:00"
   },
   "19w42a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-10-16T15:30:39+00:00"
   },
   "19w40a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-10-02T13:40:26+00:00"
   },
   "19w41a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-10-09T15:21:35+00:00"
   },
   "19w44a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-10-30T15:31:44+00:00"
   },
   "19w38b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-09-18T14:59:13+00:00"
   },
   "19w38a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-09-18T10:03:22+00:00"
   },
   "19w39a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-09-27T10:13:33+00:00"
   },
   "19w35a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-08-28T15:01:44+00:00"
   },
   "19w36a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-09-04T11:19:34+00:00"
   },
   "19w37a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-09-11T11:46:44+00:00"
   },
   "19w34a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-08-22T12:06:21+00:00"
   },
   "1.14.4": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-07-19T09:25:47+00:00"
   },
   "1.14.4-pre6": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-07-15T12:39:49+00:00"
   },
   "1.14.4-pre7": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-07-18T11:32:36+00:00"
   },
   "1.14.4-pre5": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-07-11T10:52:33+00:00"
   },
   "1.14.4-pre4": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-07-10T12:53:29+00:00"
   },
   "1.14.4-pre3": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-07-08T11:21:42+00:00"
   },
   "1.14.4-pre2": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-07-04T14:41:05+00:00"
   },
   "1.14.3-pre4": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-06-19T11:44:29+00:00"
   },
   "1.14.3": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-06-24T12:52:52+00:00"
   },
   "1.14.4-pre1": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-07-03T13:01:01+00:00"
   },
   "1.14.3-pre1": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-06-03T14:34:20+00:00"
   },
   "1.14.3-pre2": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-06-07T09:11:29+00:00"
   },
   "1.14.2": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-05-27T11:48:25+00:00"
   },
   "1.14.2 Pre-Release 3": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-05-22T13:12:51+00:00"
   },
   "1.14.3-pre3": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-06-14T08:03:33+00:00"
   },
   "1.14.2 Pre-Release 4": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-05-27T07:21:11+00:00"
   },
   "1.14.2 Pre-Release 2": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-05-17T12:21:03+00:00"
   },
   "1.14": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-23T14:52:44+00:00"
   },
   "1.14.1": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-05-13T11:10:12+00:00"
   },
   "1.14.2 Pre-Release 1": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-05-16T15:40:25+00:00"
   },
   "1.14 Pre-Release 5": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-18T11:05:19+00:00"
   },
   "1.14.1 Pre-Release 1": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-05-07T14:44:42+00:00"
   },
   "1.14.1 Pre-Release 2": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-05-09T14:01:04+00:00"
   },
   "1.14 Pre-Release 4": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-17T15:31:12+00:00"
   },
   "1.14 Pre-Release 3": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-16T13:57:10+00:00"
   },
   "1.14 Pre-Release 2": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-12T11:38:53+00:00"
   },
   "19w14b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-05T10:33:58+00:00"
   },
   "1.14 Pre-Release 1": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-10T14:24:16+00:00"
   },
   "19w13a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-03-27T15:15:31+00:00"
   },
   "19w14a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-03T13:45:00+00:00"
   },
   "19w13b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-03-29T16:53:22+00:00"
   },
   "19w12a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-03-20T16:47:34+00:00"
   },
   "19w11b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-03-14T14:26:23+00:00"
   },
   "19w11a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-03-13T13:59:29+00:00"
   },
   "19w09a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-02-27T14:44:30+00:00"
   },
   "19w08b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-02-21T13:38:09+00:00"
   },
   "19w08a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-02-20T14:56:58+00:00"
   },
   "19w12b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-03-21T15:20:01+00:00"
   },
   "3D Shareware v1.34": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-04-01T11:18:08+00:00"
   },
   "19w06a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-02-06T16:24:13+00:00"
   },
   "19w07a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-02-13T16:12:08+00:00"
   },
   "19w04b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-01-25T12:20:15+00:00"
   },
   "19w04a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-01-24T15:31:52+00:00"
   },
   "19w05a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-01-30T15:16:49+00:00"
   },
   "19w03a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-01-16T16:45:02+00:00"
   },
   "19w03b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-01-17T16:43:27+00:00"
   },
   "19w02a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-01-09T15:52:07+00:00"
   },
   "18w50a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2018-12-12T14:58:13+00:00"
   },
   "19w03c": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2019-01-18T11:27:13+00:00"
   },
   "18w49a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2018-12-05T12:24:30+00:00"
   },
   "18w48b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2018-11-30T10:37:31+00:00"
   },
   "18w47b": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2018-11-23T10:46:41+00:00"
   },
   "18w48a": {
     "datapack": 4,
-    "resourcepack": 4
+    "resourcepack": 4,
+    "releaseTime": "2018-11-29T13:11:38+00:00"
   },
   "1.21.9-pre4": {
     "datapack": 88,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-09-23T14:58:08+00:00"
   },
   "1.21.9-rc1": {
     "datapack": 88,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-09-25T13:01:28+00:00"
   },
   "1.21.10-rc1": {
     "datapack": 88,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-10-02T12:09:16+00:00"
   },
   "1.21.9": {
     "datapack": 88,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-09-30T11:58:43+00:00"
   },
   "1.21.9-pre3": {
     "datapack": 88,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-09-22T12:57:35+00:00"
   },
   "1.21.9-pre1": {
     "datapack": 87.1,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-09-16T12:10:12+00:00"
   },
   "1.21.9-pre2": {
     "datapack": 88,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-09-19T09:48:58+00:00"
   },
   "25w37a": {
     "datapack": 87,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-09-09T13:24:21+00:00"
   },
   "25w36b": {
     "datapack": 86,
-    "resourcepack": 68
+    "resourcepack": 68,
+    "releaseTime": "2025-09-02T15:47:32+00:00"
   },
   "25w36a": {
     "datapack": 86,
-    "resourcepack": 68
+    "resourcepack": 68,
+    "releaseTime": "2025-09-02T11:48:30+00:00"
   },
   "25w35a": {
     "datapack": 85,
-    "resourcepack": 67
+    "resourcepack": 67,
+    "releaseTime": "2025-08-26T11:51:22+00:00"
   },
   "25w34b": {
     "datapack": 84,
-    "resourcepack": 66
+    "resourcepack": 66,
+    "releaseTime": "2025-08-19T15:02:29+00:00"
   },
   "25w34a": {
     "datapack": 84,
-    "resourcepack": 66
+    "resourcepack": 66,
+    "releaseTime": "2025-08-19T12:09:50+00:00"
   },
   "25w33a": {
     "datapack": 83.1,
-    "resourcepack": 65.2
+    "resourcepack": 65.2,
+    "releaseTime": "2025-08-12T11:45:24+00:00"
   },
   "25w32a": {
     "datapack": 83,
-    "resourcepack": 65.1
+    "resourcepack": 65.1,
+    "releaseTime": "2025-08-05T12:21:45+00:00"
   },
   "1.21.8": {
     "datapack": 81,
-    "resourcepack": 64
+    "resourcepack": 64,
+    "releaseTime": "2025-07-17T12:04:02+00:00"
   },
   "1.21.8-rc1": {
     "datapack": 81,
-    "resourcepack": 64
+    "resourcepack": 64,
+    "releaseTime": "2025-07-15T13:42:50+00:00"
   },
   "25w31a": {
     "datapack": 82,
-    "resourcepack": 65
+    "resourcepack": 65,
+    "releaseTime": "2025-07-29T11:29:33+00:00"
   },
   "1.21.7": {
     "datapack": 81,
-    "resourcepack": 64
+    "resourcepack": 64,
+    "releaseTime": "2025-06-30T09:32:16+00:00"
   },
   "1.21.7-rc2": {
     "datapack": 81,
-    "resourcepack": 64
+    "resourcepack": 64,
+    "releaseTime": "2025-06-26T13:59:20+00:00"
   },
   "1.21.7-rc1": {
     "datapack": 80,
-    "resourcepack": 63
+    "resourcepack": 63,
+    "releaseTime": "2025-06-25T12:41:59+00:00"
   },
   "1.21.10": {
     "datapack": 88,
-    "resourcepack": 69
+    "resourcepack": 69,
+    "releaseTime": "2025-10-07T09:17:23+00:00"
   },
   "25w41a": {
     "datapack": 89,
-    "resourcepack": 70
+    "resourcepack": 70,
+    "releaseTime": "2025-10-09T13:41:35+00:00"
   },
   "25w42a": {
     "datapack": 90,
-    "resourcepack": 70.1
+    "resourcepack": 70.1,
+    "releaseTime": "2025-10-14T12:48:10+00:00"
   },
   "25w43a": {
     "datapack": 91,
-    "resourcepack": 71
+    "resourcepack": 71,
+    "releaseTime": "2025-10-21T11:38:51+00:00"
   },
   "25w44a": {
     "datapack": 92,
-    "resourcepack": 72
+    "resourcepack": 72,
+    "releaseTime": "2025-10-28T14:02:28+00:00"
   },
   "25w45a": {
     "datapack": 93,
-    "resourcepack": 73
+    "resourcepack": 73,
+    "releaseTime": "2025-11-04T13:51:04+00:00"
   },
   "25w46a": {
     "datapack": 93.1,
-    "resourcepack": 74
+    "resourcepack": 74,
+    "releaseTime": "2025-11-11T13:05:00+00:00"
   },
   "1.21.11-pre1": {
     "datapack": 94,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-11-19T08:06:45+00:00"
   },
   "1.21.11-pre2": {
     "datapack": 94,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-11-21T11:44:15+00:00"
   },
   "1.21.11-pre3": {
     "datapack": 94,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-11-25T13:56:50+00:00"
   },
   "1.21.11-pre4": {
     "datapack": 94.1,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-12-01T13:17:32+00:00"
   },
   "1.21.11-pre5": {
     "datapack": 94.1,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-12-03T13:14:25+00:00"
   },
   "1.21.11-rc1": {
     "datapack": 94.1,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-12-04T15:20:43+00:00"
   },
   "1.21.11-rc2": {
     "datapack": 94.1,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-12-05T11:14:20+00:00"
   },
   "1.21.11-rc3": {
     "datapack": 94.1,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-12-08T13:17:37+00:00"
   },
   "1.21.11": {
     "datapack": 94.1,
-    "resourcepack": 75
+    "resourcepack": 75,
+    "releaseTime": "2025-12-09T12:23:30+00:00"
   },
   "26.1-snapshot-1": {
     "datapack": 95,
-    "resourcepack": 76
+    "resourcepack": 76,
+    "releaseTime": "2025-12-16T12:42:29+00:00"
   },
   "26.1-snapshot-2": {
     "datapack": 96,
-    "resourcepack": 77
+    "resourcepack": 77,
+    "releaseTime": "2026-01-07T12:38:03+00:00"
   },
   "26.1-snapshot-3": {
     "datapack": 97,
-    "resourcepack": 78
+    "resourcepack": 78,
+    "releaseTime": "2026-01-13T12:47:34+00:00"
   },
   "26.1-snapshot-4": {
     "datapack": 97.1,
-    "resourcepack": 78.1
+    "resourcepack": 78.1,
+    "releaseTime": "2026-01-20T14:15:37+00:00"
   },
   "26.1-snapshot-5": {
     "datapack": 98,
-    "resourcepack": 79
+    "resourcepack": 79,
+    "releaseTime": "2026-01-27T13:01:17+00:00"
   },
   "26.1-snapshot-6": {
     "datapack": 99,
-    "resourcepack": 80
+    "resourcepack": 80,
+    "releaseTime": "2026-02-03T12:46:52+00:00"
   },
   "26.1-snapshot-7": {
     "datapack": 99.1,
-    "resourcepack": 81
+    "resourcepack": 81,
+    "releaseTime": "2026-02-11T09:25:36+00:00"
   },
   "26.1-snapshot-8": {
     "datapack": 99.2,
-    "resourcepack": 81.1
+    "resourcepack": 81.1,
+    "releaseTime": "2026-02-17T12:42:24+00:00"
   },
   "26.1-snapshot-9": {
     "datapack": 99.2,
-    "resourcepack": 81.1
+    "resourcepack": 81.1,
+    "releaseTime": "2026-02-18T10:13:30+00:00"
   },
   "26.1-snapshot-10": {
     "datapack": 99.3,
-    "resourcepack": 82
+    "resourcepack": 82,
+    "releaseTime": "2026-02-24T13:03:38+00:00"
   },
   "26.1-snapshot-11": {
     "datapack": 100,
-    "resourcepack": 83
+    "resourcepack": 83,
+    "releaseTime": "2026-03-03T13:01:51+00:00"
   },
   "26.1-pre-1": {
     "datapack": 101,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-03-10T13:00:38+00:00"
   },
   "26.1-pre-2": {
     "datapack": 101,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-03-13T12:55:35+00:00"
   },
   "26.1-rc-3": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-03-23T11:11:54+00:00"
   },
   "26.1-rc-1": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-03-19T14:48:47+00:00"
   },
   "26.1-rc-2": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-03-20T10:21:13+00:00"
   },
   "26.1": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-03-24T12:11:04+00:00"
   },
   "26.1-pre-3": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-03-17T13:37:33+00:00"
   },
   "26.1.1-rc-1": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-03-31T10:07:21+00:00"
   },
   "26.1.1": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-04-01T09:06:36+00:00"
   },
   "26w14a": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-04-01T12:13:30+00:00"
   },
   "26.2-snapshot-1": {
     "datapack": 101.2,
-    "resourcepack": 85
+    "resourcepack": 85,
+    "releaseTime": "2026-04-07T11:52:43+00:00"
   },
   "26.1.2-rc-1": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-04-08T12:47:45+00:00"
   },
   "26.1.2": {
     "datapack": 101.1,
-    "resourcepack": 84
+    "resourcepack": 84,
+    "releaseTime": "2026-04-09T10:12:23+00:00"
   },
   "26.2-snapshot-2": {
     "datapack": 101.2,
-    "resourcepack": 85
+    "resourcepack": 85,
+    "releaseTime": "2026-04-09T12:26:35+00:00"
   },
   "26.2-snapshot-3": {
     "datapack": 102,
-    "resourcepack": 86
+    "resourcepack": 86,
+    "releaseTime": "2026-04-14T11:30:34+00:00"
   },
   "26.2-snapshot-4": {
     "datapack": 103,
-    "resourcepack": 86.1
+    "resourcepack": 86.1,
+    "releaseTime": "2026-04-21T12:05:40+00:00"
   },
   "26.2-snapshot-5": {
     "datapack": 104,
-    "resourcepack": 86.2
+    "resourcepack": 86.2,
+    "releaseTime": "2026-04-28T12:41:41+00:00"
   },
   "26.2-snapshot-6": {
     "datapack": 105,
-    "resourcepack": 86.2
+    "resourcepack": 86.2,
+    "releaseTime": "2026-05-05T12:50:56+00:00"
   },
   "26.2-snapshot-7": {
     "datapack": 105.1,
-    "resourcepack": 87
+    "resourcepack": 87,
+    "releaseTime": "2026-05-12T12:24:28+00:00"
   },
   "26.2-snapshot-8": {
     "datapack": 106,
-    "resourcepack": 87
+    "resourcepack": 87,
+    "releaseTime": "2026-05-19T15:19:20+00:00"
   },
   "26.2-pre-1": {
     "datapack": 106.1,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-05-26T13:48:31+00:00"
   },
   "26.2-pre-2": {
     "datapack": 107,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-05-28T12:45:31+00:00"
   },
   "26.2-pre-3": {
     "datapack": 107,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-06-02T11:48:29+00:00"
   },
   "26.2-pre-4": {
     "datapack": 107.1,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-06-04T12:38:47+00:00"
   },
   "26.2-pre-5": {
     "datapack": 107.1,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-06-08T13:04:25+00:00"
   },
   "26.2-pre-6": {
     "datapack": 107.1,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-06-10T12:20:24+00:00"
   },
   "26.2-rc-1": {
     "datapack": 107.1,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-06-11T11:57:50+00:00"
   },
   "26.2-rc-2": {
     "datapack": 107.1,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-06-12T11:32:28+00:00"
   },
   "26.2": {
     "datapack": 107.1,
-    "resourcepack": 88
+    "resourcepack": 88,
+    "releaseTime": "2026-06-16T12:03:33+00:00"
   },
   "26.3-snapshot-1": {
     "datapack": 108,
-    "resourcepack": 89
+    "resourcepack": 89,
+    "releaseTime": "2026-06-23T11:57:02+00:00"
   },
   "26.3-snapshot-2": {
     "datapack": 109,
-    "resourcepack": 90
+    "resourcepack": 90,
+    "releaseTime": "2026-06-30T12:45:43+00:00"
   },
   "26.3-snapshot-3": {
     "datapack": 110,
-    "resourcepack": 91
+    "resourcepack": 91,
+    "releaseTime": "2026-07-07T12:03:01+00:00"
   },
   "26.3-snapshot-5": {
     "datapack": 112,
-    "resourcepack": 93
+    "resourcepack": 93,
+    "releaseTime": "2026-07-21T11:45:42+00:00"
   },
   "26.3-snapshot-4": {
     "datapack": 111,
-    "resourcepack": 92
+    "resourcepack": 92,
+    "releaseTime": "2026-07-16T13:59:30+00:00"
   },
   "26.3-snapshot-7": {
     "datapack": 115,
-    "resourcepack": 95
+    "resourcepack": 95,
+    "releaseTime": "2026-08-04T11:49:07+00:00"
   },
   "26.3-snapshot-6": {
     "datapack": 113,
-    "resourcepack": 94
+    "resourcepack": 94,
+    "releaseTime": "2026-07-28T12:25:51+00:00"
   },
   "26.3": {
     "datapack": 121,
-    "resourcepack": 97.1
+    "resourcepack": 97.1,
+    "releaseTime": "2026-09-15T11:23:02+00:00"
   },
   "26.3-rc-1": {
     "datapack": 121,
-    "resourcepack": 97.1
+    "resourcepack": 97.1,
+    "releaseTime": "2026-09-10T11:28:25+00:00"
   },
   "26.3-snapshot-10": {
     "datapack": 118,
-    "resourcepack": 97
+    "resourcepack": 97,
+    "releaseTime": "2026-08-25T12:53:43+00:00"
   },
   "26.3-pre-2": {
     "datapack": 120,
-    "resourcepack": 97.1
+    "resourcepack": 97.1,
+    "releaseTime": "2026-09-04T11:54:52+00:00"
   },
   "26.3-pre-3": {
     "datapack": 121,
-    "resourcepack": 97.1
+    "resourcepack": 97.1,
+    "releaseTime": "2026-09-08T13:04:44+00:00"
   },
   "26.3-pre-1": {
     "datapack": 119,
-    "resourcepack": 97.1
+    "resourcepack": 97.1,
+    "releaseTime": "2026-09-01T11:29:01+00:00"
   },
   "26.3-rc-2": {
     "datapack": 121,
-    "resourcepack": 97.1
+    "resourcepack": 97.1,
+    "releaseTime": "2026-09-11T10:34:40+00:00"
   },
   "26.3-rc-3": {
     "datapack": 121,
-    "resourcepack": 97.1
+    "resourcepack": 97.1,
+    "releaseTime": "2026-09-14T12:58:38+00:00"
   },
   "26.3-snapshot-8": {
     "datapack": 116,
-    "resourcepack": 96
+    "resourcepack": 96,
+    "releaseTime": "2026-08-12T09:39:37+00:00"
   },
   "26.3-snapshot-9": {
     "datapack": 117,
-    "resourcepack": 96
+    "resourcepack": 96,
+    "releaseTime": "2026-08-17T11:46:16+00:00"
   },
   "26.4-snapshot-1": {
     "datapack": 122,
-    "resourcepack": 98
+    "resourcepack": 98,
+    "releaseTime": "2026-09-22T13:38:53+00:00"
   }
 }
