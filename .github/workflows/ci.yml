@@ -21,10 +21,6 @@ permissions:
 concurrency:
     group:  ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
     cancel-in-progress: true
-env:
-  STONECRAFT_TEST_GRADLE_HOME: /cache/e2e_tests/home
-  STONECRAFT_TEST_PROJECT_CACHE: /cache/e2e_tests/cache
-
 jobs:
   build:
     runs-on: meza-ubuntu-slim
@@ -95,10 +91,14 @@ jobs:
         working-directory: ${{ github.workspace }}
         # This step updates the version in gradle.properties using the semantic-release output
 
-      - name: Prepare Gradle Test cache directories
+      - name: Prepare Gradle Test caches
         run: |
-          mkdir -p "$STONECRAFT_TEST_GRADLE_HOME"
-          mkdir -p "$STONECRAFT_TEST_PROJECT_CACHE"
+          test_cache_dir="$(mktemp -d "$RUNNER_TEMP/stonecraft-test.XXXXXX")"
+          mkdir -p "$test_cache_dir/home/caches" "$test_cache_dir/home/init.d" "$test_cache_dir/project" /cache/loom
+          ln -s /cache/loom "$test_cache_dir/home/caches/fabric-loom"
+          cp .github/scripts/stonecraft-loom-paths.init.gradle "$test_cache_dir/home/init.d/"
+          echo "STONECRAFT_TEST_GRADLE_HOME=$test_cache_dir/home" >> "$GITHUB_ENV"
+          echo "STONECRAFT_TEST_PROJECT_CACHE=$test_cache_dir/project" >> "$GITHUB_ENV"
 
       - name: "🧪 Run tests"
         run: ./gradlew build --stacktrace --no-configuration-cache
