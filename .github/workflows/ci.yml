@@ -94,8 +94,9 @@ jobs:
       - name: Prepare Gradle Test caches
         run: |
           test_cache_dir="$(mktemp -d "$RUNNER_TEMP/stonecraft-test.XXXXXX")"
-          mkdir -p "$test_cache_dir/home/caches" "$test_cache_dir/project" /cache/loom
+          mkdir -p "$test_cache_dir/home/caches" "$test_cache_dir/home/init.d" "$test_cache_dir/project" /cache/loom
           ln -s /cache/loom "$test_cache_dir/home/caches/fabric-loom"
+          cp .github/scripts/stonecraft-loom-paths.init.gradle "$test_cache_dir/home/init.d/"
           echo "STONECRAFT_TEST_GRADLE_HOME=$test_cache_dir/home" >> "$GITHUB_ENV"
           echo "STONECRAFT_TEST_PROJECT_CACHE=$test_cache_dir/project" >> "$GITHUB_ENV"
 

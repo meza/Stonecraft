@@ -1,0 +1,22 @@
+import org.gradle.api.tasks.JavaExec
+
+gradle.beforeProject { project ->
+    if (!project.name.endsWith('-neoforge')) return
+
+    project.tasks.withType(JavaExec).configureEach { task ->
+        if (!task.name.startsWith('run')) return
+
+        task.doFirst {
+            def cache = System.getenv('STONECRAFT_TEST_PROJECT_CACHE')
+            def classpath = new File(cache, "loom-cache/projects/${project.name}/forge_minecraft_classpath.txt")
+            if (!classpath.isFile()) return
+
+            def original = classpath.readLines()
+            def resolved = original.collect { new File(it).canonicalPath }
+            if (resolved != original) {
+                classpath.text = resolved.join('\n') + '\n'
+                logger.lifecycle("Resolved NeoForge legacy classpath paths for ${project.path}")
+            }
+        }
+    }
+}
