@@ -3,28 +3,19 @@ package gg.meza.stonecraft.configurations
 import com.google.gson.GsonBuilder
 import gg.meza.stonecraft.IntegrationTest
 import org.gradle.api.file.FileSystemLocation
-import org.gradle.testkit.runner.BuildResult
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.util.zip.ZipFile
 
 @Suppress("DEPRECATION")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProcessResourcesTest : IntegrationTest {
 
-    private lateinit var gradleTest: IntegrationTest.TestBuilder
-    private lateinit var result: BuildResult
-
-    @BeforeEach
-    fun setUp() {
-        if (::result.isInitialized) {
-            return
-        }
-
-        gradleTest = gradleTest().buildScript(
+    private val resourceProject by lazy {
+        gradleTest().buildScript(
             """
 modSettings {
     variableReplacements = mapOf(
@@ -47,10 +38,10 @@ modSettings {
                     "org.gradle.caching" to "false"
                 )
             )
-
-        gradleTest.run("clean", cacheTask = false)
-        result = gradleTest.run("buildAndCollect")
-        gradleTest.assertNoGradleFailures(result)
+            .also { project ->
+                project.run("clean", cacheTask = false)
+                project.assertNoGradleFailures(project.run("buildAndCollect"))
+            }
     }
 
     @Test
@@ -542,7 +533,7 @@ tasks.withType<org.gradle.api.tasks.JavaExec>().configureEach {
     }
 
     private fun getPathsFor(version: String, loader: String, files: List<String>): MutableList<FileSystemLocation> {
-        var project = gradleTest.project()
+        val project = resourceProject.project()
         val basePath = project.layout.projectDirectory.dir("versions/$version-$loader/build/resources/main")
         val paths = mutableListOf<FileSystemLocation>()
         files.forEach { file ->
