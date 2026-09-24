@@ -424,6 +424,26 @@ modSettings {
         )
     }
 
+    @Test
+    fun `failed fabric archive rewrite removes its temporary file`() {
+        val gametest = gametestResourceProject()
+            .buildScript("tasks.register(\"gametestMarker\")")
+        val projectDirectory = gametest.project().projectDir
+        projectDirectory.resolve("src/main/resources/fabric.mod.json").writeText("{ invalid json")
+
+        val result = gametest.run(listOf("buildAndCollect", "gametestMarker"), cacheTask = false)
+
+        assertTrue(result.output.contains("BUILD FAILED"))
+        assertTrue(result.output.contains(":1.21.4-fabric:jar FAILED"))
+        assertTrue(result.output.contains("MalformedJsonException"))
+        val archiveDirectory = projectDirectory.resolve("versions/1.21.4-fabric/build/devlibs")
+        assertTrue(archiveDirectory.exists())
+        assertTrue(
+            archiveDirectory.listFiles()?.none { it.name.endsWith(".tmp") } == true,
+            "Failed archive rewriting should leave no temporary file in ${archiveDirectory.absolutePath}"
+        )
+    }
+
     private fun assertGametestTargetKeepsFabricGametestEntrypoint(taskName: String) {
         val gametest = gametestResourceProject()
 

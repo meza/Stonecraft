@@ -238,42 +238,42 @@ private fun removeFabricGametestEntrypointFromArchive(archive: File) {
     val tempArchive = Files.createTempFile(archive.parentFile.toPath(), archive.name, ".tmp").toFile()
     var changed = false
 
-    ZipInputStream(archive.inputStream().buffered()).use { input ->
-        ZipOutputStream(tempArchive.outputStream().buffered()).use { output ->
-            generateSequence { input.nextEntry }.forEach { entry ->
-                val replacementContent = if (entry.name == "fabric.mod.json") {
-                    removeFabricGametestEntrypointFromJson(input.readBytes().toString(StandardCharsets.UTF_8))
-                } else {
-                    null
-                }
+    AutoCloseable { Files.deleteIfExists(tempArchive.toPath()) }.use {
+        ZipInputStream(archive.inputStream().buffered()).use { input ->
+            ZipOutputStream(tempArchive.outputStream().buffered()).use { output ->
+                generateSequence { input.nextEntry }.forEach { entry ->
+                    val replacementContent = if (entry.name == "fabric.mod.json") {
+                        removeFabricGametestEntrypointFromJson(input.readBytes().toString(StandardCharsets.UTF_8))
+                    } else {
+                        null
+                    }
 
-                val outputEntry = ZipEntry(entry.name)
-                outputEntry.time = entry.time
-                output.putNextEntry(outputEntry)
+                    val outputEntry = ZipEntry(entry.name)
+                    outputEntry.time = entry.time
+                    output.putNextEntry(outputEntry)
 
-                if (entry.isDirectory) {
+                    if (entry.isDirectory) {
+                        output.closeEntry()
+                        input.closeEntry()
+                        return@forEach
+                    }
+
+                    if (replacementContent != null) {
+                        changed = true
+                        output.write(replacementContent.toByteArray(StandardCharsets.UTF_8))
+                    } else {
+                        input.copyTo(output)
+                    }
+
                     output.closeEntry()
                     input.closeEntry()
-                    return@forEach
                 }
-
-                if (replacementContent != null) {
-                    changed = true
-                    output.write(replacementContent.toByteArray(StandardCharsets.UTF_8))
-                } else {
-                    input.copyTo(output)
-                }
-
-                output.closeEntry()
-                input.closeEntry()
             }
         }
-    }
 
-    if (changed) {
-        Files.move(tempArchive.toPath(), archive.toPath(), StandardCopyOption.REPLACE_EXISTING)
-    } else {
-        tempArchive.delete()
+        if (changed) {
+            Files.move(tempArchive.toPath(), archive.toPath(), StandardCopyOption.REPLACE_EXISTING)
+        }
     }
 }
 
