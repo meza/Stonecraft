@@ -31,7 +31,7 @@ The feature selector controls complete project capabilities. All five are includ
 
 | Feature | Included files and configuration |
 | --- | --- |
-| Data generation | Example providers for supported selected loaders, loader metadata, the DataGen script, CI commands, and generated-project guidance |
+| Data generation | Example providers for supported selected loaders, loader metadata, CI commands, and generated-project guidance |
 | GameTests | Cross-loader test source and resources, CI commands, and generated-project guidance |
 | Mod publishing | Modrinth and CurseForge Gradle configuration, release integration, and generated-project guidance |
 | Automated releases | Semantic-release configuration, release script, and release-aware GitHub Actions workflow |

@@ -55,7 +55,7 @@ __STONECRAFT_/AUTOMATED_RELEASES__
           cache-provider: basic
 
       - name: "🔓 Adjust script permissions"
-        run: chmod +x ./gradlew__STONECRAFT_#DATAGEN__ ./scripts/datagen.sh__STONECRAFT_/DATAGEN____STONECRAFT_#AUTOMATED_RELEASES__ ./scripts/release.sh__STONECRAFT_/AUTOMATED_RELEASES__
+        run: chmod +x ./gradlew__STONECRAFT_#AUTOMATED_RELEASES__ ./scripts/release.sh__STONECRAFT_/AUTOMATED_RELEASES__
 
 __STONECRAFT_#AUTOMATED_RELEASES__
       - name: "🔎 Determine version"
@@ -74,16 +74,12 @@ __STONECRAFT_#AUTOMATED_RELEASES__
             conventional-changelog-conventionalcommits
             semantic-release-export-data
 
-__STONECRAFT_/AUTOMATED_RELEASES____STONECRAFT_#DATAGEN__
-      - name: "🔨 Generate data"
-        run: ./scripts/datagen.sh
-
-__STONECRAFT_/DATAGEN__
+__STONECRAFT_/AUTOMATED_RELEASES__
       - name: "🧪 Run Dev Build"
 __STONECRAFT_#AUTOMATED_RELEASES__
         if: ${{ steps.get-next-version.outputs.new_release_published != 'true' }}
 __STONECRAFT_/AUTOMATED_RELEASES__
-        run: ./gradlew __STONECRAFT_#GAMETESTS__runGameTestServer __STONECRAFT_/GAMETESTS__buildAndCollect --stacktrace
+        run: ./gradlew __STONECRAFT_#DATAGEN__runDatagen __STONECRAFT_/DATAGEN____STONECRAFT_#GAMETESTS__runGameTestServer __STONECRAFT_/GAMETESTS__buildAndCollect --stacktrace
 
 __STONECRAFT_#AUTOMATED_RELEASES__
       - name: "🏗️ Build, Test & Release"
