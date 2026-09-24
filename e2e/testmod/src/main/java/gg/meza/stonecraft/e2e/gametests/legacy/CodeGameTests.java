@@ -4,19 +4,28 @@
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 
+//? if forge {
+/^import net.minecraftforge.gametest.GameTestHolder;
+
+import static gg.meza.stonecraft.e2e.TestMod.MOD_ID;
+^///?}
+
 //? if neoforge {
 /^import net.neoforged.neoforge.gametest.GameTestHolder;
 
 import static gg.meza.stonecraft.e2e.TestMod.MOD_ID;
 ^///?}
 
-//? if neoforge
+//? if forgeLike
 //@GameTestHolder(MOD_ID)
 public class CodeGameTests {
     @GameTest(
         //? if fabric {
         template = "fabric-gametest-api-v1:empty",
         //?}
+        //? if forge {
+        /^template = "stonecraft_testmod:codegametests.empty",
+        ^///?}
         //? if neoforge {
         /^template = "empty",
         ^///?}

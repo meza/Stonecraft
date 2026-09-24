@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.testmod
 
 import gg.meza.stonecraft.IntegrationTest
+import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -9,8 +10,12 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import java.util.zip.ZipFile
 
-@DisplayName("Testmod build")
+@DisplayName("Testmod e2e")
 class TestModBasicsTest : IntegrationTest {
+    private val versionProjects = listOf(
+        "1.20.4-fabric", "1.20.4-forge", "1.20.4-neoforge",
+        "26.1-fabric", "26.1-forge", "26.1-neoforge"
+    )
 
     @Test
     fun `forge metadata requires an explicit loader version`() {
@@ -37,12 +42,43 @@ class TestModBasicsTest : IntegrationTest {
     }
 
     @Test
-    fun `testmod can build and collect jars`() {
+    @Timeout(value = 20, unit = TimeUnit.MINUTES)
+    fun `testmod generates data, builds jars, and runs gametests for every version project`() {
         val gradleTest = gradleTestMod()
+        deleteCopiedGeneratedResources(gradleTest)
 
-        val result = gradleTest.run("buildAndCollect", cacheTask = false)
+        val result = gradleTest.run(
+            listOf("--no-configuration-cache", "chiseledDatagen", "buildAndCollect", "chiseledGameTest"),
+            cacheTask = false
+        )
 
         gradleTest.assertNoGradleFailures(result)
+
+        versionProjects.forEach { versionProject ->
+            listOf("runDatagen", "buildAndCollect", "runGameTestServer").forEach { taskName ->
+                val taskPath = ":$versionProject:$taskName"
+                assertTrue(
+                    result.task(taskPath)?.outcome == TaskOutcome.SUCCESS,
+                    "Expected $taskPath to execute successfully; outcome was ${result.task(taskPath)?.outcome}"
+                )
+            }
+
+            val generatedDirectory = File(gradleTest.project().projectDir, "versions/$versionProject/src/main/generated")
+            assertTrue(
+                generatedDirectory.walkTopDown().any { it.isFile && it.name == "stone.json" },
+                "Expected $versionProject to generate stone.json under $generatedDirectory"
+            )
+
+            val gameTestTask = ":$versionProject:runGameTestServer"
+            val taskStart = result.output.indexOf("> Task $gameTestTask")
+            assertTrue(taskStart >= 0, "Expected output for $gameTestTask")
+            val nextTask = result.output.indexOf("> Task ", taskStart + 1).let { if (it < 0) result.output.length else it }
+            val taskOutput = result.output.substring(taskStart, nextTask)
+            assertTrue(
+                Regex("All [1-9][0-9]* required tests passed").containsMatchIn(taskOutput),
+                "Expected $gameTestTask to run at least one required game test. Output:\n$taskOutput"
+            )
+        }
 
         val collectedJars = gradleTest.project()
             .layout.projectDirectory
@@ -79,27 +115,41 @@ class TestModBasicsTest : IntegrationTest {
             collectedJars.jarNamed("stonecraft_testmod-forge-0.0-SNAPSHOT+mc26.1.jar"),
             "62.0.9"
         )
-    }
 
-    @Test
-    @Timeout(value = 20, unit = TimeUnit.MINUTES)
-    fun `testmod can run chiseled gametest`() {
-        val gradleTest = gradleTestMod()
-
-        val result = gradleTest.run("chiseledGameTest", cacheTask = false)
-
-        gradleTest.assertNoGradleFailures(result)
-
-        val successMarkers = listOf(
-            "required tests pass",
-            "GAME TESTS COMPLETE"
+        val clientDatagen = ":26.1-neoforge:runClientDatagen"
+        val serverDatagen = ":26.1-neoforge:runServerDatagen"
+        val executedTasks = result.tasks.map { it.path }
+        assertTrue(
+            executedTasks.indexOf(clientDatagen) >= 0 &&
+                executedTasks.indexOf(clientDatagen) < executedTasks.indexOf(serverDatagen),
+            "Expected NeoForge client datagen before server datagen. Task order: $executedTasks"
         )
 
-        successMarkers.forEach { marker ->
-            assertTrue(
-                result.output.contains(marker),
-                "Expected Gradle success marker '$marker'. Output:\n${result.output}"
-            )
+        val neoforgeProject = File(gradleTest.project().projectDir, "versions/26.1-neoforge")
+        val clientAdvancement = File(
+            neoforgeProject,
+            "src/main/generated/client/data/stonecraft_testmod/advancement/datagen/stone.json"
+        )
+        assertTrue(clientAdvancement.isFile, "Expected NeoForge server datagen to preserve the client advancement")
+
+        val processedResources = gradleTest.run(
+            listOf("--no-configuration-cache", ":26.1-neoforge:processResources"),
+            cacheTask = false
+        )
+        gradleTest.assertNoGradleFailures(processedResources)
+        assertTrue(
+            File(
+                neoforgeProject,
+                "build/resources/main/data/stonecraft_testmod/advancement/datagen/stone.json"
+            ).isFile,
+            "Expected NeoForge processed resources to include the client advancement"
+        )
+    }
+
+    private fun deleteCopiedGeneratedResources(gradleTest: IntegrationTest.TestBuilder) {
+        versionProjects.forEach { versionProject ->
+            File(gradleTest.project().projectDir, "versions/$versionProject/src/main/generated")
+                .deleteRecursively()
         }
     }
 
