@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -38,6 +39,16 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
             Regex("chiseled\\.dep=.*:buildAndCollect").containsMatchIn(br.output),
             "Expected chiseledBuildAndCollect to depend on buildAndCollect. Output was:\n${br.output}"
         )
+    }
+
+    @Test
+    fun `building a jar does not schedule optional datagen`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+
+        val result = gradleTest.run(listOf(":1.21.4-fabric:buildAndCollect", "--dry-run"))
+
+        gradleTest.assertNoGradleFailures(result)
+        assertNull(result.task(":1.21.4-fabric:runDatagen"))
     }
 
     @Test

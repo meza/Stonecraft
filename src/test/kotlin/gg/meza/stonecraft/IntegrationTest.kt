@@ -174,13 +174,13 @@ plugins {
             failureMarkers.forEach { marker ->
                 assertTrue(
                     !result.output.contains(marker),
-                    "Expected no Gradle failure marker '$marker'. Output:\n$result.output"
+                    "Expected no Gradle failure marker '$marker'. Output:\n${result.output}"
                 )
             }
 
             assertTrue(
                 !Regex("""> Task .+ FAILED""").containsMatchIn(result.output),
-                "Expected no failed Gradle tasks. Output:\n$result.output"
+                "Expected no failed Gradle tasks. Output:\n${result.output}"
             )
         }
 

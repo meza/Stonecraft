@@ -8,6 +8,7 @@ import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
 import net.fabricmc.loom.task.DownloadAssetsTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
+import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 
@@ -24,6 +25,14 @@ fun configureTasks(
         from(jarTask.flatMap { it.archiveFile })
         into(project.rootProject.layout.buildDirectory.file("libs"))
         dependsOn("build", jarTask)
+    }
+
+    project.tasks.named("jar", Jar::class.java) {
+        mustRunAfter(project.tasks.named("runDatagen"))
+    }
+    val runtimeTasks = setOf("runClient", "runServer", "runGameTestClient", "runGameTestServer")
+    project.tasks.matching { it.name in runtimeTasks }.configureEach {
+        mustRunAfter(project.tasks.named("runDatagen"))
     }
 
     if (stonecutter.current.isActive) {

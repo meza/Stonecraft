@@ -83,7 +83,7 @@ class ModPlugin : Plugin<Any> {
         project.version = "${project.mod.version}+mc$realMinecraftVersion"
 
         configureDependencies(project, stonecutter, realMinecraftVersion, minecraftObfuscation)
-        configureJunit(project, modSettings)
+        configureJunit(project, stonecutter, modSettings)
         configureStonecutterConstants(project, stonecutter)
         configureProcessResources(project, realMinecraftVersion, modSettings, stonecutter)
         configureLoom(project, stonecutter, modSettings, minecraftObfuscation)

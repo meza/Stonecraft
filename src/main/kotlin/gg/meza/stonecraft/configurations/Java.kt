@@ -2,16 +2,17 @@ package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.extension.ModSettingsExtension
-import gg.meza.stonecraft.mod
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.tasks.JavaExec
+import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.withType
 
 fun configureJava(project: Project, stonecutter: StonecutterBuildExtension, modSettingsExtension: ModSettingsExtension) {
-    val generatedResources = modSettingsExtension.generatedResourcesProp
-
     // Configure the compile time
     project.project.configure<JavaPluginExtension> {
         // Configure the Java plugin to use the correct Java version for the given Minecraft version
@@ -22,20 +23,21 @@ fun configureJava(project: Project, stonecutter: StonecutterBuildExtension, modS
     }
 
     project.afterEvaluate {
-        project.project.configure<JavaPluginExtension> {
-            // Add the generated resources directory to the resources source set for ForgeLike mods
-            // This is to allow them to read the generated resources
-            if (project.mod.isForgeLike) {
-                sourceSets.named("main").get().resources.apply {
-                    val generatedResourcesDirectory = generatedResources.get()
-                    if (project.mod.isNeoforge && stonecutter.eval(stonecutter.current.version, ">=1.21.4")) {
-                        srcDir(generatedResourcesDirectory.dir("client"))
-                        srcDir(generatedResourcesDirectory.dir("server"))
-                    } else {
-                        srcDir(generatedResourcesDirectory)
-                    }
-                }
+        val generatedDirectories = generatedResourceDirectories(project, stonecutter, modSettingsExtension)
+        val generatedFiles = project.files(generatedDirectories)
+
+        project.tasks.named("jar", Jar::class.java) {
+            generatedDirectories.forEach { from(it) }
+        }
+        val runtimeTasks = setOf("runClient", "runServer", "runGameTestClient", "runGameTestServer")
+        project.tasks.withType<JavaExec>().configureEach {
+            if (name in runtimeTasks) {
+                classpath(generatedFiles)
             }
+        }
+        project.tasks.withType<Test>().configureEach {
+            classpath = classpath.plus(generatedFiles)
+            mustRunAfter(project.tasks.named("runDatagen"))
         }
     }
 }

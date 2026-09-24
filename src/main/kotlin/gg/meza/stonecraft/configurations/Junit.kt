@@ -1,9 +1,11 @@
 package gg.meza.stonecraft.configurations
 
 import dev.kikugie.stonecutter.data.ParsedVersion
+import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import gg.meza.stonecraft.extension.ModSettingsExtension
 import gg.meza.stonecraft.mod
 import org.gradle.api.Project
+import org.gradle.api.file.Directory
 import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.testing.Test
@@ -55,7 +57,7 @@ internal object JunitCompatibility {
     }
 }
 
-fun configureJunit(project: Project, modSettings: ModSettingsExtension) {
+fun configureJunit(project: Project, stonecutter: StonecutterBuildExtension, modSettings: ModSettingsExtension) {
     project.afterEvaluate {
         if (!modSettings.enableJunitProp.get()) return@afterEvaluate
 
@@ -83,7 +85,11 @@ fun configureJunit(project: Project, modSettings: ModSettingsExtension) {
             )
         ) {
             JunitSupportMode.FABRIC_LOADER -> configureFabricLoaderJunit(project, requireNotNull(loaderVersion))
-            JunitSupportMode.NEOFORGE_FML_FIXTURES -> configureNeoForgeJunit(project, requireNotNull(loaderVersion))
+            JunitSupportMode.NEOFORGE_FML_FIXTURES -> configureNeoForgeJunit(
+                project,
+                requireNotNull(loaderVersion),
+                generatedResourceDirectories(project, stonecutter, modSettings),
+            )
             JunitSupportMode.PLATFORM_ONLY -> Unit
         }
     }
@@ -96,7 +102,7 @@ private fun configureFabricLoaderJunit(project: Project, loaderVersion: String) 
     )
 }
 
-private fun configureNeoForgeJunit(project: Project, neoForgeVersion: String) {
+private fun configureNeoForgeJunit(project: Project, neoForgeVersion: String, generatedDirectories: List<Directory>) {
     val neoForgeTestFixtures = project.dependencies.create(
         "net.neoforged:neoforge:$neoForgeVersion"
     ) as ExternalModuleDependency
@@ -106,8 +112,9 @@ private fun configureNeoForgeJunit(project: Project, neoForgeVersion: String) {
     project.dependencies.add("testRuntimeOnly", neoForgeTestFixtures)
 
     val sourceSets = project.extensions.getByType<SourceSetContainer>()
-    val modFolders = listOf("main", "test")
-        .flatMap { sourceSetName -> sourceSets.getByName(sourceSetName).output.files }
+    val modFolders = (listOf("main", "test")
+        .flatMap { sourceSetName -> sourceSets.getByName(sourceSetName).output.files } +
+        generatedDirectories.map { it.asFile })
         .distinct()
         .joinToString(File.pathSeparator) { output -> "main%%${output.absolutePath}" }
 

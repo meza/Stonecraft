@@ -23,6 +23,7 @@ val awFile =
     }
 
 modSettings {
+    testServerRunDirectory = rootProject.layout.projectDirectory.dir("run/testserver/${project.name}")
     clientOptions {
         fov = 90
         guiScale = 3

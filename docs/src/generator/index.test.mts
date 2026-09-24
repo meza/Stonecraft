@@ -102,7 +102,7 @@ test('renders the Stonecraft template', async () => {
     assert.ok(zip.file('src/main/resources/soundsbegone.accesswidener'));
     assert.ok(zip.file('src/main/resources/assets/soundsbegone/icon.png'));
     assert.ok(zip.file('src/main/resources/data/soundsbegone/test_instance/noop.json'));
-    assert.ok(zip.file('scripts/datagen.sh'));
+    assert.equal(zip.file('scripts/datagen.sh'), null);
     assert.ok(zip.file('scripts/release.sh'));
     assert.ok(zip.file('.releaserc.json'));
     assert.ok(zip.file('renovate.json'));
@@ -115,6 +115,10 @@ test('renders the Stonecraft template', async () => {
 
     const settings = await zip.file('settings.gradle.kts')!.async('string');
     assert.match(settings, /id\("gg\.meza\.stonecraft"\) version "1\.13\.0"/);
+
+    const workflow = await zip.file('.github/workflows/build.yml')!.async('string');
+    assert.match(workflow, /\.\/gradlew runDatagen runGameTestServer buildAndCollect --stacktrace/);
+    assert.doesNotMatch(workflow, /Generate data|datagen\.sh/);
 
     const fabricMetadata = JSON.parse(
         await zip.file('src/main/resources/fabric.mod.json')!.async('string'),
@@ -191,7 +195,6 @@ test('omits every disabled project capability', async () => {
     });
     const zip = await JSZip.loadAsync(await project.archive.arrayBuffer());
 
-    assert.equal(zip.file('scripts/datagen.sh'), null);
     assert.equal(zip.file('scripts/release.sh'), null);
     assert.equal(zip.file('.releaserc.json'), null);
     assert.equal(zip.file('renovate.json'), null);
@@ -298,6 +301,31 @@ test('keeps publishing and automated releases independently selectable', async (
     assert.equal(publishingZip.file('scripts/release.sh'), null);
     assert.match(await publishingZip.file('build.gradle.kts')!.async('string'), /publishMods/);
     assert.match(await publishingZip.file('README.md')!.async('string'), /Publishing configuration/);
+});
+
+test('runs data generation with the build only when selected', async () => {
+    const source = await archiveTemplateDirectory();
+    const development = await generate(source, {
+        ...OPTIONS,
+        features: {...OPTIONS.features, automatedReleases: false},
+    });
+    const developmentZip = await JSZip.loadAsync(await development.archive.arrayBuffer());
+    const developmentWorkflow = await developmentZip.file('.github/workflows/build.yml')!.async('string');
+    assert.match(developmentWorkflow, /\.\/gradlew runDatagen runGameTestServer buildAndCollect --stacktrace/);
+    assert.doesNotMatch(developmentWorkflow, /datagen\.sh/);
+
+    const withoutDatagen = await generate(source, {
+        ...OPTIONS,
+        features: {...OPTIONS.features, dataGeneration: false},
+    });
+    const withoutDatagenZip = await JSZip.loadAsync(await withoutDatagen.archive.arrayBuffer());
+    const withoutDatagenWorkflow = await withoutDatagenZip.file('.github/workflows/build.yml')!.async('string');
+    assert.match(withoutDatagenWorkflow, /\.\/gradlew runGameTestServer buildAndCollect --stacktrace/);
+    assert.doesNotMatch(withoutDatagenWorkflow, /runDatagen|datagen\.sh/);
+    assert.doesNotMatch(
+        await withoutDatagenZip.file('scripts/release.sh')!.async('string'),
+        /runDatagen/,
+    );
 });
 
 test('derives entrypoint class names', async () => {
