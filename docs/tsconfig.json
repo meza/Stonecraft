@@ -1,7 +1,6 @@
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
     "types": ["node", "react", "react-dom"]
   },
   "exclude": ["**/*.test.mts", "**/*.test.tsx", "src/test"]
