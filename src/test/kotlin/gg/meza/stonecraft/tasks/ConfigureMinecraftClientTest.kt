@@ -114,4 +114,19 @@ class ConfigureMinecraftClientTest : IntegrationTest {
             "Original settings should be there but are not."
         )
     }
+
+    @Test
+    fun `existing option values and unparsed lines are preserved`() {
+        optionsFile.writeText("lastServer:example.com:25565\nipv6Address:[::1]:25565\nunparsed line\n\nfov:70")
+
+        val task = project.tasks.register<ConfigureMinecraftClient>("configureMinecraftClient").get()
+        task.run()
+
+        val outputLines = optionsFile.readLines()
+        assertTrue(outputLines.contains("lastServer:example.com:25565"))
+        assertTrue(outputLines.contains("ipv6Address:[::1]:25565"))
+        assertTrue(outputLines.contains("unparsed line"))
+        assertTrue(outputLines.contains(""))
+        assertTrue(outputLines.contains("fov:70"))
+    }
 }

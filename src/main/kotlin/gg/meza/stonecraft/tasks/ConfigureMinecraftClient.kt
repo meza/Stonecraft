@@ -50,13 +50,18 @@ abstract class ConfigureMinecraftClient : DefaultTask() {
         }
 
         val optionsMap = mutableMapOf<String, String>()
+        val unparsedLines = mutableListOf<String>()
 
         val optionsFileActual = optionsFile.toFile()
 
         if (optionsFileActual.length() > 0) {
             optionsFileActual.readLines().forEach { line ->
-                val (key, value) = line.split(":")
-                optionsMap[key] = value
+                val separator = line.indexOf(':')
+                if (separator < 0) {
+                    unparsedLines.add(line)
+                } else {
+                    optionsMap[line.substring(0, separator)] = line.substring(separator + 1)
+                }
             }
         }
 
@@ -66,7 +71,7 @@ abstract class ConfigureMinecraftClient : DefaultTask() {
 
         val mergedValues = defaults + optionsMap
 
-        optionsFileActual.writeText(mergedValues.map { (key, value) -> "$key:$value" }.joinToString("\n"))
+        optionsFileActual.writeText((unparsedLines + mergedValues.map { (key, value) -> "$key:$value" }).joinToString("\n"))
         logger.debug("Minecraft options have been configured in ${optionsFileActual.absolutePath}.")
     }
 
