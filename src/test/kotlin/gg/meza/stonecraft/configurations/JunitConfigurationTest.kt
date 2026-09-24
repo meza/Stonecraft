@@ -44,6 +44,11 @@ class JunitConfigurationTest : IntegrationTest {
             )
         )
         assertTrue(result.output.contains(":1.21-neoforge.fml.modFolders=main%%"))
+        val generatedDirectory = gradleTest.project().layout.projectDirectory
+            .dir("versions/1.21-neoforge/src/main/generated").asFile.absolutePath
+        assertTrue(result.output.lineSequence().any {
+            it.startsWith(":1.21-neoforge.fml.modFolders=") && it.contains("main%%$generatedDirectory")
+        })
     }
 
     @Test

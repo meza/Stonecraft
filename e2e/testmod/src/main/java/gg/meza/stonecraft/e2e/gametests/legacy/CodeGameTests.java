@@ -33,6 +33,9 @@ public class CodeGameTests {
         required = true
     )
     public void codeRegisteredNoop(GameTestHelper ctx) {
+        if (CodeGameTests.class.getResource("/data/stonecraft_testmod/advancements/datagen/stone.json") == null) {
+            throw new AssertionError("Generated advancement is missing from the GameTest runtime classpath");
+        }
         ctx.setNight();
         ctx.succeed();
     }

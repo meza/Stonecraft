@@ -3,6 +3,7 @@ package gg.meza.stonecraft.testmod
 import gg.meza.stonecraft.IntegrationTest
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Timeout
@@ -116,6 +117,20 @@ class TestModBasicsTest : IntegrationTest {
             "62.0.9"
         )
 
+        versionProjects.forEach { versionProject ->
+            val (version, loader) = versionProject.split("-")
+            val jar = collectedJars.jarNamed("stonecraft_testmod-$loader-0.0-SNAPSHOT+mc$version.jar")
+            val advancementDirectory = if (version == "1.20.4") "advancements" else "advancement"
+            val generatedEntry = "data/stonecraft_testmod/$advancementDirectory/datagen/stone.json"
+            ZipFile(jar).use { zip ->
+                assertEquals(
+                    1,
+                    zip.entries().asSequence().count { it.name == generatedEntry },
+                    "Expected exactly one fresh generated advancement in ${jar.name}: $generatedEntry"
+                )
+            }
+        }
+
         val clientDatagen = ":26.1-neoforge:runClientDatagen"
         val serverDatagen = ":26.1-neoforge:runServerDatagen"
         val executedTasks = result.tasks.map { it.path }
@@ -132,18 +147,6 @@ class TestModBasicsTest : IntegrationTest {
         )
         assertTrue(clientAdvancement.isFile, "Expected NeoForge server datagen to preserve the client advancement")
 
-        val processedResources = gradleTest.run(
-            listOf("--no-configuration-cache", ":26.1-neoforge:processResources"),
-            cacheTask = false
-        )
-        gradleTest.assertNoGradleFailures(processedResources)
-        assertTrue(
-            File(
-                neoforgeProject,
-                "build/resources/main/data/stonecraft_testmod/advancement/datagen/stone.json"
-            ).isFile,
-            "Expected NeoForge processed resources to include the client advancement"
-        )
     }
 
     private fun deleteCopiedGeneratedResources(gradleTest: IntegrationTest.TestBuilder) {
