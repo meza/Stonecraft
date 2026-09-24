@@ -18,14 +18,11 @@ If you override Stonecutter manually you can break task wiring, DSL keywords, or
 | `1.3.3 - 1.7.x`         | `0.6.2`                       | End-of-life (frozen). Upgrade when possible. |
 | `1.8.x`                 | `0.7.11`                      | End-of-life (frozen). Upgrade when possible. |
 | `1.9.x`                 | `0.8.x`                       | End-of-life (frozen). Upgrade when possible. |
-| `1.10.x`                | `0.9.x`                       | Stable line. Stonecutter 0.9 stable          |
+| `1.10.x - 1.14.x`       | `0.9.x`                       | Use `1.14.x` for new projects.               |
 
 
-:::warning Support policy
-- `1.10.x` is in active development.
-- `1.9.x` is in maintenance mode (critical fixes only).
-- `1.8.x` is in maintenance mode (critical fixes only).
-- `1.7.x` is end-of-life and receives no further updates.
+:::note
+The Quickstart uses the current `1.14.x` line. Earlier mappings help existing projects identify their Stonecutter baseline.
 :::
 
 ## Experimental Snapshot Channel
@@ -43,15 +40,15 @@ pluginManagement {
 }
 ```
 
-2. Depend on the compatible plugin versions:
+2. Check the [published Stonecraft plugin versions](https://maven.meza.gg/snapshots/gg/meza/stonecraft/gg.meza.stonecraft.gradle.plugin/maven-metadata.xml). Choose an exact version from the metadata's `<versions>` list. Use `0.8+` for a `1.9.x` Stonecraft snapshot, or `0.9+` for a snapshot from the `1.10.x`–`1.14.x` line. If no snapshot for your Stonecraft line is listed, this channel does not provide one for that line.
 
 ```kotlin
 plugins {
-    id("gg.meza.stonecraft") version "1.9.+"
-    id("dev.kikugie.stonecutter") version "0.8+"
+    id("gg.meza.stonecraft") version "<exact-version-from-metadata>"
+    id("dev.kikugie.stonecutter") version "<matching-selector-above>"
 }
 ```
 
-Snapshot builds can include breaking changes between bumps. Track this page for updates before promoting a build to production or pinning the line in CI.
+Replace both placeholders before using this example. Snapshot builds can include breaking changes between bumps. Track this page for updates before promoting a build to production or pinning the line in CI.
 
 We actively track Stonecutter development so Stonecraft users can adopt the latest tooling with minimal effort. When Stonecutter moves forward, expect a corresponding Stonecraft release to keep this compatibility matrix authoritative.

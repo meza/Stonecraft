@@ -6,6 +6,8 @@ import org.gradle.api.Project
 import java.io.InputStreamReader
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.time.Instant
+import java.time.OffsetDateTime
 
 @JvmInline
 value class PackFormatVersion private constructor(private val value: BigDecimal) : Comparable<PackFormatVersion> {
@@ -44,18 +46,38 @@ value class PackFormatVersion private constructor(private val value: BigDecimal)
 }
 
 fun String.upperCaseFirst() = replaceFirstChar { if (it.isLowerCase()) it.uppercaseChar() else it }
-private data class PackFormats(val datapack: PackFormatVersion, val resourcepack: PackFormatVersion)
+internal data class PackFormats(val datapack: PackFormatVersion, val resourcepack: PackFormatVersion)
+private data class VersionedPackFormats(
+    val minecraftVersion: String,
+    val formats: PackFormats,
+    val releaseTime: Instant
+)
+internal class PackFormatLookup(
+    private val formatsByMinecraftVersion: Map<String, PackFormats>,
+    private val latestFormats: PackFormats
+) {
+    operator fun get(minecraftVersion: String): PackFormats =
+        formatsByMinecraftVersion[minecraftVersion] ?: latestFormats
+}
 
 private object ResourceHolder
 
-private val packFormatMap: Map<String, PackFormats> by lazy {
+private val packFormatLookup: PackFormatLookup by lazy {
     val stream = requireNotNull(
         ResourceHolder::class.java.classLoader.getResourceAsStream("pack_versions.json")
     ) { "pack_versions.json not found" }
     val json = JsonParser.parseReader(InputStreamReader(stream)).asJsonObject
-    json.entrySet().associate { (version, data) ->
-        version to data.asJsonObject.toPackFormats()
+    json.toPackFormatLookup()
+}
+
+internal fun JsonObject.toPackFormatLookup(): PackFormatLookup {
+    val entries = entrySet().map { (version, data) ->
+        data.asJsonObject.toVersionedPackFormats(version)
     }
+    return PackFormatLookup(
+        entries.associate { it.minecraftVersion to it.formats },
+        entries.maxBy { it.releaseTime }.formats
+    )
 }
 
 private fun JsonObject.toPackFormats(): PackFormats = PackFormats(
@@ -63,8 +85,13 @@ private fun JsonObject.toPackFormats(): PackFormats = PackFormats(
     PackFormatVersion.of(get("resourcepack").asBigDecimal)
 )
 
-private fun getPackFormats(version: String): PackFormats = packFormatMap[version]
-    ?: throw IllegalArgumentException("Unknown Minecraft version: $version")
+private fun JsonObject.toVersionedPackFormats(minecraftVersion: String): VersionedPackFormats = VersionedPackFormats(
+    minecraftVersion,
+    toPackFormats(),
+    OffsetDateTime.parse(get("releaseTime").asString).toInstant()
+)
+
+private fun getPackFormats(version: String): PackFormats = packFormatLookup[version]
 
 fun getResourcePackFormat(version: String): PackFormatVersion = getPackFormats(version).resourcepack
 

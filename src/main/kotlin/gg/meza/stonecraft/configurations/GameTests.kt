@@ -106,6 +106,7 @@ internal fun RunConfiguration.useGameTestSourceSet(
 
         mods.maybeCreate(project.mod.id).apply {
             sourceSet(SourceSet.MAIN_SOURCE_SET_NAME)
+            modFiles.from(globalMods.named("main").get().modFiles)
             if (registerGameTestCodeInProductionMod) {
                 modFiles.from(gameTest.output.classesDirs)
             }

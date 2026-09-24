@@ -94,6 +94,9 @@ abstract class ModSettingsExtension @Inject constructor(
     @Internal
     internal val gametestModuleNameProp: Property<String> = project.objects.property(String::class.java)
 
+    @Internal
+    internal val enableJunitProp: Property<Boolean> = project.objects.property(Boolean::class.java)
+
     init {
         runDirectoryProp.convention(project.rootProject.layout.projectDirectory.dir("run"))
         generatedResourcesProp.convention(project.layout.projectDirectory.dir("src/main/generated"))
@@ -106,6 +109,7 @@ abstract class ModSettingsExtension @Inject constructor(
         accessWidenerProcessingProp.convention(true)
         gametestEntrypointCleanupProp.convention(true)
         gametestModuleNameProp.convention("${project.mod.id}_gametest")
+        enableJunitProp.convention(true)
     }
 
     var runDirectory: Directory
@@ -174,6 +178,13 @@ abstract class ModSettingsExtension @Inject constructor(
         set(value) {
             gametestModuleNameProp.set(value)
             gametestModuleNameProp.disallowChanges()
+        }
+
+    var enableJunit: Boolean
+        get() = enableJunitProp.get()
+        set(value) {
+            enableJunitProp.set(value)
+            enableJunitProp.disallowChanges()
         }
 
     fun clientOptions(configure: MinecraftClientOptions.() -> Unit) {

@@ -1,0 +1,38 @@
+import org.gradle.api.tasks.JavaExec
+
+/*
+ * CI shares Loom's Minecraft downloads through /cache/loom. Each TestKit build
+ * has a separate Gradle home whose caches/fabric-loom directory is a symlink to
+ * that shared cache. Loom writes the symlink paths to NeoForge's generated
+ * forge_minecraft_classpath.txt, while Java can discover the same JARs through
+ * their resolved /cache/loom paths. This mismatch can make legacy FML treat
+ * one JAR as two during module discovery. Stonecraft CI has failed with
+ * "Module fml_loader reads another module named fml_loader" in this setup.
+ *
+ * The CI workflow installs this script only in the TestKit Gradle home's init.d.
+ * It resolves the generated classpath entries immediately before NeoForge run
+ * tasks launch. Versions without the legacy classpath file are left alone.
+ * Keep this until the shared-cache NeoForge runs pass without path correction.
+ * Related upstream report: https://github.com/neoforged/ModDevGradle/issues/347
+ * Stonecraft failure: https://github.com/meza/Stonecraft/actions/runs/35887523965/job/107271359982
+ */
+gradle.beforeProject { project ->
+    if (!project.name.endsWith('-neoforge')) return
+
+    project.tasks.withType(JavaExec).configureEach { task ->
+        if (!task.name.startsWith('run')) return
+
+        task.doFirst {
+            def cache = System.getenv('STONECRAFT_TEST_PROJECT_CACHE')
+            def classpath = new File(cache, "loom-cache/projects/${project.name}/forge_minecraft_classpath.txt")
+            if (!classpath.isFile()) return
+
+            def original = classpath.readLines()
+            def resolved = original.collect { new File(it).canonicalPath }
+            if (resolved != original) {
+                classpath.text = resolved.join('\n') + '\n'
+                logger.lifecycle("Resolved NeoForge legacy classpath paths for ${project.path}")
+            }
+        }
+    }
+}

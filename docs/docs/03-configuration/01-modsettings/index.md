@@ -47,5 +47,6 @@ modSettings {
 
     gametestModuleName = "my_mod_gametest"
     gametestEntrypointCleanup = true
+    enableJunit = true
 }
 ```

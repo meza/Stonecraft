@@ -5,15 +5,6 @@ plugins {
     id("gg.meza.stonecraft")
 }
 
-dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:6.1.3")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
 val awFile =
     when {
         stonecutter.current.parsed >= "26.1" -> {
@@ -32,6 +23,7 @@ val awFile =
     }
 
 modSettings {
+    testServerRunDirectory = rootProject.layout.projectDirectory.dir("run/testserver/${project.name}")
     clientOptions {
         fov = 90
         guiScale = 3

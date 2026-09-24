@@ -88,12 +88,14 @@ class ModPlugin : Plugin<Any> {
             modSettings.gametestModuleNameProp,
         )
         configureDependencies(project, stonecutter, realMinecraftVersion, minecraftObfuscation)
+        configureJunit(project, stonecutter, modSettings)
         configureStonecutterConstants(project, stonecutter)
         configureProcessResources(project, realMinecraftVersion, modSettings, stonecutter)
         configureLoom(project, stonecutter, modSettings, minecraftObfuscation, gameTestSourceSet)
         patchAroundArchitecturyQuirks(project, stonecutter)
         configurePublishing(project, realMinecraftVersion, minecraftObfuscation)
         configureTasks(project, stonecutter, modSettings, minecraftObfuscation)
+        configureIntellij(project, stonecutter)
         configureJava(project, stonecutter, modSettings)
     }
 

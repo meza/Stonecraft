@@ -13,8 +13,9 @@ For NeoForge projects targeting Minecraft 1.21.4 or later, Stonecraft writes cli
 registered directly as a resource root, so either run can clean stale files without deleting output
 owned by the other.
 
-Fabric, Forge, and NeoForge projects targeting versions before Minecraft 1.21.4 write directly to
-`generatedResources`.
+Fabric and Forge projects write directly to `generatedResources` for every supported Minecraft
+version. NeoForge projects targeting versions before Minecraft 1.21.4 also write directly to that
+directory.
 
 ```kotlin title="build.gradle.kts"
 modSettings {

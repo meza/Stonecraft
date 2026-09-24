@@ -5,7 +5,7 @@ import okio.Path
 import org.gradle.testkit.runner.BuildResult
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -15,15 +15,13 @@ import org.junit.jupiter.api.TestInstance
  * We run the loom print task once and run tests against the output
  */
 @DisplayName("Test loom configures everything")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoomFullTest : IntegrationTest {
     private lateinit var gradleTest: IntegrationTest.TestBuilder
     private lateinit var result: BuildResult
 
-    @BeforeEach
+    @BeforeAll
     fun setUp() {
-        if (::result.isInitialized) {
-            return
-        }
         gradleTest = gradleTest()
             .buildScript(loomTask)
             .buildScript(

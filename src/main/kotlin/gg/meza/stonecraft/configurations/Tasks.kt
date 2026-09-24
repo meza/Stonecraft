@@ -8,10 +8,9 @@ import gg.meza.stonecraft.tasks.ConfigureMinecraftClient
 import net.fabricmc.loom.task.DownloadAssetsTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
-import org.gradle.api.tasks.testing.Test
+import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
-import java.io.File
 
 fun configureTasks(
     project: Project,
@@ -26,6 +25,14 @@ fun configureTasks(
         from(jarTask.flatMap { it.archiveFile })
         into(project.rootProject.layout.buildDirectory.file("libs"))
         dependsOn("build", jarTask)
+    }
+
+    project.tasks.named("jar", Jar::class.java) {
+        mustRunAfter(project.tasks.named("runDatagen"))
+    }
+    val runtimeTasks = setOf("runClient", "runServer", "runGameTestClient", "runGameTestServer")
+    project.tasks.matching { it.name in runtimeTasks }.configureEach {
+        mustRunAfter(project.tasks.named("runDatagen"))
     }
 
     if (stonecutter.current.isActive) {
@@ -99,18 +106,4 @@ fun configureTasks(
         legacyResourcesDirectory.set(project.layout.projectDirectory.file("run/resources"))
     }
 
-    if (project.mod.isNeoforge) {
-        // Necessary to enable minecraft facing unit test facilities
-        project.tasks.withType<Test>().configureEach {
-            jvmArgs("--add-opens=java.base/java.lang.invoke=ALL-UNNAMED")
-            systemProperty(
-                "fml.modFolders",
-                listOf(
-                    "main%%${project.layout.buildDirectory.dir("resources/main").get().asFile.absolutePath}",
-                    "main%%${project.layout.buildDirectory.dir("classes/java/main").get().asFile.absolutePath}",
-                    "main%%${project.layout.buildDirectory.dir("classes/java/test").get().asFile.absolutePath}",
-                ).joinToString(File.pathSeparator)
-            )
-        }
-    }
 }

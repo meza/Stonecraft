@@ -32,7 +32,11 @@ tasks.register("checkSourceSets") {
             println("SourceSet: ${'$'}{sourceSet.name}")
             println("  Java sources: ${'$'}{sourceSet.java.srcDirs}")
             println("  Resources: ${'$'}{sourceSet.resources.srcDirs}")
+            println("  Output: ${'$'}{sourceSet.output.dirs.files}")
         }
+        println("Jar sources: ${'$'}{tasks.named<org.gradle.jvm.tasks.Jar>("jar").get().source.files}")
+        val loom = project.extensions.getByType<net.fabricmc.loom.api.LoomGradleExtensionAPI>()
+        println("Loom mod files: ${'$'}{loom.mods.flatMap { it.modFiles.files }}")
     }
 }
             """.trimIndent()
@@ -62,7 +66,7 @@ tasks.register("checkSourceSets") {
     }
 
     @Test
-    fun `check if the generated source is added for forge`() {
+    fun `forge generated resources are jar inputs`() {
         gradleTest.setStonecutterVersion("1.21", "forge")
         gradleTest.buildScript(
             """
@@ -71,14 +75,18 @@ modSettings {
 }"""
         )
 
+        val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-forge/build/src/main/generatedForTests")
+        val generatedFile = expectedDirectory.file("marker.txt").asFile.apply { parentFile.mkdirs(); writeText("generated") }
         val br = gradleTest.run("checkSourceSets")
         gradleTest.assertNoGradleFailures(br)
-        val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-forge/build/src/main/generatedForTests")
-        assertTrue(br.output.contains(expectedDirectory.asFile.absolutePath))
+        assertTrue(br.output.lineSequence().any { it.startsWith("Jar sources:") && it.contains(generatedFile.absolutePath) })
+        assertTrue(br.output.lineSequence().any { it.startsWith("Loom mod files:") && it.contains(expectedDirectory.asFile.absolutePath) })
+        assertFalse(br.output.lineSequence().any { it.startsWith("  Output:") && it.contains(expectedDirectory.asFile.absolutePath) })
+        assertFalse(br.output.lineSequence().any { it.startsWith("  Resources:") && it.contains(expectedDirectory.asFile.absolutePath) })
     }
 
     @Test
-    fun `check if the generated source is NOT added for fabric`() {
+    fun `fabric generated resources are jar inputs`() {
         gradleTest.setStonecutterVersion("1.21", "fabric")
         gradleTest.buildScript(
             """
@@ -87,14 +95,18 @@ modSettings {
 }"""
         )
 
+        val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-fabric/build/src/main/generatedForTests")
+        val generatedFile = expectedDirectory.file("marker.txt").asFile.apply { parentFile.mkdirs(); writeText("generated") }
         val br = gradleTest.run("checkSourceSets")
         gradleTest.assertNoGradleFailures(br)
-        val expectedDirectory = gradleTest.project().layout.projectDirectory.dir("versions/1.21-forge/build/src/main/generatedForTests")
-        assertFalse(br.output.contains(expectedDirectory.asFile.absolutePath))
+        assertTrue(br.output.lineSequence().any { it.startsWith("Jar sources:") && it.contains(generatedFile.absolutePath) })
+        assertTrue(br.output.lineSequence().any { it.startsWith("Loom mod files:") && it.contains(expectedDirectory.asFile.absolutePath) })
+        assertFalse(br.output.lineSequence().any { it.startsWith("  Output:") && it.contains(expectedDirectory.asFile.absolutePath) })
+        assertFalse(br.output.lineSequence().any { it.startsWith("  Resources:") && it.contains(expectedDirectory.asFile.absolutePath) })
     }
 
     @Test
-    fun `modern neoforge adds isolated client and server generated resource roots`() {
+    fun `modern neoforge adds isolated client and server jar inputs`() {
         gradleTest.setStonecutterVersion("1.21.4", "neoforge")
         gradleTest.buildScript(
             """
@@ -103,12 +115,19 @@ modSettings {
 }"""
         )
 
-        val br = gradleTest.run("checkSourceSets")
-        gradleTest.assertNoGradleFailures(br)
         val generatedResources = gradleTest.project().layout.projectDirectory
             .dir("versions/1.21.4-neoforge/build/src/main/generatedForTests")
+        val generatedFiles = listOf("client", "server").map { side ->
+            generatedResources.file("$side/marker.txt").asFile.apply { parentFile.mkdirs(); writeText(side) }
+        }
+        val br = gradleTest.run("checkSourceSets")
+        gradleTest.assertNoGradleFailures(br)
 
-        assertTrue(br.output.contains(generatedResources.dir("client").asFile.absolutePath))
-        assertTrue(br.output.contains(generatedResources.dir("server").asFile.absolutePath))
+        generatedFiles.forEach { generatedFile ->
+            assertTrue(br.output.lineSequence().any { it.startsWith("Jar sources:") && it.contains(generatedFile.absolutePath) })
+            assertTrue(br.output.lineSequence().any { it.startsWith("Loom mod files:") && it.contains(generatedFile.parentFile.absolutePath) })
+            assertFalse(br.output.lineSequence().any { it.startsWith("  Output:") && it.contains(generatedFile.parentFile.absolutePath) })
+            assertFalse(br.output.lineSequence().any { it.startsWith("  Resources:") && it.contains(generatedFile.parentFile.absolutePath) })
+        }
     }
 }

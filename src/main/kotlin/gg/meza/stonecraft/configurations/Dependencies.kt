@@ -6,8 +6,6 @@ import gg.meza.stonecraft.mod
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.api.fabricapi.FabricApiExtension
 import org.gradle.api.Project
-import org.gradle.api.artifacts.ExternalModuleDependency
-import org.gradle.kotlin.dsl.exclude
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.maven
@@ -80,16 +78,6 @@ fun configureDependencies(
         val neoforge = "net.neoforged:neoforge:${project.mod.prop("neoforge_version")}"
 
         project.dependencies.add("neoForge", neoforge)
-        val neoforgeTestFixtures = project.dependencies.create(neoforge) as ExternalModuleDependency
-        neoforgeTestFixtures.capabilities {
-            requireCapability("net.neoforged:neoforge-moddev-test-fixtures")
-        }
-
-        if (stonecutter.current.parsed < "1.20.6") {
-            neoforgeTestFixtures.exclude("net.neoforged.fancymodloader", "junit-fml")
-        }
-        project.dependencies.add("testRuntimeOnly", neoforgeTestFixtures)
-        project.dependencies.add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
     }
 
     // Forge
@@ -112,10 +100,6 @@ fun configureDependencies(
             project.dependencies.add(
                 "api",
                 "net.fabricmc.fabric-api:fabric-api:${project.mod.prop("fabric_version")}"
-            )
-            project.dependencies.add(
-                "testImplementation",
-                "net.fabricmc:fabric-loader-junit:${project.mod.prop("loader_version")}"
             )
             project.dependencies.add(
                 "${GAME_TEST_SOURCE_SET_NAME}Implementation",

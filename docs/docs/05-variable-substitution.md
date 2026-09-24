@@ -73,8 +73,30 @@ The Minecraft version of your mod. This is the resolved Minecraft version for th
 
 ### `packVersion`
 
-The pack version of your mod. This is the resource pack version belonging to the Minecraft version you are using.
-It's supplied by Stonecraft.
+The resource pack format belonging to the Minecraft version you are using. Stonecraft supplies this value from its
+bundled Minecraft metadata.
+
+Stonecraft looks up pack formats as follows:
+
+- A Minecraft ID present in the bundled metadata uses its exact datapack and resource pack formats.
+- An ID absent from the bundled metadata is assumed to be newer. It uses both formats from the single bundled entry
+  with the latest `releaseTime`.
+
+This fallback is based on the newest metadata bundled with your installed Stonecraft version. It does not confirm
+that the unknown Minecraft ID actually uses those formats.
+
+The fallback follows the normal substitution and metadata rules. Unless you override `packVersion` in
+`variableReplacements`, a `${packVersion}` placeholder receives the fallback resource pack format. A literal value
+remains unchanged. For Forge, a source `pack.mcmeta` takes precedence over Stonecraft's generated file; placeholders
+within that source file are still substituted.
+
+To use a specific resource pack format instead of Stonecraft's value, set the replacement in `build.gradle.kts`:
+
+```kotlin
+modSettings {
+    variableReplacements = mapOf("packVersion" to 98)
+}
+```
 
 ### `fabricVersion`
 

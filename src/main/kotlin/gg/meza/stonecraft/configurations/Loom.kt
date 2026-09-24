@@ -11,6 +11,7 @@ import net.fabricmc.loom.api.RunConfiguration
 import net.fabricmc.loom.api.fabricapi.FabricApiExtension
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
@@ -69,6 +70,16 @@ fun configureLoom(
     configureServerGameTests(project, loom, stonecutter, modSettings, gameTestSourceSet)
 
     project.afterEvaluate {
+        val generatedDirectories = generatedResourceDirectories(project, stonecutter, modSettings)
+        val mainMod = if (project.mod.isForgeLike) {
+            loom.mods.named("main").get()
+        } else {
+            val mainSourceSet = project.extensions.getByType(JavaPluginExtension::class)
+                .sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
+            loom.mods.maybeCreate(project.mod.id).apply { sourceSet(mainSourceSet) }
+        }
+        mainMod.modFiles.from(generatedDirectories)
+
         val awFile = modSettings.effectiveAccessWidenerLocationProp.orNull
         if (awFile != null) {
             val relativeLocation =
@@ -283,6 +294,7 @@ fun configureDatagen(
                 if (stonecutter.eval(stonecutter.current.version, ">=1.21.4")) {
                     client.set(true)
                 }
+                addToResources.set(false)
                 outputDirectory.set(project.layout.file(generatedResources.map { directory -> directory.asFile }))
             }
         }

@@ -1,6 +1,7 @@
 package gg.meza.stonecraft.configurations
 
 import gg.meza.stonecraft.IntegrationTest
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -38,6 +39,16 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
             Regex("chiseled\\.dep=.*:buildAndCollect").containsMatchIn(br.output),
             "Expected chiseledBuildAndCollect to depend on buildAndCollect. Output was:\n${br.output}"
         )
+    }
+
+    @Test
+    fun `building a jar does not schedule optional datagen`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric")
+
+        val result = gradleTest.run(listOf(":1.21.4-fabric:buildAndCollect", "--dry-run"))
+
+        gradleTest.assertNoGradleFailures(result)
+        assertNull(result.task(":1.21.4-fabric:runDatagen"))
     }
 
     @Test
@@ -153,6 +164,56 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
     }
 
     @Test
+    fun `active client IntelliJ configuration debugs the complete runActive task graph`() {
+        gradleTest.setStonecutterVersion("1.21.4", "fabric", "neoforge")
+        gradleTest.buildScript(
+            """
+            tasks.register("printIdeaSyncOutputs") {
+                doLast {
+                    rootProject.allprojects.forEach { candidate ->
+                        candidate.tasks.findByName("ideaSyncTask")?.let { ideaSyncTask ->
+                            ideaSyncTask.outputs.files.files
+                                .map { it.invariantSeparatorsPath }
+                                .sorted()
+                                .forEach { println(candidate.path + ".ideaSync.output=" + it) }
+                        }
+                    }
+                }
+            }
+            """.trimIndent()
+        )
+
+        val br = gradleTest.run(
+            listOf(
+                "printIdeaSyncOutputs",
+                ":1.21.4-fabric:ideaSyncTask"
+            )
+        )
+        gradleTest.assertNoGradleFailures(br)
+
+        assertTrue(
+            Regex(
+                ":1\\.21\\.4-fabric\\.ideaSync\\.output=.*" +
+                    "Stonecraft_Active_Minecraft_Client\\.xml"
+            ).containsMatchIn(br.output)
+        )
+        assertTrue(
+            !Regex(
+                ":1\\.21\\.4-neoforge\\.ideaSync\\.output=.*" +
+                    "Stonecraft_Active_Minecraft_Client\\.xml"
+            ).containsMatchIn(br.output)
+        )
+
+        val configuration = gradleTest.project().projectDir
+            .resolve(".idea/runConfigurations/Stonecraft_Active_Minecraft_Client.xml")
+            .readText()
+        assertTrue(configuration.contains("name=\"Run the Active Minecraft Client\""))
+        assertTrue(configuration.contains("<option value=\":runActive\" />"))
+        assertTrue(configuration.contains("<ExternalSystemReattachDebugProcess>true"))
+        assertTrue(configuration.contains("<DebugAllEnabled>true"))
+    }
+
+    @Test
     fun `build and collect depends on remapJar for mapped versions`() {
         gradleTest.setStonecutterVersion("1.21.4", "fabric")
         gradleTest.buildScript(
@@ -228,7 +289,8 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
         val expectedFolders = listOf(
             "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/resources/main").asFile.absolutePath}",
             "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/main").asFile.absolutePath}",
-            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/test").asFile.absolutePath}"
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/classes/java/test").asFile.absolutePath}",
+            "main%%${gradleTest.project().layout.projectDirectory.dir("$versionProject/build/resources/test").asFile.absolutePath}"
         )
 
         assertTrue(
@@ -241,5 +303,9 @@ class ChiseledTasksConfigurationTest : IntegrationTest {
                 "NeoForge Test tasks should include $folder in fml.modFolders."
             )
         }
+        assertTrue(
+            !br.output.contains("junit-fml"),
+            "NeoForge Test tasks should rely on the published fixture capability rather than a hard-coded junit-fml module."
+        )
     }
 }

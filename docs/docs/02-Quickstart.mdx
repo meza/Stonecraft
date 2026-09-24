@@ -46,8 +46,8 @@ pluginManagement {
     }
 }
 plugins {
-    id("gg.meza.stonecraft") version "1.9.+"
-    id("dev.kikugie.stonecutter") version "0.8+"
+    id("gg.meza.stonecraft") version "1.14.+"
+    id("dev.kikugie.stonecutter") version "0.9+"
 }
 
 stonecutter {
@@ -99,6 +99,17 @@ plugins {
 stonecutter active "1.21.4-fabric" /* [SC] DO NOT EDIT */
 ```
 
-:::info Stonecutter 0.8
-Stonecutter 0.8 keeps the native Gradle task fan-out introduced in 0.7 while layering the typed task APIs and parser/handler rewrite. Stonecraft wires the typed accessors for you, so you can stick with the stock Gradle tasks (`build`, `publishMods`, etc.) or keep using the `chiseled*` wrappers if your CI expects them. For background on why the native tasks are preferred, see [our blog post](/blog/native-tasks-deprecation).
+### Run or debug the active client in IntelliJ
+
+After IntelliJ imports or reloads the Gradle project, select **Run the Active Minecraft Client** from the
+run configurations. Use **Run** to launch the client normally, or **Debug** to launch it with the
+IntelliJ debugger attached to the Minecraft process.
+
+To change the active version, run Stonecutter's generated
+**Set active project to &lt;version-loader&gt;** Gradle task. Do not edit the `stonecutter active`
+declaration directly. Reload the Gradle project afterwards; the same IntelliJ configuration will
+then launch the newly active version.
+
+:::info Gradle tasks
+With the Stonecutter 0.9 line shown above, use the native Gradle tasks (`build`, `publishMods`, etc.). Stonecraft also keeps the `chiseled*` wrappers for existing workflows. See [our blog post](/blog/native-tasks-deprecation) for the task naming background.
 :::

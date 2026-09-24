@@ -31,7 +31,7 @@ plugins {
 }
 ```
 
-Need unreleased changes early? Follow the [snapshot channel guide](https://stonecraft.meza.gg/docs/stonecraft-and-stonecutter-compatibility#experimental-snapshot-channel) on the documentation site.
+For available prerelease builds, follow the [snapshot channel guide](https://stonecraft.meza.gg/docs/stonecutter-compatibility#experimental-snapshot-channel). A snapshot may not exist for the current release line.
 
 ### If you're using an AI coding agent:
 
@@ -63,8 +63,8 @@ pluginManagement {
     }
 }
 plugins {
-   id("gg.meza.stonecraft") version "1.9.+"
-    id("dev.kikugie.stonecutter") version "0.8+"
+   id("gg.meza.stonecraft") version "1.14.+"
+    id("dev.kikugie.stonecutter") version "0.9+"
 }
 
 stonecutter {
@@ -101,6 +101,12 @@ plugins {
 
 stonecutter active "1.21.4-fabric" /* [SC] DO NOT EDIT */
 ```
+
+When IntelliJ imports the Gradle project, Stonecraft generates the **Run the Active Minecraft Client** run
+configuration. Run it normally to launch the active client, or start it with **Debug** to attach the
+IntelliJ debugger to the Minecraft process. See the
+[Quickstart guide](https://stonecraft.meza.gg/docs/Quickstart#run-or-debug-the-active-client-in-intellij)
+for details.
 
 ## Social?
 

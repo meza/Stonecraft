@@ -1,6 +1,7 @@
 /*? if < 1.21.5 {*/
 /*package gg.meza.stonecraft.e2e.gametests.legacy;
 
+import gg.meza.stonecraft.e2e.TestMod;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 
@@ -28,6 +29,9 @@ public class CodeGameTests {
         required = true
     )
     public void codeRegisteredNoop(GameTestHelper ctx) {
+        if (TestMod.class.getResource("/data/stonecraft_testmod/advancements/datagen/stone.json") == null) {
+            throw new AssertionError("Generated advancement is missing from the GameTest runtime classpath");
+        }
         ctx.setNight();
         ctx.succeed();
     }
