@@ -16,9 +16,9 @@
     "dev": "docusaurus start"
   },
   "dependencies": {
-    "@docusaurus/core": "4.0.0-canary-6818",
-    "@docusaurus/plugin-content-blog": "4.0.0-canary-6818",
-    "@docusaurus/preset-classic": "4.0.0-canary-6818",
+    "@docusaurus/core": "4.0.0-canary-6822",
+    "@docusaurus/plugin-content-blog": "4.0.0-canary-6822",
+    "@docusaurus/preset-classic": "4.0.0-canary-6822",
     "@fortawesome/fontawesome-svg-core": "7.3.1",
     "@fortawesome/free-brands-svg-icons": "7.3.1",
     "@fortawesome/free-regular-svg-icons": "7.3.1",
@@ -33,9 +33,9 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "4.0.0-canary-6818",
-    "@docusaurus/tsconfig": "4.0.0-canary-6818",
-    "@docusaurus/types": "4.0.0-canary-6818",
+    "@docusaurus/module-type-aliases": "4.0.0-canary-6822",
+    "@docusaurus/tsconfig": "4.0.0-canary-6822",
+    "@docusaurus/types": "4.0.0-canary-6822",
     "@testing-library/dom": "10.4.2",
     "@testing-library/react": "16.3.3",
     "@testing-library/user-event": "14.6.7",
