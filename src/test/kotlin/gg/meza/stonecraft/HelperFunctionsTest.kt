@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
+import java.time.OffsetDateTime
 
 class HelperFunctionsTest {
     @Test
@@ -18,18 +19,28 @@ class HelperFunctionsTest {
 
     @Test
     fun `unknown versions use both formats from the most recently released bundled version`() {
+        val stream = requireNotNull(javaClass.classLoader.getResourceAsStream("pack_versions.json")) {
+            "pack_versions.json not found"
+        }
+        val manifest = stream.reader().use { JsonParser.parseReader(it).asJsonObject }
+        val latestEntry = manifest.entrySet().maxBy {
+            OffsetDateTime.parse(it.value.asJsonObject.get("releaseTime").asString).toInstant()
+        }
+        val latestFormats = latestEntry.value.asJsonObject
+
         listOf(
-            "27.1",
-            "27.1-snapshot-1",
-            "27w01a"
+            "${latestEntry.key}-unknown-release",
+            "${latestEntry.key}-unknown-snapshot",
+            "${latestEntry.key}-unknown-weekly-snapshot"
         ).forEach { unknownVersion ->
+            assertFalse(manifest.has(unknownVersion), "$unknownVersion must be absent from the bundled manifest")
             assertEquals(
-                BigDecimal("122"),
+                latestFormats.get("datapack").asBigDecimal.stripTrailingZeros(),
                 getDatapackFormat(unknownVersion).toBigDecimal(),
                 "datapack format for $unknownVersion"
             )
             assertEquals(
-                BigDecimal("98"),
+                latestFormats.get("resourcepack").asBigDecimal.stripTrailingZeros(),
                 getResourcePackFormat(unknownVersion).toBigDecimal(),
                 "resource pack format for $unknownVersion"
             )
