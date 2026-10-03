@@ -2478,5 +2478,10 @@
     "datapack": 122,
     "resourcepack": 98,
     "releaseTime": "2026-09-22T13:38:53+00:00"
+  },
+  "26.4-snapshot-2": {
+    "datapack": 122.1,
+    "resourcepack": 99,
+    "releaseTime": "2026-09-29T11:32:57+00:00"
   }
 }
