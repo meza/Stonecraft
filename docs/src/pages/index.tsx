@@ -176,10 +176,13 @@ export default function Home(): React.JSX.Element {
             and publish to every platform without duplicating effort.
           </p>
           <div className={styles.heroButtons}>
-            <Link className="button button--primary button--lg" to="/generator">
+            <Link className="button button--primary button--lg" to="/docs/Quickstart">
+              Get Started!
+            </Link>
+            <Link className="button button--secondary button--outline button--lg" to="/generator">
               Generate a project
             </Link>
-            <Link className="button button--outline button--lg" to="https://github.com/meza/Stonecraft">
+            <Link className="button button--link button--lg" to="https://github.com/meza/Stonecraft">
               View on GitHub
             </Link>
           </div>
