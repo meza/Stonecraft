@@ -1,7 +1,7 @@
 [versions]
 plugin-publish = "2.2.1"
 test-logger = "4.0.0"
-kover = "0.9.9"
+kover = "0.9.11"
 spotless = "8.10.3"
 gson = "2.14.0"
 stonecutter = "0.9+"
