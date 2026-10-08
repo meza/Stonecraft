@@ -5,6 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 
 import JSZip from 'jszip';
+import {createTemplateArchive, readStonecutterVersion} from '../../plugins/templateArchive.ts';
 
 import {
     generateStonecraftProject,
@@ -30,6 +31,7 @@ const OPTIONS: GenerateStonecraftProjectOptions = {
         publishing: true,
         automatedReleases: true,
         renovate: true,
+        aiInstructions: true,
     },
 };
 
@@ -50,30 +52,10 @@ function mockTemplate(bytes: Uint8Array): void {
 
 async function archiveTemplateDirectory(): Promise<Uint8Array> {
     const templateRoot = path.resolve('..', 'generator', 'template');
-    const zip = new JSZip();
-
-    async function visit(directory: string, prefix = ''): Promise<void> {
-        const entries = await fs.readdir(directory, {withFileTypes: true});
-        for (const entry of entries) {
-            const archivePath = prefix ? `${prefix}/${entry.name}` : entry.name;
-            const absolutePath = path.join(directory, entry.name);
-            if (entry.isDirectory()) {
-                await visit(absolutePath, archivePath);
-            } else {
-                const executable =
-                    archivePath === 'gradlew' || /^scripts\/[^/]+\.sh$/.test(archivePath);
-                zip.file(archivePath, await fs.readFile(absolutePath), {
-                    binary: true,
-                    createFolders: false,
-                    date: new Date(Date.UTC(1980, 0, 1)),
-                    unixPermissions: executable ? '755' : '644',
-                });
-            }
-        }
-    }
-
-    await visit(templateRoot);
-    return zip.generateAsync({type: 'uint8array', platform: 'UNIX'});
+    const skillsRoot = path.resolve('..', 'src', 'main', 'resources', 'gg', 'meza', 'stonecraft', 'skills');
+    const version = await readStonecutterVersion(path.resolve('..', 'gradle', 'libs.versions.toml'));
+    const {archive} = await createTemplateArchive(templateRoot, version, skillsRoot);
+    return archive;
 }
 
 async function generate(source: Uint8Array, options = OPTIONS) {
@@ -106,6 +88,12 @@ test('renders the Stonecraft template', async () => {
     assert.ok(zip.file('scripts/release.sh'));
     assert.ok(zip.file('.releaserc.json'));
     assert.ok(zip.file('renovate.json'));
+    assert.match(await zip.file('AGENTS.md')!.async('string'), /# Sounds Be Gone/);
+    assert.ok(zip.file('CONTRIBUTING.md'));
+    assert.deepEqual(
+        await zip.file('.agents/skills/stonecraft/SKILL.md')!.async('nodebuffer'),
+        await fs.readFile(path.resolve('..', 'src', 'main', 'resources', 'gg', 'meza', 'stonecraft', 'skills', 'stonecraft', 'SKILL.md')),
+    );
 
     const properties = await zip.file('gradle.properties')!.async('string');
     assert.match(properties, /mod\.id=soundsbegone/);
@@ -181,6 +169,39 @@ test('renders the Stonecraft template', async () => {
     assert.equal((zip.file('gradlew')!.unixPermissions as number) & 0o777, 0o755);
 });
 
+test('preserves bundled skill paths and bytes without template rendering', async () => {
+    const template = new JSZip();
+    const files = [
+        ['.agents/skills/stonecraft/SKILL.md', Buffer.from('__STONECRAFT_MOD_NAME__\r\n')],
+        ['.agents/skills/stonecraft/references/__STONECRAFT_MOD_ID__.bin', Buffer.from([0, 255, 128])],
+        ['.agents/skills/stonecraft/empty.txt', Buffer.alloc(0)],
+    ] as const;
+    for (const [name, content] of files) {
+        template.file(name, content, {createFolders: false});
+    }
+    const project = await generate(await template.generateAsync({type: 'uint8array'}));
+    const zip = await JSZip.loadAsync(await project.archive.arrayBuffer());
+
+    for (const [name, content] of files) {
+        assert.deepEqual(await zip.file(name)!.async('nodebuffer'), content);
+    }
+});
+
+test('omits AI instructions independently of other project capabilities', async () => {
+    const source = await archiveTemplateDirectory();
+    const project = await generate(source, {
+        ...OPTIONS,
+        features: {...OPTIONS.features, aiInstructions: false},
+    });
+    const zip = await JSZip.loadAsync(await project.archive.arrayBuffer());
+
+    assert.equal(zip.file('AGENTS.md'), null);
+    assert.deepEqual(Object.keys(zip.files).filter((name) => name.startsWith('.agents/skills/')), []);
+    assert.ok(zip.file('CONTRIBUTING.md'));
+    assert.ok(zip.file('renovate.json'));
+    assert.ok(zip.file('scripts/release.sh'));
+});
+
 test('omits every disabled project capability', async () => {
     const source = await archiveTemplateDirectory();
     const project = await generate(source, {
@@ -191,6 +212,7 @@ test('omits every disabled project capability', async () => {
             publishing: false,
             automatedReleases: false,
             renovate: false,
+            aiInstructions: false,
         },
     });
     const zip = await JSZip.loadAsync(await project.archive.arrayBuffer());
@@ -198,6 +220,9 @@ test('omits every disabled project capability', async () => {
     assert.equal(zip.file('scripts/release.sh'), null);
     assert.equal(zip.file('.releaserc.json'), null);
     assert.equal(zip.file('renovate.json'), null);
+    assert.equal(zip.file('AGENTS.md'), null);
+    assert.deepEqual(Object.keys(zip.files).filter((name) => name.startsWith('.agents/skills/')), []);
+    assert.ok(zip.file('CONTRIBUTING.md'));
     assert.equal(zip.file('src/main/java/gg/meza/soundsbegone/gametest/ExampleGameTests.java'), null);
     assert.equal(zip.file('src/main/java/gg/meza/soundsbegone/datagen/ExampleAdvancements.java'), null);
     assert.equal(zip.file('src/main/resources/data/soundsbegone/test_instance/noop.json'), null);

@@ -34,12 +34,17 @@ async function createFixture(): Promise<string> {
     return directory;
 }
 
-async function withFixture(run: (directory: string) => Promise<void>): Promise<void> {
+async function withFixture(run: (directory: string, skillsDirectory: string) => Promise<void>): Promise<void> {
     const directory = await createFixture();
+    const skillsDirectory = await mkdtemp(path.join(tmpdir(), 'stonecraft-skills-'));
     try {
-        await run(directory);
+        await mkdir(path.join(skillsDirectory, 'stonecraft', 'references'), {recursive: true});
+        await writeFile(path.join(skillsDirectory, 'stonecraft', 'SKILL.md'), '# Stonecraft\n');
+        await writeFile(path.join(skillsDirectory, 'stonecraft', 'references', 'guide.md'), 'Guidance\n');
+        await run(directory, skillsDirectory);
     } finally {
         await rm(directory, {recursive: true, force: true});
+        await rm(skillsDirectory, {recursive: true, force: true});
     }
 }
 
@@ -48,9 +53,9 @@ function sha256(content: Buffer): string {
 }
 
 test('creates a deterministic archive with exact content and permissions', async () => {
-    await withFixture(async (directory) => {
-        const first = await createTemplateArchive(directory, '0.9+');
-        const second = await createTemplateArchive(directory, '0.9+');
+    await withFixture(async (directory, skillsDirectory) => {
+        const first = await createTemplateArchive(directory, '0.9+', skillsDirectory);
+        const second = await createTemplateArchive(directory, '0.9+', skillsDirectory);
         assert.equal(sha256(first.archive), sha256(second.archive));
 
         const zip = await JSZip.loadAsync(first.archive);
@@ -65,13 +70,17 @@ test('creates a deterministic archive with exact content and permissions', async
                 'scripts/release.sh',
                 'settings.gradle.kts',
                 'ä.txt',
+                '.agents/skills/stonecraft/SKILL.md',
+                '.agents/skills/stonecraft/references/guide.md',
             ],
         );
 
         for (const entry of entries) {
             assert.equal(entry.date.toISOString(), EXPECTED_DATE);
             const expected = await import('node:fs/promises').then((fs) =>
-                fs.readFile(path.join(directory, ...entry.name.split('/'))),
+                fs.readFile(entry.name.startsWith('.agents/skills/')
+                    ? path.join(skillsDirectory, ...entry.name.slice('.agents/skills/'.length).split('/'))
+                    : path.join(directory, ...entry.name.split('/'))),
             );
             if (entry.name === 'settings.gradle.kts') {
                 assert.equal(
@@ -94,12 +103,12 @@ test('creates a deterministic archive with exact content and permissions', async
 });
 
 test('creates identical archives in different time zones', async () => {
-    await withFixture(async (directory) => {
+    await withFixture(async (directory, skillsDirectory) => {
         const moduleUrl = new URL('./templateArchive.ts', import.meta.url).href;
         const script = `
             import {createHash} from 'node:crypto';
             import {createTemplateArchive} from ${JSON.stringify(moduleUrl)};
-            const {archive} = await createTemplateArchive(process.env.TEMPLATE_DIRECTORY, '0.9+');
+            const {archive} = await createTemplateArchive(process.env.TEMPLATE_DIRECTORY, '0.9+', process.env.SKILLS_DIRECTORY);
             process.stdout.write(createHash('sha256').update(archive).digest('hex'));
         `;
 
@@ -107,7 +116,7 @@ test('creates identical archives in different time zones', async () => {
             const result = spawnSync(process.execPath, ['--input-type=module', '--eval', script], {
                 cwd: process.cwd(),
                 encoding: 'utf8',
-                env: {...process.env, TEMPLATE_DIRECTORY: directory, TZ: timezone},
+                env: {...process.env, TEMPLATE_DIRECTORY: directory, SKILLS_DIRECTORY: skillsDirectory, TZ: timezone},
             });
             assert.equal(result.status, 0, result.stderr);
             return result.stdout;
@@ -120,10 +129,24 @@ test('creates identical archives in different time zones', async () => {
 test('rejects empty templates', async () => {
     const directory = await mkdtemp(path.join(tmpdir(), 'stonecraft-template-empty-'));
     try {
-        await assert.rejects(createTemplateArchive(directory, '0.9+'), /template is empty/);
+        await assert.rejects(createTemplateArchive(directory, '0.9+', directory), /template is empty/);
     } finally {
         await rm(directory, {recursive: true, force: true});
     }
+});
+
+test('requires a nonempty skills source directory', async () => {
+    await withFixture(async (directory, skillsDirectory) => {
+        await rm(path.join(skillsDirectory, 'stonecraft'), {recursive: true});
+        await assert.rejects(
+            createTemplateArchive(directory, '0.9+', skillsDirectory),
+            /skills directory is empty/,
+        );
+        await assert.rejects(
+            createTemplateArchive(directory, '0.9+', path.join(skillsDirectory, 'missing')),
+            {code: 'ENOENT'},
+        );
+    });
 });
 
 test('rejects Git metadata at any depth', async () => {
@@ -132,7 +155,7 @@ test('rejects Git metadata at any depth', async () => {
         try {
             await mkdir(path.join(directory, relativePath), {recursive: true});
             await assert.rejects(
-                createTemplateArchive(directory, '0.9+'),
+                createTemplateArchive(directory, '0.9+', directory),
                 /must not contain Git metadata/,
             );
         } finally {
@@ -147,7 +170,7 @@ test('rejects unsupported filesystem entries', async () => {
         await writeFile(path.join(directory, 'target.txt'), 'target\n');
         await symlink(path.join(directory, 'target.txt'), path.join(directory, 'link.txt'));
         await assert.rejects(
-            createTemplateArchive(directory, '0.9+'),
+            createTemplateArchive(directory, '0.9+', directory),
             /Unsupported template entry/,
         );
     } finally {
@@ -156,7 +179,7 @@ test('rejects unsupported filesystem entries', async () => {
 });
 
 test('emits the archive and registers source dependencies', async () => {
-    await withFixture(async (directory) => {
+    await withFixture(async (directory, skillsDirectory) => {
         const versionCatalogPath = path.join(directory, 'libs.versions.toml');
         await writeFile(versionCatalogPath, '[versions]\nstonecutter = "0.9+"\n');
         let compilationHandler: ((compilation: unknown) => void) | undefined;
@@ -178,7 +201,7 @@ test('emits the archive and registers source dependencies', async () => {
             webpack,
         } as unknown as Compiler;
 
-        new TemplateArchiveWebpackPlugin(directory, versionCatalogPath).apply(compiler);
+        new TemplateArchiveWebpackPlugin(directory, versionCatalogPath, skillsDirectory).apply(compiler);
         assert.ok(compilationHandler);
 
         compilationHandler({
@@ -210,8 +233,10 @@ test('emits the archive and registers source dependencies', async () => {
         assert.equal(emittedName, 'generator/template.zip');
         assert.ok(emittedSource);
         assert.ok(emittedSource.buffer().length > 0);
-        assert.deepEqual([...contextDependencies], [directory]);
-        assert.equal(fileDependencies.size, 8);
+        assert.deepEqual([...contextDependencies], [directory, skillsDirectory]);
+        assert.equal(fileDependencies.size, 10);
+        assert.ok(fileDependencies.has(path.join(skillsDirectory, 'stonecraft', 'SKILL.md')));
+        assert.ok(fileDependencies.has(path.join(skillsDirectory, 'stonecraft', 'references', 'guide.md')));
     });
 });
 

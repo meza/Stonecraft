@@ -16,6 +16,7 @@ const featureParameters = [
     ['publishing', 'publishing'],
     ['releases', 'automatedReleases'],
     ['renovate', 'renovate'],
+    ['ai-instructions', 'aiInstructions'],
 ] as const;
 
 const loaderParameters = [
@@ -41,6 +42,7 @@ const emptyProject: GenerateStonecraftProjectOptions = {
         publishing: true,
         automatedReleases: true,
         renovate: true,
+        aiInstructions: true,
     },
 };
 
@@ -459,6 +461,24 @@ export default function ProjectGenerator(): React.JSX.Element {
                                     <strong>Renovate dependency updates</strong>
                                     <small id="renovate-help">
                                         Repository configuration for automated dependency updates.
+                                    </small>
+                                </span>
+                            </label>
+                            <label className={styles.featureOption}>
+                                <input
+                                    type="checkbox"
+                                    name="aiInstructions"
+                                    checked={project.features.aiInstructions}
+                                    onChange={(event) =>
+                                        updateFeature('aiInstructions', event.currentTarget.checked)
+                                    }
+                                    aria-label="AI Instructions"
+                                    aria-describedby="aiInstructions-help"
+                                />
+                                <span>
+                                    <strong>AI Instructions</strong>
+                                    <small id="aiInstructions-help">
+                                        Include AGENTS.md and Stonecraft skills for AI coding agents.
                                     </small>
                                 </span>
                             </label>

@@ -17,6 +17,7 @@ The generator keeps the form state in the page URL, so you can copy the address 
 The URL contains those project details, so share it only with people who should be able to read them.
 
 Download the ZIP, unzip it into a new directory, and follow the generated README.
+Keep **AI Instructions** selected to include `AGENTS.md` and bundled Stonecraft skills under `.agents/skills/`.
 
 If you generated a project, stop here. The remaining steps are only for adding Stonecraft to an existing Architectury project.
 

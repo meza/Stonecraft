@@ -27,7 +27,7 @@ the Mod name as you type and remains editable:
 The generated metadata starts with `A Minecraft mod called <Mod name>.` Edit `mod.description` in
 the downloaded project's `gradle.properties` when you are ready to replace it.
 
-The feature selector controls complete project capabilities. All five are included by default:
+The feature selector controls complete project capabilities. All six are included by default:
 
 | Feature | Included files and configuration |
 | --- | --- |
@@ -36,6 +36,7 @@ The feature selector controls complete project capabilities. All five are includ
 | Mod publishing | Modrinth and CurseForge Gradle configuration, release integration, and generated-project guidance |
 | Automated releases | Semantic-release configuration, release script, and release-aware GitHub Actions workflow |
 | Renovate dependency updates | Root-level `renovate.json` configuration and generated-project guidance |
+| AI Instructions | Root-level `AGENTS.md` and bundled Stonecraft skills under `.agents/skills/`; clear this checkbox to omit both |
 
 Publishing and automated releases are independent. A project can retain manual Modrinth and
 CurseForge publishing without semantic-release, or use semantic-release for GitHub releases without

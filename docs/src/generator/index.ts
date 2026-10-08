@@ -15,6 +15,7 @@ export type StonecraftProjectFeatures = {
     publishing: boolean;
     automatedReleases: boolean;
     renovate: boolean;
+    aiInstructions: boolean;
 };
 
 /** Mod loaders targeted by a generated Stonecraft project. */
@@ -93,6 +94,7 @@ function templateValues(
         PUBLISHING: options.features.publishing,
         AUTOMATED_RELEASES: options.features.automatedReleases,
         RENOVATE: options.features.renovate,
+        AI_INSTRUCTIONS: options.features.aiInstructions,
     };
 }
 
@@ -128,8 +130,13 @@ async function renderTemplate(template: JSZip, values: TemplateValues): Promise<
     const output = new JSZip();
 
     for (const entry of Object.values(template.files)) {
-        const path = render(entry.name, values);
-        const binary = /\.(jar|png)$/.test(entry.name);
+        const skill = entry.name.startsWith('.agents/skills/');
+        if (skill && !values.AI_INSTRUCTIONS) {
+            continue;
+        }
+
+        const path = skill ? entry.name : render(entry.name, values);
+        const binary = skill || /\.(jar|png)$/.test(entry.name);
         const content = binary
             ? await entry.async('uint8array')
             : render(await entry.async('string'), values);

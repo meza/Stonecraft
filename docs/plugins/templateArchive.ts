@@ -66,6 +66,7 @@ export async function readStonecutterVersion(versionCatalogPath: string): Promis
 export async function createTemplateArchive(
     templateDirectory: string,
     stonecutterVersion: string,
+    skillsDirectory: string,
 ): Promise<{
     archive: Buffer;
     files: TemplateFile[];
@@ -75,6 +76,17 @@ export async function createTemplateArchive(
     if (files.length === 0) {
         throw new Error(`The Stonecraft template is empty: ${templateDirectory}`);
     }
+
+    const skillFiles = await collectTemplateFiles(skillsDirectory);
+    if (skillFiles.length === 0) {
+        throw new Error(`The Stonecraft skills directory is empty: ${skillsDirectory}`);
+    }
+    files.push(
+        ...skillFiles.map((file) => ({
+            absolutePath: file.absolutePath,
+            archivePath: `.agents/skills/${file.archivePath}`,
+        })),
+    );
 
     const zip = new JSZip();
     for (const file of files) {
@@ -105,15 +117,18 @@ export async function createTemplateArchive(
 export class TemplateArchiveWebpackPlugin {
     private readonly templateDirectory: string;
     private readonly versionCatalogPath: string;
+    private readonly skillsDirectory: string;
 
-    constructor(templateDirectory: string, versionCatalogPath: string) {
+    constructor(templateDirectory: string, versionCatalogPath: string, skillsDirectory: string) {
         this.templateDirectory = templateDirectory;
         this.versionCatalogPath = versionCatalogPath;
+        this.skillsDirectory = skillsDirectory;
     }
 
     apply(compiler: Compiler): void {
         compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation) => {
             compilation.contextDependencies.add(this.templateDirectory);
+            compilation.contextDependencies.add(this.skillsDirectory);
 
             compilation.hooks.processAssets.tapPromise(
                 {
@@ -127,6 +142,7 @@ export class TemplateArchiveWebpackPlugin {
                     const {archive, files} = await createTemplateArchive(
                         this.templateDirectory,
                         stonecutterVersion,
+                        this.skillsDirectory,
                     );
                     files.forEach((file) => compilation.fileDependencies.add(file.absolutePath));
                     compilation.fileDependencies.add(this.versionCatalogPath);
@@ -143,6 +159,17 @@ export class TemplateArchiveWebpackPlugin {
 export function templateArchivePlugin(context: LoadContext): Plugin {
     const templateDirectory = path.resolve(context.siteDir, '..', 'generator', 'template');
     const versionCatalogPath = path.resolve(context.siteDir, '..', 'gradle', 'libs.versions.toml');
+    const skillsDirectory = path.resolve(
+        context.siteDir,
+        '..',
+        'src',
+        'main',
+        'resources',
+        'gg',
+        'meza',
+        'stonecraft',
+        'skills',
+    );
 
     return {
         name: PLUGIN_NAME,
@@ -153,7 +180,11 @@ export function templateArchivePlugin(context: LoadContext): Plugin {
 
             return {
                 plugins: [
-                    new TemplateArchiveWebpackPlugin(templateDirectory, versionCatalogPath),
+                    new TemplateArchiveWebpackPlugin(
+                        templateDirectory,
+                        versionCatalogPath,
+                        skillsDirectory,
+                    ),
                 ],
             };
         },

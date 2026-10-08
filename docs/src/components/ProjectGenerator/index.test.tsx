@@ -22,6 +22,11 @@ function releaseResponse(): Response {
 async function templateResponse(): Promise<Response> {
     const template = new JSZip();
     template.file(
+        'AGENTS.md',
+        '__STONECRAFT_#AI_INSTRUCTIONS__# __STONECRAFT_MOD_NAME____STONECRAFT_/AI_INSTRUCTIONS__',
+    );
+    template.file('.agents/skills/stonecraft/SKILL.md', '# Stonecraft', {createFolders: false});
+    template.file(
         '__STONECRAFT_MOD_ID__.txt',
         [
             '__STONECRAFT_MOD_NAME__',
@@ -179,6 +184,7 @@ describe('ProjectGenerator', () => {
         expect((screen.getByRole('checkbox', {name: 'Mod publishing'}) as HTMLInputElement).checked).toBe(true);
         expect((screen.getByRole('checkbox', {name: 'Automated releases'}) as HTMLInputElement).checked).toBe(false);
         expect((screen.getByRole('checkbox', {name: 'Renovate dependency updates'}) as HTMLInputElement).checked).toBe(false);
+        expect((screen.getByRole('checkbox', {name: 'AI Instructions'}) as HTMLInputElement).checked).toBe(false);
         expect((screen.getByRole('checkbox', {name: 'Fabric'}) as HTMLInputElement).checked).toBe(false);
         expect((screen.getByRole('checkbox', {name: 'Forge'}) as HTMLInputElement).checked).toBe(true);
         expect((screen.getByRole('checkbox', {name: 'NeoForge'}) as HTMLInputElement).checked).toBe(true);
@@ -186,13 +192,14 @@ describe('ProjectGenerator', () => {
         await user.clear(screen.getByLabelText('Mod name'));
         await user.type(screen.getByLabelText('Mod name'), 'Tin Tools');
         await user.click(screen.getByRole('checkbox', {name: 'GameTests'}));
+        await user.click(screen.getByRole('checkbox', {name: 'AI Instructions'}));
         await user.click(screen.getByRole('checkbox', {name: 'Fabric'}));
 
         await waitFor(() => {
             const parameters = new URLSearchParams(window.location.search);
             expect(parameters.get('modName')).toBe('Tin Tools');
             expect(parameters.get('modId')).toBe('copper_tools_plus');
-            expect(parameters.get('features')).toBe('datagen,gametests,publishing');
+            expect(parameters.get('features')).toBe('datagen,gametests,publishing,ai-instructions');
             expect(parameters.get('loaders')).toBe('fabric,forge,neoforge');
             expect(parameters.has('description')).toBe(false);
             expect(parameters.has('githubOwner')).toBe(false);
@@ -243,6 +250,7 @@ describe('ProjectGenerator', () => {
             'Mod publishing',
             'Automated releases',
             'Renovate dependency updates',
+            'AI Instructions',
         ]) {
             expect((screen.getByRole('checkbox', {name}) as HTMLInputElement).checked).toBe(true);
         }
@@ -278,7 +286,9 @@ describe('ProjectGenerator', () => {
 
         const archive = createObjectURL.mock.calls[0][0] as Blob;
         const zip = await JSZip.loadAsync(await readBlob(archive));
-        expect(Object.keys(zip.files)).toEqual(['copper_tools.txt']);
+        expect(Object.keys(zip.files)).toEqual(['AGENTS.md', '.agents/skills/stonecraft/SKILL.md', 'copper_tools.txt']);
+        await expect(zip.file('AGENTS.md')!.async('string')).resolves.toBe('# Copper Tools');
+        await expect(zip.file('.agents/skills/stonecraft/SKILL.md')!.async('string')).resolves.toBe('# Stonecraft');
         await expect(zip.file('copper_tools.txt')!.async('string')).resolves.toBe(
             [
                 project.modName,
@@ -312,6 +322,7 @@ describe('ProjectGenerator', () => {
             'Mod publishing',
             'Automated releases',
             'Renovate dependency updates',
+            'AI Instructions',
         ]) {
             await user.click(screen.getByRole('checkbox', {name}));
         }
@@ -323,6 +334,8 @@ describe('ProjectGenerator', () => {
 
         const archive = createObjectURL.mock.calls[0][0] as Blob;
         const zip = await JSZip.loadAsync(await readBlob(archive));
+        expect(zip.file('AGENTS.md')).toBeNull();
+        expect(zip.file('.agents/skills/stonecraft/SKILL.md')).toBeNull();
         await expect(zip.file('copper_tools.txt')!.async('string')).resolves.toBe(
             [
                 project.modName,
