@@ -4,7 +4,7 @@
 
 Stonecraft is a complex project due to the wild nature of Minecraft modding and the need to support multiple versions and loaders. To maintain a high standard of quality and ensure the project remains maintainable, we have established the following core development principles that all contributors must adhere to:
 
-### Test Coverage Requirements (STRICT)
+### Test Coverage Requirements for production Java/Kotlin code (STRICT)
 
 **100% test coverage is mandatory - this is the bare minimum.**
 
@@ -41,9 +41,10 @@ When working with the `e2e/testmod` project, please refer to the
 - Document all new features and changes by modifying the `docs/docs` folder's relevant files
 - Update README.md when adding new functionality
 - Maintain consistent language and style
+- Ensure that `pnpm build` works in the `docs` folder
 
 ## Quality Gates
 
-Before any pull request:
+Before any pull request that changes java/kotlin code:
 - [ ] Ensure build (`./gradlew build`)
 - [ ] Documentation updated if needed
