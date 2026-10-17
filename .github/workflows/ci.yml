@@ -69,7 +69,7 @@ jobs:
           MEZA_MAVEN_USER: ${{ secrets.MEZA_MAVEN_USER }}
           MEZA_MAVEN_PASSWORD: ${{ secrets.MEZA_MAVEN_PASSWORD }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: cycjimmy/semantic-release-action@8be816a60e417d22b0e09b61adc23605036497eb # v7.1.0
+        uses: cycjimmy/semantic-release-action@1989a0fefc4aea321e07f717680ed8e345925dc1 # v7.1.2
         with:
           dry_run: true
           extra_plugins: |
@@ -125,7 +125,7 @@ jobs:
           MEZA_MAVEN_PASSWORD: ${{ secrets.MEZA_MAVEN_PASSWORD }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           STONECRAFT_PRERELEASE: ${{ steps.version.outputs.new_release_channel == 'SNAPSHOT' }}
-        uses: cycjimmy/semantic-release-action@8be816a60e417d22b0e09b61adc23605036497eb # v7.1.0
+        uses: cycjimmy/semantic-release-action@1989a0fefc4aea321e07f717680ed8e345925dc1 # v7.1.2
         with:
           extra_plugins: |
             @semantic-release/changelog@6.0.0
