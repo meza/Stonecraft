@@ -38,7 +38,7 @@
     "@docusaurus/types": "4.0.0-canary-6913",
     "@testing-library/dom": "10.4.2",
     "@testing-library/react": "16.3.3",
-    "@testing-library/user-event": "14.6.7",
+    "@testing-library/user-event": "14.6.8",
     "@types/mustache": "4.2.6",
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
