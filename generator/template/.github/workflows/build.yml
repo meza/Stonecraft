@@ -60,7 +60,7 @@ __STONECRAFT_/AUTOMATED_RELEASES__
 __STONECRAFT_#AUTOMATED_RELEASES__
       - name: "🔎 Determine version"
         id: get-next-version
-        uses: cycjimmy/semantic-release-action@9e1f8a3ef91f1097285028e799a5fb8bb90e8899 # v8.1.0
+        uses: cycjimmy/semantic-release-action@03595b5eaf44910cf239ff20904cc52d410f97d4 # v8.1.2
         env:
           GH_TOKEN: ${{ github.token }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -84,7 +84,7 @@ __STONECRAFT_/AUTOMATED_RELEASES__
 __STONECRAFT_#AUTOMATED_RELEASES__
       - name: "🏗️ Build, Test & Release"
         if: ${{ steps.get-next-version.outputs.new_release_published == 'true' }}
-        uses: cycjimmy/semantic-release-action@9e1f8a3ef91f1097285028e799a5fb8bb90e8899 # v8.1.0
+        uses: cycjimmy/semantic-release-action@03595b5eaf44910cf239ff20904cc52d410f97d4 # v8.1.2
         env:
           GH_TOKEN: ${{ github.token }}
 __STONECRAFT_#PUBLISHING__
