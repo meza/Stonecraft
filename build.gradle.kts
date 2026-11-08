@@ -114,8 +114,8 @@ gradlePlugin {
                 "multi-loader",
                 "configuration",
                 "modding",
-                "minecraft modding",
-                "development environment configuration"
+                "minecraft-modding",
+                "development-environment-configuration"
             )
             description = project.description
         }
