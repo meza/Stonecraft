@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@docusaurus/core':
-        specifier: 4.0.0-canary-7002
-        version: 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+        specifier: 4.0.0-canary-7029
+        version: 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
       '@docusaurus/plugin-content-blog':
-        specifier: 4.0.0-canary-7002
-        version: 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+        specifier: 4.0.0-canary-7029
+        version: 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
       '@docusaurus/preset-classic':
-        specifier: 4.0.0-canary-7002
-        version: 4.0.0-canary-7002(@algolia/client-search@5.61.0)(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+        specifier: 4.0.0-canary-7029
+        version: 4.0.0-canary-7029(@algolia/client-search@5.61.0)(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
       '@fortawesome/fontawesome-svg-core':
         specifier: 7.3.1
         version: 7.3.1
@@ -55,14 +55,14 @@ importers:
         version: 19.3.1(react@19.3.1)
     devDependencies:
       '@docusaurus/module-type-aliases':
-        specifier: 4.0.0-canary-7002
-        version: 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+        specifier: 4.0.0-canary-7029
+        version: 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@docusaurus/tsconfig':
-        specifier: 4.0.0-canary-7002
-        version: 4.0.0-canary-7002(typescript@7.0.2)
+        specifier: 4.0.0-canary-7029
+        version: 4.0.0-canary-7029(typescript@7.0.2)
       '@docusaurus/types':
-        specifier: 4.0.0-canary-7002
-        version: 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+        specifier: 4.0.0-canary-7029
+        version: 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@testing-library/dom':
         specifier: 10.4.2
         version: 10.4.2
@@ -1166,116 +1166,116 @@ packages:
       search-insights:
         optional: true
 
-  '@docusaurus/babel@4.0.0-canary-7002':
-    resolution: {integrity: sha512-zoST61GQX9j00Xp3+WycbWrYwjgp5m2Gd/e7yuSkINYzcE/IbTRx7MgfsF0iDB44DW9jqM5AzGyxKwCUzUxHhw==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/babel@4.0.0-canary-7029':
+    resolution: {integrity: sha512-yJVaiOmJccIDdYdh151/5i8nIBQBaaW4e5+1ylyxu+fuchzwD29YIS6IySKArGz4O8h+QLNdgcgRRnkWbwFQag==}
+    engines: {node: '>=26.13'}
 
-  '@docusaurus/bundler@4.0.0-canary-7002':
-    resolution: {integrity: sha512-v8ZOnELtcs7FQwdRNtKANkW2X0Ax/SxLPbEiKC+NUbTU/Ld1LP56MVPhv5Ae6xHXl16p9yan8IBWk5/5jj1pZQ==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/bundler@4.0.0-canary-7029':
+    resolution: {integrity: sha512-bVN/ryLDH6NKnayEVfQL/vg4nEXCLxr2kuLoAviIQb0UcB2R23SC5C4QyubvpA/EmsqrGwhJ0pmpYhuwEPN4sQ==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       '@swc/core': ^1.16.2
     peerDependenciesMeta:
       '@swc/core':
         optional: true
 
-  '@docusaurus/core@4.0.0-canary-7002':
-    resolution: {integrity: sha512-yJLk9OKLjTSTqpo1StadPrsgqjLsye8f1HMUSS6fHYyPQM3SlaXV481b5wDXlHhZ/6NTnZTOIRlAFgyqB42PTQ==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/core@4.0.0-canary-7029':
+    resolution: {integrity: sha512-a31pVcmaQDYb7gkuCMqz29Z7cZUy3i+cWrn3PTy8dfBDnl6LGBrDETft3FbYizB4nJ2bdR7eQqAYGvgNRfaiCw==}
+    engines: {node: '>=26.13'}
     hasBin: true
     peerDependencies:
       '@mdx-js/react': ^3.1.1
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/fs@4.0.0-canary-7002':
-    resolution: {integrity: sha512-f/0V0uw5wdHvoKlSVplroMVCl8FmtojAQAfriXFpEKhwAgWy+4YGzEr+DTTbbIAUgvaw828e3CG/cbzoQs2m2w==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/fs@4.0.0-canary-7029':
+    resolution: {integrity: sha512-dTYTCVY2/l+zxoO1ixEFxnnyBKTvvqxsFLr2Cp9RH0vIssYy2Nptsc6fr5Qrs5Vvtm9xA5B7onHihDcCZtaAfg==}
+    engines: {node: '>=26.13'}
 
-  '@docusaurus/glob@4.0.0-canary-7002':
-    resolution: {integrity: sha512-1EYWZYYO98Ew5vMKT9lE/otDrVMLFlXJZ/xxePI2+cJ16CDF5HItg+3EBcbnZWaaGzqnx6aHTQHBLFqGia7D8w==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/glob@4.0.0-canary-7029':
+    resolution: {integrity: sha512-EJvsIhcrF1FrLSzgjYL3G+lxWhib1cNvxZUK1eipGbXWrYEv1kh/Y1iFd+sVMMHMxMdU9m6zxGU8IBM5x6gmvg==}
+    engines: {node: '>=26.13'}
 
-  '@docusaurus/logger@4.0.0-canary-7002':
-    resolution: {integrity: sha512-SAWqZhLnnngukCktEGYg5d/Br0ywiaEziiN/PSeizoMXX83bYZ8vap/s1xIcbTibTzp6YAA6uGyfF4t8KS+JBg==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/logger@4.0.0-canary-7029':
+    resolution: {integrity: sha512-uophgOLkpMceq5MxQl6xIqGrYByu8F3hIZ0nBGF8kn0mvrXXWHh/m4AmIkOrLxGjcDmSU1a+DmolXpaP9gQZ+A==}
+    engines: {node: '>=26.13'}
 
-  '@docusaurus/mdx-loader@4.0.0-canary-7002':
-    resolution: {integrity: sha512-ksZ6O4cNjIj0gdCNNFrWO2kzj5VLw+V7CDJKF3qdFknrRuJKrzKaSmpEGsJzSgRAZ5utWtGdbLiCNbdiGmWBGQ==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/mdx-loader@4.0.0-canary-7029':
+    resolution: {integrity: sha512-blUXxEL9UB7tEY+JfQYeBnDWivDXt3YytJl9dY8Kcsjv+cjBrUmGv/+iWwUCIHlUq49HthaZlH8hT6vdcKSJCw==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/module-type-aliases@4.0.0-canary-7002':
-    resolution: {integrity: sha512-AjbFIRZwLCJjPE6F14arPRq1Mts3EM96XGeJPal2s6UY7J1EusSN9egOooHDGC4C2gy4HnOJ8BGyWuogejLCgg==}
+  '@docusaurus/module-type-aliases@4.0.0-canary-7029':
+    resolution: {integrity: sha512-rO2CJN61mvAyeOo3xGGEKnHJy1UBaaqNnoRQ7VxHKeLPKGNA7ij9XQ7/ra/rVMqvMHt0E1yEkqI9K5PedrPeZw==}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/plugin-content-blog@4.0.0-canary-7002':
-    resolution: {integrity: sha512-VvZqaXygG9oivYf5+XRXwgkCcCa0udTb1aSot4ztuJorIrc/1ri5XgY5aToBL6vUjDOZLfRfXTDoOOA0aAnPUw==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-content-blog@4.0.0-canary-7029':
+    resolution: {integrity: sha512-1o10+wq3s6haZWyubTO1L9fDetAYNORJ9XdXtYf4hrF6XzTcBNWq+ahRv3FIaMCIQgPYssN2qXujy7Xr7nqH0Q==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/plugin-content-docs@4.0.0-canary-7002':
-    resolution: {integrity: sha512-1zE4DMAPYz/aXHu5RkYuoP8az3B0xZEZdONiLYGXdF+fHisA7zhMuIV625GKyVu86CRrSQ+OILuffLPTMGYYjA==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-content-docs@4.0.0-canary-7029':
+    resolution: {integrity: sha512-Gw4T5GiDDsBLXcGYAxb1dtfVadecM3bUwBEOuY64+Y7k+8V6khYdC/GLNoUbPatXN8wSOwLK0FOuMVQ5Quu6iw==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/plugin-content-pages@4.0.0-canary-7002':
-    resolution: {integrity: sha512-fMRfaEuaqNoY5fB1YHz8zMhy3axUPGvApZ8iPi5CPcxjK+9d1OBc7oP0JU00sARNsYRULWhO+NvT4oJKogJkDg==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-content-pages@4.0.0-canary-7029':
+    resolution: {integrity: sha512-hY0oAZeslCil+hW6wgdFFL3K4LfId4fPxit8xmqUs4KA1+EPX6Q5qvkMtTruJLS+DDOhUrm7eTldPk7Uy2G3sg==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/plugin-css-cascade-layers@4.0.0-canary-7002':
-    resolution: {integrity: sha512-g19e3fgHfnLwQHdlgkovAre09DCp9aYxvQ2JIef6sfi6EcmQboh+gCv1HHQjQgXa9RDpeP7NX7I7dj41JH6aNQ==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-css-cascade-layers@4.0.0-canary-7029':
+    resolution: {integrity: sha512-8uOHbsX0KA1bEX+K2DnA1C5Bh3mSijDJ1CTQvrKjioPuLjDy2zDs5JvezrAnXmuTkLIkl6vkeWOmdc8gORJ80Q==}
+    engines: {node: '>=26.13'}
 
-  '@docusaurus/plugin-debug@4.0.0-canary-7002':
-    resolution: {integrity: sha512-7xfRWb6hXD4HPxb5htO3GS6XkAfvWy7qGOPJF50aaPmwT+48otzxZ0kcK6/43g7C6R6j0luTz4pp0l7vmcy/yg==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-debug@4.0.0-canary-7029':
+    resolution: {integrity: sha512-daNAdfJxnYrnZxFAmJZXgeIrcU+o/SRsLcshqsSCp+QG+VCkBGuDtlT4bhjY5E0tVsi2zVk+Oexut7M9nbLLHg==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/plugin-google-gtag@4.0.0-canary-7002':
-    resolution: {integrity: sha512-EG6Lq00HD/c2RglTD7e1kIzLN3KZtSCLuvXxGbcExy3JR2+uw7dvqRtrpdlI+Owxkn2OMDbhxa68GaiQoLUT6g==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-google-gtag@4.0.0-canary-7029':
+    resolution: {integrity: sha512-AczRuM3Y65tLv8OepAdYeH8xjQsBpsmAsQEJsbOyvamyefr3nQcK5lIj9odqnxSJ9VZgIunp8ku+lt6kvt6uMg==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/plugin-google-tag-manager@4.0.0-canary-7002':
-    resolution: {integrity: sha512-0hdZuM46Y2ud8haSswNKgMzFaROg/vVWC3Yv7g6qUe39TcTFgNFXHGAQXZHDX8TaTfE7UxOFjPL4AftBaZ9neQ==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-google-tag-manager@4.0.0-canary-7029':
+    resolution: {integrity: sha512-Ug80LXX8JStT5FhRWJ+H+Az16rzGJlibo8DVUVJpL8Fx1SL5sp0T1kf+Z1WZy41XA34bGngwBewXT+BUenDgqA==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/plugin-sitemap@4.0.0-canary-7002':
-    resolution: {integrity: sha512-ODgjJjYF/es8EX7KqSspQSsiNGSNs7RDlMI1VF0BDV2+cpTCeFNlMlLyYt7Rbd/Ejgu5Pg1q4MauZEL8mUypZQ==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-sitemap@4.0.0-canary-7029':
+    resolution: {integrity: sha512-l9Sje9X0CZUKWhHI4+Er/bhKRO9+NvSSKDhZ/bVOIM5QGZSHirtHtF51AnYu82epoSHQZcxVD3GGky54m28kwQ==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/plugin-svgr@4.0.0-canary-7002':
-    resolution: {integrity: sha512-C3m0TuaZk4Y14S/cCTuR0xF0DsVr9z1chTskMQOJQQiaW5077ZJs/m5uT/dViV4MuALJz3TBQVVzGtuwQegWCA==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/plugin-svgr@4.0.0-canary-7029':
+    resolution: {integrity: sha512-uklNUgNlRrvBSsilDZuTYjuCNhw0hOPiUJvL6Q3k0y0b/ojMhuyOk9AzzPhzOvirCp8G2YOG33xklNK1pEqoWQ==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/preset-classic@4.0.0-canary-7002':
-    resolution: {integrity: sha512-5CQCN6e/QCn2JCA3CPOZ5tL+1W164A/UKilTlCIlNbFxh7dj5weQDWFMrAN7RW8h+3g0ZJEOZW/qn7v09bcAJw==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/preset-classic@4.0.0-canary-7029':
+    resolution: {integrity: sha512-xvwI2ThaBxNbER1DY9fZ7ouoJMZxwKPY1MJ/Qn7cwtXRFKh/bwK3BTLPAsSbE9UXGw9IzF0TVWhu0vt6KPbnfg==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
@@ -1285,53 +1285,53 @@ packages:
     peerDependencies:
       react: '*'
 
-  '@docusaurus/theme-classic@4.0.0-canary-7002':
-    resolution: {integrity: sha512-8LPHfOgXgErkr1JPHkPTdYMabU+hh5BtLQUc79N1abo9KDNyg6BQRuvQGR3tWrd5ML6bFCKoL7ASu+Rm9mgXoA==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/theme-classic@4.0.0-canary-7029':
+    resolution: {integrity: sha512-S0hufy1hMXjBKSSspg4MIirdyhqaiH1PKCO/gbxamEthEdRUbb3QNKdW+20QAHoVIDjKKz1uXDhGSfoAFf+cBg==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/theme-common@4.0.0-canary-7002':
-    resolution: {integrity: sha512-/rcBYT2QFCJSpoUlNrwxcoTu9dfdZkHA8NbrqzbfrXraWllT6KL0YR/hd14y0IuzOTxapQWy0RZlK5VtK9zlzw==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/theme-common@4.0.0-canary-7029':
+    resolution: {integrity: sha512-qaQos2BlO6MypyEQ4nALmymvKelII8nLXEJw/xIQ+fhasjLSr+BBqeGmwOrfrI7pyXQeVc4evu45Ty6GnuiJcA==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/theme-search-algolia@4.0.0-canary-7002':
-    resolution: {integrity: sha512-eEgTf6c1T6vJcEDRKOgWflzVWFRcJdTkSPupr4S+EQo71lkriAeN5HA6hUMHLMWWQJ5N799cDxTbhNJxmj+Y6Q==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/theme-search-algolia@4.0.0-canary-7029':
+    resolution: {integrity: sha512-rcqvOEVEnDIxV/9g4A6R2gNxARVNCUGw96dbUhe5Os9Qwk+ZWT0/IcpalU6IT2GtJSX1kuon1uAmruQEw12Vcg==}
+    engines: {node: '>=26.13'}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/theme-translations@4.0.0-canary-7002':
-    resolution: {integrity: sha512-A8yHqjoTZky/A1XJE6ge3zWpGvhLe5CukJrWPSm12/B/bYUKQpogsO7TEVegGacOhNbm2h6nHSJM6DTOCa6hkg==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/theme-translations@4.0.0-canary-7029':
+    resolution: {integrity: sha512-qmEqE9XbEpyTR3tvtHUw2adpS0a1yHBmsiTIeC2DYRTUemd56xmXuGoX3LsY8NkO1H++yai+6gBPj+T/Oe3cUg==}
+    engines: {node: '>=26.13'}
 
-  '@docusaurus/tsconfig@4.0.0-canary-7002':
-    resolution: {integrity: sha512-wWdoZg6rBeRrR3iwtefdy7bjatB/cSWzjh+giAE7CcCV0fXRlRfcJUjOIQfxdScNg3axkjJ15kCBRC0aZlojAg==}
+  '@docusaurus/tsconfig@4.0.0-canary-7029':
+    resolution: {integrity: sha512-dKRxHMxhBpBsoFWCjb3GyxmDyQ0U8vC+eFCqAenGinFbPq9VF8nYWpzx4EowFQt5d6N5ihpjXfk21KgXQm+I1A==}
     peerDependencies:
       typescript: '>=6.0'
 
-  '@docusaurus/types@4.0.0-canary-7002':
-    resolution: {integrity: sha512-UV5p+LyX6ejZCyF0BiIZKtHAD4qECWSjoqxnX8alj/WGJ2SO3raUVCOudavKBZAyfqxgDO5mPx1QRYLapp/7cQ==}
+  '@docusaurus/types@4.0.0-canary-7029':
+    resolution: {integrity: sha512-ol07mx05l1eIQAyF7wIAk34VGCGDSqxLlRFIcEK/8nXJCuQxYAfQ6/uJCUhWXQOsQV/U5n7B3Ci1w3XLf9YG5Q==}
     peerDependencies:
       react: ^19.3.0
       react-dom: ^19.3.0
 
-  '@docusaurus/utils-common@4.0.0-canary-7002':
-    resolution: {integrity: sha512-HVo4Wcp0pdJZqh3gTTPFAD+qKaEnzdAyiKS4Q0C1zE56ccidsxoERCeHbo9KV0OG2E8Ai6Kx9QR/90uhtccg4A==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/utils-common@4.0.0-canary-7029':
+    resolution: {integrity: sha512-l/Y/hhQsqmyUj9UTOWXf/Le10eP3AH5K26VRQwtj4cMOx6yPX6juWz772aArlY7EweZC+py0x5jwK+OBrZ5ePg==}
+    engines: {node: '>=26.13'}
 
-  '@docusaurus/utils-validation@4.0.0-canary-7002':
-    resolution: {integrity: sha512-B5gS8ecdbf2zqe1YFnzTK/xJc5UFw1wr4N20SJMFZ5Al4BVxSZ6HdSnIHFG5WJxl/Rd4tljYQvZ6vfeLXeJknQ==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/utils-validation@4.0.0-canary-7029':
+    resolution: {integrity: sha512-kCleM0I31O3TwigB8OeRVbSbnAQI+e2u3ER7Vahhj0FogD2EsdKwQHpNK2IA2MyzhiH65iDPdl44LuQnJpEQPw==}
+    engines: {node: '>=26.13'}
 
-  '@docusaurus/utils@4.0.0-canary-7002':
-    resolution: {integrity: sha512-S+APTdFxeNDKCdykRoLUh+ABVf6iv/YMNjREk7w+rGMJ4p4Z2JlKraIIPd4pO2NpRx2T8Qq1yuZgaubHbIVSkQ==}
-    engines: {node: '>=24.21'}
+  '@docusaurus/utils@4.0.0-canary-7029':
+    resolution: {integrity: sha512-8CY7RUrRFGYBWTgtgfoKG9ScpkVgYwTp5N5OeGts4IPzrcHR6JtGhC8w07jfaSyIL9P86itc7UmUhN5PcE97Yw==}
+    engines: {node: '>=26.13'}
 
   '@emnapi/core@1.11.3':
     resolution: {integrity: sha512-zLpS5asjEb7lq8jYLq37N6XKaE41DIexlY1rF/z4/tIl3wo13Sqm28fRyfIsKZD+NZ8mM5RoKkpW/rBcuoSZSg==}
@@ -3782,8 +3782,8 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  mdast-util-directive@3.1.0:
-    resolution: {integrity: sha512-I3fNFt+DHmpWCYAT7quoM6lHf9wuqtI+oCOfvILnoicNIqjh5E3dEJWiXuYME2gNe8vl1iMQwyUHa7bgFmak6Q==}
+  mdast-util-directive@3.1.1:
+    resolution: {integrity: sha512-Gqpa3MHorXYEZ0VfbroyvBlVKUfz371V6mIERqOYMcb0W1D3LwmFq1ZW4O2TDrbn+4ZmGLwMWeFRJgYZ+bc5fQ==}
 
   mdast-util-directive@3.2.0:
     resolution: {integrity: sha512-Yxq+hH4pBEmtaLIJyMVcNbtBiCIKzdOK3HvDeM+JAqC8XVAT1e5PUYbHBpwFvQLIJuJfO2zCu7aNUXWoyZLmhw==}
@@ -4761,8 +4761,12 @@ packages:
   scheduler@0.28.0:
     resolution: {integrity: sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==}
 
-  schema-dts@1.1.5:
-    resolution: {integrity: sha512-RJr9EaCmsLzBX2NDiO5Z3ux2BVosNZN5jo0gWgsyKvxKIUL5R3swNvoorulAeL9kLB0iTSX7V6aokhla2m7xbg==}
+  schema-dts-lib@1.1.0:
+    resolution: {integrity: sha512-Nx00FDPHDimSENMznVpADeYUJDsqlMiO9wcs2S+giggNTm5+ruNkM4m9z9qCk6xUJT+ThDM3NxxpwfHfFk1G+Q==}
+    engines: {node: '>=14.0.0'}
+
+  schema-dts@2.1.0:
+    resolution: {integrity: sha512-Y/NvOvuJUZwrm+EmNqJF3M+bRufERJs1h5GJPLilUuK5D5b53ttU+XZgIjEFaAVRToh+ib+cQawFmxKC5Jt9ow==}
 
   schema-utils@4.8.2:
     resolution: {integrity: sha512-iKlak3OFHF0dgD1nZRvgWQzG+P1TiEcMnLSBtIVBg937z5Jd6WE1c3SyZkXIyCfPHowL35yMsVvIjotm1c1qiw==}
@@ -6716,7 +6720,7 @@ snapshots:
       - '@algolia/client-search'
       - algoliasearch
 
-  '@docusaurus/babel@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/babel@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       '@babel/generator': 7.29.12
@@ -6726,10 +6730,10 @@ snapshots:
       '@babel/preset-typescript': 7.29.7(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       '@babel/runtime': 7.29.10
       '@babel/traverse': 7.29.12(supports-color@8.1.1)
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       babel-plugin-dynamic-import-node: 2.3.3
       tslib: 2.9.1
     transitivePeerDependencies:
@@ -6754,12 +6758,12 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/bundler@4.0.0-canary-7002(csso@5.0.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/bundler@4.0.0-canary-7029(csso@5.0.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
-      '@docusaurus/babel': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/babel': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@rspack/core': 2.3.0
       '@rspack/dev-server': 2.2.2(@rspack/core@2.3.0)(selfsigned@5.5.0)
       '@swc/html': 1.16.21
@@ -6798,17 +6802,17 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/core@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/core@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/babel': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/bundler': 4.0.0-canary-7002(csso@5.0.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/glob': 4.0.0-canary-7002
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/mdx-loader': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/babel': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/bundler': 4.0.0-canary-7029(csso@5.0.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/glob': 4.0.0-canary-7029
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/mdx-loader': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.1)
       '@rspack/core': 2.3.0
       '@rspack/dev-server': 2.2.2(@rspack/core@2.3.0)(selfsigned@5.5.0)
@@ -6868,9 +6872,9 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/fs@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/fs@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       p-queue: 9.3.5
       tslib: 2.9.1
     transitivePeerDependencies:
@@ -6895,16 +6899,16 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/glob@4.0.0-canary-7002':
+  '@docusaurus/glob@4.0.0-canary-7029':
     dependencies:
       chokidar: 3.6.0
       micromatch: 4.0.8
       tinyglobby: 0.2.17
       tslib: 2.9.1
 
-  '@docusaurus/logger@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/logger@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       tslib: 2.9.1
     transitivePeerDependencies:
       - '@minify-html/node'
@@ -6928,12 +6932,12 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/mdx-loader@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/mdx-loader@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@mdx-js/mdx': 3.1.1(supports-color@8.1.1)
       '@slorber/remark-comment': 1.0.0
       astring: 1.9.0
@@ -6976,9 +6980,9 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/module-type-aliases@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/module-type-aliases@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@types/history': 4.7.11
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
@@ -7008,26 +7012,26 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/plugin-content-blog@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-content-blog@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/glob': 4.0.0-canary-7002
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/mdx-loader': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/module-type-aliases': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/theme-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/glob': 4.0.0-canary-7029
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/mdx-loader': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/module-type-aliases': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/theme-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       cheerio: 1.2.0
       combine-promises: 1.2.0
       feed: 6.0.0
       lodash: 4.18.1
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-      schema-dts: 1.1.5
+      schema-dts: 2.1.0
       srcset: 5.0.3
       tslib: 2.9.1
       unist-util-visit: 5.2.0
@@ -7060,26 +7064,26 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-content-docs@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-content-docs@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/glob': 4.0.0-canary-7002
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/mdx-loader': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/module-type-aliases': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/theme-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/glob': 4.0.0-canary-7029
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/mdx-loader': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/module-type-aliases': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/theme-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@types/react-router-config': 5.0.11
       combine-promises: 1.2.0
       js-yaml: 5.5.0
       lodash: 4.18.1
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-      schema-dts: 1.1.5
+      schema-dts: 2.1.0
       tslib: 2.9.1
       utility-types: 3.11.0
       webpack: 5.112.2(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(svgo@3.3.5)
@@ -7110,15 +7114,15 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-content-pages@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-content-pages@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/glob': 4.0.0-canary-7002
-      '@docusaurus/mdx-loader': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/glob': 4.0.0-canary-7029
+      '@docusaurus/mdx-loader': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       tslib: 2.9.1
@@ -7150,12 +7154,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-css-cascade-layers@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-css-cascade-layers@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       tslib: 2.9.1
     transitivePeerDependencies:
       - '@mdx-js/react'
@@ -7186,12 +7190,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-debug@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-debug@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/module-type-aliases': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/module-type-aliases': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       react-json-view-lite: 2.5.0(react@19.3.1)
@@ -7223,11 +7227,11 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-google-gtag@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-google-gtag@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       tslib: 2.9.1
@@ -7258,11 +7262,11 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-google-tag-manager@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-google-tag-manager@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       tslib: 2.9.1
@@ -7293,16 +7297,16 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-sitemap@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-sitemap@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/glob': 4.0.0-canary-7002
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/glob': 4.0.0-canary-7029
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       lodash: 4.18.1
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
@@ -7335,12 +7339,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/plugin-svgr@4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/plugin-svgr@4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@svgr/webpack': 8.1.0(supports-color@8.1.1)(typescript@7.0.2)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
@@ -7373,22 +7377,22 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/preset-classic@4.0.0-canary-7002(@algolia/client-search@5.61.0)(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/preset-classic@4.0.0-canary-7029(@algolia/client-search@5.61.0)(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-content-blog': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-content-docs': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-content-pages': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-css-cascade-layers': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-debug': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-google-gtag': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-google-tag-manager': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-sitemap': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-svgr': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/theme-classic': 4.0.0-canary-7002(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/theme-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/theme-search-algolia': 4.0.0-canary-7002(@algolia/client-search@5.61.0)(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-content-blog': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-content-docs': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-content-pages': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-css-cascade-layers': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-debug': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-google-gtag': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-google-tag-manager': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-sitemap': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-svgr': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/theme-classic': 4.0.0-canary-7029(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/theme-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/theme-search-algolia': 4.0.0-canary-7029(@algolia/client-search@5.61.0)(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
     transitivePeerDependencies:
@@ -7426,20 +7430,20 @@ snapshots:
       '@types/react': 19.3.0
       react: 19.3.1
 
-  '@docusaurus/theme-classic@4.0.0-canary-7002(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/theme-classic@4.0.0-canary-7029(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/mdx-loader': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/module-type-aliases': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/plugin-content-blog': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-content-docs': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/plugin-content-pages': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/theme-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/theme-translations': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/mdx-loader': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/module-type-aliases': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/plugin-content-blog': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-content-docs': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/plugin-content-pages': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/theme-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/theme-translations': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.1)
       clsx: 2.1.1
       copy-text-to-clipboard: 3.2.2
@@ -7480,12 +7484,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/theme-common@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/theme-common@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
-      '@docusaurus/mdx-loader': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/module-type-aliases': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/mdx-loader': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/module-type-aliases': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       '@types/history': 4.7.11
       '@types/react': 19.3.0
       '@types/react-router-config': 5.0.11
@@ -7516,18 +7520,18 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/theme-search-algolia@4.0.0-canary-7002(@algolia/client-search@5.61.0)(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
+  '@docusaurus/theme-search-algolia@4.0.0-canary-7029(@algolia/client-search@5.61.0)(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)':
     dependencies:
       '@algolia/autocomplete-core': 1.19.12(@algolia/client-search@5.61.0)(algoliasearch@5.61.0)(search-insights@2.17.3)
       '@docsearch/react': 4.7.1(@algolia/client-search@5.61.0)(@types/react@19.3.0)(algoliasearch@5.61.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(search-insights@2.17.3)
-      '@docusaurus/core': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/plugin-content-docs': 4.0.0-canary-7002(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/theme-classic': 4.0.0-canary-7002(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
-      '@docusaurus/theme-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/theme-translations': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-validation': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/core': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/plugin-content-docs': 4.0.0-canary-7029(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1))(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/theme-classic': 4.0.0-canary-7029(@swc/html@1.16.21)(@types/react@19.3.0)(csso@5.0.5)(lightningcss@1.33.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(selfsigned@5.5.0)(supports-color@8.1.1)(svgo@3.3.5)(typescript@7.0.2)
+      '@docusaurus/theme-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/theme-translations': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-validation': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       algoliasearch: 5.61.0
       algoliasearch-helper: 3.30.1(algoliasearch@5.61.0)
       clsx: 2.1.1
@@ -7567,9 +7571,9 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@docusaurus/theme-translations@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/theme-translations@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       tslib: 2.9.1
     transitivePeerDependencies:
       - '@minify-html/node'
@@ -7593,11 +7597,11 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/tsconfig@4.0.0-canary-7002(typescript@7.0.2)':
+  '@docusaurus/tsconfig@4.0.0-canary-7029(typescript@7.0.2)':
     dependencies:
       typescript: 7.0.2
 
-  '@docusaurus/types@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/types@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
       '@mdx-js/mdx': 3.1.1(supports-color@8.1.1)
       '@types/history': 4.7.11
@@ -7605,7 +7609,7 @@ snapshots:
       '@types/react': 19.3.0
       commander: 15.0.0
       joi: 18.3.1
-      mdast-util-directive: 3.1.0(supports-color@8.1.1)
+      mdast-util-directive: 3.1.1(supports-color@8.1.1)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       utility-types: 3.11.0
@@ -7631,9 +7635,9 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/utils-common@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/utils-common@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       tslib: 2.9.1
     transitivePeerDependencies:
       - '@minify-html/node'
@@ -7657,12 +7661,12 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/utils-validation@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/utils-validation@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/utils-common': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/utils-common': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       joi: 18.3.1
       js-yaml: 5.5.0
       lodash: 4.18.1
@@ -7689,12 +7693,12 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@docusaurus/utils@4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
+  '@docusaurus/utils@4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)':
     dependencies:
       '@11ty/gray-matter': 3.0.0
-      '@docusaurus/fs': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/logger': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
-      '@docusaurus/types': 4.0.0-canary-7002(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/fs': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/logger': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
+      '@docusaurus/types': 4.0.0-canary-7029(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)(svgo@3.3.5)
       execa: 10.2.1
       github-slugger: 2.0.0
       jiti: 2.7.0
@@ -10125,7 +10129,7 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  mdast-util-directive@3.1.0(supports-color@8.1.1):
+  mdast-util-directive@3.1.1(supports-color@8.1.1):
     dependencies:
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
@@ -10133,6 +10137,7 @@ snapshots:
       devlop: 1.1.0
       mdast-util-from-markdown: 2.1.0(supports-color@8.1.1)
       mdast-util-to-markdown: 2.2.1
+      micromark-util-character: 2.1.1
       parse-entities: 4.0.2
       stringify-entities: 4.0.4
       unist-util-visit-parents: 6.1.0
@@ -11553,7 +11558,11 @@ snapshots:
 
   scheduler@0.28.0: {}
 
-  schema-dts@1.1.5: {}
+  schema-dts-lib@1.1.0: {}
+
+  schema-dts@2.1.0:
+    dependencies:
+      schema-dts-lib: 1.1.0
 
   schema-utils@4.8.2(webpack@5.112.2(@swc/html@1.16.21)(csso@5.0.5)(lightningcss@1.33.0)(postcss@8.5.32)(svgo@3.3.5)):
     dependencies:
