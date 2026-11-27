@@ -2528,5 +2528,10 @@
     "datapack": 128.1,
     "resourcepack": 104,
     "releaseTime": "2026-11-24T12:48:31+00:00"
+  },
+  "26.4-pre-2": {
+    "datapack": 128.2,
+    "resourcepack": 104,
+    "releaseTime": "2026-11-27T10:00:38+00:00"
   }
 }
